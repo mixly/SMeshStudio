@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config transient="false" date="1394183100433">
+	<site enabled="true" updateable="true" policy="USER-EXCLUDE" url="platform:/base/">
+		<feature id="it.baeyens.arduino.packaging.feature" url="features/it.baeyens.arduino.packaging.feature_2.2.0.201403071703/" version="2.2.0.201403071703">
+		</feature>
+		<feature id="org.eclipse.equinox.p2.user.ui" url="features/org.eclipse.equinox.p2.user.ui_2.2.0.v20121212-204731-62DG9JXTlTj-UXcQ2y3NLn6U4Z3H/" version="2.2.0.v20121212-204731-62DG9JXTlTj-UXcQ2y3NLn6U4Z3H">
+		</feature>
+		<feature id="org.eclipse.mylyn.discovery" plugin-identifier="org.eclipse.mylyn.commons.core" url="features/org.eclipse.mylyn.discovery_3.8.3.v20130107-0100/" version="3.8.3.v20130107-0100">
+		</feature>
+		<feature id="org.eclipse.rcp" url="features/org.eclipse.rcp_4.2.2.v20130129-152330-7IARAABrMQkGSvMgQnUlz-DQz00h/" version="4.2.2.v20130129-152330-7IARAABrMQkGSvMgQnUlz-DQz00h">
+		</feature>
+		<feature id="org.eclipse.mylyn.ide_feature" plugin-identifier="org.eclipse.mylyn.context.core" url="features/org.eclipse.mylyn.ide_feature_3.8.3.v20130107-0100/" version="3.8.3.v20130107-0100">
+		</feature>
+		<feature id="org.eclipse.egit" url="features/org.eclipse.egit_2.2.0.201212191850-r/" version="2.2.0.201212191850-r">
+		</feature>
+		<feature id="org.eclipse.cdt.gdb" url="features/org.eclipse.cdt.gdb_7.0.0.201302132326/" version="7.0.0.201302132326">
+		</feature>
+		<feature id="org.eclipse.jgit.orbit" url="features/org.eclipse.jgit.orbit_2.2.0.201212191850-r/" version="2.2.0.201212191850-r">
+		</feature>
+		<feature id="org.eclipse.cdt.gnu.dsf" url="features/org.eclipse.cdt.gnu.dsf_4.0.1.201302132326/" version="4.0.1.201302132326">
+		</feature>
+		<feature id="org.eclipse.mylyn.bugzilla_feature" plugin-identifier="org.eclipse.mylyn.tasks.core" url="features/org.eclipse.mylyn.bugzilla_feature_3.8.3.v20130107-0100/" version="3.8.3.v20130107-0100">
+		</feature>
+		<feature id="org.eclipse.cdt.gnu.debug" url="features/org.eclipse.cdt.gnu.debug_7.1.1.201302132326/" version="7.1.1.201302132326">
+		</feature>
+		<feature id="org.eclipse.equinox.p2.rcp.feature" url="features/org.eclipse.equinox.p2.rcp.feature_1.1.0.v20121211-153934-785EoBqNKNZz-DW7sUc8hFwz00wd/" version="1.1.0.v20121211-153934-785EoBqNKNZz-DW7sUc8hFwz00wd">
+		</feature>
+		<feature id="org.eclipse.cdt.gnu.build" url="features/org.eclipse.cdt.gnu.build_8.1.1.201302132326/" version="8.1.1.201302132326">
+		</feature>
+		<feature id="org.eclipse.platform" url="features/org.eclipse.platform_4.2.1.v20130118-173121-9MF7GHYdG0B5kx4E_SkfZV-1mNjVATf67ZAb7/" version="4.2.1.v20130118-173121-9MF7GHYdG0B5kx4E_SkfZV-1mNjVATf67ZAb7">
+		</feature>
+		<feature id="org.eclipse.cdt.msw" url="features/org.eclipse.cdt.msw_1.0.0.201302132326/" version="1.0.0.201302132326">
+		</feature>
+		<feature id="org.eclipse.help" plugin-identifier="org.eclipse.help.base" url="features/org.eclipse.help_1.4.1.v20120912-144938-8R7xFOXFLWUl7PpNBh_HIGkb4/" version="1.4.1.v20120912-144938-8R7xFOXFLWUl7PpNBh_HIGkb4">
+		</feature>
+		<feature id="org.eclipse.equinox.p2.core.feature" url="features/org.eclipse.equinox.p2.core.feature_1.1.0.v20121211-153934-8297FndFWmE7h7Bpz-vcqkxyKz0/" version="1.1.0.v20121211-153934-8297FndFWmE7h7Bpz-vcqkxyKz0">
+		</feature>
+		<feature id="org.eclipse.emf.common" url="features/org.eclipse.emf.common_2.8.0.v20130125-0546/" version="2.8.0.v20130125-0546">
+		</feature>
+		<feature id="org.eclipse.jgit" url="features/org.eclipse.jgit_2.2.0.201212191850-r/" version="2.2.0.201212191850-r">
+		</feature>
+		<feature id="org.eclipse.mylyn.wikitext_feature" plugin-identifier="org.eclipse.mylyn.wikitext.core" url="features/org.eclipse.mylyn.wikitext_feature_1.7.3.v20130107-0100/" version="1.7.3.v20130107-0100">
+		</feature>
+		<feature id="org.eclipse.mylyn.commons.notifications" plugin-identifier="org.eclipse.mylyn.commons.core" url="features/org.eclipse.mylyn.commons.notifications_1.0.3.v20130107-0100/" version="1.0.3.v20130107-0100">
+		</feature>
+		<feature id="org.eclipse.emf.ecore" url="features/org.eclipse.emf.ecore_2.8.3.v20130125-0546/" version="2.8.3.v20130125-0546">
+		</feature>
+		<feature id="it.baeyens.arduino.feature" url="features/it.baeyens.arduino.feature_2.2.0.201403071703/" version="2.2.0.201403071703">
+		</feature>
+		<feature id="org.eclipse.mylyn.tasks.ide" plugin-identifier="org.eclipse.mylyn.tasks.core" url="features/org.eclipse.mylyn.tasks.ide_3.8.3.v20130107-0100/" version="3.8.3.v20130107-0100">
+		</feature>
+		<feature id="org.eclipse.mylyn.commons" plugin-identifier="org.eclipse.mylyn.commons.core" url="features/org.eclipse.mylyn.commons_3.8.3.v20130107-0100/" version="3.8.3.v20130107-0100">
+		</feature>
+		<feature id="org.eclipse.cdt.autotools" url="features/org.eclipse.cdt.autotools_3.0.1.201302132326/" version="3.0.1.201302132326">
+		</feature>
+		<feature id="org.eclipse.mylyn.monitor" plugin-identifier="org.eclipse.mylyn.commons.core" url="features/org.eclipse.mylyn.monitor_3.8.3.v20130107-0100/" version="3.8.3.v20130107-0100">
+		</feature>
+		<feature id="org.eclipse.mylyn.team_feature" plugin-identifier="org.eclipse.mylyn.context.core" url="features/org.eclipse.mylyn.team_feature_3.8.3.v20130107-0100/" version="3.8.3.v20130107-0100">
+		</feature>
+		<feature id="org.eclipse.cdt" url="features/org.eclipse.cdt_8.1.2.201302132326/" version="8.1.2.201302132326">
+		</feature>
+		<feature id="org.eclipse.equinox.p2.extras.feature" url="features/org.eclipse.equinox.p2.extras.feature_1.1.0.v20121211-153934-7A6FEcDiVOTg2RYDuZuFz-L2z00w/" version="1.1.0.v20121211-153934-7A6FEcDiVOTg2RYDuZuFz-L2z00w">
+		</feature>
+		<feature id="org.eclipse.mylyn.commons.identity" plugin-identifier="org.eclipse.mylyn.commons.core" url="features/org.eclipse.mylyn.commons.identity_1.0.3.v20130107-0100/" version="1.0.3.v20130107-0100">
+		</feature>
+		<feature id="org.eclipse.epp.package.common.feature" url="features/org.eclipse.epp.package.common.feature_1.5.2.20130110-1126/" version="1.5.2.20130110-1126">
+		</feature>
+		<feature id="org.eclipse.e4.rcp" url="features/org.eclipse.e4.rcp_1.1.2.v20130130-191718-91FUvGP7GIX2Kgz-z-gvjMvXV1NS/" version="1.1.2.v20130130-191718-91FUvGP7GIX2Kgz-z-gvjMvXV1NS">
+		</feature>
+		<feature id="org.eclipse.mylyn.context_feature" plugin-identifier="org.eclipse.mylyn.context.core" url="features/org.eclipse.mylyn.context_feature_3.8.3.v20130107-0100/" version="3.8.3.v20130107-0100">
+		</feature>
+		<feature id="org.eclipse.cvs" url="features/org.eclipse.cvs_1.3.201.v20130116-085741-7B79FJKAkF7BG7ODH5CAJT/" version="1.3.201.v20130116-085741-7B79FJKAkF7BG7ODH5CAJT">
+		</feature>
+		<feature id="org.eclipse.cdt.platform" url="features/org.eclipse.cdt.platform_8.1.2.201302132326/" version="8.1.2.201302132326">
+		</feature>
+		<feature id="org.eclipse.equinox.p2.discovery.feature" url="features/org.eclipse.equinox.p2.discovery.feature_1.0.100.v20120524-0542-4-Bh9oB58B5W8E28KKNEK/" version="1.0.100.v20120524-0542-4-Bh9oB58B5W8E28KKNEK">
+		</feature>
+		<feature id="org.eclipse.epp.mpc" plugin-identifier="org.eclipse.epp.mpc.ui" url="features/org.eclipse.epp.mpc_1.1.1.I20110907-0947/" version="1.1.1.I20110907-0947">
+		</feature>
+		<feature id="org.eclipse.mylyn_feature" plugin-identifier="org.eclipse.mylyn.tasks.core" url="features/org.eclipse.mylyn_feature_3.8.3.v20130107-0100/" version="3.8.3.v20130107-0100">
+		</feature>
+		<feature id="org.eclipse.mylyn.commons.repositories" plugin-identifier="org.eclipse.mylyn.commons.core" url="features/org.eclipse.mylyn.commons.repositories_1.0.3.v20130107-0100/" version="1.0.3.v20130107-0100">
+		</feature>
+	</site>
+</config>

@@ -1,0 +1,31 @@
+Signature-Version: 1.0
+SHA1-Digest-Manifest: WkVjsheCBHj7pt8nrZtVNwhS/1U=
+Created-By: 1.6.0 (IBM Corporation)
+SHA1-Digest-Manifest-Main-Attributes: RTAh5vQGGzh/CopRvt6fogogI9c=
+
+Name: META-INF/eclipse.inf
+SHA1-Digest: QdryQvJlVywlE0MGLuwYCkmkyWk=
+
+Name: os/win32/x86/spawner.dll
+SHA1-Digest: 5bqlEznQ729R/38rj/UyDNwSmBg=
+
+Name: os/win32/x86/winreg.dll
+SHA1-Digest: 7q3enlELMXH35mOohkgoPMuTuIE=
+
+Name: os/win32/x86/starter.exe
+SHA1-Digest: /YUcr52jqojBrJQJWT+9Bz+maFM=
+
+Name: META-INF/maven/org.eclipse.cdt/org.eclipse.cdt.core.win32.x86/po
+ m.properties
+SHA1-Digest: gO86TtILGXwo5uCLKJujrZrnxEg=
+
+Name: os/win32/x86/listtasks.exe
+SHA1-Digest: 1+OpmUcXnpp3cBx35Dl047XXiIg=
+
+Name: about.html
+SHA1-Digest: mytKZYCHCDPgS7Y3lrPKwYXPrbw=
+
+Name: META-INF/maven/org.eclipse.cdt/org.eclipse.cdt.core.win32.x86/po
+ m.xml
+SHA1-Digest: yKadUTLoZl4R5oWw8Un7/Jy+GKk=
+

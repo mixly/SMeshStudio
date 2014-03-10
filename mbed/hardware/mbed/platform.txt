@@ -1,0 +1,7 @@
+
+compiler.gcc_cs.path.windows={runtime.ide.path}/hardware/mbed/tools/gcc_cs/bin/
+compiler.gcc_arm.path.windows={runtime.ide.path}/hardware/mbed/tools/gcc_arm/bin/
+compiler.gcc_cr.path.windows={runtime.ide.path}/hardware/mbed/tools/gcc_cr/bin/
+
+
+tools.mbed_fm.upload.pattern="{runtime.ide.path}/hardware/mbed/tools/utils/fm"  COM(COMPORT, 115200) DEVICE({build.cpu}, 0.000000, 0) HARDWARE(BOOTEXECRTS, 50, 100) ERASE(DEVICE, PROTECTISP) HEXFILE({build.path}/{build.project_name}.hex, NOCHECKSUMS, NOFILL, PROTECTISP) VERIFY({build.path}/{build.project_name}.hex, NOCHECKSUMS)

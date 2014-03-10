@@ -1,0 +1,41 @@
+Manifest-Version: 1.0
+Bundle-Localization: plugin
+Fragment-Host: org.eclipse.cdt.core;bundle-version="[5.2.0,6.0.0)"
+Built-By: hudsonbuild
+Bundle-SymbolicName: org.eclipse.cdt.core.win32.x86;singleton:=true
+Bundle-Version: 5.2.0.201302132326
+Eclipse-PlatformFilter: (&(osgi.os=win32)(osgi.arch=x86))
+Build-Jdk: 1.6.0_21
+Bundle-Vendor: %providerName
+Bundle-Name: %fragmentName.win32.x86
+Eclipse-BundleShape: dir
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Bundle-ManifestVersion: 2
+
+Name: META-INF/eclipse.inf
+SHA1-Digest: 09gN05tobgS/MdtqyTNQhOhB73M=
+
+Name: os/win32/x86/winreg.dll
+SHA1-Digest: zj8k0Xw5BBY+wkUdrlkklTn9DoM=
+
+Name: os/win32/x86/spawner.dll
+SHA1-Digest: yk4PKyA8DLObSBIdJhOjfU7u/Ao=
+
+Name: META-INF/maven/org.eclipse.cdt/org.eclipse.cdt.core.win32.x86/po
+ m.properties
+SHA1-Digest: 8+6zYhJ0BpBo2AUWRMvj3BZax5o=
+
+Name: os/win32/x86/starter.exe
+SHA1-Digest: GdQuPkMygNo7RGWV4BQNMb0bMhk=
+
+Name: about.html
+SHA1-Digest: aTb+cxOL/sCJQPzqHdtJ8Hd0+1k=
+
+Name: os/win32/x86/listtasks.exe
+SHA1-Digest: KZ/kDiPN3YO3xC+61xIYYxEcYvU=
+
+Name: META-INF/maven/org.eclipse.cdt/org.eclipse.cdt.core.win32.x86/po
+ m.xml
+SHA1-Digest: cI8qVvf9VdkjJeQJNksro6UUySU=
+

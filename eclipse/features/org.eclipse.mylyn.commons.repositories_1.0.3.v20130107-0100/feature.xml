@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2010 Tasktop Technologies and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+   
+    Contributors:
+         Tasktop Technologies - initial API and implementation
+ -->
+<feature
+      id="org.eclipse.mylyn.commons.repositories"
+      label="%featureName"
+      version="1.0.3.v20130107-0100"
+      provider-name="%providerName"
+      plugin="org.eclipse.mylyn.commons.core">
+
+   <description url="http://eclipse.org/mylyn">
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="license.html">
+      %license
+   </license>
+
+   <requires>
+      <import feature="org.eclipse.mylyn.commons" version="3.8.0" match="greaterOrEqual"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.mylyn.commons.repositories"
+         download-size="19"
+         install-size="36"
+         version="0.9.1.v20120412-0100"
+         unpack="false"/>
+
+	<plugin
+         id="org.eclipse.mylyn.commons.team"
+         download-size="50"
+         install-size="98"
+         version="0.9.1.v20120412-0100"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.commons.repositories.core"
+         download-size="36"
+         install-size="72"
+         version="1.0.3.v20130107-0100"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.commons.repositories.ui"
+         download-size="74"
+         install-size="158"
+         version="1.0.3.v20130107-0100"
+         unpack="false"/>
+
+</feature>
