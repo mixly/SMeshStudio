@@ -5,3 +5,4 @@ compiler.gcc_cr.path.windows={runtime.ide.path}/hardware/mbed/tools/gcc_cr/bin/
 
 
 tools.mbed_fm.upload.pattern="{runtime.ide.path}/hardware/mbed/tools/utils/fm"  COM(COMPORT, 115200) DEVICE({build.cpu}, 0.000000, 0) HARDWARE(BOOTEXECRTS, 50, 100) ERASE(DEVICE, PROTECTISP) HEXFILE({build.path}/{build.project_name}.hex, NOCHECKSUMS, NOFILL, PROTECTISP) VERIFY({build.path}/{build.project_name}.hex, NOCHECKSUMS)
+tools.mbed_cp.upload.pattern="{runtime.ide.path}/hardware/mbed/tools/utils/cp" {build.path}/{build.project_name}.bin DISKDRIVE/new.bin
