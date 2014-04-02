@@ -35,10 +35,11 @@
 #ifndef BOARD_H
 #define BOARD_H (1)
 #include "const.h"
+#include "../MxRadioCfg.h"
 #define DELAY_US(x)  wait_us(x)
 #define DELAY_MS(x)  wait_ms(x)
 
-#define RADIO_TYPE  RADIO_AT86RF231 //RADIO_AT86RF212
+
 
 #if RADIO_TYPE == RADIO_AT86RF230 || defined(DOXYGEN)
 # include "at86rf230a.h"
@@ -58,5 +59,5 @@
 #endif
 
 //# include "at86rf231.h"
-//#define CHINABAND
+
 #endif /* #ifndef BOARD_H */

@@ -28,7 +28,9 @@
 
 #ifndef MxRadioCfg_h
 
-
+#define RADIO_TYPE  RADIO_AT86RF231 //RADIO_AT86RF212
+//#define CHINABAND
+#define MxRadioCfg_h
 
 //#define ENABLE_DIG3_DIG4 // this enables the DIG3 and DIG4 indicators by enabling PA_EXT_EN
 
