@@ -1,0 +1,33 @@
+// Only modify this file to include
+// - function definitions (prototypes)
+// - include files
+// - extern variable definitions
+// In the appropriate section
+
+#ifndef _ACoapTest_H_
+#define _ACoapTest_H_
+#include "project-conf.h" 
+#undef ARDUINO 
+#define AUTOSTART_ENABLE 1 
+#define UIP_CONF_EUI64  1
+//#define UIP_CONF_IPV6 1 
+//#define RF230BB 1 
+#define WATCHDOG_CONF_TIMEOUT WDTO_8S 
+#define AUTO_CRC_PADDING=2 
+//#define HAVE_STDINT_H 
+#define LOWPOWER 0
+#define EUI64_ADDRESS {0x02, 0, 0, 0, 0, 0, 0, 0xCC};
+#define RFCHANNEL 26 
+#define REST coap_rest_implementation
+//  Auto Added by "SMeshLink Eclipse IDE""
+
+
+
+
+//add your function definitions for the project ACoapTest here
+
+
+
+
+//Do not add code below this line
+#endif /* _ACoapTest_H_ */

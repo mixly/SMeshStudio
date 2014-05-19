@@ -1,0 +1,50 @@
+CONTIKI_TARGET_DIRS = . dev apps net loader 
+CONTIKI_CORE=contiki-iduino-main
+CONTIKI_TARGET_MAIN = ${CONTIKI_CORE}.o
+
+CONTIKI_TARGET_SOURCEFILES += contiki-iduino-main.c params.c ds2401.c \
+							leds-arch.c   \
+							slip_uart0.c slip.c \
+							adc.c adc-sensors.c \
+							 # sht11.c sht11-sensor.c  interrupt-arch.c 
+							
+#The avr cpu makefile will also add these files if COFFEE_FILES is specified.
+
+
+
+
+CONTIKIAVR=$(CONTIKI)/cpu/avr
+CONTIKIBOARD=.
+
+CONTIKI_PLAT_DEFS = -DF_CPU=16000000UL -DAUTO_CRC_PADDING=2 -DWATCHDOG_CONF_TIMEOUT=WDTO_8S -D__AVR__=1
+
+
+MCU=atmega128rfa1
+RF230BB=1
+#RF212BB=1
+
+ifdef CONF_LOWPOWER
+CFLAGS += -DLOWPOWER=$(CONF_LOWPOWER)
+else
+CFLAGS += -DLOWPOWER=0
+endif
+
+AVRDUDE_PROGRAMMER=arduino
+AVRDUDE_PORT ?=COM110
+AVRDUDE_OPTIONS=-V -F -D -b 57600
+
+ifdef UIP_CONF_EUI64
+CFLAGS += -DUIP_CONF_EUI64=$(UIP_CONF_EUI64)
+endif
+
+ifdef UIP_CONF_IPV6
+  CFLAGS += -DWITH_UIP6=1
+  ifeq ($(UIP_CONF_RPL),0)
+    CFLAGS+= -DUIP_CONF_IPV6_RPL=0
+  endif
+endif
+
+CLEAN += symbols.c symbols.h *.$(TARGET)
+
+include $(CONTIKIAVR)/Makefile.avr
+include $(CONTIKIAVR)/radio/Makefile.radio

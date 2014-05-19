@@ -1,0 +1,4 @@
+MxTimer2	KEYWORD1
+set	KEYWORD2
+start	KEYWORD2
+stop	KEYWORD2

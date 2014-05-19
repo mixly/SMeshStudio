@@ -1,0 +1,116 @@
+Release notes for
+*************************************************
+GNU Tools for ARM Embedded Processors 4.7
+                               - Q3 2013
+*************************************************
+
+This release includes the following items:
+* Bare metal EABI pre-built binaries for running on a Windows host
+* Bare metal EABI pre-built binaries for running on a Linux host
+* Bare metal EABI pre-built binaries for running on a Mac OS X host
+* Source code package (together with build scripts and instructions to setup
+  build environment), composed of:
+  * gcc : ARM/embedded-4_7-branch revision 202601
+    http://gcc.gnu.org/svn/gcc/branches/ARM/embedded-4_7-branch/
+
+  * binutils : 2.22 with mainline backports
+    git://sourceware.org/git/binutils.git commit 8f0e6ebede51788f429937646e891633a20dc533
+
+  * newlib : 1.19 with mainline backports
+    ftp://sources.redhat.com/pub/newlib/newlib-1.19.0.tar.gz
+
+  * gdb : 7.4.1 with mainline backports, without target sim support
+    git://sourceware.org/git/gdb.git commit 263dc2d4afef8873f4262257f372af9fade55d94
+
+  * cloog-ppl 0.15.11 : 
+    ftp://gcc.gnu.org/pub/gcc/infrastructure/cloog-ppl-0.15.11.tar.gz
+
+  * expat 2.0.1 :
+    http://jaist.dl.sourceforge.net/project/expat/expat/2.0.1/expat-2.0.1.tar.gz
+
+  * gmp 4.3.2 : ftp://gcc.gnu.org/pub/gcc/infrastructure/gmp-4.3.2.tar.bz2
+
+  * libelf 0.8.13 : http://www.mr511.de/software/libelf-0.8.13.tar.gz
+
+  * libiconv 1.14 :
+    http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
+
+  * mpc 0.8.1 : ftp://gcc.gnu.org/pub/gcc/infrastructure/mpc-0.8.1.tar.gz
+
+  * mpfr 2.4.2 : ftp://gcc.gnu.org/pub/gcc/infrastructure/mpfr-2.4.2.tar.bz2
+
+  * ppl 0.11 : ftp://gcc.gnu.org/pub/gcc/infrastructure/ppl-0.11.tar.gz
+
+  * zlib 1.2.5 with makefile patch : 
+    http://sourceforge.net/projects/libpng/files/zlib/1.2.5/zlib-1.2.5.tar.bz2/download
+
+  * newlib-nano 1.0 : Included in source package
+
+Supported hosts:
+* Windows XP/7 32/64 bits (with installer and alternative zip package)
+* Linux 32/64 bits
+  - Ubuntu 8.x or later (tarball)
+  - Ubuntu 10.04/12.04/13.04 (tarball and PPA)
+  - RHEL 4/5 (tarball)
+* Mac OS X 10.7.3 and newer 64 bits (tarball)
+
+Supported target OS:
+* Bare metal EABI only
+
+Features:
+* All GCC 4.7 features, plus latest mainline features
+  - Defaultly turn on option -munaligned-access for ARM
+  - Support for more features from C11 revision of ISO C
+  - Support various new GNU extensions to the DWARF
+* Additional code size optimizations
+* Cortex-M0+ support
+* Newlib-nano: newlib branch optimized for code size
+* GDB support of unwind from exception handler
+* GDB support of FP registers in Cortex-M4
+* Cortex-A profile multilib
+* Link Time Optimization (LTO)
+* Cortex-R7 support
+
+Tests:
+* Tested on a variety of Cortex-M0/M0+/M3/M4/A9 boards
+* Tested on an internal simulator for Cortex-R4
+* Tested on Qemu
+
+Known issues in 4.7 release series:
+* The gdb support to DWARF information in ELF file built with option -g3
+  is incomplete.  Sometimes debugging such ELF file crashes gdb.  Recommend
+  not to use GCC option -g3.
+* Comparing to 4.6, GCC 4.7 tends to inline more function calls when
+  optimizing for speed (O2/O3).  So program built from 4.7 with O2/O3
+  might be slightly bigger than 4.6, but usually with performance gain.
+  To fall back closer to 4.6 behavior, please include compiler option:
+  --param early-inlining-insns=10
+
+Important bugs fixed in 4.7 update 2013q3 release:
+* Crash when compile fixed-point app with LTO
+  https://answers.launchpad.net/gcc-arm-embedded/+question/235582  
+* Branch to target specified by a linker script symbol
+  https://sourceware.org/bugzilla/show_bug.cgi?id=15302
+* Windows hosted gdb hang at some breakpoint
+  https://bugs.launchpad.net/gcc-arm-embedded/+bug/1197615
+* Nano missing reference to _mallopt_r
+  https://mbed.org/forum/mbed/topic/2701/?page=3#comment-22549
+
+Important bugs fixed in 4.7 update 2013q2 release:
+* Upgrade doc/*.texi to the latest texinfo package
+  https://answers.launchpad.net/gcc-arm-embedded/+question/227685
+* Fix ICE with -mtune option
+  https://answers.launchpad.net/gcc-arm-embedded/+question/224937
+* Fix --debug option in build script
+  https://answers.launchpad.net/gcc-arm-embedded/+question/229127
+* Fix unnecessary lr save in thumb1 leaf function
+
+Important bugs fixed in 4.7 update 2013q1 release:
+* Mac OS host version has python dependence
+* LTO failure when installed in directory with space in path name
+  http://gcc.gnu.org/bugzilla/show_bug.cgi?id=50293
+* Load address of data sections containing aligned data
+  http://sourceware.org/bugzilla/show_bug.cgi?id=15222
+* libnosys doesn't check stack overflow
+  https://answers.launchpad.net/gcc-arm-embedded/+question/218972 
+* librdimon.a doesn't match newlib-nano

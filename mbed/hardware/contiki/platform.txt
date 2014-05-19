@@ -1,0 +1,39 @@
+
+compiler.gcc_cs.path.windows={runtime.ide.path}/hardware/tools/gcc_cs/bin/
+compiler.gcc_arm.path.windows={runtime.ide.path}/hardware/tools/gcc_arm/bin/
+compiler.gcc_cr.path.windows={runtime.ide.path}/hardware/tools/gcc_cr/bin/
+compiler.gcc_avr.path.windows={runtime.ide.path}/hardware/tools/avr/bin/
+
+compiler.keil.path.windows=C:\Keil\ARM
+compiler.keil.binpath.windows=C:/Keil/ARM/ARMCC/bin/
+
+tools.mbed_cp.upload.pattern="{runtime.ide.path}/hardware/tools/utils/cp" {build.path}/{build.project_name}.bin DISKDRIVE/new.bin
+tools.mbed_isp.upload.pattern="{runtime.ide.path}/hardware/tools/utils/lpc21isp"   {build.path}/{build.project_name}.hex COMCOMPORT 115200 12000
+tools.mbed_fm.upload.pattern="{runtime.ide.path}/hardware/tools/utils/fm"  COM(COMPORT, 115200) HARDWARE(BOOTEXECRTS, 50, 100) DEVICE({build.cpu}, 0.000000, 0) ERASE(DEVICE, PROTECTISP) HEXFILE({build.path}/{build.project_name}.hex, NOCHECKSUMS, NOFILL, PROTECTISP) VERIFY({build.path}/{build.project_name}.hex, NOCHECKSUMS)
+tools.mbed_dfu.upload.pattern="{runtime.ide.path}/hardware/tools/utils/dfu-util" -a1 -d 0x1EAF:0x0003 -D  {build.path}/{build.project_name}.bin -R
+#tools.mbed_fm.upload.pattern="fm"  COM(COMPORT, 115200)  HARDWARE(BOOTEXEC, 50, 100) ERASE(DEVICE, PROTECTISP) HEXFILE({build.path}/{build.project_name}.hex, NOCHECKSUMS, NOFILL, PROTECTISP) VERIFY({build.path}/{build.project_name}.hex, NOCHECKSUMS)
+
+# AVR Uploader/Programmers tools
+# -------------------
+
+tools.avrdude.cmd.path={runtime.ide.path}/hardware/tools/avr/bin/avrdude
+tools.avrdude.config.path={runtime.ide.path}/hardware/tools/avr/bin/avrdude.conf
+tools.avrdude.cmd.path.linux={runtime.ide.path}/hardware/tools/avrdude
+tools.avrdude.config.path.linux={runtime.ide.path}/hardware/tools/avrdude.conf
+
+tools.avrdude.upload.params.verbose=-v -v -v -v
+tools.avrdude.upload.params.quiet=-q -q
+#tools.avrdude.upload.pattern="{cmd.path}" "-C{config.path}" {upload.verbose} -p{build.mcu} -c{upload.protocol} -P{serial.port} -b{upload.speed} -D "-Uflash:w:{build.path}/{build.project_name}.hex:i"
+tools.avrdude.upload.pattern="{cmd.path}" "-C{config.path}" {upload.verbose} -p{build.mcu} -c{upload.protocol} -P{serial.port} -b{upload.speed} "-Uflash:w:{build.path}/{build.project_name}.hex:i"
+tools.avrdude.program.params.verbose=-v -v -v -v
+tools.avrdude.program.params.quiet=-q -q
+tools.avrdude.program.pattern="{cmd.path}" "-C{config.path}" {program.verbose} -p{build.mcu} -c{protocol} {program.extra_params} "-Uflash:w:{build.path}/{build.project_name}.hex:i"
+
+tools.avrdude.erase.params.verbose=-v -v -v -v
+tools.avrdude.erase.params.quiet=-q -q
+tools.avrdude.erase.pattern="{cmd.path}" "-C{config.path}" {erase.verbose} -p{build.mcu} -c{protocol} {program.extra_params} -e -Ulock:w:{bootloader.unlock_bits}:m -Uefuse:w:{bootloader.extended_fuses}:m -Uhfuse:w:{bootloader.high_fuses}:m -Ulfuse:w:{bootloader.low_fuses}:m
+
+tools.avrdude.bootloader.params.verbose=-v -v -v -v
+tools.avrdude.bootloader.params.quiet=-q -q
+tools.avrdude.bootloader.pattern="{cmd.path}" "-C{config.path}" {bootloader.verbose} -p{build.mcu} -c{protocol} {program.extra_params} "-Uflash:w:{runtime.ide.path}/hardware/arduino/avr/bootloaders/{bootloader.file}:i" -Ulock:w:{bootloader.lock_bits}:m
+

@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Require-Bundle: org.eclipse.core.runtime,org.eclipse.ui,it.baeyens.ard
+ uino.monitor,org.eclipse.ui.intro
+Bundle-Version: 2.2.0.201405131838
+Bundle-Name: Application
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: it.baeyens.arduino.application;singleton:=true
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
+

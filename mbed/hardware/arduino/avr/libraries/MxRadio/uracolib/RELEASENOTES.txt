@@ -1,0 +1,2 @@
+iDuinoRadio V1.0 Based iDuinoRadio  Arduino Library 20120920
+http://www.smeshlink.com

@@ -1,0 +1,97 @@
+# See: http://www.smeshlink.com
+##############################################################
+iduinormini.name=contiki_iduinormini_r2
+iduinormini.cpu=atmega128rfa1
+
+iduinormini.upload.tool=avrdude
+iduinormini.upload.protocol=arduino
+iduinormini.upload.maximum_size=126976
+iduinormini.upload.speed=57600
+
+iduinormini.bootloader.tool=avrdude
+iduinormini.bootloader.low_fuses=0xFF
+iduinormini.bootloader.high_fuses=0xDA
+iduinormini.bootloader.extended_fuses=0xF5
+iduinormini.bootloader.file=atmega/ATmegaBOOT_atmega128rfa1_16M.hex
+iduinormini.bootloader.unlock_bits=0x3F
+iduinormini.bootloader.lock_bits=0x0F
+
+iduinormini.build.mcu=atmega128rfa1
+iduinormini.build.f_cpu=16000000L
+iduinormini.build.core=contiki
+iduinormini.build.variant=iduino
+iduinormini.compiler.path={runtime.ide.path}/hardware/tools/avr/bin/
+iduinormini.compiler.c.cmd=avr-gcc
+iduinormini.compiler.c.flags=-c -g -Os -w -ffunction-sections -fdata-sections -MMD -gdwarf-2 -fno-strict-aliasing  
+iduinormini.compiler.c.elf.flags=-Os -Wl,--gc-sections
+iduinormini.compiler.c.elf.cmd=avr-gcc
+iduinormini.compiler.S.flags=-c -g -assembler-with-cpp
+iduinormini.compiler.cpp.cmd=avr-g++
+iduinormini.compiler.cpp.flags=-c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -MMD  -std=gnu++98  
+iduinormini.compiler.ar.cmd=avr-ar
+iduinormini.compiler.ar.flags=rcs
+iduinormini.compiler.objcopy.cmd=avr-objcopy
+iduinormini.compiler.objcopy.eep.flags=-O ihex -j .eeprom --set-section-flags=.eeprom=alloc,load --no-change-warnings --change-section-lma .eeprom=0
+iduinormini.compiler.elf2hex.flags=-O ihex -R .eeprom -j .text -j .data
+iduinormini.compiler.elf2hex.cmd=avr-objcopy
+iduinormini.compiler.ldflags=
+iduinormini.compiler.size.cmd=avr-size
+iduinormini.recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch}  {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+iduinormini.recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch}  {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+iduinormini.recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} "{build.path}/{archive_file}" "{object_file}"
+iduinormini.recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" {compiler.c.elf.flags} -mmcu={build.mcu} -o "{build.path}/{build.project_name}.elf" {object_files} "{build.path}/{archive_file}" "-L{build.path}" -lm
+iduinormini.recipe.objcopy.eep.pattern="{compiler.path}{compiler.objcopy.cmd}" {compiler.objcopy.eep.flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.eep"
+iduinormini.recipe.objcopy.hex.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+iduinormini.recipe.size.pattern="{compiler.path}{compiler.size.cmd}" --format=avr --mcu={build.mcu} "{build.path}/{build.project_name}.elf"
+iduinormini.recipe.size.regex=^(?:\.text|\.data|\.bootloader)\s+([0-9]+).*
+iduinormini.recipe.size.regex.data=^(?:\.data|\.bss|\.noinit)\s+([0-9]+).*
+iduinormini.recipe.size.regex.eeprom=^(?:\.eeprom)\s+([0-9]+).*
+iduinormini.build.extra_flags=-DHAVE_STDINT_H -DRF230BB=1 -DUIP_CONF_IPV6=1 -DWATCHDOG_CONF_TIMEOUT=WDTO_8S -DAUTO_CRC_PADDING=2 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1 
+##############################################################
+mx2xxcc.name=contiki_mx2xxcc
+mx2xxcc.cpu=atmega1284p
+
+mx2xxcc.upload.tool=avrdude
+mx2xxcc.upload.protocol=arduino
+mx2xxcc.upload.maximum_size=129024
+mx2xxcc.upload.speed=38400
+
+mx2xxcc.bootloader.tool=avrdude
+mx2xxcc.bootloader.low_fuses=0xE2
+mx2xxcc.bootloader.high_fuses=0x9A
+mx2xxcc.bootloader.extended_fuses=0xFF
+mx2xxcc.bootloader.file=atmega/ATmegaBOOT_atmega1284p_8M.hex
+mx2xxcc.bootloader.unlock_bits=0x3F
+mx2xxcc.bootloader.lock_bits=0x0F
+
+mx2xxcc.build.mcu=atmega1284p
+mx2xxcc.build.f_cpu=8000000L
+mx2xxcc.build.core=contiki
+mx2xxcc.build.variant=mx2xxcc
+mx2xxcc.compiler.path={runtime.ide.path}/hardware/tools/avr/bin/
+mx2xxcc.compiler.c.cmd=avr-gcc
+mx2xxcc.compiler.c.flags=-c -g -Os -w -ffunction-sections -fdata-sections -MMD -gdwarf-2 -fno-strict-aliasing  
+mx2xxcc.compiler.c.elf.flags=-Os -Wl,--gc-sections
+mx2xxcc.compiler.c.elf.cmd=avr-gcc
+mx2xxcc.compiler.S.flags=-c -g -assembler-with-cpp
+mx2xxcc.compiler.cpp.cmd=avr-g++
+mx2xxcc.compiler.cpp.flags=-c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -MMD  -std=gnu++98  
+mx2xxcc.compiler.ar.cmd=avr-ar
+mx2xxcc.compiler.ar.flags=rcs
+mx2xxcc.compiler.objcopy.cmd=avr-objcopy
+mx2xxcc.compiler.objcopy.eep.flags=-O ihex -j .eeprom --set-section-flags=.eeprom=alloc,load --no-change-warnings --change-section-lma .eeprom=0
+mx2xxcc.compiler.elf2hex.flags=-O ihex -R .eeprom -j .text -j .data
+mx2xxcc.compiler.elf2hex.cmd=avr-objcopy
+mx2xxcc.compiler.ldflags=
+mx2xxcc.compiler.size.cmd=avr-size
+mx2xxcc.recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch}  {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+mx2xxcc.recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch}  {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+mx2xxcc.recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} "{build.path}/{archive_file}" "{object_file}"
+mx2xxcc.recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" {compiler.c.elf.flags} -mmcu={build.mcu} -o "{build.path}/{build.project_name}.elf" {object_files} "{build.path}/{archive_file}" "-L{build.path}" -lm
+mx2xxcc.recipe.objcopy.eep.pattern="{compiler.path}{compiler.objcopy.cmd}" {compiler.objcopy.eep.flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.eep"
+mx2xxcc.recipe.objcopy.hex.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+mx2xxcc.recipe.size.pattern="{compiler.path}{compiler.size.cmd}" --format=avr --mcu={build.mcu} "{build.path}/{build.project_name}.elf"
+mx2xxcc.recipe.size.regex=^(?:\.text|\.data|\.bootloader)\s+([0-9]+).*
+mx2xxcc.recipe.size.regex.data=^(?:\.data|\.bss|\.noinit)\s+([0-9]+).*
+mx2xxcc.recipe.size.regex.eeprom=^(?:\.eeprom)\s+([0-9]+).*
+mx2xxcc.build.extra_flags=-DHAVE_STDINT_H -DRF230BB=1 -DUIP_CONF_IPV6=1 -DWATCHDOG_CONF_TIMEOUT=WDTO_8S -DAUTO_CRC_PADDING=2 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1 
