@@ -105,7 +105,7 @@ inline void store_char(unsigned char c, ring_buffer *buffer)
   }
 }
 
-#if !defined(USART0_RX_vect) && defined(USART1_RX_vect)
+#if !defined(USART0_RX_vect) && defined(USART1_RX_vect) || defined(CONTIKI) && RS232_CONF_NUMPORTS>0
 // do nothing - on the 32u4 the first USART is USART1
 #else
 #if !defined(USART_RX_vect) && !defined(SIG_USART0_RECV) && \
@@ -149,7 +149,7 @@ inline void store_char(unsigned char c, ring_buffer *buffer)
 #endif
 #endif
 
-#if defined(USART1_RX_vect)
+#if defined(USART1_RX_vect) && (!(defined(CONTIKI) && RS232_CONF_NUMPORTS>0))
   void serialEvent1() __attribute__((weak));
   void serialEvent1() {}
   #define serialEvent1_implemented

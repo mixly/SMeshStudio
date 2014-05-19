@@ -4,7 +4,7 @@
 #define MAX_TRY_READ 10
 
 //Debug is disabled by default
-#if 0
+#if 1
 #define DBG(x, ...) std::printf("[WebSocket : DBG]"x"\r\n", ##__VA_ARGS__); 
 #define WARN(x, ...) std::printf("[WebSocket : WARN]"x"\r\n", ##__VA_ARGS__); 
 #define ERR(x, ...) std::printf("[WebSocket : ERR]"x"\r\n", ##__VA_ARGS__); 

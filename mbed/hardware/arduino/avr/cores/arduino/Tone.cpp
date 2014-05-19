@@ -113,7 +113,7 @@ static uint8_t tone_pins[AVAILABLE_TONE_PINS] = { 255 /*, 255 */ };
 #else
 
 #define AVAILABLE_TONE_PINS 1
-#define USE_TIMER2
+#define USE_TIMER1
 
 // Leave timer 0 to last.
 const uint8_t PROGMEM tone_pin_to_timer_PGM[] = { 2 /*, 1, 0 */ };

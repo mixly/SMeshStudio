@@ -63,7 +63,7 @@ ISR(TIMER0_OVF_vect)
 	timer0_millis = m;
 	timer0_overflow_count++;
 }
-
+#ifndef CONTIKI
 unsigned long millis()
 {
 	unsigned long m;
@@ -111,7 +111,6 @@ void delay(unsigned long ms)
 	uint16_t start = (uint16_t)micros();
 
 	while (ms > 0) {
-		yield();
 		if (((uint16_t)micros() - start) >= 1000) {
 			ms--;
 			start += 1000;
@@ -186,13 +185,14 @@ void delayMicroseconds(unsigned int us)
 		"brne 1b" : "=w" (us) : "0" (us) // 2 cycles
 	);
 }
+#endif
 
 void init()
 {
 	// this needs to be called before setup() or some functions won't
 	// work there
 	sei();
-	
+#if !defined(CONTIKI)
 	// on the ATmega168, timer 0 is also used for fast hardware pwm
 	// (using phase-correct PWM would mean that timer 0 overflowed half as often
 	// resulting in different millis() behavior on the ATmega8 and ATmega168)
@@ -229,6 +229,7 @@ void init()
 #else
 	#error	Timer 0 overflow interrupt not set correctly
 #endif
+#endif  //!defined(CONTIKI) || LOWPOWER!=1
 
 	// timers 1 and 2 are used for phase-correct hardware pwm
 	// this is better for motors as it ensures an even waveform
@@ -256,6 +257,7 @@ void init()
 	#warning this needs to be finished
 #endif
 
+#if !defined(CONTIKI)
 	// set timer 2 prescale factor to 64
 #if defined(TCCR2) && defined(CS22)
 	sbi(TCCR2, CS22);
@@ -274,11 +276,13 @@ void init()
 	#warning Timer 2 not finished (may not be present on this CPU)
 #endif
 
+
 #if defined(TCCR3B) && defined(CS31) && defined(WGM30)
 	sbi(TCCR3B, CS31);		// set timer 3 prescale factor to 64
 	sbi(TCCR3B, CS30);
 	sbi(TCCR3A, WGM30);		// put timer 3 in 8-bit phase correct pwm mode
 #endif
+#endif // !defined(CONTIKI) || LOWPOWER!=0
 
 #if defined(TCCR4A) && defined(TCCR4B) && defined(TCCR4D) /* beginning of timer4 block for 32U4 and similar */
 	sbi(TCCR4B, CS42);		// set timer4 prescale factor to 64

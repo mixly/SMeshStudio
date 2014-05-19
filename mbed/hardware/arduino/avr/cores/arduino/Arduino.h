@@ -1,9 +1,20 @@
 #ifndef Arduino_h
 #define Arduino_h
 
+#ifdef CONTIKI
+#ifdef __cplusplus
+	extern "C"{
+	#endif
+#include "contiki.h"
+	#ifdef __cplusplus
+	} // extern "C"
+#endif
+#endif
+
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
 
 #include <avr/pgmspace.h>
 #include <avr/io.h>
@@ -14,8 +25,6 @@
 #ifdef __cplusplus
 extern "C"{
 #endif
-
-void yield(void);
 
 #define HIGH 0x1
 #define LOW  0x0
@@ -108,13 +117,15 @@ void analogReference(uint8_t mode);
 void analogWrite(uint8_t, int);
 
 #if defined(CONTIKI)
-#include <util/delay.h>
 
+
+#include <util/delay.h>
 extern volatile unsigned long seconds;
 #define delay(a) _delay_ms(a)
 #define delayMicroseconds(a) _delay_us(a)
 #define millis(...) seconds*128
 #define micros(...) seconds*1000*128
+#include "contiki-arduino.h"
 #elif defined(IDUINO)
 #include <util/delay.h>
 
