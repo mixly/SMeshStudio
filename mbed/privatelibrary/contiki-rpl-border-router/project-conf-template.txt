@@ -1,0 +1,59 @@
+
+#ifndef PROJECT_ROUTER_CONF_H_
+#define PROJECT_ROUTER_CONF_H_
+
+#undef ARDUINO 
+#define UIP_CONF_EUI64  1
+#define LOWPOWER 0
+#define EUI64_ADDRESS {0x02, 0, 0, 0, 0, 0, 0, 0x11};
+#define RFCHANNEL 26
+//#define AUTOSTART_ENABLE 1
+//#define UIP_CONF_IPV6 1 
+//#define RF230BB 1 
+//#define WATCHDOG_CONF_TIMEOUT WDTO_8S
+//#define AUTO_CRC_PADDING=2
+//#define HAVE_STDINT_H 
+//#define AUTOSTART_ENABLE 1
+
+
+#define RDC_CONF_MCU_SLEEP 0
+#define AVR_CONF_USE32KCRYSTAL 0
+
+#ifndef BORDER_ROUTER
+#define BORDER_ROUTER
+#endif
+
+
+#ifndef UIP_FALLBACK_INTERFACE
+#define UIP_FALLBACK_INTERFACE rpl_interface
+#endif
+
+#ifndef QUEUEBUF_CONF_NUM
+#define QUEUEBUF_CONF_NUM          15
+#endif
+
+#ifndef UIP_CONF_BUFFER_SIZE
+#define UIP_CONF_BUFFER_SIZE    1500
+#endif
+
+#ifndef UIP_CONF_RECEIVE_WINDOW
+#define UIP_CONF_RECEIVE_WINDOW  60
+#endif
+
+#ifndef WEBSERVER_CONF_CFS_CONNS
+#define WEBSERVER_CONF_CFS_CONNS 2
+#endif
+
+#undef UIP_CONF_DS6_NBR_NBU
+#ifdef __AVR_ATmega256RFR2__
+#define UIP_CONF_DS6_NBR_NBU 200
+#else
+#define UIP_CONF_DS6_NBR_NBU 20
+#endif
+#undef UIP_CONF_DS6_ROUTE_NBU
+#ifdef __AVR_ATmega256RFR2__
+#define UIP_CONF_DS6_ROUTE_NBU    200
+#else
+#define UIP_CONF_DS6_ROUTE_NBU    20
+#endif
+#endif /* __PROJECT_ROUTER_CONF_H__ */

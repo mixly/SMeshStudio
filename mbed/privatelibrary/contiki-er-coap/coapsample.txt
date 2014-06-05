@@ -1,0 +1,134 @@
+#include "contiki.h"
+#include "contiki-net.h"
+
+#include "erbium.h"
+
+#include "dev/leds.h"
+#include "dev/adc-sensors.h"
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+#include "er-coap.h"
+
+/*---------------------------------------------------------------------------*/
+//char temp[100];
+
+PERIODIC_RESOURCE(temperature, METHOD_GET, "temperature", "title=\"Periodic temperature\";rt=\"Observable\"", 2*CLOCK_SECOND);
+void
+temperature_handler(void* request, void* response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
+{
+	char tbuf[32];
+	int16_t temp = sensor_temp_get(TEMP_UNIT_CELCIUS);
+	sprintf(tbuf, "%d", temp);
+	REST.set_header_content_type(response, REST.type.TEXT_PLAIN);
+	REST.set_response_payload(response, (uint8_t *)tbuf, strlen(tbuf));
+}
+void
+temperature_periodic_handler(resource_t *r)
+{
+	static uint32_t obs_counter = 0;
+	char content[32];
+
+	obs_counter++;
+
+	int16_t temp = sensor_temp_get(TEMP_UNIT_CELCIUS);
+
+	/* Build notification. */
+	coap_packet_t notification[1]; /* This way the packet can be treated as pointer as usual. */
+	coap_init_message(notification, COAP_TYPE_NON, CONTENT_2_05, 0 );
+	coap_set_payload(notification, content, snprintf(content, sizeof(content), "%u", temp));
+
+	/* Notify the registered observers with the given message type, observe option, and payload. */
+	REST.notify_subscribers(r, obs_counter, notification);
+}
+
+/*---------------------------------------------------------------------------*/
+PERIODIC_RESOURCE(light, METHOD_GET, "light", "title=\"Periodic light\";rt=\"Observable\"", 1*CLOCK_SECOND);
+void
+light_handler(void* request, void* response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
+{
+	char tbuf[32];
+#ifdef sensor_light_get
+	int16_t light = sensor_light_get();
+#else
+	int16_t light = 0;
+#endif
+	sprintf(tbuf, "%d", light);
+	REST.set_header_content_type(response, REST.type.TEXT_PLAIN);
+	REST.set_response_payload(response, (uint8_t *)tbuf, strlen(tbuf));
+}
+void
+light_periodic_handler(resource_t *r)
+{
+	static uint32_t obs_counter = 0;
+	char content[32];
+
+	obs_counter++;
+#ifdef sensor_light_get
+	int16_t light = sensor_light_get();
+#else
+		int16_t light = 0;
+#endif
+
+	/* Build notification. */
+	coap_packet_t notification[1]; /* This way the packet can be treated as pointer as usual. */
+	coap_init_message(notification, COAP_TYPE_NON, CONTENT_2_05, 0 );
+	coap_set_payload(notification, content, snprintf(content, sizeof(content), "%u", light));
+
+	/* Notify the registered observers with the given message type, observe option, and payload. */
+	REST.notify_subscribers(r, obs_counter, notification);
+}
+
+/*---------------------------------------------------------------------------*/
+PERIODIC_RESOURCE(voltage, METHOD_GET, "voltage", "title=\"Periodic voltage\";rt=\"Observable\"", 1*CLOCK_SECOND);
+void
+voltage_handler(void* request, void* response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
+{
+	char tbuf[32];
+	double voltage = voltage_get();
+	sprintf(tbuf, "%d", (int)(voltage * (double)1000));
+	REST.set_header_content_type(response, REST.type.TEXT_PLAIN);
+	REST.set_response_payload(response, (uint8_t *)tbuf, strlen(tbuf));
+}
+void
+voltage_periodic_handler(resource_t *r)
+{
+	static uint32_t obs_counter = 0;
+	char content[32];
+
+	obs_counter++;
+
+	double voltage = voltage_get();
+
+	/* Build notification. */
+	coap_packet_t notification[1]; /* This way the packet can be treated as pointer as usual. */
+	coap_init_message(notification, COAP_TYPE_NON, CONTENT_2_05, 0 );
+	coap_set_payload(notification, content, snprintf(content, sizeof(content), "%d", (int)(voltage * (double)1000)));
+
+	/* Notify the registered observers with the given message type, observe option, and payload. */
+	REST.notify_subscribers(r, obs_counter, notification);
+}
+
+
+/*---------------------------------------------------------------------------*/
+PROCESS(coap_sample, "CoAP Sample");
+AUTOSTART_PROCESSES(&coap_sample);
+/*---------------------------------------------------------------------------*/
+PROCESS_THREAD(coap_sample, ev, data)
+{
+	PROCESS_BEGIN();
+
+	/* Initialize the REST engine. */
+	rest_init_engine();
+
+	rest_activate_periodic_resource(&periodic_resource_temperature);
+	rest_activate_periodic_resource(&periodic_resource_light);
+	rest_activate_periodic_resource(&periodic_resource_voltage);
+
+	PROCESS_END();
+}
+/*---------------------------------------------------------------------------*/
