@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 #include "contiki.h"
+void initialize();
 #ifdef __cplusplus
 } // extern "C"
 #endif

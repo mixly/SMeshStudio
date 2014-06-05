@@ -29,12 +29,18 @@
 #define LIGHT_BIT PORTD1
 
 
-static uint8_t light_initialized = 0;
-static void
+uint8_t light_initialized = 0;
+void
 light_init()
 {
   LIGHT_DDR |= (1 << LIGHT_BIT);
   light_initialized = 1;
+}
+void
+light_shutdown()
+{
+  LIGHT_DDR &= ~(1 << LIGHT_BIT);;
+  light_initialized = 0;
 }
 /** \brief          Read current light's raw value
  * \return          EOF on error
@@ -78,7 +84,7 @@ sensor_light_get()
  */
 int16_t sensor_temp_get(temp_unit_t unit)
 {
-	int reading = 0;
+	int32_t reading = 0;
 	int result = 0;
 	ADCSRB |= _BV(MUX5);
 	ADMUX = _BV(REFS1) | _BV(REFS0) | 0b1001 ;
@@ -102,7 +108,7 @@ int16_t sensor_temp_get(temp_unit_t unit)
 /** \brief          Read current voltage
  * \return          EOF on error
  */
-double
+int16_t
 voltage_get() {
 	BATMON = 16;
 	int i;
@@ -111,6 +117,6 @@ voltage_get() {
 		BATMON = i;
 		if ((BATMON &(1<<BATMON_OK))==0) break;
 	}
-	return ((double)(2550-75*16-75+75*i))/1000.0;
+	return (2550-75*16-75+75*i);
 
 }

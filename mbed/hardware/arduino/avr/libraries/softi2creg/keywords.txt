@@ -1,4 +1,0 @@
-SOFT_I2C	KEYWORD1
-writeReg	KEYWORD2
-readReg		KEYWORD2
-begin		KEYWORD2

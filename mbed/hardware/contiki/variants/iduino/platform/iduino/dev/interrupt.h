@@ -34,7 +34,7 @@
 /* Interrupt event */
 #define PROCESS_EVENT_INTERRUPT 0x90
 /* Number of interrupts */
-#define INTERRUPT_NUM 2
+#define INTERRUPT_NUM 8
 
 struct interrupt {
   int int_vect;
@@ -42,7 +42,7 @@ struct interrupt {
 };
 
 /* Initialize interrupt handlers. */
-void interrupt_init(int isc00, int isc01, int isc10, int isc11);
+void interrupt_init(int int_vect,int mode); //0 means falling 1 means rising
 void interrupt_enable(int int_vect);
 void interrupt_disable(int int_vect);
 /* Register current process with an interrupt specified by int_vect. */

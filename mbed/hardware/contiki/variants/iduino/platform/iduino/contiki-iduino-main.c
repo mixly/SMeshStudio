@@ -68,6 +68,7 @@
 #include "dev/rs232.h"
 #include "dev/serial-line.h"
 #include "dev/slip.h"
+#include "dev/button-sensor.h"
 #ifdef BORDER_ROUTER
 PROCESS_NAME(border_router_process);
 //PROCESS_NAME(webserver_nogui_process);
@@ -182,11 +183,6 @@ init_net(void)
 	/* Set addresses BEFORE starting tcpip process */
 	set_rime_addr();
 
-	/* Setup nullmac-like MAC for 802.15.4 */
-	/* sicslowpan_init(sicslowmac_init(&cc2420_driver)); */
-	/* printf(" %s channel %u\n", sicslowmac_driver.name, RF_CHANNEL); */
-
-	/* Setup X-MAC for 802.15.4 */
 	queuebuf_init();
 
 	NETSTACK_RDC.init();
@@ -380,6 +376,8 @@ initialize(void)
 	ctimer_init();
 
 	init_net();
+
+	process_start(&sensors_process, NULL); //for button
 #else /* !RF230BB || RF212BB */
 	/* Original RF230 combined mac/radio driver */
 	/* mac process must be started before tcpip process! */
@@ -427,11 +425,7 @@ int
 main(void)
 {
 
-#if UIP_CONF_IPV6
-	uip_ds6_nbr_t *nbr;
-#endif /* UIP_CONF_IPV6 */
 	initialize();
-
 	leds_on(LEDS_RED);
 #ifdef BORDER_ROUTER
 	process_start(&border_router_process, NULL);
@@ -440,6 +434,9 @@ main(void)
 	while(1) {
 		process_run();
 		watchdog_periodic();
+#if UIP_CONF_IPV6
+	uip_ds6_nbr_t *nbr;
+#endif /* UIP_CONF_IPV6 */
 
 #if PERIODICPRINTS
 #if TESTRTIMER

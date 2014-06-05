@@ -46,7 +46,7 @@ iduinormini.recipe.size.pattern="{compiler.path}{compiler.size.cmd}" --format=av
 iduinormini.recipe.size.regex=^(?:\.text|\.data|\.bootloader)\s+([0-9]+).*
 iduinormini.recipe.size.regex.data=^(?:\.data|\.bss|\.noinit)\s+([0-9]+).*
 iduinormini.recipe.size.regex.eeprom=^(?:\.eeprom)\s+([0-9]+).*
-iduinormini.build.extra_flags=-DHAVE_STDINT_H -DRF230BB=1 -DUIP_CONF_IPV6=1 -DWATCHDOG_CONF_TIMEOUT=WDTO_8S -DAUTO_CRC_PADDING=2 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1 
+iduinormini.build.extra_flags=-DHAVE_STDINT_H -DRF230BB=1 -DUIP_CONF_IPV6=1 -DWATCHDOG_CONF_TIMEOUT=WDTO_8S -DAUTO_CRC_PADDING=2 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1 -DRS232_CONF_NUMPORTS=2 
 ##############################################################
 mx2xxcc.name=contiki_mx2xxcc
 mx2xxcc.cpu=atmega1284p
@@ -94,4 +94,4 @@ mx2xxcc.recipe.size.pattern="{compiler.path}{compiler.size.cmd}" --format=avr --
 mx2xxcc.recipe.size.regex=^(?:\.text|\.data|\.bootloader)\s+([0-9]+).*
 mx2xxcc.recipe.size.regex.data=^(?:\.data|\.bss|\.noinit)\s+([0-9]+).*
 mx2xxcc.recipe.size.regex.eeprom=^(?:\.eeprom)\s+([0-9]+).*
-mx2xxcc.build.extra_flags=-DHAVE_STDINT_H -DRF230BB=1 -DUIP_CONF_IPV6=1 -DWATCHDOG_CONF_TIMEOUT=WDTO_8S -DAUTO_CRC_PADDING=2 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1 
+mx2xxcc.build.extra_flags=-DHAVE_STDINT_H -DRF230BB=1 -DUIP_CONF_IPV6=1 -DWATCHDOG_CONF_TIMEOUT=WDTO_8S -DAUTO_CRC_PADDING=2 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1  -DRS232_CONF_NUMPORTS=2

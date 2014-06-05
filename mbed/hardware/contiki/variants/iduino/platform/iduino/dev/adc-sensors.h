@@ -33,10 +33,14 @@ int16_t sensor_temp_get(temp_unit_t unit);
 /** \brief          Read current voltage
  * \return          EOF on error
  */
-double voltage_get();
+int16_t voltage_get();
 
 /** \brief          Read current light
  * \return          EOF on error
  */
 int16_t sensor_light_get();
+void light_init();
+int16_t sensor_light_get();
+int16_t sensor_temp_get(temp_unit_t unit);
+void light_shutdown();
 #endif /* __ADC_SENSORS_H__ */

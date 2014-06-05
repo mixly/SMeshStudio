@@ -52,6 +52,12 @@
 #define F_CPU          16000000UL
 #endif
 
+#define PLATFORM_HAS_LEDS    1
+#define PLATFORM_HAS_BUTTON  1
+#define PLATFORM_HAS_LIGHT   1
+#define PLATFORM_HAS_BATTERY 1
+#define PLATFORM_HAS_SHT11   1
+
 #define AVR_CONF_TMR0_PRESCALE 1024
 
 /* The AVR tick interrupt usually is done with an 8 bit counter around 128 Hz.

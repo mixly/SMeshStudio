@@ -1,3 +1,0 @@
-camera-interface_src = camera.c camera-tcp-server.c camera-udp-server.c
-
-CFLAGS += -DCAMERA_INTERFACE=1

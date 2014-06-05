@@ -18,10 +18,10 @@ xbed_lpc1768_gcc_arm.build.core=mbed
 xbed_lpc1768_gcc_arm.build.variant=xbed1.0_lpc1768_gcc_arm
 
 
-xbed_lpc1768_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m3 -mthumb -c -Os -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections 
+xbed_lpc1768_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m3 -mthumb -c -Os -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fno-strict-aliasing 
 xbed_lpc1768_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
 xbed_lpc1768_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98
-xbed_lpc1768_gcc_arm.build.CC_SYMBOLS = -DTARGET_LPC1768 -DTARGET_M3 -DTARGET_NXP -DTARGET_LPC176X -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M3 -DARM_MATH_CM3 
+xbed_lpc1768_gcc_arm.build.CC_SYMBOLS = -DTARGET_LPC1768 -DTARGET_M3 -DTARGET_NXP -DTARGET_LPC176X -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M3 -DARM_MATH_CM3 -DUIP_CONF_IPV6=1 -DHAVE_STDINT_H -DRF230BB=1 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1
 xbed_lpc1768_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m3 -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float
 xbed_lpc1768_gcc_arm.build.LD_SYS_LIBS =  -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
 
@@ -62,7 +62,8 @@ mbed_lpc1768_gcc_arm.build.variant=xbed1.0_lpc1768_gcc_arm
 mbed_lpc1768_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m3 -mthumb -c -Os -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections 
 mbed_lpc1768_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
 mbed_lpc1768_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98
-mbed_lpc1768_gcc_arm.build.CC_SYMBOLS = -DTARGET_LPC1768 -DTARGET_M3 -DTARGET_NXP -DTARGET_LPC176X -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M3 -DARM_MATH_CM3 
+mbed_lpc1768_gcc_arm.build.CC_SYMBOLS = -DTARGET_LPC1768 -DTARGET_M3 -DTARGET_NXP -DTARGET_LPC176X -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M3 -DARM_MATH_CM3  
+ 
 mbed_lpc1768_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m3 -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float
 mbed_lpc1768_gcc_arm.build.LD_SYS_LIBS =  -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
 

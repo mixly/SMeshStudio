@@ -3,7 +3,7 @@
 <repository name='Bundle pool' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1'>
   <properties size='2'>
     <property name='p2.system' value='true'/>
-    <property name='p2.timestamp' value='1399977618843'/>
+    <property name='p2.timestamp' value='1401156842926'/>
   </properties>
   <mappings size='3'>
     <rule filter='(&amp; (classifier=osgi.bundle))' output='${repoUrl}/plugins/${id}_${version}.jar'/>
@@ -39,6 +39,11 @@
     <artifact classifier='osgi.bundle' id='org.eclipse.equinox.util' version='1.0.400.v20120917-192807'>
       <properties size='1'>
         <property name='download.size' value='78026'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='it.baeyens.arduino.common' version='2.2.0.201405271010'>
+      <properties size='1'>
+        <property name='download.size' value='364452'/>
       </properties>
     </artifact>
     <artifact classifier='org.eclipse.update.feature' id='org.eclipse.mylyn.commons' version='3.8.3.v20130107-0100'>
@@ -157,6 +162,14 @@
       <properties size='1'>
         <property name='download.size' value='30968'/>
       </properties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='it.baeyens.arduino.feature' version='2.2.0.201405271010'>
+      <properties size='1'>
+        <property name='download.size' value='13198'/>
+      </properties>
+      <repositoryProperties size='1'>
+        <property name='artifact.folder' value='true'/>
+      </repositoryProperties>
     </artifact>
     <artifact classifier='osgi.bundle' id='org.w3c.dom.smil' version='1.0.0.v200806040011'>
       <properties size='1'>
@@ -277,6 +290,11 @@
     <artifact classifier='osgi.bundle' id='org.apache.xmlrpc' version='3.0.0.v20100427-1100'>
       <properties size='1'>
         <property name='download.size' value='229157'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='it.baeyens.arduino.monitor' version='2.2.0.201405271010'>
+      <properties size='1'>
+        <property name='download.size' value='98379'/>
       </properties>
     </artifact>
     <artifact classifier='osgi.bundle' id='org.eclipse.cdt.codan.core.cxx' version='1.1.0.201302132326'>
@@ -962,6 +980,14 @@
         <property name='download.size' value='27328'/>
       </properties>
     </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='it.baeyens.arduino.packaging.feature' version='2.2.0.201405271010'>
+      <properties size='1'>
+        <property name='download.size' value='12936'/>
+      </properties>
+      <repositoryProperties size='1'>
+        <property name='artifact.folder' value='true'/>
+      </repositoryProperties>
+    </artifact>
     <artifact classifier='osgi.bundle' id='org.eclipse.core.databinding.beans' version='1.2.200.v20120523-1955'>
       <properties size='1'>
         <property name='download.size' value='76647'/>
@@ -1265,11 +1291,6 @@
         <property name='download.size' value='13413'/>
       </properties>
     </artifact>
-    <artifact classifier='osgi.bundle' id='it.baeyens.arduino.application' version='2.2.0.201405131838'>
-      <properties size='1'>
-        <property name='download.size' value='275797'/>
-      </properties>
-    </artifact>
     <artifact classifier='osgi.bundle' id='org.eclipse.cdt.make.core' version='7.2.0.201302132326'>
       <properties size='1'>
         <property name='download.size' value='433922'/>
@@ -1323,11 +1344,6 @@
         <property name='download.size' value='39490'/>
       </properties>
     </artifact>
-    <artifact classifier='osgi.bundle' id='it.baeyens.arduino.core' version='2.2.0.201405131838'>
-      <properties size='1'>
-        <property name='download.size' value='740619'/>
-      </properties>
-    </artifact>
     <artifact classifier='osgi.bundle' id='org.eclipse.mylyn.wikitext.mediawiki.core' version='1.7.3.v20130107-0100'>
       <properties size='1'>
         <property name='download.size' value='107015'/>
@@ -1361,6 +1377,11 @@
         <property name='artifact.folder' value='true'/>
       </repositoryProperties>
     </artifact>
+    <artifact classifier='osgi.bundle' id='it.baeyens.arduino.core' version='2.2.0.201405271010'>
+      <properties size='1'>
+        <property name='download.size' value='740768'/>
+      </properties>
+    </artifact>
     <artifact classifier='osgi.bundle' id='org.eclipse.mylyn.team.cvs' version='3.8.3.v20130107-0100'>
       <properties size='1'>
         <property name='download.size' value='20578'/>
@@ -1390,14 +1411,6 @@
       <properties size='1'>
         <property name='download.size' value='90193'/>
       </properties>
-    </artifact>
-    <artifact classifier='org.eclipse.update.feature' id='it.baeyens.arduino.feature' version='2.2.0.201405131838'>
-      <properties size='1'>
-        <property name='download.size' value='13199'/>
-      </properties>
-      <repositoryProperties size='1'>
-        <property name='artifact.folder' value='true'/>
-      </repositoryProperties>
     </artifact>
     <artifact classifier='osgi.bundle' id='javax.annotation' version='1.0.0.v20101115-0725'>
       <properties size='1'>
@@ -1478,11 +1491,6 @@
         <property name='download.size' value='83084'/>
       </properties>
     </artifact>
-    <artifact classifier='osgi.bundle' id='it.baeyens.arduino.common' version='2.2.0.201405131838'>
-      <properties size='1'>
-        <property name='download.size' value='364453'/>
-      </properties>
-    </artifact>
     <artifact classifier='org.eclipse.update.feature' id='org.eclipse.jgit' version='2.2.0.201212191850-r'>
       <properties size='1'>
         <property name='download.size' value='16930'/>
@@ -1526,6 +1534,11 @@
         <property name='download.size' value='18224'/>
       </properties>
     </artifact>
+    <artifact classifier='osgi.bundle' id='it.baeyens.arduino.application' version='2.2.0.201405271010'>
+      <properties size='1'>
+        <property name='download.size' value='275796'/>
+      </properties>
+    </artifact>
     <artifact classifier='osgi.bundle' id='org.eclipse.core.jobs' version='3.5.300.v20120912-155018'>
       <properties size='1'>
         <property name='download.size' value='92510'/>
@@ -1540,14 +1553,6 @@
       <properties size='1'>
         <property name='download.size' value='93175'/>
       </properties>
-    </artifact>
-    <artifact classifier='org.eclipse.update.feature' id='it.baeyens.arduino.packaging.feature' version='2.2.0.201405131838'>
-      <properties size='1'>
-        <property name='download.size' value='12937'/>
-      </properties>
-      <repositoryProperties size='1'>
-        <property name='artifact.folder' value='true'/>
-      </repositoryProperties>
     </artifact>
     <artifact classifier='osgi.bundle' id='org.eclipse.help' version='3.6.0.v20120912-134126'>
       <properties size='1'>
@@ -1817,11 +1822,6 @@
     <artifact classifier='osgi.bundle' id='org.eclipse.jetty.server' version='8.1.3.v20120522'>
       <properties size='1'>
         <property name='download.size' value='344666'/>
-      </properties>
-    </artifact>
-    <artifact classifier='osgi.bundle' id='it.baeyens.arduino.monitor' version='2.2.0.201405131838'>
-      <properties size='1'>
-        <property name='download.size' value='98379'/>
       </properties>
     </artifact>
     <artifact classifier='osgi.bundle' id='org.eclipse.platform.doc.user' version='4.2.2.v20130121-200410'>
