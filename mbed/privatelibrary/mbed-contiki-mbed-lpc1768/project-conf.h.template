@@ -1,0 +1,20 @@
+#ifndef _t_H_
+#define _t_H_
+//去掉编译器自动添加的ARDUINO宏定义 
+#undef ARDUINO 
+//设置xbed LPC1768节点的mac地址定义方式0表示使用ds2411自动设置，1表示使用下面的EUI64_ADDRESS手动设置
+#define UIP_CONF_EUI64  1 
+//设置xbed LPC1768节点的功耗模式，当前系统还不支持低功耗，所以这里只能设成1 
+#define LOWPOWER 0 
+//设置xbed LPC1768节点的mac地址，该定义只有在UIP_CONF_EUI64为1时有效 
+#define EUI64_ADDRESS {0x02, 0, 0, 0, 0, 0, 0, 0xbb}; 
+/* 设置xbed LPC1768节点的工作频段，范围是11-26*/
+#define RFCHANNEL 26 
+//下面是在系统编译时会自动添加的宏定义
+//#define AUTOSTART_ENABLE 1 
+//#define UIP_CONF_IPV6 1 
+//#define RF230BB 1 
+//#define WATCHDOG_CONF_TIMEOUT WDTO_8S 
+//#define AUTO_CRC_PADDING 2 
+//#define HAVE_STDINT_H 
+#endif /* _t_H_ */

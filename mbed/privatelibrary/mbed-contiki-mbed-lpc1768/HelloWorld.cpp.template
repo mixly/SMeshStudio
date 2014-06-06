@@ -1,0 +1,26 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include "contiki.h"
+#include "dev/leds.h"
+#ifdef __cplusplus
+}
+#endif
+PROCESS(leds_blink_process, "LEDs blink process");
+
+AUTOSTART_PROCESSES(&leds_blink_process);
+
+PROCESS_THREAD(leds_blink_process, ev, data)
+{ 
+	static struct etimer timer;
+	static uint8_t leds_state = 0;
+	PROCESS_BEGIN();
+	while(1) {
+		etimer_set(&timer, CLOCK_CONF_SECOND*1);
+		PROCESS_WAIT_EVENT_UNTIL(ev == PROCESS_EVENT_TIMER);
+		leds_off(LEDS_ALL);
+		leds_on(leds_state);
+		leds_state += 1;
+	} 
+	PROCESS_END();
+}
