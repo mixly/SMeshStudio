@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config date="1402368361217" transient="false">
+<config date="1402387075706" transient="false">
 	<site updateable="true" url="platform:/base/" enabled="true" policy="USER-EXCLUDE">
 		<feature id="org.eclipse.cdt.gnu.dsf" version="4.0.1.201302132326" url="features/org.eclipse.cdt.gnu.dsf_4.0.1.201302132326/">
+		</feature>
+		<feature id="it.baeyens.arduino.feature" version="2.2.0.201406101557" url="features/it.baeyens.arduino.feature_2.2.0.201406101557/">
 		</feature>
 		<feature id="org.eclipse.jgit" version="2.2.0.201212191850-r" url="features/org.eclipse.jgit_2.2.0.201212191850-r/">
 		</feature>
 		<feature id="org.eclipse.cdt" version="8.1.2.201302132326" url="features/org.eclipse.cdt_8.1.2.201302132326/">
 		</feature>
 		<feature id="org.eclipse.equinox.p2.extras.feature" version="1.1.0.v20121211-153934-7A6FEcDiVOTg2RYDuZuFz-L2z00w" url="features/org.eclipse.equinox.p2.extras.feature_1.1.0.v20121211-153934-7A6FEcDiVOTg2RYDuZuFz-L2z00w/">
-		</feature>
-		<feature id="it.baeyens.arduino.packaging.feature" version="2.2.0.201406101045" url="features/it.baeyens.arduino.packaging.feature_2.2.0.201406101045/">
 		</feature>
 		<feature id="org.eclipse.help" version="1.4.1.v20120912-144938-8R7xFOXFLWUl7PpNBh_HIGkb4" url="features/org.eclipse.help_1.4.1.v20120912-144938-8R7xFOXFLWUl7PpNBh_HIGkb4/" plugin-identifier="org.eclipse.help.base">
 		</feature>
@@ -53,11 +53,11 @@
 		</feature>
 		<feature id="org.eclipse.epp.mpc" version="1.1.1.I20110907-0947" url="features/org.eclipse.epp.mpc_1.1.1.I20110907-0947/" plugin-identifier="org.eclipse.epp.mpc.ui">
 		</feature>
+		<feature id="it.baeyens.arduino.packaging.feature" version="2.2.0.201406101557" url="features/it.baeyens.arduino.packaging.feature_2.2.0.201406101557/">
+		</feature>
 		<feature id="org.eclipse.mylyn.context_feature" version="3.8.3.v20130107-0100" url="features/org.eclipse.mylyn.context_feature_3.8.3.v20130107-0100/" plugin-identifier="org.eclipse.mylyn.context.core">
 		</feature>
 		<feature id="org.eclipse.equinox.p2.discovery.feature" version="1.0.100.v20120524-0542-4-Bh9oB58B5W8E28KKNEK" url="features/org.eclipse.equinox.p2.discovery.feature_1.0.100.v20120524-0542-4-Bh9oB58B5W8E28KKNEK/">
-		</feature>
-		<feature id="it.baeyens.arduino.feature" version="2.2.0.201406101045" url="features/it.baeyens.arduino.feature_2.2.0.201406101045/">
 		</feature>
 		<feature id="org.eclipse.equinox.p2.core.feature" version="1.1.0.v20121211-153934-8297FndFWmE7h7Bpz-vcqkxyKz0" url="features/org.eclipse.equinox.p2.core.feature_1.1.0.v20121211-153934-8297FndFWmE7h7Bpz-vcqkxyKz0/">
 		</feature>
