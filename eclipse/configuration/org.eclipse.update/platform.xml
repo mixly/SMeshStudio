@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config date="1402362392812" transient="false">
+<config date="1402368607873" transient="false">
 	<site updateable="true" url="platform:/base/" enabled="true" policy="USER-EXCLUDE">
 		<feature id="org.eclipse.cdt.gnu.dsf" version="4.0.1.201302132326" url="features/org.eclipse.cdt.gnu.dsf_4.0.1.201302132326/">
+		</feature>
+		<feature id="it.baeyens.arduino.packaging.feature" version="2.2.0.201406101049" url="features/it.baeyens.arduino.packaging.feature_2.2.0.201406101049/">
 		</feature>
 		<feature id="org.eclipse.jgit" version="2.2.0.201212191850-r" url="features/org.eclipse.jgit_2.2.0.201212191850-r/">
 		</feature>
@@ -57,6 +59,8 @@
 		</feature>
 		<feature id="org.eclipse.equinox.p2.discovery.feature" version="1.0.100.v20120524-0542-4-Bh9oB58B5W8E28KKNEK" url="features/org.eclipse.equinox.p2.discovery.feature_1.0.100.v20120524-0542-4-Bh9oB58B5W8E28KKNEK/">
 		</feature>
+		<feature id="it.baeyens.arduino.feature" version="2.2.0.201406101049" url="features/it.baeyens.arduino.feature_2.2.0.201406101049/">
+		</feature>
 		<feature id="org.eclipse.equinox.p2.core.feature" version="1.1.0.v20121211-153934-8297FndFWmE7h7Bpz-vcqkxyKz0" url="features/org.eclipse.equinox.p2.core.feature_1.1.0.v20121211-153934-8297FndFWmE7h7Bpz-vcqkxyKz0/">
 		</feature>
 		<feature id="org.eclipse.mylyn.commons.notifications" version="1.0.3.v20130107-0100" url="features/org.eclipse.mylyn.commons.notifications_1.0.3.v20130107-0100/" plugin-identifier="org.eclipse.mylyn.commons.core">
@@ -70,10 +74,6 @@
 		<feature id="org.eclipse.mylyn.bugzilla_feature" version="3.8.3.v20130107-0100" url="features/org.eclipse.mylyn.bugzilla_feature_3.8.3.v20130107-0100/" plugin-identifier="org.eclipse.mylyn.tasks.core">
 		</feature>
 		<feature id="org.eclipse.mylyn.team_feature" version="3.8.3.v20130107-0100" url="features/org.eclipse.mylyn.team_feature_3.8.3.v20130107-0100/" plugin-identifier="org.eclipse.mylyn.context.core">
-		</feature>
-		<feature id="it.baeyens.arduino.feature" version="2.2.0.201406100905" url="features/it.baeyens.arduino.feature_2.2.0.201406100905/">
-		</feature>
-		<feature id="it.baeyens.arduino.packaging.feature" version="2.2.0.201406100905" url="features/it.baeyens.arduino.packaging.feature_2.2.0.201406100905/">
 		</feature>
 		<feature id="org.eclipse.cdt.gnu.build" version="8.1.1.201302132326" url="features/org.eclipse.cdt.gnu.build_8.1.1.201302132326/">
 		</feature>
