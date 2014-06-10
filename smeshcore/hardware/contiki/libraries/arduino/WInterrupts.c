@@ -298,12 +298,12 @@ ISR(INT6_vect) {
   if(intFunc[EXTERNAL_INT_6])
     intFunc[EXTERNAL_INT_6]();
 }
-
+#ifndef CONTIKI
 ISR(INT7_vect) {
   if(intFunc[EXTERNAL_INT_7])
     intFunc[EXTERNAL_INT_7]();
 }
-
+#endif
 #else
 
 ISR(INT0_vect) {
