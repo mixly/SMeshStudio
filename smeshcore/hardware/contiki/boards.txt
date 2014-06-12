@@ -95,3 +95,51 @@ mx2xxcc.recipe.size.regex=^(?:\.text|\.data|\.bootloader)\s+([0-9]+).*
 mx2xxcc.recipe.size.regex.data=^(?:\.data|\.bss|\.noinit)\s+([0-9]+).*
 mx2xxcc.recipe.size.regex.eeprom=^(?:\.eeprom)\s+([0-9]+).*
 mx2xxcc.build.extra_flags=-DHAVE_STDINT_H -DRF230BB=1 -DUIP_CONF_IPV6=1 -DWATCHDOG_CONF_TIMEOUT=WDTO_8S -DAUTO_CRC_PADDING=2 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1  -DRS232_CONF_NUMPORTS=2
+##############################################################
+zigduino.name=contiki_zigduino
+zigduino.cpu=atmega128rfa1
+
+zigduino.upload.tool=avrdude
+zigduino.upload.protocol=arduino
+zigduino.upload.maximum_size=126976
+zigduino.upload.speed=57600
+
+zigduino.bootloader.tool=avrdude
+zigduino.bootloader.low_fuses=0xFF
+zigduino.bootloader.high_fuses=0xDA
+zigduino.bootloader.extended_fuses=0xF5
+zigduino.bootloader.file=atmega/ATmegaBOOT_atmega128rfa1_16M.hex
+zigduino.bootloader.unlock_bits=0x3F
+zigduino.bootloader.lock_bits=0x0F
+
+zigduino.build.mcu=atmega128rfa1
+zigduino.build.f_cpu=16000000L
+zigduino.build.core=contiki
+zigduino.build.variant=iduino
+zigduino.compiler.path={runtime.ide.path}/tools/avr/bin/
+zigduino.compiler.c.cmd=avr-gcc
+zigduino.compiler.c.flags=-c -g -Os -w -ffunction-sections -fdata-sections -MMD -gdwarf-2 -fno-strict-aliasing  
+zigduino.compiler.c.elf.flags=-Os -Wl,--gc-sections
+zigduino.compiler.c.elf.cmd=avr-gcc
+zigduino.compiler.S.flags=-c -g -assembler-with-cpp
+zigduino.compiler.cpp.cmd=avr-g++
+zigduino.compiler.cpp.flags=-c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -MMD  -std=gnu++98  
+zigduino.compiler.ar.cmd=avr-ar
+zigduino.compiler.ar.flags=rcs
+zigduino.compiler.objcopy.cmd=avr-objcopy
+zigduino.compiler.objcopy.eep.flags=-O ihex -j .eeprom --set-section-flags=.eeprom=alloc,load --no-change-warnings --change-section-lma .eeprom=0
+zigduino.compiler.elf2hex.flags=-O ihex -R .eeprom -j .text -j .data
+zigduino.compiler.elf2hex.cmd=avr-objcopy
+zigduino.compiler.ldflags=
+zigduino.compiler.size.cmd=avr-size
+zigduino.recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch}  {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+zigduino.recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch}  {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+zigduino.recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} "{build.path}/{archive_file}" "{object_file}"
+zigduino.recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" {compiler.c.elf.flags} -mmcu={build.mcu} -o "{build.path}/{build.project_name}.elf" {object_files} "{build.path}/{archive_file}" "-L{build.path}" -lm
+zigduino.recipe.objcopy.eep.pattern="{compiler.path}{compiler.objcopy.cmd}" {compiler.objcopy.eep.flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.eep"
+zigduino.recipe.objcopy.hex.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+zigduino.recipe.size.pattern="{compiler.path}{compiler.size.cmd}" --format=avr --mcu={build.mcu} "{build.path}/{build.project_name}.elf"
+zigduino.recipe.size.regex=^(?:\.text|\.data|\.bootloader)\s+([0-9]+).*
+zigduino.recipe.size.regex.data=^(?:\.data|\.bss|\.noinit)\s+([0-9]+).*
+zigduino.recipe.size.regex.eeprom=^(?:\.eeprom)\s+([0-9]+).*
+zigduino.build.extra_flags=-DHAVE_STDINT_H -DRF230BB=1 -DUIP_CONF_IPV6=1 -DWATCHDOG_CONF_TIMEOUT=WDTO_8S -DAUTO_CRC_PADDING=2 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1 -DRS232_CONF_NUMPORTS=2 

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="it.baeyens.arduino.packaging.feature"
+      label="mBed Eclipse Features"
+      version="2.2.0.201406101545"
+      provider-name="SMeshLink based on jan Baeyens ">
+
+   <description>
+      An IDE for C/C++ developers with mBed integration.
+   </description>
+
+   <license url="license.html">
+      %license
+   </license>
+
+   <url>
+      <discovery label="Juno" url="http://download.eclipse.org/releases/juno/"/>
+      <discovery label="Eclipse Platform 4.2" url="http://download.eclipse.org/eclipse/updates/4.2"/>
+   </url>
+
+   <includes
+         id="org.eclipse.cvs"
+         version="1.3.201.v20130116-085741-7B79FJKAkF7BG7ODH5CAJT"/>
+
+   <includes
+         id="org.eclipse.equinox.p2.user.ui"
+         version="2.2.0.v20121212-204731-62DG9JXTlTj-UXcQ2y3NLn6U4Z3H"/>
+
+   <includes
+         id="org.eclipse.help"
+         version="1.4.1.v20120912-144938-8R7xFOXFLWUl7PpNBh_HIGkb4"/>
+
+   <includes
+         id="org.eclipse.platform"
+         version="4.2.1.v20130118-173121-9MF7GHYdG0B5kx4E_SkfZV-1mNjVATf67ZAb7"/>
+
+   <includes
+         id="org.eclipse.rcp"
+         version="4.2.2.v20130129-152330-7IARAABrMQkGSvMgQnUlz-DQz00h"/>
+
+   <includes
+         id="org.eclipse.cdt"
+         version="8.1.2.201302132326"/>
+
+  
+
+   <includes
+         id="org.eclipse.cdt.autotools"
+         version="3.0.1.201302132326"/>
+
+ 
+   <includes
+         id="org.eclipse.mylyn_feature"
+         version="3.8.3.v20130107-0100"/>
+
+   <includes
+         id="org.eclipse.mylyn.context_feature"
+         version="3.8.3.v20130107-0100"/>
+
+   <includes
+         id="org.eclipse.mylyn.team_feature"
+         version="3.8.3.v20130107-0100"/>
+
+   <includes
+         id="org.eclipse.mylyn.ide_feature"
+         version="3.8.3.v20130107-0100"/>
+
+   <includes
+         id="org.eclipse.mylyn.bugzilla_feature"
+         version="3.8.3.v20130107-0100"/>
+
+   <includes
+         id="org.eclipse.mylyn.wikitext_feature"
+         version="1.7.3.v20130107-0100"/>
+
+   
+
+   <includes
+         id="org.eclipse.egit"
+         version="2.2.0.201212191850-r"/>
+
+   <includes
+         id="org.eclipse.epp.package.common.feature"
+         version="1.5.2.20130110-1126"/>
+
+
+   <plugin
+         id="it.baeyens.arduino.application"
+         download-size="0"
+         install-size="0"
+         version="2.2.0.201406101545"
+         unpack="false"/>
+
+</feature>
