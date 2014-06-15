@@ -152,7 +152,7 @@ osMessageQId osMessageQId_osTimerMessageQ;
  static uint32_t nr_mutex;
 
  /*--------------------------- _mutex_initialize -----------------------------*/
- 
+
 int _mutex_initialize (OS_ID *mutex) {
   /* Allocate and initialize a system mutex. */
 
@@ -214,11 +214,17 @@ osThreadDef_t os_thread_def_main = {(os_pthread)main, osPriorityNormal, 0, NULL}
 #elif defined(TARGET_LPC812)
 #define INITIAL_SP            (0x10001000UL)
 
-#elif defined(TARGET_KL25Z) || defined(TARGET_K64F)
+#elif defined(TARGET_KL25Z)
 #define INITIAL_SP            (0x20003000UL)
+
+#elif defined(TARGET_K64F)
+#define INITIAL_SP            (0x20030000UL)
 
 #elif defined(TARGET_KL46Z)
 #define INITIAL_SP            (0x20006000UL)
+
+#elif defined(TARGET_KL05Z)
+#define INITIAL_SP            (0x20000C00UL)
 
 #elif defined(TARGET_LPC4088)
 #define INITIAL_SP            (0x10010000UL)
@@ -234,6 +240,12 @@ osThreadDef_t os_thread_def_main = {(os_pthread)main, osPriorityNormal, 0, NULL}
 
 #elif defined(TARGET_STM32F407) || defined(TARGET_F407VG)
 #define INITIAL_SP            (0x20020000UL)
+
+#elif defined(TARGET_LPC1549)
+#define INITIAL_SP            (0x02009000UL)
+
+#elif defined(TARGET_LPC11U68)
+#define INITIAL_SP            (0x10004000UL)
 
 #else
 #error "no target defined"
@@ -251,7 +263,7 @@ extern unsigned char     __end__[];
 void set_main_stack(void) {
     // That is the bottom of the main stack block: no collision detection
     os_thread_def_main.stack_pointer = HEAP_START;
-    
+
     // Leave OS_SCHEDULERSTKSIZE words for the scheduler and interrupts
     os_thread_def_main.stacksize = (INITIAL_SP - (unsigned int)HEAP_START) - (OS_SCHEDULERSTKSIZE * 4);
 }
@@ -270,7 +282,7 @@ void _main_init (void) {
 
 /* The single memory model is checking for stack collision at run time, verifing
    that the heap pointer is underneath the stack pointer.
-   
+
    With the RTOS there is not only one stack above the heap, there are multiple
    stacks and some of them are underneath the heap pointer.
 */
@@ -391,7 +403,7 @@ extern void exit(int arg);
 
 __noreturn __stackless void __cmain(void) {
   int a;
-  
+
   if (__low_level_init() != 0) {
     __iar_data_init3();
   }

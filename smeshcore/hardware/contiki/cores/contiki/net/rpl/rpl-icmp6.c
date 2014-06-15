@@ -274,7 +274,7 @@ dio_input(void)
 
   PRINTF("RPL: Incoming DIO (id, ver, rank) = (%u,%u,%u)\n",
          (unsigned)dio.instance_id,
-         (unsigned)dio.version, 
+         (unsigned)dio.version,
          (unsigned)dio.rank);
 
   dio.grounded = buffer[i] & RPL_DIO_GROUNDED;
@@ -330,11 +330,11 @@ dio_input(void)
         dio.mc.obj.etx = get16(buffer, i + 6);
 
         PRINTF("RPL: DAG MC: type %u, flags %u, aggr %u, prec %u, length %u, ETX %u\n",
-	       (unsigned)dio.mc.type,  
-	       (unsigned)dio.mc.flags, 
-	       (unsigned)dio.mc.aggr, 
-	       (unsigned)dio.mc.prec, 
-	       (unsigned)dio.mc.length, 
+	       (unsigned)dio.mc.type,
+	       (unsigned)dio.mc.flags,
+	       (unsigned)dio.mc.aggr,
+	       (unsigned)dio.mc.prec,
+	       (unsigned)dio.mc.length,
 	       (unsigned)dio.mc.obj.etx);
       } else if(dio.mc.type == RPL_DAG_MC_ENERGY) {
         dio.mc.obj.energy.flags = buffer[i + 6];
@@ -431,7 +431,7 @@ dio_output(rpl_instance_t *instance, uip_ipaddr_t *uc_addr)
 #endif /* !RPL_LEAF_ONLY */
 
 #if RPL_LEAF_ONLY
-  /* In leaf mode, we only send DIO messages as unicasts in response to 
+  /* In leaf mode, we only send DIO messages as unicasts in response to
      unicast DIS messages. */
   if(uc_addr == NULL) {
     PRINTF("RPL: LEAF ONLY have multicast addr: skip dio_output\n");
@@ -652,7 +652,7 @@ dao_input(void)
       PRINTF("RPL: Loop detected when receiving a unicast DAO from a node with a lower rank! (%u < %u)\n",
           DAG_RANK(parent->rank, instance), DAG_RANK(dag->rank, instance));
       parent->rank = INFINITE_RANK;
-      parent->updated = 1;
+      parent->flags |= RPL_PARENT_FLAG_UPDATED;
       return;
     }
 
@@ -660,7 +660,7 @@ dao_input(void)
     if(parent != NULL && parent == dag->preferred_parent) {
       PRINTF("RPL: Loop detected when receiving a unicast DAO from our parent\n");
       parent->rank = INFINITE_RANK;
-      parent->updated = 1;
+      parent->flags |= RPL_PARENT_FLAG_UPDATED;
       return;
     }
   }
@@ -957,3 +957,5 @@ rpl_icmp6_register_handlers()
 }
 /*---------------------------------------------------------------------------*/
 #endif /* UIP_CONF_IPV6 */
+
+/** @}*/

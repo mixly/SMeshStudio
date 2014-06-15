@@ -108,7 +108,7 @@ int16_t sensor_temp_get(temp_unit_t unit)
 /** \brief          Read current voltage
  * \return          EOF on error
  */
-int16_t
+double
 voltage_get() {
 	BATMON = 16;
 	int i;
@@ -117,6 +117,6 @@ voltage_get() {
 		BATMON = i;
 		if ((BATMON &(1<<BATMON_OK))==0) break;
 	}
-	return (2550-75*16-75+75*i);
+	return (double)(2550-75*16-75+75*i) /1000 ;
 
 }

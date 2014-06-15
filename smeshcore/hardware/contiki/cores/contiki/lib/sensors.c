@@ -120,7 +120,7 @@ PROCESS_THREAD(sensors_process, ev, data)
 
     do {
       events = 0;
-    for(i = 0; i < num_sensors; ++i) {
+      for(i = 0; i < num_sensors; ++i) {
 	if(sensors_flags[i] & FLAG_CHANGED) {
 	  if(process_post(PROCESS_BROADCAST, sensors_event, (void *)sensors[i]) == PROCESS_ERR_OK) {
 	    PROCESS_WAIT_EVENT_UNTIL(ev == sensors_event);

@@ -8,19 +8,19 @@
 #define _ACoapTest_H_
 #include "project-conf.h" 
 #undef ARDUINO 
-#define AUTOSTART_ENABLE 1 
-#define UIP_CONF_EUI64  1
+#define UIP_CONF_EUI64  1 //0 means use ds2411 
+#define LOWPOWER 0 
+#define EUI64_ADDRESS {0x02, 0, 0, 0, 0, 0, 0, 0xbb}; 
+#define RFCHANNEL 26 
+//Belows is been defined  in Makefile auto
+//#define AUTOSTART_ENABLE 1 
 //#define UIP_CONF_IPV6 1 
 //#define RF230BB 1 
-#define WATCHDOG_CONF_TIMEOUT WDTO_8S 
-#define AUTO_CRC_PADDING=2 
+//#define WATCHDOG_CONF_TIMEOUT WDTO_8S 
+//#define AUTO_CRC_PADDING 2 
 //#define HAVE_STDINT_H 
-#define LOWPOWER 0
-#define EUI64_ADDRESS {0x02, 0, 0, 0, 0, 0, 0, 0xCC};
-#define RFCHANNEL 26 
 #define REST coap_rest_implementation
-//  Auto Added by "SMeshLink Eclipse IDE""
-
+//  Auto Added by "SMeshLink SMeshStudio""
 
 
 

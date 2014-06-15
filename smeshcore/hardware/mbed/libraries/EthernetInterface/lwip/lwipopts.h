@@ -48,12 +48,6 @@
 // 32-bit alignment
 #define MEM_ALIGNMENT               4
 
-#if defined(TARGET_LPC4088)
-#define MEM_SIZE                    15360
-#else
-#define MEM_SIZE                    16362
-#endif
-
 #define PBUF_POOL_SIZE              5
 #define MEMP_NUM_TCP_PCB_LISTEN     4
 #define MEMP_NUM_TCP_PCB            4
@@ -114,7 +108,7 @@
 #if LWIP_TRANSPORT_ETHERNET
 
 /* MSS should match the hardware packet size */
-#define TCP_MSS                     1280//1460 fredqian edit
+#define TCP_MSS                     1460
 #define TCP_SND_BUF                 (2 * TCP_MSS)
 #define TCP_WND                     (2 * TCP_MSS)
 #define TCP_SND_QUEUELEN            (2 * TCP_SND_BUF/TCP_MSS)

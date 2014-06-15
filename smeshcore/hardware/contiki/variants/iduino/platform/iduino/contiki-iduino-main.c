@@ -376,8 +376,9 @@ initialize(void)
 	ctimer_init();
 
 	init_net();
-
+#ifndef BORDER_ROUTER
 	process_start(&sensors_process, NULL); //for button
+#endif	
 #else /* !RF230BB || RF212BB */
 	/* Original RF230 combined mac/radio driver */
 	/* mac process must be started before tcpip process! */

@@ -47,5 +47,6 @@ int      sht11_set_sreg(unsigned);
  * Temperature in Celsius (t in 14 bits resolution at 3 Volts)
  * T = -39.60 + 0.01*t
  */
-
+float convert_TC(int rawTemp);
+float convert_RH(int rawTemp, int rawHumidity);
 #endif /* SHT11_H */

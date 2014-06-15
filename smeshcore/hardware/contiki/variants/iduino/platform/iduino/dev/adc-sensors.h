@@ -33,7 +33,7 @@ int16_t sensor_temp_get(temp_unit_t unit);
 /** \brief          Read current voltage
  * \return          EOF on error
  */
-int16_t voltage_get();
+double voltage_get();
 
 /** \brief          Read current light
  * \return          EOF on error

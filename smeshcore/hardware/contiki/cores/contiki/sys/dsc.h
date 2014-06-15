@@ -61,7 +61,7 @@
 #ifndef DSC_H_
 #define DSC_H_
 
-//#include "ctk/ctk.h"
+#include "ctk/ctk.h"
 
 /**
  * The DSC program description structure.

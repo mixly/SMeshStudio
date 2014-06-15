@@ -270,6 +270,7 @@ rpl_set_root(uint8_t instance_id, uip_ipaddr_t *dag_id)
   dag->version = version;
   dag->joined = 1;
   dag->grounded = RPL_GROUNDED;
+  dag->preference = RPL_PREFERENCE;
   instance->mop = RPL_MOP_DEFAULT;
   instance->of = &RPL_OF;
   rpl_set_preferred_parent(dag, NULL);
@@ -364,7 +365,7 @@ check_prefix(rpl_prefix_t *last_prefix, rpl_prefix_t *new_prefix)
       uip_ds6_addr_rm(rep);
     }
   }
-  
+
   if(new_prefix != NULL) {
     set_ip_from_prefix(&ipaddr, new_prefix);
     if(uip_ds6_addr_lookup(&ipaddr) == NULL) {
@@ -381,7 +382,7 @@ rpl_set_prefix(rpl_dag_t *dag, uip_ipaddr_t *prefix, unsigned len)
 {
   rpl_prefix_t last_prefix;
   uint8_t last_len = dag->prefix_info.length;
-  
+
   if(len > 128) {
     return 0;
   }
@@ -398,7 +399,7 @@ rpl_set_prefix(rpl_dag_t *dag, uip_ipaddr_t *prefix, unsigned len)
   if(last_len == 0) {
     PRINTF("rpl_set_prefix - prefix NULL\n");
     check_prefix(NULL, &dag->prefix_info);
-  } else { 
+  } else {
     PRINTF("rpl_set_prefix - prefix NON-NULL\n");
     check_prefix(&last_prefix, &dag->prefix_info);
   }
@@ -712,7 +713,7 @@ best_parent(rpl_dag_t *dag)
 
   p = nbr_table_head(rpl_parents);
   while(p != NULL) {
-    if(p->rank == INFINITE_RANK) {
+    if(p->dag != dag || p->rank == INFINITE_RANK) {
       /* ignore this neighbor */
     } else if(best == NULL) {
       best = p;
@@ -1082,8 +1083,8 @@ rpl_recalculate_ranks(void)
    */
   p = nbr_table_head(rpl_parents);
   while(p != NULL) {
-    if(p->dag != NULL && p->dag->instance && p->updated) {
-      p->updated = 0;
+    if(p->dag != NULL && p->dag->instance && (p->flags & RPL_PARENT_FLAG_UPDATED)) {
+      p->flags &= ~RPL_PARENT_FLAG_UPDATED;
       PRINTF("RPL: rpl_process_parent_event recalculate_ranks\n");
       if(!rpl_process_parent_event(p->dag->instance, p)) {
         PRINTF("RPL: A parent was dropped\n");
@@ -1310,3 +1311,4 @@ rpl_lock_parent(rpl_parent_t *p)
 }
 /*---------------------------------------------------------------------------*/
 #endif /* UIP_CONF_IPV6 */
+/** @} */
