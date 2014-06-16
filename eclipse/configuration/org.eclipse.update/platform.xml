@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config date="1402386361031" transient="false">
+<config date="1402877066772" transient="false">
 	<site updateable="true" url="platform:/base/" enabled="true" policy="USER-EXCLUDE">
 		<feature id="org.eclipse.cdt.gnu.dsf" version="4.0.1.201302132326" url="features/org.eclipse.cdt.gnu.dsf_4.0.1.201302132326/">
-		</feature>
-		<feature id="it.baeyens.arduino.packaging.feature" version="2.2.0.201406101545" url="features/it.baeyens.arduino.packaging.feature_2.2.0.201406101545/">
 		</feature>
 		<feature id="org.eclipse.jgit" version="2.2.0.201212191850-r" url="features/org.eclipse.jgit_2.2.0.201212191850-r/">
 		</feature>
@@ -20,6 +18,8 @@
 		<feature id="org.eclipse.equinox.p2.user.ui" version="2.2.0.v20121212-204731-62DG9JXTlTj-UXcQ2y3NLn6U4Z3H" url="features/org.eclipse.equinox.p2.user.ui_2.2.0.v20121212-204731-62DG9JXTlTj-UXcQ2y3NLn6U4Z3H/">
 		</feature>
 		<feature id="org.eclipse.mylyn.commons.repositories" version="1.0.3.v20130107-0100" url="features/org.eclipse.mylyn.commons.repositories_1.0.3.v20130107-0100/" plugin-identifier="org.eclipse.mylyn.commons.core">
+		</feature>
+		<feature id="it.baeyens.arduino.feature" version="2.2.0.201406160803" url="features/it.baeyens.arduino.feature_2.2.0.201406160803/">
 		</feature>
 		<feature id="org.eclipse.platform" version="4.2.1.v20130118-173121-9MF7GHYdG0B5kx4E_SkfZV-1mNjVATf67ZAb7" url="features/org.eclipse.platform_4.2.1.v20130118-173121-9MF7GHYdG0B5kx4E_SkfZV-1mNjVATf67ZAb7/">
 		</feature>
@@ -45,6 +45,8 @@
 		</feature>
 		<feature id="org.eclipse.rcp" version="4.2.2.v20130129-152330-7IARAABrMQkGSvMgQnUlz-DQz00h" url="features/org.eclipse.rcp_4.2.2.v20130129-152330-7IARAABrMQkGSvMgQnUlz-DQz00h/">
 		</feature>
+		<feature id="it.baeyens.arduino.packaging.feature" version="2.2.0.201406160803" url="features/it.baeyens.arduino.packaging.feature_2.2.0.201406160803/">
+		</feature>
 		<feature id="org.eclipse.egit" version="2.2.0.201212191850-r" url="features/org.eclipse.egit_2.2.0.201212191850-r/">
 		</feature>
 		<feature id="org.eclipse.cdt.msw" version="1.0.0.201302132326" url="features/org.eclipse.cdt.msw_1.0.0.201302132326/">
@@ -58,8 +60,6 @@
 		<feature id="org.eclipse.mylyn.context_feature" version="3.8.3.v20130107-0100" url="features/org.eclipse.mylyn.context_feature_3.8.3.v20130107-0100/" plugin-identifier="org.eclipse.mylyn.context.core">
 		</feature>
 		<feature id="org.eclipse.equinox.p2.discovery.feature" version="1.0.100.v20120524-0542-4-Bh9oB58B5W8E28KKNEK" url="features/org.eclipse.equinox.p2.discovery.feature_1.0.100.v20120524-0542-4-Bh9oB58B5W8E28KKNEK/">
-		</feature>
-		<feature id="it.baeyens.arduino.feature" version="2.2.0.201406101545" url="features/it.baeyens.arduino.feature_2.2.0.201406101545/">
 		</feature>
 		<feature id="org.eclipse.equinox.p2.core.feature" version="1.1.0.v20121211-153934-8297FndFWmE7h7Bpz-vcqkxyKz0" url="features/org.eclipse.equinox.p2.core.feature_1.1.0.v20121211-153934-8297FndFWmE7h7Bpz-vcqkxyKz0/">
 		</feature>
