@@ -9,8 +9,7 @@
 <link rel="next" href="Support-Libraries.html#Support-Libraries" title="Support Libraries">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -45,11 +44,11 @@ Up:&nbsp;<a rel="up" accesskey="u" href="index.html#Top">Top</a>
 
 <h2 class="chapter">14 Native Debugging</h2>
 
-<p><a name="index-native-debugging-445"></a>
+<p><a name="index-native-debugging-440"></a>
 Several files control <span class="sc">gdb</span>'s configuration for native support:
 
      
-<a name="index-NATDEPFILES-446"></a>
+<a name="index-NATDEPFILES-441"></a>
 <dl><dt><samp><span class="file">gdb/config/</span><var>arch</var><span class="file">/</span><var>xyz</var><span class="file">.mh</span></samp><dd>Specifies Makefile fragments needed by a <em>native</em> configuration on
 machine <var>xyz</var>.  In particular, this lists the required
 native-dependent object files, by defining &lsquo;<samp><span class="samp">NATDEPFILES=...</span></samp>&rsquo;. 
@@ -108,7 +107,7 @@ the Unix <code>ptrace</code> call in a vanilla way.
 
 <h3 class="section">14.5 Native Conditionals</h3>
 
-<p><a name="index-native-conditionals-447"></a>
+<p><a name="index-native-conditionals-442"></a>
 When <span class="sc">gdb</span> is configured and compiled, various macros are
 defined or left undefined, to control compilation when the host and
 target systems are the same.  These macros should be defined (or left
@@ -118,15 +117,15 @@ undefined) in <samp><span class="file">nm-</span><var>system</var><span class="f
 <dt><code>I386_USE_GENERIC_WATCHPOINTS</code><dd>An x86-based machine can define this to use the generic x86 watchpoint
 support; see <a href="Algorithms.html#Algorithms">I386_USE_GENERIC_WATCHPOINTS</a>.
 
-     <br><dt><code>SOLIB_ADD (</code><var>filename</var><code>, </code><var>from_tty</var><code>, </code><var>targ</var><code>, </code><var>readsyms</var><code>)</code><dd><a name="index-SOLIB_005fADD-448"></a>Define this to expand into an expression that will cause the symbols in
+     <br><dt><code>SOLIB_ADD (</code><var>filename</var><code>, </code><var>from_tty</var><code>, </code><var>targ</var><code>, </code><var>readsyms</var><code>)</code><dd><a name="index-SOLIB_005fADD-443"></a>Define this to expand into an expression that will cause the symbols in
 <var>filename</var> to be added to <span class="sc">gdb</span>'s symbol table.  If
 <var>readsyms</var> is zero symbols are not read but any necessary low level
 processing for <var>filename</var> is still done.
 
-     <br><dt><code>SOLIB_CREATE_INFERIOR_HOOK</code><dd><a name="index-SOLIB_005fCREATE_005fINFERIOR_005fHOOK-449"></a>Define this to expand into any shared-library-relocation code that you
+     <br><dt><code>SOLIB_CREATE_INFERIOR_HOOK</code><dd><a name="index-SOLIB_005fCREATE_005fINFERIOR_005fHOOK-444"></a>Define this to expand into any shared-library-relocation code that you
 want to be run just after the child process has been forked.
 
-     <br><dt><code>START_INFERIOR_TRAPS_EXPECTED</code><dd><a name="index-START_005fINFERIOR_005fTRAPS_005fEXPECTED-450"></a>When starting an inferior, <span class="sc">gdb</span> normally expects to trap
+     <br><dt><code>START_INFERIOR_TRAPS_EXPECTED</code><dd><a name="index-START_005fINFERIOR_005fTRAPS_005fEXPECTED-445"></a>When starting an inferior, <span class="sc">gdb</span> normally expects to trap
 twice; once when
 the shell execs, and once when the program itself execs.  If the actual
 number of traps is something other than 2, then define this macro to

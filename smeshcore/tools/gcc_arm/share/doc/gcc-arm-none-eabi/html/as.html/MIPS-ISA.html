@@ -47,9 +47,9 @@ Up:&nbsp;<a rel="up" accesskey="u" href="MIPS_002dDependent.html#MIPS_002dDepend
 <hr>
 </div>
 
-<h4 class="subsection">9.24.5 Directives to override the ISA level</h4>
+<h4 class="subsection">9.26.5 Directives to override the ISA level</h4>
 
-<p><a name="index-MIPS-ISA-override-1330"></a><a name="index-g_t_0040code_007b_002eset-mips_0040var_007bn_007d_007d-1331"></a><span class="sc">gnu</span> <code>as</code> supports an additional directive to change
+<p><a name="index-MIPS-ISA-override-1383"></a><a name="index-g_t_0040code_007b_002eset-mips_0040var_007bn_007d_007d-1384"></a><span class="sc">gnu</span> <code>as</code> supports an additional directive to change
 the <span class="sc">mips</span> Instruction Set Architecture level on the fly: <code>.set
 mips</code><var>n</var>.  <var>n</var> should be a number from 0 to 5, or 32, 32r2, 64
 or 64r2. 
@@ -63,7 +63,7 @@ configuration.  You can use this feature to permit specific <span class="sc">mip
 instructions while assembling in 32 bit mode.  Use this directive with
 care!
 
-   <p><a name="index-MIPS-CPU-override-1332"></a><a name="index-g_t_0040code_007b_002eset-arch_003d_0040var_007bcpu_007d_007d-1333"></a>The <code>.set arch=</code><var>cpu</var> directive provides even finer control. 
+   <p><a name="index-MIPS-CPU-override-1385"></a><a name="index-g_t_0040code_007b_002eset-arch_003d_0040var_007bcpu_007d_007d-1386"></a>The <code>.set arch=</code><var>cpu</var> directive provides even finer control. 
 It changes the effective CPU target and allows the assembler to use
 instructions specific to a particular CPU.  All CPUs supported by the
 &lsquo;<samp><span class="samp">-march</span></samp>&rsquo; command line option are also selectable by this directive. 

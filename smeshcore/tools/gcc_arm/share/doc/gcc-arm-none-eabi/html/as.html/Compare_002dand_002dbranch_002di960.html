@@ -46,16 +46,16 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Opcodes-for-i960.html#Opcodes-for-i960"
 <hr>
 </div>
 
-<h5 class="subsubsection">9.15.4.2 Compare-and-Branch</h5>
+<h5 class="subsubsection">9.17.4.2 Compare-and-Branch</h5>
 
-<p><a name="index-i960-compare_002fbranch-instructions-1056"></a><a name="index-compare_002fbranch-instructions_002c-i960-1057"></a>The 960 architectures provide combined Compare-and-Branch instructions
+<p><a name="index-i960-compare_002fbranch-instructions-1106"></a><a name="index-compare_002fbranch-instructions_002c-i960-1107"></a>The 960 architectures provide combined Compare-and-Branch instructions
 that permit you to store the branch target in the lower 13 bits of the
 instruction word itself.  However, if you specify a branch target far
 enough away that its address won't fit in 13 bits, the assembler can
 either issue an error, or convert your Compare-and-Branch instruction
 into separate instructions to do the compare and the branch.
 
-   <p><a name="index-compare-and-jump-expansions_002c-i960-1058"></a><a name="index-i960-compare-and-jump-expansions-1059"></a>Whether <code>as</code> gives an error or expands the instruction depends
+   <p><a name="index-compare-and-jump-expansions_002c-i960-1108"></a><a name="index-i960-compare-and-jump-expansions-1109"></a>Whether <code>as</code> gives an error or expands the instruction depends
 on two choices you can make: whether you use the &lsquo;<samp><span class="samp">-no-relax</span></samp>&rsquo; option,
 and whether you use a &ldquo;Compare and Branch&rdquo; instruction or a &ldquo;Compare
 and Jump&rdquo; instruction.  The &ldquo;Jump&rdquo; instructions are <em>always</em>

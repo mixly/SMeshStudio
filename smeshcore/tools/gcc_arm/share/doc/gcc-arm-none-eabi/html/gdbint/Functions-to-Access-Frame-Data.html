@@ -10,8 +10,7 @@
 <link rel="next" href="Analyzing-Stacks_002d_002d_002dFrame-Sniffers.html#Analyzing-Stacks_002d_002d_002dFrame-Sniffers" title="Analyzing Stacks---Frame Sniffers">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -50,7 +49,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Frame-Interpretation.html#Frame-Interpr
 stack frame.
 
 <div class="defun">
-&mdash; Architecture Function: CORE_ADDR <b>unwind_pc</b> (<var>struct gdbarch *gdbarch, struct frame_info *next_frame</var>)<var><a name="index-unwind_005fpc-349"></a></var><br>
+&mdash; Architecture Function: CORE_ADDR <b>unwind_pc</b> (<var>struct gdbarch *gdbarch, struct frame_info *next_frame</var>)<var><a name="index-unwind_005fpc-345"></a></var><br>
 <blockquote>
         <p>This function is given a pointer to the NEXT stack frame (see <a href="All-About-Stack-Frames.html#All-About-Stack-Frames">All About Stack Frames</a>, for how frames are
 represented) and returns the value of the program counter in the
@@ -67,7 +66,7 @@ is typically no more than:
         </blockquote></div>
 
 <div class="defun">
-&mdash; Architecture Function: CORE_ADDR <b>unwind_sp</b> (<var>struct gdbarch *gdbarch, struct frame_info *next_frame</var>)<var><a name="index-unwind_005fsp-350"></a></var><br>
+&mdash; Architecture Function: CORE_ADDR <b>unwind_sp</b> (<var>struct gdbarch *gdbarch, struct frame_info *next_frame</var>)<var><a name="index-unwind_005fsp-346"></a></var><br>
 <blockquote>
         <p>This function is given a pointer to the NEXT stack frame
 (see <a href="All-About-Stack-Frames.html#All-About-Stack-Frames">All About Stack Frames</a> for how
@@ -85,7 +84,7 @@ is typically no more than:
         </blockquote></div>
 
 <div class="defun">
-&mdash; Architecture Function: int <b>frame_num_args</b> (<var>struct gdbarch *gdbarch, struct frame_info *this_frame</var>)<var><a name="index-frame_005fnum_005fargs-351"></a></var><br>
+&mdash; Architecture Function: int <b>frame_num_args</b> (<var>struct gdbarch *gdbarch, struct frame_info *this_frame</var>)<var><a name="index-frame_005fnum_005fargs-347"></a></var><br>
 <blockquote>
         <p>This function is given a pointer to THIS stack frame (see <a href="All-About-Stack-Frames.html#All-About-Stack-Frames">All About Stack Frames</a> for how frames are
 represented), and returns the number of arguments that are being

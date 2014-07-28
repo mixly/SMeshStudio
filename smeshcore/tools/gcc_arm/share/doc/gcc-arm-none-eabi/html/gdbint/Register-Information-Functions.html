@@ -10,8 +10,7 @@
 <link rel="next" href="Register-and-Memory-Data.html#Register-and-Memory-Data" title="Register and Memory Data">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -46,11 +45,11 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Register-Representation.html#Register-R
 
 <h4 class="subsection">11.6.3 Functions Giving Register Information</h4>
 
-<p><a name="index-g_t_0040code_007bgdbarch_007d-register-information-functions-288"></a>
+<p><a name="index-g_t_0040code_007bgdbarch_007d-register-information-functions-284"></a>
 These functions return information about registers.
 
 <div class="defun">
-&mdash; Architecture Function: const char * <b>register_name</b> (<var>struct gdbarch *gdbarch, int regnum</var>)<var><a name="index-register_005fname-289"></a></var><br>
+&mdash; Architecture Function: const char * <b>register_name</b> (<var>struct gdbarch *gdbarch, int regnum</var>)<var><a name="index-register_005fname-285"></a></var><br>
 <blockquote>
         <p>This function should convert a register number (raw or pseudo) to a
 register name (as a C <code>const char *</code>).  This is used both to
@@ -74,7 +73,7 @@ undefined. It should always be defined.
         </blockquote></div>
 
 <div class="defun">
-&mdash; Architecture Function: struct type * <b>register_type</b> (<var>struct gdbarch *gdbarch, int regnum</var>)<var><a name="index-register_005ftype-290"></a></var><br>
+&mdash; Architecture Function: struct type * <b>register_type</b> (<var>struct gdbarch *gdbarch, int regnum</var>)<var><a name="index-register_005ftype-286"></a></var><br>
 <blockquote>
         <p>Given a register number, this function identifies the type of data it
 may be holding, specified as a <code>struct type</code>.  <span class="sc">gdb</span> allows
@@ -95,7 +94,7 @@ available to guide formatting when displaying registers.
         </blockquote></div>
 
 <div class="defun">
-&mdash; Architecture Function: void <b>print_registers_info</b> (<var>struct gdbarch *gdbarch, struct ui_file *file, struct frame_info *frame, int regnum, int all</var>)<var><a name="index-print_005fregisters_005finfo-291"></a></var><br>
+&mdash; Architecture Function: void <b>print_registers_info</b> (<var>struct gdbarch *gdbarch, struct ui_file *file, struct frame_info *frame, int regnum, int all</var>)<var><a name="index-print_005fregisters_005finfo-287"></a></var><br>
 <blockquote>
         <p>Define this function to print out one or all of the registers for the
 <span class="sc">gdb</span> <kbd>info registers</kbd> command.  The default value is the
@@ -122,7 +121,7 @@ line, and if <var>all</var> is zero omits floating-point registers.
         </blockquote></div>
 
 <div class="defun">
-&mdash; Architecture Function: void <b>print_float_info</b> (<var>struct gdbarch *gdbarch, struct ui_file *file, struct frame_info *frame, const char *args</var>)<var><a name="index-print_005ffloat_005finfo-292"></a></var><br>
+&mdash; Architecture Function: void <b>print_float_info</b> (<var>struct gdbarch *gdbarch, struct ui_file *file, struct frame_info *frame, const char *args</var>)<var><a name="index-print_005ffloat_005finfo-288"></a></var><br>
 <blockquote>
         <p>Define this function to provide output about the floating point unit and
 registers for the <span class="sc">gdb</span> <kbd>info float</kbd> command respectively. 
@@ -139,7 +138,7 @@ command.
         </blockquote></div>
 
 <div class="defun">
-&mdash; Architecture Function: void <b>print_vector_info</b> (<var>struct gdbarch *gdbarch, struct ui_file *file, struct frame_info *frame, const char *args</var>)<var><a name="index-print_005fvector_005finfo-293"></a></var><br>
+&mdash; Architecture Function: void <b>print_vector_info</b> (<var>struct gdbarch *gdbarch, struct ui_file *file, struct frame_info *frame, const char *args</var>)<var><a name="index-print_005fvector_005finfo-289"></a></var><br>
 <blockquote>
         <p>Define this function to provide output about the vector unit and
 registers for the <span class="sc">gdb</span> <kbd>info vector</kbd> command respectively. 
@@ -156,7 +155,7 @@ vector</kbd> command.
         </blockquote></div>
 
 <div class="defun">
-&mdash; Architecture Function: int <b>register_reggroup_p</b> (<var>struct gdbarch *gdbarch, int regnum, struct reggroup *group</var>)<var><a name="index-register_005freggroup_005fp-294"></a></var><br>
+&mdash; Architecture Function: int <b>register_reggroup_p</b> (<var>struct gdbarch *gdbarch, int regnum, struct reggroup *group</var>)<var><a name="index-register_005freggroup_005fp-290"></a></var><br>
 <blockquote>
         <p><span class="sc">gdb</span> groups registers into different categories (general,
 vector, floating point etc).  This function, given a register,
@@ -177,7 +176,7 @@ purpose registers, floating point registers, vector registers and raw
    <div class="footnote">
 <hr>
 <h4>Footnotes</h4><p class="footnote"><small>[<a name="fn-1" href="#fnd-1">1</a>]</small> 
-<a name="index-frame-pointer-295"></a><a name="index-g_t_0040kbd_007b_0024fp_007d-296"></a>Historically, <span class="sc">gdb</span> always had a concept of a frame pointer
+<a name="index-frame-pointer-291"></a><a name="index-g_t_0040kbd_007b_0024fp_007d-292"></a>Historically, <span class="sc">gdb</span> always had a concept of a frame pointer
 register, which could be accessed via the <span class="sc">gdb</span> variable,
 <kbd>$fp</kbd>.  That concept is now deprecated, recognizing that not all
 architectures have a frame pointer.  However if an architecture does

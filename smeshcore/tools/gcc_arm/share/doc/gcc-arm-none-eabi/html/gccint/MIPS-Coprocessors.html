@@ -10,9 +10,7 @@
 <link rel="next" href="PCH-Target.html#PCH-Target" title="PCH Target">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -56,7 +54,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Target-Macros.html#Target-Macros">Targe
 
 <h3 class="section">17.27 Defining coprocessor specifics for MIPS targets.</h3>
 
-<p><a name="index-MIPS-coprocessor_002ddefinition-macros-4761"></a>
+<p><a name="index-MIPS-coprocessor_002ddefinition-macros-4801"></a>
 The MIPS specification allows MIPS implementations to have as many as 4
 coprocessors, each with as many as 32 private registers.  GCC supports
 accessing these registers and transferring values between the registers
@@ -81,15 +79,6 @@ floating-point support; they are not included in this mechanism.
 
  <p>There is one macro used in defining the MIPS coprocessor interface which
 you may want to override in subtargets; it is described below.
-
-<div class="defun">
-&mdash; Macro: <b>ALL_COP_ADDITIONAL_REGISTER_NAMES</b><var><a name="index-ALL_005fCOP_005fADDITIONAL_005fREGISTER_005fNAMES-4762"></a></var><br>
-<blockquote><p>A comma-separated list (with leading comma) of pairs describing the
-alternate names of coprocessor registers.  The format of each entry should be
-     <pre class="smallexample">          { <var>alternatename</var>, <var>register_number</var>}
-</pre>
-      <p>Default: empty. 
-</p></blockquote></div>
 
  </body></html>
 

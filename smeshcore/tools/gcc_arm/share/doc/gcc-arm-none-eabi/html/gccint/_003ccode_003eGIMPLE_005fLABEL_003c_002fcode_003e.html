@@ -10,9 +10,7 @@
 <link rel="next" href="_0040code_007bGIMPLE_005fNOP_007d.html#g_t_0040code_007bGIMPLE_005fNOP_007d" title="@code{GIMPLE_NOP}">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -57,37 +55,37 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Tuple-specific-accessors.html#Tuple-spe
 
 <h4 class="subsection">12.7.9 <code>GIMPLE_LABEL</code></h4>
 
-<p><a name="index-g_t_0040code_007bGIMPLE_005fLABEL_007d-2882"></a>
+<p><a name="index-g_t_0040code_007bGIMPLE_005fLABEL_007d-2884"></a>
 
 <div class="defun">
-&mdash; GIMPLE function: gimple <b>gimple_build_label</b> (<var>tree label</var>)<var><a name="index-gimple_005fbuild_005flabel-2883"></a></var><br>
+&mdash; GIMPLE function: gimple <b>gimple_build_label</b> (<var>tree label</var>)<var><a name="index-gimple_005fbuild_005flabel-2885"></a></var><br>
 <blockquote><p>Build a <code>GIMPLE_LABEL</code> statement with corresponding to the tree
 label, <code>LABEL</code>. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; GIMPLE function: tree <b>gimple_label_label</b> (<var>gimple g</var>)<var><a name="index-gimple_005flabel_005flabel-2884"></a></var><br>
+&mdash; GIMPLE function: tree <b>gimple_label_label</b> (<var>gimple g</var>)<var><a name="index-gimple_005flabel_005flabel-2886"></a></var><br>
 <blockquote><p>Return the <code>LABEL_DECL</code> node used by <code>GIMPLE_LABEL</code> statement <code>G</code>. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; GIMPLE function: void <b>gimple_label_set_label</b> (<var>gimple g, tree label</var>)<var><a name="index-gimple_005flabel_005fset_005flabel-2885"></a></var><br>
+&mdash; GIMPLE function: void <b>gimple_label_set_label</b> (<var>gimple g, tree label</var>)<var><a name="index-gimple_005flabel_005fset_005flabel-2887"></a></var><br>
 <blockquote><p>Set <code>LABEL</code> to be the <code>LABEL_DECL</code> node used by <code>GIMPLE_LABEL</code>
 statement <code>G</code>. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; GIMPLE function: gimple <b>gimple_build_goto</b> (<var>tree dest</var>)<var><a name="index-gimple_005fbuild_005fgoto-2886"></a></var><br>
+&mdash; GIMPLE function: gimple <b>gimple_build_goto</b> (<var>tree dest</var>)<var><a name="index-gimple_005fbuild_005fgoto-2888"></a></var><br>
 <blockquote><p>Build a <code>GIMPLE_GOTO</code> statement to label <code>DEST</code>. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; GIMPLE function: tree <b>gimple_goto_dest</b> (<var>gimple g</var>)<var><a name="index-gimple_005fgoto_005fdest-2887"></a></var><br>
+&mdash; GIMPLE function: tree <b>gimple_goto_dest</b> (<var>gimple g</var>)<var><a name="index-gimple_005fgoto_005fdest-2889"></a></var><br>
 <blockquote><p>Return the destination of the unconditional jump <code>G</code>. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; GIMPLE function: void <b>gimple_goto_set_dest</b> (<var>gimple g, tree dest</var>)<var><a name="index-gimple_005fgoto_005fset_005fdest-2888"></a></var><br>
+&mdash; GIMPLE function: void <b>gimple_goto_set_dest</b> (<var>gimple g, tree dest</var>)<var><a name="index-gimple_005fgoto_005fset_005fdest-2890"></a></var><br>
 <blockquote><p>Set <code>DEST</code> to be the destination of the unconditional jump <code>G</code>. 
 </p></blockquote></div>
 

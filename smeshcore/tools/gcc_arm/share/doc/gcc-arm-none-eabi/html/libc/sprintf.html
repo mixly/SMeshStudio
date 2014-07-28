@@ -34,29 +34,29 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdio.html#Stdio">Stdio</a>
 
 <h3 class="section">4.60 <code>sprintf</code>, <code>fprintf</code>, <code>printf</code>, <code>snprintf</code>, <code>asprintf</code>, <code>asnprintf</code>&mdash;format output</h3>
 
-<p><a name="index-fprintf-284"></a><a name="index-g_t_005ffprintf_005fr-285"></a><a name="index-printf-286"></a><a name="index-g_t_005fprintf_005fr-287"></a><a name="index-asprintf-288"></a><a name="index-g_t_005fasprintf_005fr-289"></a><a name="index-sprintf-290"></a><a name="index-g_t_005fsprintf_005fr-291"></a><a name="index-snprintf-292"></a><a name="index-g_t_005fsnprintf_005fr-293"></a><a name="index-asnprintf-294"></a><a name="index-g_t_005fasnprintf_005fr-295"></a><strong>Synopsis</strong>
+<p><a name="index-fprintf-285"></a><a name="index-g_t_005ffprintf_005fr-286"></a><a name="index-printf-287"></a><a name="index-g_t_005fprintf_005fr-288"></a><a name="index-asprintf-289"></a><a name="index-g_t_005fasprintf_005fr-290"></a><a name="index-sprintf-291"></a><a name="index-g_t_005fsprintf_005fr-292"></a><a name="index-snprintf-293"></a><a name="index-g_t_005fsnprintf_005fr-294"></a><a name="index-asnprintf-295"></a><a name="index-g_t_005fasnprintf_005fr-296"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;stdio.h&gt;
      
-     int printf(const char *<var>format</var>, ...);
-     int fprintf(FILE *<var>fd</var>, const char *<var>format</var>, ...);
-     int sprintf(char *<var>str</var>, const char *<var>format</var>, ...);
-     int snprintf(char *<var>str</var>, size_t <var>size</var>, const char *<var>format</var>,
+     int printf(const char *restrict <var>format</var>, ...);
+     int fprintf(FILE *restrict <var>fd</var>, const char *restrict <var>format</var>, ...);
+     int sprintf(char *restrict <var>str</var>, const char *restrict <var>format</var>, ...);
+     int snprintf(char *restrict <var>str</var>, size_t <var>size</var>, const char *restrict <var>format</var>,
          ...);
-     int asprintf(char **<var>strp</var>, const char *<var>format</var>, ...);
-     char *asnprintf(char *<var>str</var>, size_t *<var>size</var>, const char *<var>format</var>,
+     int asprintf(char **restrict <var>strp</var>, const char *restrict <var>format</var>, ...);
+     char *asnprintf(char *restrict <var>str</var>, size_t *restrict <var>size</var>, const char *restrict <var>format</var>,
          ...);
      
-     int _printf_r(struct _reent *<var>ptr</var>, const char *<var>format</var>, ...);
-     int _fprintf_r(struct _reent *<var>ptr</var>, FILE *<var>fd</var>,
-         const char *<var>format</var>, ...);
-     int _sprintf_r(struct _reent *<var>ptr</var>, char *<var>str</var>,
-         const char *<var>format</var>, ...);
-     int _snprintf_r(struct _reent *<var>ptr</var>, char *<var>str</var>, size_t <var>size</var>,
-         const char *<var>format</var>, ...);
-     int _asprintf_r(struct _reent *<var>ptr</var>, char **<var>strp</var>,
-         const char *<var>format</var>, ...);
-     char *_asnprintf_r(struct _reent *<var>ptr</var>, char *<var>str</var>,
-         size_t *<var>size</var>, const char *<var>format</var>, ...);
+     int _printf_r(struct _reent *<var>ptr</var>, const char *restrict <var>format</var>, ...);
+     int _fprintf_r(struct _reent *<var>ptr</var>, FILE *restrict <var>fd</var>,
+         const char *restrict <var>format</var>, ...);
+     int _sprintf_r(struct _reent *<var>ptr</var>, char *restrict <var>str</var>,
+         const char *restrict <var>format</var>, ...);
+     int _snprintf_r(struct _reent *<var>ptr</var>, char *restrict <var>str</var>, size_t <var>size</var>,
+         const char *restrict <var>format</var>, ...);
+     int _asprintf_r(struct _reent *<var>ptr</var>, char **restrict <var>strp</var>,
+         const char *restrict <var>format</var>, ...);
+     char *_asnprintf_r(struct _reent *<var>ptr</var>, char *restrict <var>str</var>,
+         size_t *restrict <var>size</var>, const char *restrict <var>format</var>, ...);
      
 </pre>
    <p><strong>Description</strong><br>
@@ -460,6 +460,9 @@ output is created.
 an implementation-defined format.  This
 implementation is similar to <code>%#tx</code>), except
 that <code>0x</code> appears even for the NULL pointer.
+
+          <br><dt><code>m</code><dd>Prints the output of <code>strerror(errno)</code>; no
+argument is required.  A GNU extension.
 
      </dl>
 

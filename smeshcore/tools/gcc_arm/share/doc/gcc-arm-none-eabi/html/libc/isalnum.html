@@ -41,7 +41,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Ctype.html#Ctype">Ctype</a>
 <code>isalnum</code> is a macro which classifies ASCII integer values by table
 lookup.  It is a predicate returning non-zero for alphabetic or
 numeric ASCII characters, and <code>0</code> for other arguments.  It is defined
-for all integer values.
+only if <var>c</var> is representable as an unsigned char or if <var>c</var> is EOF.
 
    <p>You can use a compiled subroutine instead of the macro definition by
 undefining the macro using `<code>#undef isalnum</code>'.

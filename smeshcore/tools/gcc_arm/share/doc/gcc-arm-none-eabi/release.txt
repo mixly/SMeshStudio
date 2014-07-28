@@ -1,7 +1,7 @@
 Release notes for
 *************************************************
-GNU Tools for ARM Embedded Processors 4.7
-                               - Q3 2013
+GNU Tools for ARM Embedded Processors 4.8
+                               - Q2 2014
 *************************************************
 
 This release includes the following items:
@@ -10,20 +10,20 @@ This release includes the following items:
 * Bare metal EABI pre-built binaries for running on a Mac OS X host
 * Source code package (together with build scripts and instructions to setup
   build environment), composed of:
-  * gcc : ARM/embedded-4_7-branch revision 202601
-    http://gcc.gnu.org/svn/gcc/branches/ARM/embedded-4_7-branch/
+  * gcc : ARM/embedded-4_8-branch revision 211358
+    http://gcc.gnu.org/svn/gcc/branches/ARM/embedded-4_8-branch/
 
-  * binutils : 2.22 with mainline backports
-    git://sourceware.org/git/binutils.git commit 8f0e6ebede51788f429937646e891633a20dc533
+  * binutils : 2.23 with mainline backports
+    git://sourceware.org/git/binutils.git commit 8ea85793ab9a147f826a2d30ff612d6e77d02225
 
-  * newlib : 1.19 with mainline backports
-    ftp://sources.redhat.com/pub/newlib/newlib-1.19.0.tar.gz
+  * newlib : 2.1.0 with mainline backports
+    git://sourceware.org/git/newlib.git commit e14046f93c76ef701d8ad133d0ea2b96d3c1b578 
 
-  * gdb : 7.4.1 with mainline backports, without target sim support
-    git://sourceware.org/git/gdb.git commit 263dc2d4afef8873f4262257f372af9fade55d94
+  * gdb : 7.6 without target sim support
+    git://sourceware.org/git/gdb.git commit 7fc7df8816e69c7478d09c6f3447b83f28532711
 
-  * cloog-ppl 0.15.11 : 
-    ftp://gcc.gnu.org/pub/gcc/infrastructure/cloog-ppl-0.15.11.tar.gz
+  * cloog 0.18.0 : 
+    ftp://gcc.gnu.org/pub/gcc/infrastructure/cloog-0.18.0.tar.gz
 
   * expat 2.0.1 :
     http://jaist.dl.sourceforge.net/project/expat/expat/2.0.1/expat-2.0.1.tar.gz
@@ -33,24 +33,27 @@ This release includes the following items:
   * libelf 0.8.13 : http://www.mr511.de/software/libelf-0.8.13.tar.gz
 
   * libiconv 1.14 :
-    http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
+    http://ftp.gnu.org/gnu/libiconv/libiconv-1.14.tar.gz
 
   * mpc 0.8.1 : ftp://gcc.gnu.org/pub/gcc/infrastructure/mpc-0.8.1.tar.gz
 
   * mpfr 2.4.2 : ftp://gcc.gnu.org/pub/gcc/infrastructure/mpfr-2.4.2.tar.bz2
 
-  * ppl 0.11 : ftp://gcc.gnu.org/pub/gcc/infrastructure/ppl-0.11.tar.gz
+  * isl 0.11.1 : ftp://gcc.gnu.org/pub/gcc/infrastructure/isl-0.11.1.tar.bz2
 
-  * zlib 1.2.5 with makefile patch : 
+  * zlib 1.2.5 and a makefile patch :
     http://sourceforge.net/projects/libpng/files/zlib/1.2.5/zlib-1.2.5.tar.bz2/download
 
-  * newlib-nano 1.0 : Included in source package
+  * newlib-nano 2.1 : Included in source package
+
+  * gcc-plugins (with some tweaks):
+    http://gcc.gnu.org/ml/gcc-patches/2013-05/msg00667.html
 
 Supported hosts:
-* Windows XP/7 32/64 bits (with installer and alternative zip package)
+* Windows 7 32/64 bits (with installer and alternative zip package)
 * Linux 32/64 bits
   - Ubuntu 8.x or later (tarball)
-  - Ubuntu 10.04/12.04/13.04 (tarball and PPA)
+  - Ubuntu 10.04/12.04/13.04/13.10/14.04 (tarball and PPA)
   - RHEL 4/5 (tarball)
 * Mac OS X 10.7.3 and newer 64 bits (tarball)
 
@@ -58,59 +61,63 @@ Supported target OS:
 * Bare metal EABI only
 
 Features:
-* All GCC 4.7 features, plus latest mainline features
-  - Defaultly turn on option -munaligned-access for ARM
-  - Support for more features from C11 revision of ISO C
-  - Support various new GNU extensions to the DWARF
+* All GCC 4.8 features, plus latest mainline features
+  - Cortex-R7 support
 * Additional code size optimizations
-* Cortex-M0+ support
+  - Don't expand multiply instruction for Thumb-1.
+  - Avoid unnecessary lr save instruction for Thumb-1.
 * Newlib-nano: newlib branch optimized for code size
-* GDB support of unwind from exception handler
-* GDB support of FP registers in Cortex-M4
 * Cortex-A profile multilib
 * Link Time Optimization (LTO)
-* Cortex-R7 support
+* A new compiler option -mslow-flash-data to minimize the literal load to
+  boost performance for some armv7-m targets.
+* A new compiler option -mpic-data-is-text-relative to enable/disable
+  addressing data with PC relative.
+* Avoid missing _sbrk issue when .specs is used.
+* Support multiple RAM sessions in startup code.
+* A GCC plugin to optimize Finite State Machine program.
 
 Tests:
 * Tested on a variety of Cortex-M0/M0+/M3/M4/A9 boards
-* Tested on an internal simulator for Cortex-R4
 * Tested on Qemu
 
-Known issues in 4.7 release series:
-* The gdb support to DWARF information in ELF file built with option -g3
-  is incomplete.  Sometimes debugging such ELF file crashes gdb.  Recommend
-  not to use GCC option -g3.
-* Comparing to 4.6, GCC 4.7 tends to inline more function calls when
-  optimizing for speed (O2/O3).  So program built from 4.7 with O2/O3
-  might be slightly bigger than 4.6, but usually with performance gain.
-  To fall back closer to 4.6 behavior, please include compiler option:
-  --param early-inlining-insns=10
+Important bugs fixed in 4.8 2014q2 update release:
+* Mingw GCC file path length issue
+  https://answers.launchpad.net/gcc-arm-embedded/+question/237311
+* Wildcards support in tool chain on Windows
+  https://bugs.launchpad.net/gcc-arm-embedded/+bug/1298958
+* skip_manual option doesn't skip the build-manual task in build script
+  https://bugs.launchpad.net/gcc-arm-embedded/+bug/1318131
+* Fixed a new NAN issue
+  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=60166
 
-Important bugs fixed in 4.7 update 2013q3 release:
-* Crash when compile fixed-point app with LTO
-  https://answers.launchpad.net/gcc-arm-embedded/+question/235582  
-* Branch to target specified by a linker script symbol
-  https://sourceware.org/bugzilla/show_bug.cgi?id=15302
-* Windows hosted gdb hang at some breakpoint
-  https://bugs.launchpad.net/gcc-arm-embedded/+bug/1197615
-* Nano missing reference to _mallopt_r
-  https://mbed.org/forum/mbed/topic/2701/?page=3#comment-22549
+Important bugs fixed in 4.8 2014q1 update release:
+* Incorrect write to packed field when strict-volatile-bitfields enabled
+  http://gcc.gnu.org/bugzilla/show_bug.cgi?id=56997
+  https://bugs.launchpad.net/gcc-arm-embedded/+bug/1197604
+* ICE reload1.c:1058 using 4.8 with mthumb fomit-frame-pointer
+  https://bugs.launchpad.net/gcc-arm-embedded/+bug/1278004
+* Fix ARM NAN fraction bits
+  https://sourceware.org/ml/libc-alpha/2014-02/msg00740.html
+* Unable to redefine weak function in -flto incrementally-linked executable
+  https://sourceware.org/bugzilla/show_bug.cgi?id=15323
+* ICE on Windows with due to mingw version too old
+  https://bugs.launchpad.net/gcc-arm-embedded/+bug/1267504
 
-Important bugs fixed in 4.7 update 2013q2 release:
-* Upgrade doc/*.texi to the latest texinfo package
-  https://answers.launchpad.net/gcc-arm-embedded/+question/227685
-* Fix ICE with -mtune option
-  https://answers.launchpad.net/gcc-arm-embedded/+question/224937
-* Fix --debug option in build script
-  https://answers.launchpad.net/gcc-arm-embedded/+question/229127
-* Fix unnecessary lr save in thumb1 leaf function
-
-Important bugs fixed in 4.7 update 2013q1 release:
-* Mac OS host version has python dependence
-* LTO failure when installed in directory with space in path name
-  http://gcc.gnu.org/bugzilla/show_bug.cgi?id=50293
-* Load address of data sections containing aligned data
-  http://sourceware.org/bugzilla/show_bug.cgi?id=15222
-* libnosys doesn't check stack overflow
-  https://answers.launchpad.net/gcc-arm-embedded/+question/218972 
-* librdimon.a doesn't match newlib-nano
+Known Changes and Issues:
+* Unlike the previous releases, this release O2 optimization level doesn't
+  unroll loop.  To tune the strategy to get better performance for your
+  case, please refer to unrolling related parameters in associated gcc manual.
+* The gcc regression test case pr42575.c now fails due to suboptimal code
+  on 64-bit integer multiply caused by gcc new rtx cost model.
+* Ubuntu 13.10/14.04 PPA release doesn't have documentation due to incompatibility
+  to latest texinfo.
+* Unwanted binaries in Windows tool chain are cleaned, so Windows tool chain
+  packages have about 20% size reduction.
+* Since Ubuntu 14.04, the Ubuntu official PPA has tool chain with same name as ours.
+  Those who install tool chain through our Launchpad PPA will be impacted.  So to
+  correctly install our tool chain on 14.04, a corresponding version should be
+  appended to apt-get command which looks like
+  "sudo apt-get install gcc-arm-none-eabi=4-8-2014q2-0trusty9".
+  We are working with relevant Debian/Ubuntu people to consolidate them. Hopefully
+  there will be a unified ARM embedded tool chain coming from official PPA.

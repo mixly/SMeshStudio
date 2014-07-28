@@ -36,8 +36,8 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdio.html#Stdio">Stdio</a>
 
 <p><a name="index-fgetpos-166"></a><a name="index-g_t_005ffgetpos_005fr-167"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;stdio.h&gt;
-     int fgetpos(FILE *<var>fp</var>, fpos_t *<var>pos</var>);
-     int _fgetpos_r(struct _reent *<var>ptr</var>, FILE *<var>fp</var>, fpos_t *<var>pos</var>);
+     int fgetpos(FILE *restrict <var>fp</var>, fpos_t *restrict <var>pos</var>);
+     int _fgetpos_r(struct _reent *<var>ptr</var>, FILE *restrict <var>fp</var>, fpos_t *restrict <var>pos</var>);
      
 </pre>
    <p><strong>Description</strong><br>

@@ -63,6 +63,11 @@ const static uint8_t A7 = 35;
 
 const static uint8_t RFTX = 23;
 const static uint8_t RFRX = 24;
+const static uint8_t LED1 = 23;
+const static uint8_t LED2 = 24;
+
+const static uint8_t LED3 = 25;
+
 //const static uint8_t BATMON = 35;
 
 // A majority of the pins are NOT PCINTs, SO BE WARNED (i.e. you cannot use them as receive pins)
@@ -167,9 +172,9 @@ const uint8_t PROGMEM digital_pin_to_port_PGM[] = {
 		PB	, // PB 5 ** 20 ** LIS3DH INT(POWER CONNECTED VCC)
 		PD	, // PD 1 ** 21 ** I2C_SDA
 		PD	, // PD 0 ** 22 ** I2C_SCL
-		PD , // PD 5 ** 23 ** RFTX  LED0
-		PD , // PD 6 ** 24 ** RFRX  LED1
-		PD	, // PD 7 ** 25 ** 	    LED2
+		PD , // PD 5 ** 23 ** RFTX  LED1
+		PD , // PD 6 ** 24 ** RFRX  LED2
+		PD	, // PD 7 ** 25 ** 	    LED3
 		PB , // PB 6 ** 26 **  DS2411
 		PG	, // PG 5 ** 27 ** VCC_SD_CONTROL LOW ENABLE
 		PD	, // PD 4 ** 28 ** RF212_IRQ

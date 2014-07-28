@@ -1,5 +1,5 @@
 GNU Tools for ARM Embedded Processors
-Version: 4.7
+Version: 4.8
 
 Table of Contents
 * Installing executables on Linux
@@ -8,8 +8,10 @@ Table of Contents
 * Invoking GCC
 * Architecture options usage
 * C Libraries usage
+* GCC Plugin usage
 * Linker scripts & startup code
 * Samples
+* GDB Server for CMSIS-DAP based hardware debugger
 
 * Installing executables on Linux *
 Unpack the tarball to the install directory, like this:
@@ -17,8 +19,8 @@ $ cd $install_dir && tar xjf gcc-arm-none-eabi-*-yyyymmdd-linux.tar.bz2
 
 For 64 bit system, 32 bit libc and libncurses are required to run the tools.
 
-For Ubuntu 10.04/12.04 user, the toolchain can also be installed via Launchpad
-PPA at https://launchpad.net/~terry.guo/+archive/gcc-arm-embedded.
+For some Ubuntu releases, the toolchain can also be installed via
+Launchpad PPA at https://launchpad.net/~terry.guo/+archive/gcc-arm-embedded.
 
 * Installing executables on Mac OS X *
 Unpack the tarball to the install directory, like this:
@@ -147,22 +149,30 @@ If you want to use %f, you have to pull in the symbol by explicitly specifying
   -u _printf_float
 
 e.g. to output a float, the command line is like: 
-$ arm-none-eabi-gcc --specs=nano.specs -u _printf_float $(OTHER_OPTIONS)
+$ arm-none-eabi-gcc --specs=nano.specs -u _printf_float $(OTHER_LINK_OPTIONS)
 
 For more about the difference and usage, please refer the README.nano in the
 source package.
 
 Users can choose to use or not use semihosting by following instructions.
 ** semihosting
-You can add -lrdimon in the command line and compile the programs like:
-$ arm-none-eabi-gcc --specs=rdimon.specs \
-  -Wl,--start-group -lgcc -lc -lc -lm -lrdimon -Wl,--end-group $(OTHER_OPTIONS)
+If you need semihosting, linking like:
+$ arm-none-eabi-gcc --specs=rdimon.specs $(OTHER_LINK_OPTIONS)
 
 ** non-semihosting/retarget
-If you are using retarget, you can add -lnosys in the command line and compile
-the programs like:
-$ arm-none-eabi-gcc \
-  -Wl,--start-group -lgcc -lc -lc -lm -lnosys -Wl,--end-group $(OTHER_OPTIONS)
+If you are using retarget, linking like:
+$ arm-none-eabi-gcc --specs=nosys.specs $(OTHER_LINK_OPTIONS)
+
+* GCC Plugin usage
+This release includes following Linux GCC plugins for additional performance
+optimization:
+
+** tree_switch_shortcut: optimize (Finite State Machine) FSM style program
+to reduce condition jump or indirect jumps. Usage:
+(GCC option) -fplugin=tree_switch_shortcut_elf
+
+Please be noticed that current GCC plugin can only run on Linux host. They
+are not available to Windows or Mac OS hosted GCC.
 
 * Linker scripts & startup code *
 
@@ -174,3 +184,19 @@ Examples of all above usages are available at:
 $install_dir/gcc-arm-none-eabi-*/share/gcc-arm-none-eabi/samples
 
 Read readme.txt under it for further information.
+
+* GDB Server for CMSIS-DAP based hardware debugger *
+CMSIS-DAP is the interface firmware for a Debug Unit that connects
+the Debug Port to USB.  More detailed information can be found at
+http://www.keil.com/support/man/docs/dapdebug/.
+
+A software GDB server is required for GDB to communicate with CMSIS-DAP based
+hardware debugger.  The pyOCD is an implementation of such GDB server that is
+written in Python and under Apache License.
+
+For those who are using this toolchain and have board with CMSIS-DAP based
+debugger, the pyOCD is our recommended gdb server.
+More information can be found at https://github.com/mbedmicro/pyOCD.
+
+Currently pyOCD is still in development stage but has a quite active community.
+Reporting issues in either our Launchpad website or pyOCD community are welcomed.

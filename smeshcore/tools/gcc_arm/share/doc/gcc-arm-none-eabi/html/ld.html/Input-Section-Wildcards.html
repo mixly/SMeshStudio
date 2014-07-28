@@ -11,8 +11,8 @@
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
 This file documents the GNU linker LD
-(GNU Tools for ARM Embedded Processors)
-version 2.22.0.
+(GNU Binutils)
+version 2.23.2.
 
 Copyright (C) 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000,
 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
@@ -48,7 +48,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Input-Section.html#Input-Section">Input
 
 <h5 class="subsubsection">3.6.4.2 Input Section Wildcard Patterns</h5>
 
-<p><a name="index-input-section-wildcards-404"></a><a name="index-wildcard-file-name-patterns-405"></a><a name="index-file-name-wildcard-patterns-406"></a><a name="index-section-name-wildcard-patterns-407"></a>In an input section description, either the file name or the section
+<p><a name="index-input-section-wildcards-407"></a><a name="index-wildcard-file-name-patterns-408"></a><a name="index-file-name-wildcard-patterns-409"></a><a name="index-section-name-wildcard-patterns-410"></a>In an input section description, either the file name or the section
 name or both may be wildcard patterns.
 
    <p>The file name of &lsquo;<samp><span class="samp">*</span></samp>&rsquo; seen in many examples is a simple wildcard
@@ -84,23 +84,23 @@ sequence of input section descriptions is probably in error, because the
 <pre class="smallexample">     .data : { *(.data) }
      .data1 : { data.o(.data) }
 </pre>
-   <p><a name="index-SORT_005fBY_005fNAME-408"></a>Normally, the linker will place files and sections matched by wildcards
+   <p><a name="index-SORT_005fBY_005fNAME-411"></a>Normally, the linker will place files and sections matched by wildcards
 in the order in which they are seen during the link.  You can change
 this by using the <code>SORT_BY_NAME</code> keyword, which appears before a wildcard
 pattern in parentheses (e.g., <code>SORT_BY_NAME(.text*)</code>).  When the
 <code>SORT_BY_NAME</code> keyword is used, the linker will sort the files or sections
 into ascending order by name before placing them in the output file.
 
-   <p><a name="index-SORT_005fBY_005fALIGNMENT-409"></a><code>SORT_BY_ALIGNMENT</code> is very similar to <code>SORT_BY_NAME</code>. The
+   <p><a name="index-SORT_005fBY_005fALIGNMENT-412"></a><code>SORT_BY_ALIGNMENT</code> is very similar to <code>SORT_BY_NAME</code>. The
 difference is <code>SORT_BY_ALIGNMENT</code> will sort sections into
 ascending order by alignment before placing them in the output file.
 
-   <p><a name="index-SORT_005fBY_005fINIT_005fPRIORITY-410"></a><code>SORT_BY_INIT_PRIORITY</code> is very similar to <code>SORT_BY_NAME</code>. The
+   <p><a name="index-SORT_005fBY_005fINIT_005fPRIORITY-413"></a><code>SORT_BY_INIT_PRIORITY</code> is very similar to <code>SORT_BY_NAME</code>. The
 difference is <code>SORT_BY_INIT_PRIORITY</code> will sort sections into
 ascending order by numerical value of the GCC init_priority attribute
 encoded in the section name before placing them in the output file.
 
-   <p><a name="index-SORT-411"></a><code>SORT</code> is an alias for <code>SORT_BY_NAME</code>.
+   <p><a name="index-SORT-414"></a><code>SORT</code> is an alias for <code>SORT_BY_NAME</code>.
 
    <p>When there are nested section sorting commands in linker script, there
 can be at most 1 level of nesting for section sorting commands.
@@ -138,6 +138,9 @@ treated as nested sorting command.
 
    <p>If the section sorting command in linker script is nested, the
 command line option will be ignored.
+
+   <p><a name="index-SORT_005fNONE-415"></a><code>SORT_NONE</code> disables section sorting by ignoring the command line
+section sorting option.
 
    <p>If you ever get confused about where input sections are going, use the
 &lsquo;<samp><span class="samp">-M</span></samp>&rsquo; linker option to generate a map file.  The map file shows

@@ -9,9 +9,7 @@
 <link rel="prev" href="Require-Support.html#Require-Support" title="Require Support">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -138,8 +136,34 @@ suffix <var>suffix</var>.
 
      <br><dt><code>cleanup-ipa-dump </code><var>suffix</var><dd>Removes IPA dump files generated for this test.
 
-     <br><dt><code>cleanup-modules</code><dd>Removes Fortran module files generated for this test.
-
+     <br><dt><code>cleanup-modules "</code><var>list-of-extra-modules</var><code>"</code><dd>Removes Fortran module files generated for this test, excluding the
+module names listed in keep-modules. 
+Cleaning up module files is usually done automatically by the testsuite
+by looking at the source files and removing the modules after the test
+has been executed.
+     <pre class="smallexample">          module MoD1
+          end module MoD1
+          module Mod2
+          end module Mod2
+          module moD3
+          end module moD3
+          module mod4
+          end module mod4
+          ! { dg-final { cleanup-modules "mod1 mod2" } } ! redundant
+          ! { dg-final { keep-modules "mod3 mod4" } }
+</pre>
+     <br><dt><code>keep-modules "</code><var>list-of-modules-not-to-delete</var><code>"</code><dd>Whitespace separated list of module names that should not be deleted by
+cleanup-modules. 
+If the list of modules is empty, all modules defined in this file are kept.
+     <pre class="smallexample">          module maybe_unneeded
+          end module maybe_unneeded
+          module keep1
+          end module keep1
+          module keep2
+          end module keep2
+          ! { dg-final { keep-modules "keep1 keep2" } } ! just keep these two
+          ! { dg-final { keep-modules "" } } ! keep all
+</pre>
      <br><dt><code>cleanup-profile-file</code><dd>Removes profiling files generated for this test.
 
      <br><dt><code>cleanup-repo-files</code><dd>Removes files generated for this test for <samp><span class="option">-frepo</span></samp>.

@@ -64,8 +64,12 @@
 #endif
 #define RF230_MAX_TX_POWER 0
 #define RF230_MIN_TX_POWER 0x0f
+#else //RF212BB
+#ifdef RFCHANNEL
+#define MXCHANNEL RFCHANNEL
 #else
 #define MXCHANNEL 0
+#endif
 #define RF230_MAX_TX_POWER  (0xe4) //8db
 #define RF230_MIN_TX_POWER  (0x0A) //-11db
 #endif
@@ -231,6 +235,7 @@ typedef unsigned short uip_stats_t;
 #define UIP_CONF_DS6_MADDR_NBU    0
 #define UIP_CONF_DS6_AADDR_NBU    0
 
+//#define RPL_CONF_LEAF_ONLY		1
 
 #elif 1  /* Contiki-mac radio cycling */
 //#define NETSTACK_CONF_MAC         nullmac_driver
@@ -276,6 +281,7 @@ typedef unsigned short uip_stats_t;
 #define UIP_CONF_DS6_MADDR_NBU    0
 #define UIP_CONF_DS6_AADDR_NBU    0
 
+//#define RPL_CONF_LEAF_ONLY		1
 
 #elif 1  /* cx-mac radio cycling */
 /* RF230 does clear-channel assessment in extended mode (autoretries>0) */
@@ -383,7 +389,7 @@ typedef unsigned short uip_stats_t;
 #else //border_router
 
 #ifndef UIP_CONF_BUFFER_SIZE
-#define UIP_CONF_BUFFER_SIZE    1500
+#define UIP_CONF_BUFFER_SIZE    1300
 #endif
 
 #endif//border_router

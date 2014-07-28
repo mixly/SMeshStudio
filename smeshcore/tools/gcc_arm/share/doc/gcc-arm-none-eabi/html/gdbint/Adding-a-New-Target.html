@@ -9,8 +9,7 @@
 <link rel="prev" href="Defining-Other-Architecture-Features.html#Defining-Other-Architecture-Features" title="Defining Other Architecture Features">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -44,10 +43,10 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Target-Architecture-Definition.html#Tar
 
 <h3 class="section">11.11 Adding a New Target</h3>
 
-<p><a name="index-adding-a-target-435"></a>The following files add a target to <span class="sc">gdb</span>:
+<p><a name="index-adding-a-target-430"></a>The following files add a target to <span class="sc">gdb</span>:
 
      
-<a name="index-target-dependent-files-436"></a>
+<a name="index-target-dependent-files-431"></a>
 <dl>
 <dt><samp><span class="file">gdb/</span><var>ttt</var><span class="file">-tdep.c</span></samp><dd>Contains any miscellaneous code required for this target machine.  On
 some machines it doesn't exist at all.
@@ -63,7 +62,7 @@ targets that use the same processor architecture.
 <samp><span class="file">gdb/config/</span><var>arch</var><span class="file">/tm-</span><var>arch</var><span class="file">.h</span></samp>, and
 <samp><span class="file">config/tm-</span><var>os</var><span class="file">.h</span></samp> are no longer used.)
 
-   <p><a name="index-g_t_005finitialize_005f_0040var_007barch_007d_005ftdep-437"></a>A <span class="sc">gdb</span> description for a new architecture, arch is created by
+   <p><a name="index-g_t_005finitialize_005f_0040var_007barch_007d_005ftdep-432"></a>A <span class="sc">gdb</span> description for a new architecture, arch is created by
 defining a global function <code>_initialize_</code><var>arch</var><code>_tdep</code>, by
 convention in the source file <samp><var>arch</var><span class="file">-tdep.c</span></samp>.  For
 example, in the case of the OpenRISC 1000, this function is called
@@ -86,7 +85,7 @@ dependencies on these will not be picked up from the entries in
 show these dependencies. 
 </blockquote>
 
-   <p><a name="index-gdbarch_005fregister-438"></a>A new struct gdbarch, defining the new architecture, is created within
+   <p><a name="index-gdbarch_005fregister-433"></a>A new struct gdbarch, defining the new architecture, is created within
 the <code>_initialize_</code><var>arch</var><code>_tdep</code> function by calling
 <code>gdbarch_register</code>:
 

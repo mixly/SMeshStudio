@@ -10,9 +10,7 @@
 <link rel="next" href="Aggregate-Return.html#Aggregate-Return" title="Aggregate Return">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -56,12 +54,12 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stack-and-Calling.html#Stack-and-Callin
 
 <h4 class="subsection">17.10.8 How Scalar Function Values Are Returned</h4>
 
-<p><a name="index-return-values-in-registers-4179"></a><a name="index-values_002c-returned-by-functions-4180"></a><a name="index-scalars_002c-returned-as-values-4181"></a>
+<p><a name="index-return-values-in-registers-4219"></a><a name="index-values_002c-returned-by-functions-4220"></a><a name="index-scalars_002c-returned-as-values-4221"></a>
 This section discusses the macros that control returning scalars as
 values&mdash;values that can fit in registers.
 
 <div class="defun">
-&mdash; Target Hook: rtx <b>TARGET_FUNCTION_VALUE</b> (<var>const_tree ret_type, const_tree fn_decl_or_type, bool outgoing</var>)<var><a name="index-TARGET_005fFUNCTION_005fVALUE-4182"></a></var><br>
+&mdash; Target Hook: rtx <b>TARGET_FUNCTION_VALUE</b> (<var>const_tree ret_type, const_tree fn_decl_or_type, bool outgoing</var>)<var><a name="index-TARGET_005fFUNCTION_005fVALUE-4222"></a></var><br>
 <blockquote>
       <p>Define this to return an RTX representing the place where a function
 returns or receives a value of data type <var>ret_type</var>, a tree node
@@ -106,13 +104,13 @@ aggregate data types, because these are returned in another way.  See
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>FUNCTION_VALUE</b> (<var>valtype, func</var>)<var><a name="index-FUNCTION_005fVALUE-4183"></a></var><br>
+&mdash; Macro: <b>FUNCTION_VALUE</b> (<var>valtype, func</var>)<var><a name="index-FUNCTION_005fVALUE-4223"></a></var><br>
 <blockquote><p>This macro has been deprecated.  Use <code>TARGET_FUNCTION_VALUE</code> for
 a new target instead. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>LIBCALL_VALUE</b> (<var>mode</var>)<var><a name="index-LIBCALL_005fVALUE-4184"></a></var><br>
+&mdash; Macro: <b>LIBCALL_VALUE</b> (<var>mode</var>)<var><a name="index-LIBCALL_005fVALUE-4224"></a></var><br>
 <blockquote><p>A C expression to create an RTX representing the place where a library
 function returns a value of mode <var>mode</var>.
 
@@ -123,7 +121,7 @@ compiled.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: rtx <b>TARGET_LIBCALL_VALUE</b> (<var>enum machine_mode mode, const_rtx fun</var>)<var><a name="index-TARGET_005fLIBCALL_005fVALUE-4185"></a></var><br>
+&mdash; Target Hook: rtx <b>TARGET_LIBCALL_VALUE</b> (<var>enum machine_mode mode, const_rtx fun</var>)<var><a name="index-TARGET_005fLIBCALL_005fVALUE-4225"></a></var><br>
 <blockquote><p>Define this hook if the back-end needs to know the name of the libcall
 function in order to determine where the result should be returned.
 
@@ -135,7 +133,7 @@ representing the place where the library function result will be returned.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>FUNCTION_VALUE_REGNO_P</b> (<var>regno</var>)<var><a name="index-FUNCTION_005fVALUE_005fREGNO_005fP-4186"></a></var><br>
+&mdash; Macro: <b>FUNCTION_VALUE_REGNO_P</b> (<var>regno</var>)<var><a name="index-FUNCTION_005fVALUE_005fREGNO_005fP-4226"></a></var><br>
 <blockquote><p>A C expression that is nonzero if <var>regno</var> is the number of a hard
 register in which the values of called function may come back.
 
@@ -155,7 +153,7 @@ for a new target instead.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: bool <b>TARGET_FUNCTION_VALUE_REGNO_P</b> (<var>const unsigned int regno</var>)<var><a name="index-TARGET_005fFUNCTION_005fVALUE_005fREGNO_005fP-4187"></a></var><br>
+&mdash; Target Hook: bool <b>TARGET_FUNCTION_VALUE_REGNO_P</b> (<var>const unsigned int regno</var>)<var><a name="index-TARGET_005fFUNCTION_005fVALUE_005fREGNO_005fP-4227"></a></var><br>
 <blockquote><p>A target hook that return <code>true</code> if <var>regno</var> is the number of a hard
 register in which the values of called function may come back.
 
@@ -171,14 +169,14 @@ should recognize only the caller's register numbers.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>APPLY_RESULT_SIZE</b><var><a name="index-APPLY_005fRESULT_005fSIZE-4188"></a></var><br>
+&mdash; Macro: <b>APPLY_RESULT_SIZE</b><var><a name="index-APPLY_005fRESULT_005fSIZE-4228"></a></var><br>
 <blockquote><p>Define this macro if &lsquo;<samp><span class="samp">untyped_call</span></samp>&rsquo; and &lsquo;<samp><span class="samp">untyped_return</span></samp>&rsquo;
 need more space than is implied by <code>FUNCTION_VALUE_REGNO_P</code> for
 saving and restoring an arbitrary return value. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: bool <b>TARGET_RETURN_IN_MSB</b> (<var>const_tree type</var>)<var><a name="index-TARGET_005fRETURN_005fIN_005fMSB-4189"></a></var><br>
+&mdash; Target Hook: bool <b>TARGET_RETURN_IN_MSB</b> (<var>const_tree type</var>)<var><a name="index-TARGET_005fRETURN_005fIN_005fMSB-4229"></a></var><br>
 <blockquote><p>This hook should return true if values of type <var>type</var> are returned
 at the most significant end of a register (in other words, if they are
 padded at the least significant end).  You can assume that <var>type</var>

@@ -10,8 +10,7 @@
 <link rel="next" href="Creating-a-New-Architecture.html#Creating-a-New-Architecture" title="Creating a New Architecture">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -46,7 +45,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Initialize-New-Architecture.html#Initia
 
 <h4 class="subsection">11.2.2 Looking Up an Existing Architecture</h4>
 
-<p><a name="index-g_t_0040code_007bgdbarch_007d-lookup-233"></a>
+<p><a name="index-g_t_0040code_007bgdbarch_007d-lookup-229"></a>
 The initialization function has this prototype:
 
 <pre class="smallexample">     static struct gdbarch *
@@ -64,7 +63,7 @@ search through <var>arches</var> for an exact match to <var>info</var>, and
 return one if found.  Lastly, if no exact match was found, it should
 create a new architecture based on <var>info</var> and return it.
 
-   <p><a name="index-gdbarch_005flist_005flookup_005fby_005finfo-234"></a><a name="index-g_t_0040code_007bgdbarch_005finfo_007d-235"></a>The lookup is done using <code>gdbarch_list_lookup_by_info</code>.  It is
+   <p><a name="index-gdbarch_005flist_005flookup_005fby_005finfo-230"></a><a name="index-g_t_0040code_007bgdbarch_005finfo_007d-231"></a>The lookup is done using <code>gdbarch_list_lookup_by_info</code>.  It is
 passed the list of existing architectures, <var>arches</var>, and the
 <code>struct gdbarch_info</code>, <var>info</var>, and returns the first matching
 architecture it finds, or <code>NULL</code> if none are found.  If an
@@ -84,7 +83,7 @@ to be created.
         const struct target_desc   *target_desc;
      };
 </pre>
-   <p><a name="index-bfd_005farch_005finfo-236"></a>The <code>bfd_arch_info</code> member holds the key details about the
+   <p><a name="index-bfd_005farch_005finfo-232"></a>The <code>bfd_arch_info</code> member holds the key details about the
 architecture.  The <code>byte_order</code> member is a value in an
 enumeration indicating the endianism.  The <code>abfd</code> member is a
 pointer to the full <span class="sc">bfd</span>, the <code>tdep_info</code> member is

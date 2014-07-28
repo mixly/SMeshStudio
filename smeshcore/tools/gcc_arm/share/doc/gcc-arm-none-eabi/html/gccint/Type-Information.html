@@ -9,9 +9,7 @@
 <link rel="next" href="Plugins.html#Plugins" title="Plugins">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -55,23 +53,23 @@ Up:&nbsp;<a rel="up" accesskey="u" href="index.html#Top">Top</a>
 
 <h2 class="chapter">22 Memory Management and Type Information</h2>
 
-<p><a name="index-GGC-4945"></a><a name="index-GTY-4946"></a>
+<p><a name="index-GGC-4986"></a><a name="index-GTY-4987"></a>
 GCC uses some fairly sophisticated memory management techniques, which
 involve determining information about GCC's data structures from GCC's
 source code and using this information to perform garbage collection and
 implement precompiled headers.
 
- <p>A full C parser would be too complicated for this task, so a limited
-subset of C is interpreted and special markers are used to determine
-what parts of the source to look at.  All <code>struct</code> and
-<code>union</code> declarations that define data structures that are
-allocated under control of the garbage collector must be marked.  All
-global variables that hold pointers to garbage-collected memory must
-also be marked.  Finally, all global variables that need to be saved
-and restored by a precompiled header must be marked.  (The precompiled
-header mechanism can only save static variables if they're scalar. 
-Complex data structures must be allocated in garbage-collected memory
-to be saved in a precompiled header.)
+ <p>A full C++ parser would be too complicated for this task, so a limited
+subset of C++ is interpreted and special markers are used to determine
+what parts of the source to look at.  All <code>struct</code>, <code>union</code>
+and <code>template</code> structure declarations that define data structures
+that are allocated under control of the garbage collector must be
+marked.  All global variables that hold pointers to garbage-collected
+memory must also be marked.  Finally, all global variables that need
+to be saved and restored by a precompiled header must be marked.  (The
+precompiled header mechanism can only save static variables if they're
+scalar. Complex data structures must be allocated in garbage-collected
+memory to be saved in a precompiled header.)
 
  <p>The full format of a marker is
 <pre class="smallexample">     GTY (([<var>option</var>] [(<var>param</var>)], [<var>option</var>] [(<var>param</var>)] ...))
@@ -106,12 +104,32 @@ are still necessary, though: <code>GTY(())</code>.  Markers can appear:
 <code>typedef int </code><var>name</var><code>;</code>. 
 These don't need to be marked.
 
+ <p>Since <code>gengtype</code>'s understanding of C++ is limited, there are
+several constructs and declarations that are not supported inside
+classes/structures marked for automatic GC code generation.  The
+following C++ constructs produce a <code>gengtype</code> error on
+structures/classes marked for automatic GC code generation:
+
+     <ul>
+<li>Type definitions inside classes/structures are not supported. 
+<li>Enumerations inside classes/structures are not supported. 
+</ul>
+
+ <p>If you have a class or structure using any of the above constructs,
+you need to mark that class as <code>GTY ((user))</code> and provide your
+own marking routines (see section <a href="User-GC.html#User-GC">User GC</a> for details).
+
+ <p>It is always valid to include function definitions inside classes. 
+Those are always ignored by <code>gengtype</code>, as it only cares about
+data members.
+
 <ul class="menu">
 <li><a accesskey="1" href="GTY-Options.html#GTY-Options">GTY Options</a>:          What goes inside a <code>GTY(())</code>. 
-<li><a accesskey="2" href="GGC-Roots.html#GGC-Roots">GGC Roots</a>:            Making global variables GGC roots. 
-<li><a accesskey="3" href="Files.html#Files">Files</a>:                How the generated files work. 
-<li><a accesskey="4" href="Invoking-the-garbage-collector.html#Invoking-the-garbage-collector">Invoking the garbage collector</a>:    How to invoke the garbage collector. 
-<li><a accesskey="5" href="Troubleshooting.html#Troubleshooting">Troubleshooting</a>:      When something does not work as expected. 
+<li><a accesskey="2" href="User-GC.html#User-GC">User GC</a>: 		Adding user-provided GC marking routines. 
+<li><a accesskey="3" href="GGC-Roots.html#GGC-Roots">GGC Roots</a>:            Making global variables GGC roots. 
+<li><a accesskey="4" href="Files.html#Files">Files</a>:                How the generated files work. 
+<li><a accesskey="5" href="Invoking-the-garbage-collector.html#Invoking-the-garbage-collector">Invoking the garbage collector</a>:    How to invoke the garbage collector. 
+<li><a accesskey="6" href="Troubleshooting.html#Troubleshooting">Troubleshooting</a>:      When something does not work as expected. 
 </ul>
 
  </body></html>

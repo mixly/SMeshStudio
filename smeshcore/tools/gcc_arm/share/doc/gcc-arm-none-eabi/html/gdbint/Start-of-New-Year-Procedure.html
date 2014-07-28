@@ -9,8 +9,7 @@
 <link rel="next" href="Releasing-GDB.html#Releasing-GDB" title="Releasing GDB">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -45,7 +44,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="index.html#Top">Top</a>
 
 <h2 class="chapter">20 Start of New Year Procedure</h2>
 
-<p><a name="index-new-year-procedure-495"></a>
+<p><a name="index-new-year-procedure-490"></a>
 At the start of each new year, the following actions should be performed:
 
      <ul>
@@ -77,24 +76,9 @@ in <samp><span class="file">gdb/config/djgpp/fnchange.lst</span></samp>.
   <li>  file <samp><span class="file">gdbserver/gdbreplay.c</span></samp>, function <code>gdbreplay_version</code>
 </ul>
 
-     <li>Run the <samp><span class="file">copyright.sh</span></samp> script to add the new year in the copyright
-notices of most source files.  This script requires Emacs 22 or later to
-be installed.
-
-     <li>The new year also needs to be added manually in all other files that
-are not already taken care of by the <samp><span class="file">copyright.sh</span></samp> script:
-          <ul>
-  <li>  <samp><span class="file">*.s</span></samp>
-  <li>  <samp><span class="file">*.f</span></samp>
-  <li>  <samp><span class="file">*.f90</span></samp>
-  <li>  <samp><span class="file">*.igen</span></samp>
-  <li>  <samp><span class="file">*.ac</span></samp>
-  <li>  <samp><span class="file">*.texi</span></samp>
-  <li>  <samp><span class="file">*.texinfo</span></samp>
-  <li>  <samp><span class="file">*.tex</span></samp>
-  <li>  <samp><span class="file">*.defs</span></samp>
-  <li>  <samp><span class="file">*.1</span></samp>
-</ul>
+     <li>Run the <samp><span class="file">copyright.py</span></samp> Python script to add the new year in the copyright
+notices of most source files.  This script has been tested with Python
+2.6 and 2.7.
 
    </ul>
 

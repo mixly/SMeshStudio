@@ -10,9 +10,7 @@
 <link rel="next" href="Cond-Exec-Macros.html#Cond-Exec-Macros" title="Cond Exec Macros">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -57,10 +55,10 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Condition-Code.html#Condition-Code">Con
 
 <h4 class="subsection">17.16.2 Representation of condition codes using registers</h4>
 
-<p><a name="index-CCmode-4332"></a><a name="index-MODE_005fCC-4333"></a>
+<p><a name="index-CCmode-4373"></a><a name="index-MODE_005fCC-4374"></a>
 
 <div class="defun">
-&mdash; Macro: <b>SELECT_CC_MODE</b> (<var>op, x, y</var>)<var><a name="index-SELECT_005fCC_005fMODE-4334"></a></var><br>
+&mdash; Macro: <b>SELECT_CC_MODE</b> (<var>op, x, y</var>)<var><a name="index-SELECT_005fCC_005fMODE-4375"></a></var><br>
 <blockquote><p>On many machines, the condition code may be produced by other instructions
 than compares, for example the branch can use directly the condition
 code set by a subtract instruction.  However, on some machines
@@ -108,28 +106,30 @@ in <samp><var>machine</var><span class="file">-modes.def</span></samp>.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>CANONICALIZE_COMPARISON</b> (<var>code, op0, op1</var>)<var><a name="index-CANONICALIZE_005fCOMPARISON-4335"></a></var><br>
+&mdash; Target Hook: void <b>TARGET_CANONICALIZE_COMPARISON</b> (<var>int *code, rtx *op0, rtx *op1, bool op0_preserve_value</var>) (<var>code, op0, op1, op0_preserve_value</var>)<var><a name="index-TARGET_005fCANONICALIZE_005fCOMPARISON-4376"></a></var><br>
 <blockquote><p>On some machines not all possible comparisons are defined, but you can
 convert an invalid comparison into a valid one.  For example, the Alpha
 does not have a <code>GT</code> comparison, but you can use an <code>LT</code>
 comparison instead and swap the order of the operands.
 
-      <p>On such machines, define this macro to be a C statement to do any
-required conversions.  <var>code</var> is the initial comparison code
-and <var>op0</var> and <var>op1</var> are the left and right operands of the
-comparison, respectively.  You should modify <var>code</var>, <var>op0</var>, and
-<var>op1</var> as required.
+      <p>On such machines, implement this hook to do any required conversions. 
+<var>code</var> is the initial comparison code and <var>op0</var> and <var>op1</var>
+are the left and right operands of the comparison, respectively.  If
+<var>op0_preserve_value</var> is <code>true</code> the implementation is not
+allowed to change the value of <var>op0</var> since the value might be used
+in RTXs which aren't comparisons.  E.g. the implementation is not
+allowed to swap operands in that case.
 
       <p>GCC will not assume that the comparison resulting from this macro is
 valid but will see if the resulting insn matches a pattern in the
 <samp><span class="file">md</span></samp> file.
 
-      <p>You need not define this macro if it would never change the comparison
-code or operands. 
+      <p>You need not to implement this hook if it would never change the
+comparison code or operands. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>REVERSIBLE_CC_MODE</b> (<var>mode</var>)<var><a name="index-REVERSIBLE_005fCC_005fMODE-4336"></a></var><br>
+&mdash; Macro: <b>REVERSIBLE_CC_MODE</b> (<var>mode</var>)<var><a name="index-REVERSIBLE_005fCC_005fMODE-4377"></a></var><br>
 <blockquote><p>A C expression whose value is one if it is always safe to reverse a
 comparison whose mode is <var>mode</var>.  If <code>SELECT_CC_MODE</code>
 can ever return <var>mode</var> for a floating-point inequality comparison,
@@ -145,7 +145,7 @@ inequality comparisons are always given <code>CCFPEmode</code>:
       </blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>REVERSE_CONDITION</b> (<var>code, mode</var>)<var><a name="index-REVERSE_005fCONDITION-4337"></a></var><br>
+&mdash; Macro: <b>REVERSE_CONDITION</b> (<var>code, mode</var>)<var><a name="index-REVERSE_005fCONDITION-4378"></a></var><br>
 <blockquote><p>A C expression whose value is reversed condition code of the <var>code</var> for
 comparison done in CC_MODE <var>mode</var>.  The macro is used only in case
 <code>REVERSIBLE_CC_MODE (</code><var>mode</var><code>)</code> is nonzero.  Define this macro in case
@@ -161,7 +161,7 @@ like:
       </blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: bool <b>TARGET_FIXED_CONDITION_CODE_REGS</b> (<var>unsigned int *p1, unsigned int *p2</var>)<var><a name="index-TARGET_005fFIXED_005fCONDITION_005fCODE_005fREGS-4338"></a></var><br>
+&mdash; Target Hook: bool <b>TARGET_FIXED_CONDITION_CODE_REGS</b> (<var>unsigned int *p1, unsigned int *p2</var>)<var><a name="index-TARGET_005fFIXED_005fCONDITION_005fCODE_005fREGS-4379"></a></var><br>
 <blockquote><p>On targets which do not use <code>(cc0)</code>, and which use a hard
 register rather than a pseudo-register to hold condition codes, the
 regular CSE passes are often not able to identify cases in which the
@@ -177,7 +177,7 @@ integer pointed to by <var>p2</var> should be set to
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: enum machine_mode <b>TARGET_CC_MODES_COMPATIBLE</b> (<var>enum machine_mode m1, enum machine_mode m2</var>)<var><a name="index-TARGET_005fCC_005fMODES_005fCOMPATIBLE-4339"></a></var><br>
+&mdash; Target Hook: enum machine_mode <b>TARGET_CC_MODES_COMPATIBLE</b> (<var>enum machine_mode m1, enum machine_mode m2</var>)<var><a name="index-TARGET_005fCC_005fMODES_005fCOMPATIBLE-4380"></a></var><br>
 <blockquote><p>On targets which use multiple condition code modes in class
 <code>MODE_CC</code>, it is sometimes the case that a comparison can be
 validly done in more than one mode.  On such a system, define this

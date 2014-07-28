@@ -34,9 +34,11 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Strings.html#Strings">Strings</a>
 
 <h3 class="section">5.24 <code>strerror</code>&mdash;convert error number to string</h3>
 
-<p><a name="index-strerror-391"></a><strong>Synopsis</strong>
+<p><a name="index-strerror-392"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;string.h&gt;
      char *strerror(int <var>errnum</var>);
+     char *_strerror_r(struct _reent <var>ptr</var>, int <var>errnum</var>,
+         int <var>internal</var>, int *<var>error</var>);
      
 </pre>
    <p><strong>Description</strong><br>
@@ -49,7 +51,9 @@ empty string.
 for each of the values defined in `<code>errno.h</code>':
 
      <dl>
-<dt><code>E2BIG</code><dd>Arg list too long
+<dt><code>0</code><dd>Success
+
+     <br><dt><code>E2BIG</code><dd>Arg list too long
 
      <br><dt><code>EACCES</code><dd>Permission denied
 
@@ -221,6 +225,8 @@ for each of the values defined in `<code>errno.h</code>':
 
    </dl>
 
+   <p><code>_strerror_r</code> is a reentrant version of the above.
+
    <p><br>
 <strong>Returns</strong><br>
 This function returns a pointer to a string.  Your application must
@@ -231,22 +237,45 @@ not modify that string.
 ANSI C requires <code>strerror</code>, but does not specify the strings used
 for each error number.
 
-   <p>Although this implementation of <code>strerror</code> is reentrant, ANSI C
-declares that subsequent calls to <code>strerror</code> may overwrite the
-result string; therefore portable code cannot depend on the reentrancy
-of this subroutine.
+   <p>Although this implementation of <code>strerror</code> is reentrant (depending
+on <code>_user_strerror</code>), ANSI C declares that subsequent calls to
+<code>strerror</code> may overwrite the result string; therefore portable
+code cannot depend on the reentrancy of this subroutine.
+
+   <p>Although this implementation of <code>strerror</code> guarantees a non-null
+result with a NUL-terminator, some implementations return <code>NULL</code>
+on failure.  Although POSIX allows <code>strerror</code> to set <code>errno</code>
+to EINVAL on failure, this implementation does not do so (unless
+you provide <code>_user_strerror</code>).
+
+   <p>POSIX recommends that unknown <var>errnum</var> result in a message
+including that value, however it is not a requirement and this
+implementation does not provide that information (unless you
+provide <code>_user_strerror</code>).
 
    <p>This implementation of <code>strerror</code> provides for user-defined
 extensibility.  <code>errno.h</code> defines <var>__ELASTERROR</var>, which can be
 used as a base for user-defined error values.  If the user supplies a
 routine named <code>_user_strerror</code>, and <var>errnum</var> passed to
 <code>strerror</code> does not match any of the supported values,
-<code>_user_strerror</code> is called with <var>errnum</var> as its argument.
-
-   <p><code>_user_strerror</code> takes one argument of type <var>int</var>, and returns a
-character pointer.  If <var>errnum</var> is unknown to <code>_user_strerror</code>,
-<code>_user_strerror</code> returns <var>NULL</var>.  The default <code>_user_strerror</code>
-returns <var>NULL</var> for all input values.
+<code>_user_strerror</code> is called with three arguments.  The first is of
+type <var>int</var>, and is the <var>errnum</var> value unknown to <code>strerror</code>. 
+The second is of type <var>int</var>, and matches the <var>internal</var> argument
+of <code>_strerror_r</code>; this should be zero if called from <code>strerror</code>
+and non-zero if called from any other function; <code>_user_strerror</code> can
+use this information to satisfy the POSIX rule that no other
+standardized function can overwrite a static buffer reused by
+<code>strerror</code>.  The third is of type <var>int *</var>, and matches the
+<var>error</var> argument of <code>_strerror_r</code>; if a non-zero value is stored
+into that location (usually <var>EINVAL</var>), then <code>strerror</code> will set
+<code>errno</code> to that value, and the XPG variant of <code>strerror_r</code> will
+return that value instead of zero or <var>ERANGE</var>.  <code>_user_strerror</code>
+returns a <var>char *</var> value; returning <var>NULL</var> implies that the user
+function did not choose to handle <var>errnum</var>.  The default
+<code>_user_strerror</code> returns <var>NULL</var> for all input values.  Note that
+<code>_user_sterror</code> must be thread-safe, and only denote errors via the
+third argument rather than modifying <code>errno</code>, if <code>strerror</code> and
+<code>strerror_r</code> are are to comply with POSIX.
 
    <p><code>strerror</code> requires no supporting OS subroutines.
 

@@ -9,8 +9,7 @@
 <link rel="next" href="Porting-GDB.html#Porting-GDB" title="Porting GDB">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -50,7 +49,7 @@ algorithms of <span class="sc">gdb</span>.
 
 <h3 class="section">17.1 Cleanups</h3>
 
-<p><a name="index-cleanups-466"></a>
+<p><a name="index-cleanups-461"></a>
 Cleanups are a structured way to deal with things that need to be done
 later.
 
@@ -68,17 +67,17 @@ created.
      <dl>
 <dt><code>struct cleanup *</code><var>old_chain</var><code>;</code><dd>Declare a variable which will hold a cleanup chain handle.
 
-     <p><a name="index-make_005fcleanup-467"></a><br><dt><var>old_chain</var><code> = make_cleanup (</code><var>function</var><code>, </code><var>arg</var><code>);</code><dd>Make a cleanup which will cause <var>function</var> to be called with
+     <p><a name="index-make_005fcleanup-462"></a><br><dt><var>old_chain</var><code> = make_cleanup (</code><var>function</var><code>, </code><var>arg</var><code>);</code><dd>Make a cleanup which will cause <var>function</var> to be called with
 <var>arg</var> (a <code>char *</code>) later.  The result, <var>old_chain</var>, is a
 handle that can later be passed to <code>do_cleanups</code> or
 <code>discard_cleanups</code>.  Unless you are going to call
 <code>do_cleanups</code> or <code>discard_cleanups</code>, you can ignore the result
 from <code>make_cleanup</code>.
 
-     <p><a name="index-do_005fcleanups-468"></a><br><dt><code>do_cleanups (</code><var>old_chain</var><code>);</code><dd>Do all cleanups added to the chain since the corresponding
+     <p><a name="index-do_005fcleanups-463"></a><br><dt><code>do_cleanups (</code><var>old_chain</var><code>);</code><dd>Do all cleanups added to the chain since the corresponding
 <code>make_cleanup</code> call was made.
 
-     <p><a name="index-discard_005fcleanups-469"></a><br><dt><code>discard_cleanups (</code><var>old_chain</var><code>);</code><dd>Same as <code>do_cleanups</code> except that it just removes the cleanups from
+     <p><a name="index-discard_005fcleanups-464"></a><br><dt><code>discard_cleanups (</code><var>old_chain</var><code>);</code><dd>Same as <code>do_cleanups</code> except that it just removes the cleanups from
 the chain and does not call the specified functions. 
 </dl>
 
@@ -138,7 +137,7 @@ functions, since they might never return to your code (they
 
 <h3 class="section">17.2 Per-architecture module data</h3>
 
-<p><a name="index-per_002darchitecture-module-data-470"></a><a name="index-multi_002darch-data-471"></a><a name="index-data_002dpointer_002c-per_002darchitecture_002fper_002dmodule-472"></a>
+<p><a name="index-per_002darchitecture-module-data-465"></a><a name="index-multi_002darch-data-466"></a><a name="index-data_002dpointer_002c-per_002darchitecture_002fper_002dmodule-467"></a>
 The multi-arch framework includes a mechanism for adding module
 specific per-architecture data-pointers to the <code>struct gdbarch</code>
 architecture object.
@@ -146,7 +145,7 @@ architecture object.
    <p>A module registers one or more per-architecture data-pointers using:
 
 <div class="defun">
-&mdash; Architecture Function: struct gdbarch_data * <b>gdbarch_data_register_pre_init</b> (<var>gdbarch_data_pre_init_ftype *pre_init</var>)<var><a name="index-gdbarch_005fdata_005fregister_005fpre_005finit-473"></a></var><br>
+&mdash; Architecture Function: struct gdbarch_data * <b>gdbarch_data_register_pre_init</b> (<var>gdbarch_data_pre_init_ftype *pre_init</var>)<var><a name="index-gdbarch_005fdata_005fregister_005fpre_005finit-468"></a></var><br>
 <blockquote><p><var>pre_init</var> is used to, on-demand, allocate an initial value for a
 per-architecture data-pointer using the architecture's obstack (passed
 in as a parameter).  Since <var>pre_init</var> can be called during
@@ -155,7 +154,7 @@ and must not call modules that use per-architecture data.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Architecture Function: struct gdbarch_data * <b>gdbarch_data_register_post_init</b> (<var>gdbarch_data_post_init_ftype *post_init</var>)<var><a name="index-gdbarch_005fdata_005fregister_005fpost_005finit-474"></a></var><br>
+&mdash; Architecture Function: struct gdbarch_data * <b>gdbarch_data_register_post_init</b> (<var>gdbarch_data_post_init_ftype *post_init</var>)<var><a name="index-gdbarch_005fdata_005fregister_005fpost_005finit-469"></a></var><br>
 <blockquote><p><var>post_init</var> is used to obtain an initial value for a
 per-architecture data-pointer <em>after</em>.  Since <var>post_init</var> is
 always called after architecture creation, it both receives the fully
@@ -171,7 +170,7 @@ identify the per-architecture data-pointer added for that module.
    <p>The per-architecture data-pointer is accessed using the function:
 
 <div class="defun">
-&mdash; Architecture Function: void * <b>gdbarch_data</b> (<var>struct gdbarch *gdbarch, struct gdbarch_data *data_handle</var>)<var><a name="index-gdbarch_005fdata-475"></a></var><br>
+&mdash; Architecture Function: void * <b>gdbarch_data</b> (<var>struct gdbarch *gdbarch, struct gdbarch_data *data_handle</var>)<var><a name="index-gdbarch_005fdata-470"></a></var><br>
 <blockquote><p>Given the architecture <var>arch</var> and module data handle
 <var>data_handle</var> (returned by <code>gdbarch_data_register_pre_init</code>
 or <code>gdbarch_data_register_post_init</code>), this function returns the
@@ -232,8 +231,8 @@ architecture.
 </pre>
    <h3 class="section">17.3 Wrapping Output Lines</h3>
 
-<p><a name="index-line-wrap-in-output-476"></a>
-<a name="index-wrap_005fhere-477"></a>Output that goes through <code>printf_filtered</code> or <code>fputs_filtered</code>
+<p><a name="index-line-wrap-in-output-471"></a>
+<a name="index-wrap_005fhere-472"></a>Output that goes through <code>printf_filtered</code> or <code>fputs_filtered</code>
 or <code>fputs_demangled</code> needs only to have calls to <code>wrap_here</code>
 added in places that would be good breaking points.  The utility
 routines will take care of actually wrapping if the line width is
@@ -295,7 +294,7 @@ errors.</em>
 
 <h3 class="section">17.5 Compiler Warnings</h3>
 
-<p><a name="index-compiler-warnings-478"></a>
+<p><a name="index-compiler-warnings-473"></a>
 With few exceptions, developers should avoid the configuration option
 &lsquo;<samp><span class="samp">--disable-werror</span></samp>&rsquo; when building <span class="sc">gdb</span>.  The exceptions
 are listed in the file <samp><span class="file">gdb/MAINTAINERS</span></samp>.  The default, when
@@ -364,12 +363,12 @@ error and issued an </em><code>internal_error</code><em>.</em>
 
 <h3 class="section">17.8 Clean Design and Portable Implementation</h3>
 
-<p><a name="index-design-479"></a>In addition to getting the syntax right, there's the little question of
+<p><a name="index-design-474"></a>In addition to getting the syntax right, there's the little question of
 semantics.  Some things are done in certain ways in <span class="sc">gdb</span> because long
 experience has shown that the more obvious ways caused various kinds of
 trouble.
 
-   <p><a name="index-assumptions-about-targets-480"></a>You can't assume the byte order of anything that comes from a target
+   <p><a name="index-assumptions-about-targets-475"></a>You can't assume the byte order of anything that comes from a target
 (including <var>value</var>s, object files, and instructions).  Such things
 must be byte-swapped using <code>SWAP_TARGET_AND_HOST</code> in
 <span class="sc">gdb</span>, or one of the swap routines defined in <samp><span class="file">bfd.h</span></samp>,
@@ -386,11 +385,11 @@ host machine.  Target code must bring along its own header files &ndash;
 written from scratch or explicitly donated by their owner, to avoid
 copyright problems.
 
-   <p><a name="index-portability-481"></a>Insertion of new <code>#ifdef</code>'s will be frowned upon.  It's much better
+   <p><a name="index-portability-476"></a>Insertion of new <code>#ifdef</code>'s will be frowned upon.  It's much better
 to write the code portably than to conditionalize it for various
 systems.
 
-   <p><a name="index-system-dependencies-482"></a>New <code>#ifdef</code>'s which test for specific compilers or manufacturers
+   <p><a name="index-system-dependencies-477"></a>New <code>#ifdef</code>'s which test for specific compilers or manufacturers
 or operating systems are unacceptable.  All <code>#ifdef</code>'s should test
 for features.  The information about which configurations contain which
 features should be segregated into the configuration files.  Experience
@@ -403,7 +402,7 @@ with regard to this feature.
    <p>Adding code that handles specific architectures, operating systems,
 target interfaces, or hosts, is not acceptable in generic code.
 
-   <p><a name="index-portable-file-name-handling-483"></a><a name="index-file-names_002c-portability-484"></a>One particularly notorious area where system dependencies tend to
+   <p><a name="index-portable-file-name-handling-478"></a><a name="index-file-names_002c-portability-479"></a>One particularly notorious area where system dependencies tend to
 creep in is handling of file names.  The mainline <span class="sc">gdb</span> code
 assumes Posix semantics of file names: absolute file names begin with
 a forward slash <samp><span class="file">/</span></samp>, slashes are used to separate leading
@@ -413,32 +412,32 @@ system-dependent code where you need to take apart or construct a file
 name, use the following portable macros:
 
      
-<a name="index-HAVE_005fDOS_005fBASED_005fFILE_005fSYSTEM-485"></a>
+<a name="index-HAVE_005fDOS_005fBASED_005fFILE_005fSYSTEM-480"></a>
 <dl><dt><code>HAVE_DOS_BASED_FILE_SYSTEM</code><dd>This preprocessing symbol is defined to a non-zero value on hosts
 whose filesystems belong to the MS-DOS/MS-Windows family.  Use this
 symbol to write conditional code which should only be compiled for
 such hosts.
 
-     <p><a name="index-IS_005fDIR_005fSEPARATOR-486"></a><br><dt><code>IS_DIR_SEPARATOR (</code><var>c</var><code>)</code><dd>Evaluates to a non-zero value if <var>c</var> is a directory separator
+     <p><a name="index-IS_005fDIR_005fSEPARATOR-481"></a><br><dt><code>IS_DIR_SEPARATOR (</code><var>c</var><code>)</code><dd>Evaluates to a non-zero value if <var>c</var> is a directory separator
 character.  On Unix and GNU/Linux systems, only a slash <samp><span class="file">/</span></samp> is
 such a character, but on Windows, both <samp><span class="file">/</span></samp> and <samp><span class="file">\</span></samp> will
 pass.
 
-     <p><a name="index-IS_005fABSOLUTE_005fPATH-487"></a><br><dt><code>IS_ABSOLUTE_PATH (</code><var>file</var><code>)</code><dd>Evaluates to a non-zero value if <var>file</var> is an absolute file name. 
+     <p><a name="index-IS_005fABSOLUTE_005fPATH-482"></a><br><dt><code>IS_ABSOLUTE_PATH (</code><var>file</var><code>)</code><dd>Evaluates to a non-zero value if <var>file</var> is an absolute file name. 
 For Unix and GNU/Linux hosts, a name which begins with a slash
 <samp><span class="file">/</span></samp> is absolute.  On DOS and Windows, <samp><span class="file">d:/foo</span></samp> and
 <samp><span class="file">x:\bar</span></samp> are also absolute file names.
 
-     <p><a name="index-FILENAME_005fCMP-488"></a><br><dt><code>FILENAME_CMP (</code><var>f1</var><code>, </code><var>f2</var><code>)</code><dd>Calls a function which compares file names <var>f1</var> and <var>f2</var> as
+     <p><a name="index-FILENAME_005fCMP-483"></a><br><dt><code>FILENAME_CMP (</code><var>f1</var><code>, </code><var>f2</var><code>)</code><dd>Calls a function which compares file names <var>f1</var> and <var>f2</var> as
 appropriate for the underlying host filesystem.  For Posix systems,
 this simply calls <code>strcmp</code>; on case-insensitive filesystems it
 will call <code>strcasecmp</code> instead.
 
-     <p><a name="index-DIRNAME_005fSEPARATOR-489"></a><br><dt><code>DIRNAME_SEPARATOR</code><dd>Evaluates to a character which separates directories in
+     <p><a name="index-DIRNAME_005fSEPARATOR-484"></a><br><dt><code>DIRNAME_SEPARATOR</code><dd>Evaluates to a character which separates directories in
 <code>PATH</code>-style lists, typically held in environment variables. 
 This character is &lsquo;<samp><span class="samp">:</span></samp>&rsquo; on Unix, &lsquo;<samp><span class="samp">;</span></samp>&rsquo; on DOS and Windows.
 
-     <p><a name="index-SLASH_005fSTRING-490"></a><br><dt><code>SLASH_STRING</code><dd>This evaluates to a constant string you should use to produce an
+     <p><a name="index-SLASH_005fSTRING-485"></a><br><dt><code>SLASH_STRING</code><dd>This evaluates to a constant string you should use to produce an
 absolute filename from leading directories and the file's basename. 
 <code>SLASH_STRING</code> is <code>"/"</code> on most systems, but might be
 <code>"\\"</code> for some Windows-based ports. 

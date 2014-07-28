@@ -45,30 +45,30 @@ Up:&nbsp;<a rel="up" accesskey="u" href="MIPS_002dDependent.html#MIPS_002dDepend
 <hr>
 </div>
 
-<h4 class="subsection">9.24.1 Assembler options</h4>
+<h4 class="subsection">9.26.1 Assembler options</h4>
 
 <p>The <span class="sc">mips</span> configurations of <span class="sc">gnu</span> <code>as</code> support these
 special options:
 
      
-<a name="index-g_t_0040code_007b_002dG_007d-option-_0028MIPS_0029-1309"></a>
+<a name="index-g_t_0040code_007b_002dG_007d-option-_0028MIPS_0029-1362"></a>
 <dl><dt><code>-G </code><var>num</var><dd>This option sets the largest size of an object that can be referenced
 implicitly with the <code>gp</code> register.  It is only accepted for targets
 that use <span class="sc">ecoff</span> format.  The default value is 8.
 
-     <p><a name="index-g_t_0040code_007b_002dEB_007d-option-_0028MIPS_0029-1310"></a><a name="index-g_t_0040code_007b_002dEL_007d-option-_0028MIPS_0029-1311"></a><a name="index-MIPS-big_002dendian-output-1312"></a><a name="index-MIPS-little_002dendian-output-1313"></a><a name="index-big_002dendian-output_002c-MIPS-1314"></a><a name="index-little_002dendian-output_002c-MIPS-1315"></a><br><dt><code>-EB</code><dt><code>-EL</code><dd>Any <span class="sc">mips</span> configuration of <code>as</code> can select big-endian or
+     <p><a name="index-g_t_0040code_007b_002dEB_007d-option-_0028MIPS_0029-1363"></a><a name="index-g_t_0040code_007b_002dEL_007d-option-_0028MIPS_0029-1364"></a><a name="index-MIPS-big_002dendian-output-1365"></a><a name="index-MIPS-little_002dendian-output-1366"></a><a name="index-big_002dendian-output_002c-MIPS-1367"></a><a name="index-little_002dendian-output_002c-MIPS-1368"></a><br><dt><code>-EB</code><dt><code>-EL</code><dd>Any <span class="sc">mips</span> configuration of <code>as</code> can select big-endian or
 little-endian output at run time (unlike the other <span class="sc">gnu</span> development
 tools, which must be configured for one or the other).  Use &lsquo;<samp><span class="samp">-EB</span></samp>&rsquo;
 to select big-endian output, and &lsquo;<samp><span class="samp">-EL</span></samp>&rsquo; for little-endian.
 
-     <br><dt><code>-KPIC</code><dd><a name="index-PIC-selection_002c-MIPS-1316"></a><a name="index-g_t_0040option_007b_002dKPIC_007d-option_002c-MIPS-1317"></a>Generate SVR4-style PIC.  This option tells the assembler to generate
+     <br><dt><code>-KPIC</code><dd><a name="index-PIC-selection_002c-MIPS-1369"></a><a name="index-g_t_0040option_007b_002dKPIC_007d-option_002c-MIPS-1370"></a>Generate SVR4-style PIC.  This option tells the assembler to generate
 SVR4-style position-independent macro expansions.  It also tells the
 assembler to mark the output file as PIC.
 
-     <br><dt><code>-mvxworks-pic</code><dd><a name="index-g_t_0040option_007b_002dmvxworks_002dpic_007d-option_002c-MIPS-1318"></a>Generate VxWorks PIC.  This option tells the assembler to generate
+     <br><dt><code>-mvxworks-pic</code><dd><a name="index-g_t_0040option_007b_002dmvxworks_002dpic_007d-option_002c-MIPS-1371"></a>Generate VxWorks PIC.  This option tells the assembler to generate
 VxWorks-style position-independent macro expansions.
 
-     <p><a name="index-MIPS-architecture-options-1319"></a><br><dt><code>-mips1</code><dt><code>-mips2</code><dt><code>-mips3</code><dt><code>-mips4</code><dt><code>-mips5xo</code><dt><code>-mips32</code><dt><code>-mips32r2</code><dt><code>-mips64</code><dt><code>-mips64r2</code><dd>Generate code for a particular MIPS Instruction Set Architecture level. 
+     <p><a name="index-MIPS-architecture-options-1372"></a><br><dt><code>-mips1</code><dt><code>-mips2</code><dt><code>-mips3</code><dt><code>-mips4</code><dt><code>-mips5</code><dt><code>-mips32</code><dt><code>-mips32r2</code><dt><code>-mips64</code><dt><code>-mips64r2</code><dd>Generate code for a particular MIPS Instruction Set Architecture level. 
 &lsquo;<samp><span class="samp">-mips1</span></samp>&rsquo; corresponds to the <span class="sc">r2000</span> and <span class="sc">r3000</span> processors,
 &lsquo;<samp><span class="samp">-mips2</span></samp>&rsquo; to the <span class="sc">r6000</span> processor, &lsquo;<samp><span class="samp">-mips3</span></samp>&rsquo; to the
 <span class="sc">r4000</span> processor, and &lsquo;<samp><span class="samp">-mips4</span></samp>&rsquo; to the <span class="sc">r8000</span> and
@@ -161,7 +161,7 @@ all problems in hand-written assembler code.
 
      <br><dt><code>-mfix-vr4130</code><dt><code>-mno-fix-vr4130</code><dd>Insert nops to work around the VR4130 &lsquo;<samp><span class="samp">mflo</span></samp>&rsquo;/&lsquo;<samp><span class="samp">mfhi</span></samp>&rsquo; errata.
 
-     <br><dt><code>-mfix-24k</code><dt><code>-no-mfix-24k</code><dd>Insert nops to work around the 24K &lsquo;<samp><span class="samp">eret</span></samp>&rsquo;/&lsquo;<samp><span class="samp">deret</span></samp>&rsquo; errata.
+     <br><dt><code>-mfix-24k</code><dt><code>-mno-fix-24k</code><dd>Insert nops to work around the 24K &lsquo;<samp><span class="samp">eret</span></samp>&rsquo;/&lsquo;<samp><span class="samp">deret</span></samp>&rsquo; errata.
 
      <br><dt><code>-mfix-cn63xxp1</code><dt><code>-mno-fix-cn63xxp1</code><dd>Replace <code>pref</code> hints 0 - 4 and 6 - 24 with hint 28 to work around
 certain CN63XXP1 errata.
@@ -228,6 +228,8 @@ m4k,
 m4kp,
 m14k,
 m14kc,
+m14ke,
+m14kec,
 24kc,
 24kf2_1,
 24kf,
@@ -259,7 +261,10 @@ loongson2e,
 loongson2f,
 loongson3a,
 octeon,
-xlr
+octeon+,
+octeon2,
+xlr,
+xlp
 </blockquote>
 
      <p>For compatibility reasons, &lsquo;<samp><var>n</var><span class="samp">x</span></samp>&rsquo; and &lsquo;<samp><var>b</var><span class="samp">fx</span></samp>&rsquo; are
@@ -272,10 +277,10 @@ identical to &lsquo;<samp><span class="samp">-march=</span><var>cpu</var></samp>
      <br><dt><code>-mabi=</code><var>abi</var><dd>Record which ABI the source code uses.  The recognized arguments
 are: &lsquo;<samp><span class="samp">32</span></samp>&rsquo;, &lsquo;<samp><span class="samp">n32</span></samp>&rsquo;, &lsquo;<samp><span class="samp">o64</span></samp>&rsquo;, &lsquo;<samp><span class="samp">64</span></samp>&rsquo; and &lsquo;<samp><span class="samp">eabi</span></samp>&rsquo;.
 
-     <br><dt><code>-msym32</code><dt><code>-mno-sym32</code><dd><a name="index-g_t_002dmsym32-1320"></a><a name="index-g_t_002dmno_002dsym32-1321"></a>Equivalent to adding <code>.set sym32</code> or <code>.set nosym32</code> to
+     <br><dt><code>-msym32</code><dt><code>-mno-sym32</code><dd><a name="index-g_t_002dmsym32-1373"></a><a name="index-g_t_002dmno_002dsym32-1374"></a>Equivalent to adding <code>.set sym32</code> or <code>.set nosym32</code> to
 the beginning of the assembler input.  See <a href="MIPS-symbol-sizes.html#MIPS-symbol-sizes">MIPS symbol sizes</a>.
 
-     <p><a name="index-g_t_0040code_007b_002dnocpp_007d-ignored-_0028MIPS_0029-1322"></a><br><dt><code>-nocpp</code><dd>This option is ignored.  It is accepted for command-line compatibility with
+     <p><a name="index-g_t_0040code_007b_002dnocpp_007d-ignored-_0028MIPS_0029-1375"></a><br><dt><code>-nocpp</code><dd>This option is ignored.  It is accepted for command-line compatibility with
 other assemblers, which use it to turn off C style preprocessing.  With
 <span class="sc">gnu</span> <code>as</code>, there is no need for &lsquo;<samp><span class="samp">-nocpp</span></samp>&rsquo;, because the
 <span class="sc">gnu</span> assembler itself never runs the C preprocessor.

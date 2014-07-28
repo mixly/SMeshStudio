@@ -9,9 +9,7 @@
 <link rel="next" href="Configuration.html#Configuration" title="Configuration">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -59,10 +57,17 @@ Up:&nbsp;<a rel="up" accesskey="u" href="gcc-Directory.html#gcc-Directory">gcc D
      <dl>
 <dt><samp><var>language</var></samp><dd>Subdirectories for various languages.  Directories containing a file
 <samp><span class="file">config-lang.in</span></samp> are language subdirectories.  The contents of
-the subdirectories <samp><span class="file">cp</span></samp> (for C++), <samp><span class="file">lto</span></samp> (for LTO),
-<samp><span class="file">objc</span></samp> (for Objective-C) and <samp><span class="file">objcp</span></samp> (for Objective-C++) are
-documented in this manual (see <a href="Passes.html#Passes">Passes and Files of the Compiler</a>); those for other languages are not.  See <a href="Front-End.html#Front-End">Anatomy of a Language Front End</a>, for details of the files in these
+the subdirectories <samp><span class="file">c</span></samp> (for C), <samp><span class="file">cp</span></samp> (for C++),
+<samp><span class="file">objc</span></samp> (for Objective-C), <samp><span class="file">objcp</span></samp> (for Objective-C++),
+and <samp><span class="file">lto</span></samp> (for LTO) are documented in this
+manual (see <a href="Passes.html#Passes">Passes and Files of the Compiler</a>);
+those for other languages are not.  See <a href="Front-End.html#Front-End">Anatomy of a Language Front End</a>, for details of the files in these
 directories.
+
+     <br><dt><samp><span class="file">common</span></samp><dd>Source files shared between the compiler drivers (such as
+<samp><span class="command">gcc</span></samp>) and the compilers proper (such as <samp><span class="file">cc1</span></samp>).  If an
+architecture defines target hooks shared between those places, it also
+has a subdirectory in <samp><span class="file">common/config</span></samp>.  See <a href="Target-Structure.html#Target-Structure">Target Structure</a>.
 
      <br><dt><samp><span class="file">config</span></samp><dd>Configuration files for supported architectures and operating
 systems.  See <a href="Back-End.html#Back-End">Anatomy of a Target Back End</a>, for

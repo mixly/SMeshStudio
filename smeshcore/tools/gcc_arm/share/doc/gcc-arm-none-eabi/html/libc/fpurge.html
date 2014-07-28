@@ -34,11 +34,15 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdio.html#Stdio">Stdio</a>
 
 <h3 class="section">4.19 <code>fpurge</code>&mdash;discard pending file I/O</h3>
 
-<p><a name="index-fpurge-181"></a><a name="index-g_t_005ffpurge_005fr-182"></a><strong>Synopsis</strong>
+<p><a name="index-fpurge-181"></a><a name="index-g_t_005ffpurge_005fr-182"></a><a name="index-g_t_005f_005ffpurge-183"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;stdio.h&gt;
      int fpurge(FILE *<var>fp</var>);
      
      int _fpurge_r(struct _reent *<var>reent</var>, FILE *<var>fp</var>);
+     
+     #include &lt;stdio.h&gt;
+     #include &lt;stdio_ext.h&gt;
+     void  __fpurge(FILE *<var>fp</var>);
      
 </pre>
    <p><strong>Description</strong><br>
@@ -48,6 +52,8 @@ this discards any data from <code>ungetc</code> and any data retrieved from disk
 but not yet read via <code>getc</code>.  This is more severe than <code>fflush</code>,
 and generally is only needed when manually altering the underlying file
 descriptor of a stream.
+
+   <p><code>__fpurge</code> behaves exactly like <code>fpurge</code> but does not return a value.
 
    <p>The alternate function <code>_fpurge_r</code> is a reentrant version, where the
 extra argument <var>reent</var> is a pointer to a reentrancy structure, and

@@ -47,15 +47,15 @@ Up:&nbsp;<a rel="up" accesskey="u" href="MIPS_002dDependent.html#MIPS_002dDepend
 <hr>
 </div>
 
-<h4 class="subsection">9.24.7 Directive to mark data as an instruction</h4>
+<h4 class="subsection">9.26.7 Directive to mark data as an instruction</h4>
 
-<p><a name="index-g_t_0040code_007b_002einsn_007d-1336"></a>The <code>.insn</code> directive tells <code>as</code> that the following
+<p><a name="index-g_t_0040code_007b_002einsn_007d-1389"></a>The <code>.insn</code> directive tells <code>as</code> that the following
 data is actually instructions.  This makes a difference in MIPS 16 and
 microMIPS modes: when loading the address of a label which precedes
 instructions, <code>as</code> automatically adds 1 to the value, so
 that jumping to the loaded address will do the right thing.
 
-   <p><a name="index-g_t_0040code_007b_002eglobal_007d-1337"></a>The <code>.global</code> and <code>.globl</code> directives supported by
+   <p><a name="index-g_t_0040code_007b_002eglobal_007d-1390"></a>The <code>.global</code> and <code>.globl</code> directives supported by
 <code>as</code> will by default mark the symbol as pointing to a
 region of data not code.  This means that, for example, any
 instructions following such a symbol will not be disassembled by

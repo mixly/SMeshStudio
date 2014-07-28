@@ -11,8 +11,8 @@
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
 This file documents the GNU linker LD
-(GNU Tools for ARM Embedded Processors)
-version 2.22.0.
+(GNU Binutils)
+version 2.23.2.
 
 Copyright (C) 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000,
 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
@@ -48,7 +48,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="SECTIONS.html#SECTIONS">SECTIONS</a>
 
 <h4 class="subsection">3.6.5 Output Section Data</h4>
 
-<p><a name="index-data-419"></a><a name="index-section-data-420"></a><a name="index-output-section-data-421"></a><a name="index-BYTE_0028_0040var_007bexpression_007d_0029-422"></a><a name="index-SHORT_0028_0040var_007bexpression_007d_0029-423"></a><a name="index-LONG_0028_0040var_007bexpression_007d_0029-424"></a><a name="index-QUAD_0028_0040var_007bexpression_007d_0029-425"></a><a name="index-SQUAD_0028_0040var_007bexpression_007d_0029-426"></a>You can include explicit bytes of data in an output section by using
+<p><a name="index-data-423"></a><a name="index-section-data-424"></a><a name="index-output-section-data-425"></a><a name="index-BYTE_0028_0040var_007bexpression_007d_0029-426"></a><a name="index-SHORT_0028_0040var_007bexpression_007d_0029-427"></a><a name="index-LONG_0028_0040var_007bexpression_007d_0029-428"></a><a name="index-QUAD_0028_0040var_007bexpression_007d_0029-429"></a><a name="index-SQUAD_0028_0040var_007bexpression_007d_0029-430"></a>You can include explicit bytes of data in an output section by using
 <code>BYTE</code>, <code>SHORT</code>, <code>LONG</code>, <code>QUAD</code>, or <code>SQUAD</code> as
 an output section command.  Each keyword is followed by an expression in
 parentheses providing the value to store (see <a href="Expressions.html#Expressions">Expressions</a>).  The
@@ -82,7 +82,7 @@ between them, so the following will produce an error from the linker:
 <pre class="smallexample">     SECTIONS { .text : { *(.text) } LONG(1) .data : { *(.data) } }</pre>
    <p>whereas this will work:
 <pre class="smallexample">     SECTIONS { .text : { *(.text) ; LONG(1) } .data : { *(.data) } }</pre>
-   <p><a name="index-FILL_0028_0040var_007bexpression_007d_0029-427"></a><a name="index-holes_002c-filling-428"></a><a name="index-unspecified-memory-429"></a>You may use the <code>FILL</code> command to set the fill pattern for the
+   <p><a name="index-FILL_0028_0040var_007bexpression_007d_0029-431"></a><a name="index-holes_002c-filling-432"></a><a name="index-unspecified-memory-433"></a>You may use the <code>FILL</code> command to set the fill pattern for the
 current section.  It is followed by an expression in parentheses.  Any
 otherwise unspecified regions of memory within the section (for example,
 gaps left due to the required alignment of input sections) are filled

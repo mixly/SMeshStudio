@@ -19,7 +19,7 @@
 #include "camera.h"
 
 #ifndef CAMERA_PORT
-#define CAMERA_PORT RS232_PORT_1
+#define CAMERA_PORT RS232_PORT_0
 #endif
 
 #define CAMERA_CMD_H 0x48

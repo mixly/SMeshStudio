@@ -11,8 +11,8 @@
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
 This file documents the GNU linker LD
-(GNU Tools for ARM Embedded Processors)
-version 2.22.0.
+(GNU Binutils)
+version 2.23.2.
 
 Copyright (C) 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000,
 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
@@ -48,7 +48,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Scripts.html#Scripts">Scripts</a>
 
 <h3 class="section">3.7 MEMORY Command</h3>
 
-<p><a name="index-MEMORY-470"></a><a name="index-memory-regions-471"></a><a name="index-regions-of-memory-472"></a><a name="index-allocating-memory-473"></a><a name="index-discontinuous-memory-474"></a>The linker's default configuration permits allocation of all available
+<p><a name="index-MEMORY-474"></a><a name="index-memory-regions-475"></a><a name="index-regions-of-memory-476"></a><a name="index-allocating-memory-477"></a><a name="index-discontinuous-memory-478"></a>The linker's default configuration permits allocation of all available
 memory.  You can override this by using the <code>MEMORY</code> command.
 
    <p>The <code>MEMORY</code> command describes the location and size of blocks of
@@ -76,7 +76,7 @@ must have a distinct name within the <code>MEMORY</code> command.  However you c
 add later alias names to existing memory regions with the <a href="REGION_005fALIAS.html#REGION_005fALIAS">REGION_ALIAS</a>
 command.
 
-   <p><a name="index-memory-region-attributes-475"></a>The <var>attr</var> string is an optional list of attributes that specify
+   <p><a name="index-memory-region-attributes-479"></a>The <var>attr</var> string is an optional list of attributes that specify
 whether to use a particular memory region for an input section which is
 not explicitly mapped in the linker script.  As described in
 <a href="SECTIONS.html#SECTIONS">SECTIONS</a>, if you do not specify an output section for some input
@@ -101,13 +101,13 @@ attribute reverses this test, so that an unmapped section will be placed
 in the memory region only if it does not match any of the listed
 attributes.
 
-   <p><a name="index-ORIGIN-_003d-476"></a><a name="index-o-_003d-477"></a><a name="index-org-_003d-478"></a>The <var>origin</var> is an numerical expression for the start address of
+   <p><a name="index-ORIGIN-_003d-480"></a><a name="index-o-_003d-481"></a><a name="index-org-_003d-482"></a>The <var>origin</var> is an numerical expression for the start address of
 the memory region.  The expression must evaluate to a constant and it
 cannot involve any symbols.  The keyword <code>ORIGIN</code> may be
 abbreviated to <code>org</code> or <code>o</code> (but not, for example,
 <code>ORG</code>).
 
-   <p><a name="index-LENGTH-_003d-479"></a><a name="index-len-_003d-480"></a><a name="index-l-_003d-481"></a>The <var>len</var> is an expression for the size in bytes of the memory
+   <p><a name="index-LENGTH-_003d-483"></a><a name="index-len-_003d-484"></a><a name="index-l-_003d-485"></a>The <var>len</var> is an expression for the size in bytes of the memory
 region.  As with the <var>origin</var> expression, the expression must
 be numerical only and must evaluate to a constant.  The keyword
 <code>LENGTH</code> may be abbreviated to <code>len</code> or <code>l</code>.

@@ -9,8 +9,7 @@
 <link rel="next" href="Looking-Up-an-Existing-Architecture.html#Looking-Up-an-Existing-Architecture" title="Looking Up an Existing Architecture">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -44,7 +43,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Initialize-New-Architecture.html#Initia
 
 <h4 class="subsection">11.2.1 How an Architecture is Represented</h4>
 
-<p><a name="index-architecture-representation-226"></a><a name="index-representation-of-architecture-227"></a>
+<p><a name="index-architecture-representation-222"></a><a name="index-representation-of-architecture-223"></a>
 Each <code>gdbarch</code> is associated with a single <span class="sc">bfd</span> architecture,
 via a <code>bfd_arch_</code><var>arch</var> in the <code>bfd_architecture</code>
 enumeration.  The <code>gdbarch</code> is registered by a call to
@@ -53,14 +52,14 @@ enumeration.  The <code>gdbarch</code> is registered by a call to
 called during <span class="sc">gdb</span> startup.  The arguments are a <span class="sc">bfd</span>
 architecture constant and an initialization function.
 
-   <p><a name="index-g_t_005finitialize_005f_0040var_007barch_007d_005ftdep-228"></a><a name="index-g_t_0040file_007b_0040var_007barch_007d_002dtdep_002ec_007d-229"></a>A <span class="sc">gdb</span> description for a new architecture, <var>arch</var> is created by
+   <p><a name="index-g_t_005finitialize_005f_0040var_007barch_007d_005ftdep-224"></a><a name="index-g_t_0040file_007b_0040var_007barch_007d_002dtdep_002ec_007d-225"></a>A <span class="sc">gdb</span> description for a new architecture, <var>arch</var> is created by
 defining a global function <code>_initialize_</code><var>arch</var><code>_tdep</code>, by
 convention in the source file <samp><var>arch</var><span class="file">-tdep.c</span></samp>.  For example,
 in the case of the OpenRISC 1000, this function is called
 <code>_initialize_or1k_tdep</code> and is found in the file
 <samp><span class="file">or1k-tdep.c</span></samp>.
 
-   <p><a name="index-g_t_0040file_007bconfigure_002etgt_007d-230"></a><a name="index-g_t_0040code_007bgdbarch_007d-231"></a><a name="index-gdbarch_005fregister-232"></a>The resulting object files containing the implementation of the
+   <p><a name="index-g_t_0040file_007bconfigure_002etgt_007d-226"></a><a name="index-g_t_0040code_007bgdbarch_007d-227"></a><a name="index-gdbarch_005fregister-228"></a>The resulting object files containing the implementation of the
 <code>_initialize_</code><var>arch</var><code>_tdep</code> function are specified in the <span class="sc">gdb</span>
 <samp><span class="file">configure.tgt</span></samp> file, which includes a large case statement
 pattern matching against the <code>--target</code> option of the

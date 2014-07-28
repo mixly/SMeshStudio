@@ -96,7 +96,7 @@ mx2xxcc.recipe.size.regex.data=^(?:\.data|\.bss|\.noinit)\s+([0-9]+).*
 mx2xxcc.recipe.size.regex.eeprom=^(?:\.eeprom)\s+([0-9]+).*
 mx2xxcc.build.extra_flags=-DHAVE_STDINT_H -DRF230BB=1 -DUIP_CONF_IPV6=1 -DWATCHDOG_CONF_TIMEOUT=WDTO_8S -DAUTO_CRC_PADDING=2 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1  -DRS232_CONF_NUMPORTS=2
 ##############################################################
-mxseabo.name=contiki_mxseabo_7.3728
+mxseabo.name=contiki_mxseabo_8M
 mxseabo.cpu=atmega1284p
 
 mxseabo.upload.tool=avrdude
@@ -113,7 +113,7 @@ mxseabo.bootloader.unlock_bits=0x3F
 mxseabo.bootloader.lock_bits=0x0F
 
 mxseabo.build.mcu=atmega1284p
-mxseabo.build.f_cpu=7372800L
+mxseabo.build.f_cpu=8000000L
 mxseabo.build.core=contiki
 mxseabo.build.variant=mxseabo
 mxseabo.compiler.path={runtime.ide.path}/tools/avr/bin/

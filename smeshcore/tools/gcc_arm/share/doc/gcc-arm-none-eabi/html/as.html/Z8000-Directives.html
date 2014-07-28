@@ -47,29 +47,29 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Z8000_002dDependent.html#Z8000_002dDepe
 <hr>
 </div>
 
-<h4 class="subsection">9.42.3 Assembler Directives for the Z8000</h4>
+<h4 class="subsection">9.45.3 Assembler Directives for the Z8000</h4>
 
-<p><a name="index-Z8000-directives-2020"></a><a name="index-directives_002c-Z8000-2021"></a>The Z8000 port of as includes additional assembler directives,
+<p><a name="index-Z8000-directives-2094"></a><a name="index-directives_002c-Z8000-2095"></a>The Z8000 port of as includes additional assembler directives,
 for compatibility with other Z8000 assemblers.  These do not begin with
 &lsquo;<samp><span class="samp">.</span></samp>&rsquo; (unlike the ordinary as directives).
 
      
-<a name="index-segm-2022"></a>
-<dl><dt><code>segm</code><dd><a name="index-g_t_002ez8001-2023"></a><dt><code>.z8001</code><dd>Generate code for the segmented Z8001.
+<a name="index-segm-2096"></a>
+<dl><dt><code>segm</code><dd><a name="index-g_t_002ez8001-2097"></a><dt><code>.z8001</code><dd>Generate code for the segmented Z8001.
 
-     <p><a name="index-unsegm-2024"></a><br><dt><code>unsegm</code><dd><a name="index-g_t_002ez8002-2025"></a><dt><code>.z8002</code><dd>Generate code for the unsegmented Z8002.
+     <p><a name="index-unsegm-2098"></a><br><dt><code>unsegm</code><dd><a name="index-g_t_002ez8002-2099"></a><dt><code>.z8002</code><dd>Generate code for the unsegmented Z8002.
 
-     <p><a name="index-name-2026"></a><br><dt><code>name</code><dd>Synonym for <code>.file</code>
+     <p><a name="index-name-2100"></a><br><dt><code>name</code><dd>Synonym for <code>.file</code>
 
-     <p><a name="index-global-2027"></a><br><dt><code>global</code><dd>Synonym for <code>.global</code>
+     <p><a name="index-global-2101"></a><br><dt><code>global</code><dd>Synonym for <code>.global</code>
 
-     <p><a name="index-wval-2028"></a><br><dt><code>wval</code><dd>Synonym for <code>.word</code>
+     <p><a name="index-wval-2102"></a><br><dt><code>wval</code><dd>Synonym for <code>.word</code>
 
-     <p><a name="index-lval-2029"></a><br><dt><code>lval</code><dd>Synonym for <code>.long</code>
+     <p><a name="index-lval-2103"></a><br><dt><code>lval</code><dd>Synonym for <code>.long</code>
 
-     <p><a name="index-bval-2030"></a><br><dt><code>bval</code><dd>Synonym for <code>.byte</code>
+     <p><a name="index-bval-2104"></a><br><dt><code>bval</code><dd>Synonym for <code>.byte</code>
 
-     <p><a name="index-sval-2031"></a><br><dt><code>sval</code><dd>Assemble a string.  <code>sval</code> expects one string literal, delimited by
+     <p><a name="index-sval-2105"></a><br><dt><code>sval</code><dd>Assemble a string.  <code>sval</code> expects one string literal, delimited by
 single quotes.  It assembles each byte of the string into consecutive
 addresses.  You can use the escape sequence &lsquo;<samp><span class="samp">%</span><var>xx</var></samp>&rsquo; (where
 <var>xx</var> represents a two-digit hexadecimal number) to represent the
@@ -85,11 +85,11 @@ literals as themselves.  For example, the C statement &lsquo;<samp><span class="
           25206F66
           662200
 </pre>
-     <p><a name="index-rsect-2032"></a><br><dt><code>rsect</code><dd>synonym for <code>.section</code>
+     <p><a name="index-rsect-2106"></a><br><dt><code>rsect</code><dd>synonym for <code>.section</code>
 
-     <p><a name="index-block-2033"></a><br><dt><code>block</code><dd>synonym for <code>.space</code>
+     <p><a name="index-block-2107"></a><br><dt><code>block</code><dd>synonym for <code>.space</code>
 
-     <p><a name="index-even-2034"></a><br><dt><code>even</code><dd>special case of <code>.align</code>; aligns output to even byte boundary. 
+     <p><a name="index-even-2108"></a><br><dt><code>even</code><dd>special case of <code>.align</code>; aligns output to even byte boundary. 
 </dl>
 
    </body></html>

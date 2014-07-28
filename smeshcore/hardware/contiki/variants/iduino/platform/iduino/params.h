@@ -21,7 +21,10 @@
 #else
 #define PARAMETER_STORAGE 0 //save no data to eeprom
 #endif
-
+#ifdef ARDUINO
+#undef PARAMETER_STORAGE
+#define PARAMETER_STORAGE 0
+#endif
 /* Include settings.h, then dummy out the write routines */
 #include "settings.h"
 #if PARAMETER_STORAGE==2

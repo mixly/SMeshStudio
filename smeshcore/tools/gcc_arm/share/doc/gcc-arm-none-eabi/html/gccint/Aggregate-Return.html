@@ -10,9 +10,7 @@
 <link rel="next" href="Caller-Saves.html#Caller-Saves" title="Caller Saves">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -56,7 +54,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stack-and-Calling.html#Stack-and-Callin
 
 <h4 class="subsection">17.10.9 How Large Values Are Returned</h4>
 
-<p><a name="index-aggregates-as-return-values-4190"></a><a name="index-large-return-values-4191"></a><a name="index-returning-aggregate-values-4192"></a><a name="index-structure-value-address-4193"></a>
+<p><a name="index-aggregates-as-return-values-4230"></a><a name="index-large-return-values-4231"></a><a name="index-returning-aggregate-values-4232"></a><a name="index-structure-value-address-4233"></a>
 When a function value's mode is <code>BLKmode</code> (and in some other
 cases), the value is not returned according to
 <code>TARGET_FUNCTION_VALUE</code> (see <a href="Scalar-Return.html#Scalar-Return">Scalar Return</a>).  Instead, the
@@ -68,7 +66,7 @@ address</dfn>.
 memory.
 
 <div class="defun">
-&mdash; Target Hook: bool <b>TARGET_RETURN_IN_MEMORY</b> (<var>const_tree type, const_tree fntype</var>)<var><a name="index-TARGET_005fRETURN_005fIN_005fMEMORY-4194"></a></var><br>
+&mdash; Target Hook: bool <b>TARGET_RETURN_IN_MEMORY</b> (<var>const_tree type, const_tree fntype</var>)<var><a name="index-TARGET_005fRETURN_005fIN_005fMEMORY-4234"></a></var><br>
 <blockquote><p>This target hook should return a nonzero value to say to return the
 function value in memory, just as large structures are always returned. 
 Here <var>type</var> will be the data type of the value, and <var>fntype</var>
@@ -88,7 +86,7 @@ to indicate this.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>DEFAULT_PCC_STRUCT_RETURN</b><var><a name="index-DEFAULT_005fPCC_005fSTRUCT_005fRETURN-4195"></a></var><br>
+&mdash; Macro: <b>DEFAULT_PCC_STRUCT_RETURN</b><var><a name="index-DEFAULT_005fPCC_005fSTRUCT_005fRETURN-4235"></a></var><br>
 <blockquote><p>Define this macro to be 1 if all structure and union return values must be
 in memory.  Since this results in slower code, this should be defined
 only if needed for compatibility with other compilers or with an ABI. 
@@ -100,7 +98,7 @@ target hook.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: rtx <b>TARGET_STRUCT_VALUE_RTX</b> (<var>tree fndecl, int incoming</var>)<var><a name="index-TARGET_005fSTRUCT_005fVALUE_005fRTX-4196"></a></var><br>
+&mdash; Target Hook: rtx <b>TARGET_STRUCT_VALUE_RTX</b> (<var>tree fndecl, int incoming</var>)<var><a name="index-TARGET_005fSTRUCT_005fVALUE_005fRTX-4236"></a></var><br>
 <blockquote><p>This target hook should return the location of the structure value
 address (normally a <code>mem</code> or <code>reg</code>), or 0 if the address is
 passed as an &ldquo;invisible&rdquo; first argument.  Note that <var>fndecl</var> may
@@ -124,7 +122,7 @@ to emit adjusting code, you should do it at this point.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>PCC_STATIC_STRUCT_RETURN</b><var><a name="index-PCC_005fSTATIC_005fSTRUCT_005fRETURN-4197"></a></var><br>
+&mdash; Macro: <b>PCC_STATIC_STRUCT_RETURN</b><var><a name="index-PCC_005fSTATIC_005fSTRUCT_005fRETURN-4237"></a></var><br>
 <blockquote><p>Define this macro if the usual system convention on the target machine
 for returning structures and unions is for the called function to return
 the address of a static variable containing the value.
@@ -137,12 +135,12 @@ nothing when you use <samp><span class="option">-freg-struct-return</span></samp
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: enum machine_mode <b>TARGET_GET_RAW_RESULT_MODE</b> (<var>int regno</var>)<var><a name="index-TARGET_005fGET_005fRAW_005fRESULT_005fMODE-4198"></a></var><br>
+&mdash; Target Hook: enum machine_mode <b>TARGET_GET_RAW_RESULT_MODE</b> (<var>int regno</var>)<var><a name="index-TARGET_005fGET_005fRAW_005fRESULT_005fMODE-4238"></a></var><br>
 <blockquote><p>This target hook returns the mode to be used when accessing raw return registers in <code>__builtin_return</code>.  Define this macro if the value in <var>reg_raw_mode</var> is not correct. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: enum machine_mode <b>TARGET_GET_RAW_ARG_MODE</b> (<var>int regno</var>)<var><a name="index-TARGET_005fGET_005fRAW_005fARG_005fMODE-4199"></a></var><br>
+&mdash; Target Hook: enum machine_mode <b>TARGET_GET_RAW_ARG_MODE</b> (<var>int regno</var>)<var><a name="index-TARGET_005fGET_005fRAW_005fARG_005fMODE-4239"></a></var><br>
 <blockquote><p>This target hook returns the mode to be used when accessing raw argument registers in <code>__builtin_apply_args</code>.  Define this macro if the value in <var>reg_raw_mode</var> is not correct. 
 </p></blockquote></div>
 

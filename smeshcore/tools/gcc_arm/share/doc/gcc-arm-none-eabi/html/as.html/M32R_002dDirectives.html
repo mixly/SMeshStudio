@@ -48,14 +48,14 @@ Up:&nbsp;<a rel="up" accesskey="u" href="M32R_002dDependent.html#M32R_002dDepend
 <hr>
 </div>
 
-<h4 class="subsection">9.20.2 M32R Directives</h4>
+<h4 class="subsection">9.22.2 M32R Directives</h4>
 
-<p><a name="index-directives_002c-M32R-1172"></a><a name="index-M32R-directives-1173"></a>
+<p><a name="index-directives_002c-M32R-1222"></a><a name="index-M32R-directives-1223"></a>
 The Renease M32R version of <code>as</code> has a few architecture
 specific directives:
 
      
-<a name="index-g_t_0040code_007blow_007d-directive_002c-M32R-1174"></a>
+<a name="index-g_t_0040code_007blow_007d-directive_002c-M32R-1224"></a>
 <dl><dt><code>low </code><var>expression</var><dd>The <code>low</code> directive computes the value of its expression and
 places the lower 16-bits of the result into the immediate-field of the
 instruction.  For example:
@@ -63,14 +63,14 @@ instruction.  For example:
      <pre class="smallexample">             or3   r0, r0, #low(0x12345678) ; compute r0 = r0 | 0x5678
              add3, r0, r0, #low(fred)   ; compute r0 = r0 + low 16-bits of address of fred
 </pre>
-     <br><dt><code>high </code><var>expression</var><dd><a name="index-g_t_0040code_007bhigh_007d-directive_002c-M32R-1175"></a>The <code>high</code> directive computes the value of its expression and
+     <br><dt><code>high </code><var>expression</var><dd><a name="index-g_t_0040code_007bhigh_007d-directive_002c-M32R-1225"></a>The <code>high</code> directive computes the value of its expression and
 places the upper 16-bits of the result into the immediate-field of the
 instruction.  For example:
 
      <pre class="smallexample">             seth  r0, #high(0x12345678) ; compute r0 = 0x12340000
              seth, r0, #high(fred)       ; compute r0 = upper 16-bits of address of fred
 </pre>
-     <br><dt><code>shigh </code><var>expression</var><dd><a name="index-g_t_0040code_007bshigh_007d-directive_002c-M32R-1176"></a>The <code>shigh</code> directive is very similar to the <code>high</code>
+     <br><dt><code>shigh </code><var>expression</var><dd><a name="index-g_t_0040code_007bshigh_007d-directive_002c-M32R-1226"></a>The <code>shigh</code> directive is very similar to the <code>high</code>
 directive.  It also computes the value of its expression and places
 the upper 16-bits of the result into the immediate-field of the
 instruction.  The difference is that <code>shigh</code> also checks to see
@@ -111,25 +111,25 @@ check to make sure that an <code>or3</code> instruction is being used rather
 than an <code>add3</code> instruction.  It is up to the programmer to make
 sure that correct directives are used.
 
-     <p><a name="index-g_t_0040code_007b_002em32r_007d-directive_002c-M32R-1177"></a><br><dt><code>.m32r</code><dd>The directive performs a similar thing as the <em>-m32r</em> command
+     <p><a name="index-g_t_0040code_007b_002em32r_007d-directive_002c-M32R-1227"></a><br><dt><code>.m32r</code><dd>The directive performs a similar thing as the <em>-m32r</em> command
 line option.  It tells the assembler to only accept M32R instructions
 from now on.  An instructions from later M32R architectures are
 refused.
 
-     <p><a name="index-g_t_0040code_007b_002em32rx_007d-directive_002c-M32RX-1178"></a><br><dt><code>.m32rx</code><dd>The directive performs a similar thing as the <em>-m32rx</em> command
+     <p><a name="index-g_t_0040code_007b_002em32rx_007d-directive_002c-M32RX-1228"></a><br><dt><code>.m32rx</code><dd>The directive performs a similar thing as the <em>-m32rx</em> command
 line option.  It tells the assembler to start accepting the extra
 instructions in the M32RX ISA as well as the ordinary M32R ISA.
 
-     <p><a name="index-g_t_0040code_007b_002em32r2_007d-directive_002c-M32R2-1179"></a><br><dt><code>.m32r2</code><dd>The directive performs a similar thing as the <em>-m32r2</em> command
+     <p><a name="index-g_t_0040code_007b_002em32r2_007d-directive_002c-M32R2-1229"></a><br><dt><code>.m32r2</code><dd>The directive performs a similar thing as the <em>-m32r2</em> command
 line option.  It tells the assembler to start accepting the extra
 instructions in the M32R2 ISA as well as the ordinary M32R ISA.
 
-     <p><a name="index-g_t_0040code_007b_002elittle_007d-directive_002c-M32RX-1180"></a><br><dt><code>.little</code><dd>The directive performs a similar thing as the <em>-little</em> command
+     <p><a name="index-g_t_0040code_007b_002elittle_007d-directive_002c-M32RX-1230"></a><br><dt><code>.little</code><dd>The directive performs a similar thing as the <em>-little</em> command
 line option.  It tells the assembler to start producing little-endian
 code and data.  This option should be used with care as producing
 mixed-endian binary files is fraught with danger.
 
-     <p><a name="index-g_t_0040code_007b_002ebig_007d-directive_002c-M32RX-1181"></a><br><dt><code>.big</code><dd>The directive performs a similar thing as the <em>-big</em> command
+     <p><a name="index-g_t_0040code_007b_002ebig_007d-directive_002c-M32RX-1231"></a><br><dt><code>.big</code><dd>The directive performs a similar thing as the <em>-big</em> command
 line option.  It tells the assembler to start producing big-endian
 code and data.  This option should be used with care as producing
 mixed-endian binary files is fraught with danger.

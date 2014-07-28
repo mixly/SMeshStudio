@@ -9,8 +9,7 @@
 <link rel="prev" href="About-Dummy-Frames.html#About-Dummy-Frames" title="About Dummy Frames">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -48,7 +47,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Inferior-Call-Setup.html#Inferior-Call-
 <dfn>dummy</dfn> stack frames.
 
 <div class="defun">
-&mdash; Architecture Function: CORE_ADDR <b>push_dummy_call</b> (<var>struct gdbarch *gdbarch, struct value *function, struct regcache *regcache, CORE_ADDR bp_addr, int nargs, struct value **args, CORE_ADDR sp, int struct_return, CORE_ADDR struct_addr</var>)<var><a name="index-push_005fdummy_005fcall-359"></a></var><br>
+&mdash; Architecture Function: CORE_ADDR <b>push_dummy_call</b> (<var>struct gdbarch *gdbarch, struct value *function, struct regcache *regcache, CORE_ADDR bp_addr, int nargs, struct value **args, CORE_ADDR sp, int struct_return, CORE_ADDR struct_addr</var>)<var><a name="index-push_005fdummy_005fcall-355"></a></var><br>
 <blockquote>
         <p>This function sets up a dummy stack frame for the function about to be
 called.  <code>push_dummy_call</code> is given the arguments to be passed
@@ -76,7 +75,7 @@ call functions within the target being debugged.
         </blockquote></div>
 
 <div class="defun">
-&mdash; Architecture Function: struct frame_id <b>unwind_dummy_id</b> (<var>struct gdbarch *gdbarch, struct frame_info *next_frame</var>)<var><a name="index-unwind_005fdummy_005fid-360"></a></var><br>
+&mdash; Architecture Function: struct frame_id <b>unwind_dummy_id</b> (<var>struct gdbarch *gdbarch, struct frame_info *next_frame</var>)<var><a name="index-unwind_005fdummy_005fid-356"></a></var><br>
 <blockquote>
         <p>This is the inverse of <code>push_dummy_call</code> which restores the stack
 pointer and program counter after a call to evaluate a function using
@@ -95,7 +94,7 @@ defined, then this function should also be defined.
         </blockquote></div>
 
 <div class="defun">
-&mdash; Architecture Function: CORE_ADDR <b>push_dummy_code</b> (<var>struct gdbarch *gdbarch, CORE_ADDR sp, CORE_ADDR funaddr, struct value **args, int nargs, struct type *value_type, CORE_ADDR *real_pc, CORE_ADDR *bp_addr, struct regcache *regcache</var>)<var><a name="index-push_005fdummy_005fcode-361"></a></var><br>
+&mdash; Architecture Function: CORE_ADDR <b>push_dummy_code</b> (<var>struct gdbarch *gdbarch, CORE_ADDR sp, CORE_ADDR funaddr, struct value **args, int nargs, struct type *value_type, CORE_ADDR *real_pc, CORE_ADDR *bp_addr, struct regcache *regcache</var>)<var><a name="index-push_005fdummy_005fcode-357"></a></var><br>
 <blockquote>
         <p>If this function is not defined (its default value is <code>NULL</code>), a dummy
 call will use the entry point of the currently loaded code on the

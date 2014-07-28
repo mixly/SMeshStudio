@@ -9,9 +9,7 @@
 <link rel="next" href="Data-Output.html#Data-Output" title="Data Output">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -54,14 +52,14 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Assembler-Format.html#Assembler-Format"
 
 <h4 class="subsection">17.21.1 The Overall Framework of an Assembler File</h4>
 
-<p><a name="index-assembler-format-4457"></a><a name="index-output-of-assembler-code-4458"></a>
+<p><a name="index-assembler-format-4497"></a><a name="index-output-of-assembler-code-4498"></a>
 <!-- prevent bad page break with this line -->
 This describes the overall framework of an assembly file.
 
- <p><a name="index-default_005ffile_005fstart-4459"></a>
+ <p><a name="index-default_005ffile_005fstart-4499"></a>
 
 <div class="defun">
-&mdash; Target Hook: void <b>TARGET_ASM_FILE_START</b> (<var>void</var>)<var><a name="index-TARGET_005fASM_005fFILE_005fSTART-4460"></a></var><br>
+&mdash; Target Hook: void <b>TARGET_ASM_FILE_START</b> (<var>void</var>)<var><a name="index-TARGET_005fASM_005fFILE_005fSTART-4500"></a></var><br>
 <blockquote><p>Output to <code>asm_out_file</code> any text which the assembler expects to
 find at the beginning of a file.  The default behavior is controlled
 by two flags, documented below.  Unless your target's assembler is
@@ -71,7 +69,7 @@ lets other target files rely on these variables.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: bool <b>TARGET_ASM_FILE_START_APP_OFF</b><var><a name="index-TARGET_005fASM_005fFILE_005fSTART_005fAPP_005fOFF-4461"></a></var><br>
+&mdash; Target Hook: bool <b>TARGET_ASM_FILE_START_APP_OFF</b><var><a name="index-TARGET_005fASM_005fFILE_005fSTART_005fAPP_005fOFF-4501"></a></var><br>
 <blockquote><p>If this flag is true, the text of the macro <code>ASM_APP_OFF</code> will be
 printed as the very first line in the assembly file, unless
 <samp><span class="option">-fverbose-asm</span></samp> is in effect.  (If that macro has been defined
@@ -86,7 +84,7 @@ comments that will cause GAS to issue errors in NO_APP mode.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: bool <b>TARGET_ASM_FILE_START_FILE_DIRECTIVE</b><var><a name="index-TARGET_005fASM_005fFILE_005fSTART_005fFILE_005fDIRECTIVE-4462"></a></var><br>
+&mdash; Target Hook: bool <b>TARGET_ASM_FILE_START_FILE_DIRECTIVE</b><var><a name="index-TARGET_005fASM_005fFILE_005fSTART_005fFILE_005fDIRECTIVE-4502"></a></var><br>
 <blockquote><p>If this flag is true, <code>output_file_directive</code> will be called
 for the primary source file, immediately after printing
 <code>ASM_APP_OFF</code> (if that is enabled).  Most ELF assemblers expect
@@ -94,13 +92,13 @@ this to be done.  The default is false.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: void <b>TARGET_ASM_FILE_END</b> (<var>void</var>)<var><a name="index-TARGET_005fASM_005fFILE_005fEND-4463"></a></var><br>
+&mdash; Target Hook: void <b>TARGET_ASM_FILE_END</b> (<var>void</var>)<var><a name="index-TARGET_005fASM_005fFILE_005fEND-4503"></a></var><br>
 <blockquote><p>Output to <code>asm_out_file</code> any text which the assembler expects
 to find at the end of a file.  The default is to output nothing. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Function: void <b>file_end_indicate_exec_stack</b> ()<var><a name="index-file_005fend_005findicate_005fexec_005fstack-4464"></a></var><br>
+&mdash; Function: void <b>file_end_indicate_exec_stack</b> ()<var><a name="index-file_005fend_005findicate_005fexec_005fstack-4504"></a></var><br>
 <blockquote><p>Some systems use a common convention, the &lsquo;<samp><span class="samp">.note.GNU-stack</span></samp>&rsquo;
 special section, to indicate whether or not an object file relies on
 the stack being executable.  If your system uses this convention, you
@@ -110,21 +108,21 @@ this function.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: void <b>TARGET_ASM_LTO_START</b> (<var>void</var>)<var><a name="index-TARGET_005fASM_005fLTO_005fSTART-4465"></a></var><br>
+&mdash; Target Hook: void <b>TARGET_ASM_LTO_START</b> (<var>void</var>)<var><a name="index-TARGET_005fASM_005fLTO_005fSTART-4505"></a></var><br>
 <blockquote><p>Output to <code>asm_out_file</code> any text which the assembler expects
 to find at the start of an LTO section.  The default is to output
 nothing. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: void <b>TARGET_ASM_LTO_END</b> (<var>void</var>)<var><a name="index-TARGET_005fASM_005fLTO_005fEND-4466"></a></var><br>
+&mdash; Target Hook: void <b>TARGET_ASM_LTO_END</b> (<var>void</var>)<var><a name="index-TARGET_005fASM_005fLTO_005fEND-4506"></a></var><br>
 <blockquote><p>Output to <code>asm_out_file</code> any text which the assembler expects
 to find at the end of an LTO section.  The default is to output
 nothing. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: void <b>TARGET_ASM_CODE_END</b> (<var>void</var>)<var><a name="index-TARGET_005fASM_005fCODE_005fEND-4467"></a></var><br>
+&mdash; Target Hook: void <b>TARGET_ASM_CODE_END</b> (<var>void</var>)<var><a name="index-TARGET_005fASM_005fCODE_005fEND-4507"></a></var><br>
 <blockquote><p>Output to <code>asm_out_file</code> any text which is needed before emitting
 unwind info and debug info at the end of a file.  Some targets emit
 here PIC setup thunks that cannot be emitted at the end of file,
@@ -133,14 +131,14 @@ nothing.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>ASM_COMMENT_START</b><var><a name="index-ASM_005fCOMMENT_005fSTART-4468"></a></var><br>
+&mdash; Macro: <b>ASM_COMMENT_START</b><var><a name="index-ASM_005fCOMMENT_005fSTART-4508"></a></var><br>
 <blockquote><p>A C string constant describing how to begin a comment in the target
 assembler language.  The compiler assumes that the comment will end at
 the end of the line. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>ASM_APP_ON</b><var><a name="index-ASM_005fAPP_005fON-4469"></a></var><br>
+&mdash; Macro: <b>ASM_APP_ON</b><var><a name="index-ASM_005fAPP_005fON-4509"></a></var><br>
 <blockquote><p>A C string constant for text to be output before each <code>asm</code>
 statement or group of consecutive ones.  Normally this is
 <code>"#APP"</code>, which is a comment that has no effect on most
@@ -149,7 +147,7 @@ that follow for all valid assembler constructs.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>ASM_APP_OFF</b><var><a name="index-ASM_005fAPP_005fOFF-4470"></a></var><br>
+&mdash; Macro: <b>ASM_APP_OFF</b><var><a name="index-ASM_005fAPP_005fOFF-4510"></a></var><br>
 <blockquote><p>A C string constant for text to be output after each <code>asm</code>
 statement or group of consecutive ones.  Normally this is
 <code>"#NO_APP"</code>, which tells the GNU assembler to resume making the
@@ -157,7 +155,7 @@ time-saving assumptions that are valid for ordinary compiler output.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>ASM_OUTPUT_SOURCE_FILENAME</b> (<var>stream, name</var>)<var><a name="index-ASM_005fOUTPUT_005fSOURCE_005fFILENAME-4471"></a></var><br>
+&mdash; Macro: <b>ASM_OUTPUT_SOURCE_FILENAME</b> (<var>stream, name</var>)<var><a name="index-ASM_005fOUTPUT_005fSOURCE_005fFILENAME-4511"></a></var><br>
 <blockquote><p>A C statement to output COFF information or DWARF debugging information
 which indicates that filename <var>name</var> is the current source file to
 the stdio stream <var>stream</var>.
@@ -167,14 +165,19 @@ for the file format in use is appropriate.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: void <b>TARGET_ASM_OUTPUT_SOURCE_FILENAME</b> (<var>FILE *file, const char *name</var>)<var><a name="index-TARGET_005fASM_005fOUTPUT_005fSOURCE_005fFILENAME-4472"></a></var><br>
+&mdash; Target Hook: void <b>TARGET_ASM_OUTPUT_SOURCE_FILENAME</b> (<var>FILE *file, const char *name</var>)<var><a name="index-TARGET_005fASM_005fOUTPUT_005fSOURCE_005fFILENAME-4512"></a></var><br>
 <blockquote><p>Output COFF information or DWARF debugging information which indicates that filename <var>name</var> is the current source file to the stdio stream <var>file</var>.
 
       <p>This target hook need not be defined if the standard form of output for the file format in use is appropriate. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>OUTPUT_QUOTED_STRING</b> (<var>stream, string</var>)<var><a name="index-OUTPUT_005fQUOTED_005fSTRING-4473"></a></var><br>
+&mdash; Target Hook: void <b>TARGET_ASM_OUTPUT_IDENT</b> (<var>const char *name</var>)<var><a name="index-TARGET_005fASM_005fOUTPUT_005fIDENT-4513"></a></var><br>
+<blockquote><p>Output a string based on <var>name</var>, suitable for the &lsquo;<samp><span class="samp">#ident</span></samp>&rsquo;  directive, or the equivalent directive or pragma in non-C-family languages.  If this hook is not defined, nothing is output for the &lsquo;<samp><span class="samp">#ident</span></samp>&rsquo;  directive. 
+</p></blockquote></div>
+
+<div class="defun">
+&mdash; Macro: <b>OUTPUT_QUOTED_STRING</b> (<var>stream, string</var>)<var><a name="index-OUTPUT_005fQUOTED_005fSTRING-4514"></a></var><br>
 <blockquote><p>A C statement to output the string <var>string</var> to the stdio stream
 <var>stream</var>.  If you do not call the function <code>output_quoted_string</code>
 in your config files, GCC will only call it to output filenames to
@@ -183,14 +186,7 @@ of the filename using this macro.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>ASM_OUTPUT_IDENT</b> (<var>stream, string</var>)<var><a name="index-ASM_005fOUTPUT_005fIDENT-4474"></a></var><br>
-<blockquote><p>A C statement to output something to the assembler file to handle a
-&lsquo;<samp><span class="samp">#ident</span></samp>&rsquo; directive containing the text <var>string</var>.  If this
-macro is not defined, nothing is output for a &lsquo;<samp><span class="samp">#ident</span></samp>&rsquo; directive. 
-</p></blockquote></div>
-
-<div class="defun">
-&mdash; Target Hook: void <b>TARGET_ASM_NAMED_SECTION</b> (<var>const char *name, unsigned int flags, tree decl</var>)<var><a name="index-TARGET_005fASM_005fNAMED_005fSECTION-4475"></a></var><br>
+&mdash; Target Hook: void <b>TARGET_ASM_NAMED_SECTION</b> (<var>const char *name, unsigned int flags, tree decl</var>)<var><a name="index-TARGET_005fASM_005fNAMED_005fSECTION-4515"></a></var><br>
 <blockquote><p>Output assembly directives to switch to section <var>name</var>.  The section
 should have attributes as specified by <var>flags</var>, which is a bit mask
 of the <code>SECTION_*</code> flags defined in <samp><span class="file">output.h</span></samp>.  If <var>decl</var>
@@ -199,7 +195,7 @@ this section is associated.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: section * <b>TARGET_ASM_FUNCTION_SECTION</b> (<var>tree decl, enum node_frequency freq, bool startup, bool exit</var>)<var><a name="index-TARGET_005fASM_005fFUNCTION_005fSECTION-4476"></a></var><br>
+&mdash; Target Hook: section * <b>TARGET_ASM_FUNCTION_SECTION</b> (<var>tree decl, enum node_frequency freq, bool startup, bool exit</var>)<var><a name="index-TARGET_005fASM_005fFUNCTION_005fSECTION-4516"></a></var><br>
 <blockquote><p>Return preferred text (sub)section for function <var>decl</var>. 
 Main purpose of this function is to separate cold, normal and hot
 functions. <var>startup</var> is true when function is known to be used only
@@ -210,12 +206,12 @@ Return NULL if function should go to default text section.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: void <b>TARGET_ASM_FUNCTION_SWITCHED_TEXT_SECTIONS</b> (<var>FILE *file, tree decl, bool new_is_cold</var>)<var><a name="index-TARGET_005fASM_005fFUNCTION_005fSWITCHED_005fTEXT_005fSECTIONS-4477"></a></var><br>
+&mdash; Target Hook: void <b>TARGET_ASM_FUNCTION_SWITCHED_TEXT_SECTIONS</b> (<var>FILE *file, tree decl, bool new_is_cold</var>)<var><a name="index-TARGET_005fASM_005fFUNCTION_005fSWITCHED_005fTEXT_005fSECTIONS-4517"></a></var><br>
 <blockquote><p>Used by the target to emit any assembler directives or additional  labels needed when a function is partitioned between different  sections.  Output should be written to <var>file</var>.  The function  decl is available as <var>decl</var> and the new section is `cold' if  <var>new_is_cold</var> is <code>true</code>. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Common Target Hook: bool <b>TARGET_HAVE_NAMED_SECTIONS</b><var><a name="index-TARGET_005fHAVE_005fNAMED_005fSECTIONS-4478"></a></var><br>
+&mdash; Common Target Hook: bool <b>TARGET_HAVE_NAMED_SECTIONS</b><var><a name="index-TARGET_005fHAVE_005fNAMED_005fSECTIONS-4518"></a></var><br>
 <blockquote><p>This flag is true if the target supports <code>TARGET_ASM_NAMED_SECTION</code>. 
 It must not be modified by command-line option processing. 
 </p></blockquote></div>
@@ -223,14 +219,14 @@ It must not be modified by command-line option processing.
  <p><a name="TARGET_005fHAVE_005fSWITCHABLE_005fBSS_005fSECTIONS"></a>
 
 <div class="defun">
-&mdash; Target Hook: bool <b>TARGET_HAVE_SWITCHABLE_BSS_SECTIONS</b><var><a name="index-TARGET_005fHAVE_005fSWITCHABLE_005fBSS_005fSECTIONS-4479"></a></var><br>
+&mdash; Target Hook: bool <b>TARGET_HAVE_SWITCHABLE_BSS_SECTIONS</b><var><a name="index-TARGET_005fHAVE_005fSWITCHABLE_005fBSS_005fSECTIONS-4519"></a></var><br>
 <blockquote><p>This flag is true if we can create zeroed data by switching to a BSS
 section and then using <code>ASM_OUTPUT_SKIP</code> to allocate the space. 
 This is true on most ELF targets. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: unsigned int <b>TARGET_SECTION_TYPE_FLAGS</b> (<var>tree decl, const char *name, int reloc</var>)<var><a name="index-TARGET_005fSECTION_005fTYPE_005fFLAGS-4480"></a></var><br>
+&mdash; Target Hook: unsigned int <b>TARGET_SECTION_TYPE_FLAGS</b> (<var>tree decl, const char *name, int reloc</var>)<var><a name="index-TARGET_005fSECTION_005fTYPE_005fFLAGS-4520"></a></var><br>
 <blockquote><p>Choose a set of section attributes for use by <code>TARGET_ASM_NAMED_SECTION</code>
 based on a variable or function decl, a section name, and whether or not the
 declaration's initializer may contain runtime relocations.  <var>decl</var> may be
@@ -243,7 +239,7 @@ set via <code>__attribute__</code>.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: int <b>TARGET_ASM_RECORD_GCC_SWITCHES</b> (<var>print_switch_type type, const char *text</var>)<var><a name="index-TARGET_005fASM_005fRECORD_005fGCC_005fSWITCHES-4481"></a></var><br>
+&mdash; Target Hook: int <b>TARGET_ASM_RECORD_GCC_SWITCHES</b> (<var>print_switch_type type, const char *text</var>)<var><a name="index-TARGET_005fASM_005fRECORD_005fGCC_005fSWITCHES-4521"></a></var><br>
 <blockquote><p>Provides the target with the ability to record the gcc command line
 switches that have been passed to the compiler, and options that are
 enabled.  The <var>type</var> argument specifies what is being recorded. 
@@ -285,7 +281,7 @@ hook.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: const char * <b>TARGET_ASM_RECORD_GCC_SWITCHES_SECTION</b><var><a name="index-TARGET_005fASM_005fRECORD_005fGCC_005fSWITCHES_005fSECTION-4482"></a></var><br>
+&mdash; Target Hook: const char * <b>TARGET_ASM_RECORD_GCC_SWITCHES_SECTION</b><var><a name="index-TARGET_005fASM_005fRECORD_005fGCC_005fSWITCHES_005fSECTION-4522"></a></var><br>
 <blockquote><p>This is the name of the section that will be created by the example
 ELF implementation of the <code>TARGET_ASM_RECORD_GCC_SWITCHES</code> target
 hook. 

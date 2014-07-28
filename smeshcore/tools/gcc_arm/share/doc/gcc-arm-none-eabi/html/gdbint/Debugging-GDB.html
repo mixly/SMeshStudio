@@ -9,8 +9,7 @@
 <link rel="prev" href="Getting-Started.html#Getting-Started" title="Getting Started">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -44,18 +43,18 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Hints.html#Hints">Hints</a>
 
 <h3 class="section">23.2 Debugging <span class="sc">gdb</span> with itself</h3>
 
-<p><a name="index-debugging-_0040value_007bGDBN_007d-504"></a>
+<p><a name="index-debugging-_0040value_007bGDBN_007d-499"></a>
 If <span class="sc">gdb</span> is limping on your machine, this is the preferred way to get it
 fully functional.  Be warned that in some ancient Unix systems, like
 Ultrix 4.2, a program can't be running in one process while it is being
 debugged in another.  Rather than typing the command <kbd>./gdb&nbsp;./gdb<!-- /@w --></kbd>, which works on Suns and such, you can copy <samp><span class="file">gdb</span></samp> to
 <samp><span class="file">gdb2</span></samp> and then type <kbd>./gdb&nbsp;./gdb2<!-- /@w --></kbd>.
 
-   <p>When you run <span class="sc">gdb</span> in the <span class="sc">gdb</span> source directory, it will read a
-<samp><span class="file">.gdbinit</span></samp> file that sets up some simple things to make debugging
-gdb easier.  The <code>info</code> command, when executed without a subcommand
-in a <span class="sc">gdb</span> being debugged by gdb, will pop you back up to the top level
-gdb.  See <samp><span class="file">.gdbinit</span></samp> for details.
+   <p>When you run <span class="sc">gdb</span> in the <span class="sc">gdb</span> source directory, it will read
+<samp><span class="file">gdb-gdb.gdb</span></samp> file (plus possibly <samp><span class="file">gdb-gdb.py</span></samp> file) that sets up
+some simple things to make debugging gdb easier.  The <code>info</code> command, when
+executed without a subcommand in a <span class="sc">gdb</span> being debugged by gdb, will pop
+you back up to the top level gdb.  See <samp><span class="file">gdb-gdb.gdb</span></samp> for details.
 
    <p>If you use emacs, you will probably want to do a <code>make TAGS</code> after
 you configure your distribution; this will put the machine dependent
@@ -67,7 +66,7 @@ have run <code>fixincludes</code> if you are compiling with gcc.
 
 <h3 class="section">23.3 Submitting Patches</h3>
 
-<p><a name="index-submitting-patches-505"></a>Thanks for thinking of offering your changes back to the community of
+<p><a name="index-submitting-patches-500"></a>Thanks for thinking of offering your changes back to the community of
 <span class="sc">gdb</span> users.  In general we like to get well designed enhancements. 
 Thanks also for checking in advance about the best way to transfer the
 changes.
@@ -79,7 +78,7 @@ This manual summarizes what we believe to be clean design for <span class="sc">g
 or if there is any question about a patch, it goes into a large queue
 with everyone else's patches and bug reports.
 
-   <p><a name="index-legal-papers-for-code-contributions-506"></a>The legal issue is that to incorporate substantial changes requires a
+   <p><a name="index-legal-papers-for-code-contributions-501"></a>The legal issue is that to incorporate substantial changes requires a
 copyright assignment from you and/or your employer, granting ownership
 of the changes to the Free Software Foundation.  You can get the
 standard documents for doing this by sending mail to <code>gnu@gnu.org</code>
@@ -131,7 +130,7 @@ be for quite some time.
 
 <h3 class="section">23.4 Build Script</h3>
 
-<p><a name="index-build-script-507"></a>
+<p><a name="index-build-script-502"></a>
 The script <samp><span class="file">gdb_buildall.sh</span></samp> builds <span class="sc">gdb</span> with flag
 <samp><span class="option">--enable-targets=all</span></samp> set.  This builds <span class="sc">gdb</span> with all supported
 targets activated.  This helps testing <span class="sc">gdb</span> when doing changes that
@@ -145,7 +144,7 @@ in the directory the script was called from.
 
 <!-- *-texinfo-*- -->
 <!-- This file is part of the GDB manual. -->
-<!-- Copyright (C) 2003-2006, 2008-2012 Free Software Foundation, Inc. -->
+<!-- Copyright (C) 2003-2013 Free Software Foundation, Inc. -->
 <!-- See the file gdbint.texinfo for copying conditions. -->
 <!-- Also, the @deftypefun lines from this file are processed into a -->
 <!-- header file during the GDB build process.  Permission is granted -->

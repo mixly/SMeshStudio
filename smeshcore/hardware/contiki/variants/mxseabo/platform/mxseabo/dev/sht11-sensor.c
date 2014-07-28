@@ -55,11 +55,11 @@ value(int type)
     /* Photosynthetically Active Radiation. */
   case SHT11_SENSOR_TEMP:
     return sht11_temp();;
-
+    break;
     /* Total Solar Radiation. */
   case SHT11_SENSOR_HUMIDITY:
     return sht11_humidity();
-
+    break;
   case SHT11_SENSOR_BATTERY_INDICATOR:
     return sht11_sreg() & 0x40? 1: 0;
 }

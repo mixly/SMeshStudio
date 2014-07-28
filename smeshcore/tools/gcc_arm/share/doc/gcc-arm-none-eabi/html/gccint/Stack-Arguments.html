@@ -10,9 +10,7 @@
 <link rel="next" href="Register-Arguments.html#Register-Arguments" title="Register Arguments">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -56,13 +54,13 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stack-and-Calling.html#Stack-and-Callin
 
 <h4 class="subsection">17.10.6 Passing Function Arguments on the Stack</h4>
 
-<p><a name="index-arguments-on-stack-4129"></a><a name="index-stack-arguments-4130"></a>
+<p><a name="index-arguments-on-stack-4168"></a><a name="index-stack-arguments-4169"></a>
 The macros in this section control how arguments are passed
 on the stack.  See the following section for other macros that
 control passing certain arguments in registers.
 
 <div class="defun">
-&mdash; Target Hook: bool <b>TARGET_PROMOTE_PROTOTYPES</b> (<var>const_tree fntype</var>)<var><a name="index-TARGET_005fPROMOTE_005fPROTOTYPES-4131"></a></var><br>
+&mdash; Target Hook: bool <b>TARGET_PROMOTE_PROTOTYPES</b> (<var>const_tree fntype</var>)<var><a name="index-TARGET_005fPROMOTE_005fPROTOTYPES-4170"></a></var><br>
 <blockquote><p>This target hook returns <code>true</code> if an argument declared in a
 prototype as an integral type smaller than <code>int</code> should actually be
 passed as an <code>int</code>.  In addition to avoiding errors in certain
@@ -71,7 +69,7 @@ The default is to not promote prototypes.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>PUSH_ARGS</b><var><a name="index-PUSH_005fARGS-4132"></a></var><br>
+&mdash; Macro: <b>PUSH_ARGS</b><var><a name="index-PUSH_005fARGS-4171"></a></var><br>
 <blockquote><p>A C expression.  If nonzero, push insns will be used to pass
 outgoing arguments. 
 If the target machine does not have a push instruction, set it to zero. 
@@ -81,7 +79,7 @@ it.  When <code>PUSH_ARGS</code> is nonzero, <code>PUSH_ROUNDING</code> must be 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>PUSH_ARGS_REVERSED</b><var><a name="index-PUSH_005fARGS_005fREVERSED-4133"></a></var><br>
+&mdash; Macro: <b>PUSH_ARGS_REVERSED</b><var><a name="index-PUSH_005fARGS_005fREVERSED-4172"></a></var><br>
 <blockquote><p>A C expression.  If nonzero, function arguments will be evaluated from
 last to first, rather than from first to last.  If this macro is not
 defined, it defaults to <code>PUSH_ARGS</code> on targets where the stack
@@ -89,7 +87,7 @@ and args grow in opposite directions, and 0 otherwise.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>PUSH_ROUNDING</b> (<var>npushed</var>)<var><a name="index-PUSH_005fROUNDING-4134"></a></var><br>
+&mdash; Macro: <b>PUSH_ROUNDING</b> (<var>npushed</var>)<var><a name="index-PUSH_005fROUNDING-4173"></a></var><br>
 <blockquote><p>A C expression that is the number of bytes actually pushed onto the
 stack when an instruction attempts to push <var>npushed</var> bytes.
 
@@ -106,13 +104,13 @@ alignment.  Then the definition should be
       <p>If the value of this macro has a type, it should be an unsigned type. 
 </p></blockquote></div>
 
- <p><a name="index-current_005ffunction_005foutgoing_005fargs_005fsize-4135"></a>
+ <p><a name="index-outgoing_005fargs_005fsize-4174"></a><a name="index-crtl_002d_003eoutgoing_005fargs_005fsize-4175"></a>
 
 <div class="defun">
-&mdash; Macro: <b>ACCUMULATE_OUTGOING_ARGS</b><var><a name="index-ACCUMULATE_005fOUTGOING_005fARGS-4136"></a></var><br>
+&mdash; Macro: <b>ACCUMULATE_OUTGOING_ARGS</b><var><a name="index-ACCUMULATE_005fOUTGOING_005fARGS-4176"></a></var><br>
 <blockquote><p>A C expression.  If nonzero, the maximum amount of space required for outgoing arguments
-will be computed and placed into the variable
-<code>current_function_outgoing_args_size</code>.  No space will be pushed
+will be computed and placed into
+<code>crtl-&gt;outgoing_args_size</code>.  No space will be pushed
 onto the stack for each call; instead, the function prologue should
 increase the stack frame size by this amount.
 
@@ -121,7 +119,7 @@ is not proper.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>REG_PARM_STACK_SPACE</b> (<var>fndecl</var>)<var><a name="index-REG_005fPARM_005fSTACK_005fSPACE-4137"></a></var><br>
+&mdash; Macro: <b>REG_PARM_STACK_SPACE</b> (<var>fndecl</var>)<var><a name="index-REG_005fPARM_005fSTACK_005fSPACE-4177"></a></var><br>
 <blockquote><p>Define this macro if functions should assume that stack space has been
 allocated for arguments even when their values are passed in
 registers.
@@ -140,7 +138,7 @@ which.
 <!-- something, not sure if it looks good.  -mew 10feb93 -->
 
 <div class="defun">
-&mdash; Macro: <b>OUTGOING_REG_PARM_STACK_SPACE</b> (<var>fntype</var>)<var><a name="index-OUTGOING_005fREG_005fPARM_005fSTACK_005fSPACE-4138"></a></var><br>
+&mdash; Macro: <b>OUTGOING_REG_PARM_STACK_SPACE</b> (<var>fntype</var>)<var><a name="index-OUTGOING_005fREG_005fPARM_005fSTACK_005fSPACE-4178"></a></var><br>
 <blockquote><p>Define this to a nonzero value if it is the responsibility of the
 caller to allocate the area reserved for arguments passed in registers
 when calling a function of <var>fntype</var>.  <var>fntype</var> may be NULL
@@ -148,11 +146,11 @@ if the function called is a library function.
 
       <p>If <code>ACCUMULATE_OUTGOING_ARGS</code> is defined, this macro controls
 whether the space for these arguments counts in the value of
-<code>current_function_outgoing_args_size</code>. 
+<code>crtl-&gt;outgoing_args_size</code>. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>STACK_PARMS_IN_REG_PARM_AREA</b><var><a name="index-STACK_005fPARMS_005fIN_005fREG_005fPARM_005fAREA-4139"></a></var><br>
+&mdash; Macro: <b>STACK_PARMS_IN_REG_PARM_AREA</b><var><a name="index-STACK_005fPARMS_005fIN_005fREG_005fPARM_005fAREA-4179"></a></var><br>
 <blockquote><p>Define this macro if <code>REG_PARM_STACK_SPACE</code> is defined, but the
 stack parameters don't skip the area specified by it. 
 <!-- i changed this, makes more sens and it should have taken care of the -->
@@ -165,7 +163,7 @@ stack in its natural location.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: int <b>TARGET_RETURN_POPS_ARGS</b> (<var>tree fundecl, tree funtype, int size</var>)<var><a name="index-TARGET_005fRETURN_005fPOPS_005fARGS-4140"></a></var><br>
+&mdash; Target Hook: int <b>TARGET_RETURN_POPS_ARGS</b> (<var>tree fundecl, tree funtype, int size</var>)<var><a name="index-TARGET_005fRETURN_005fPOPS_005fARGS-4180"></a></var><br>
 <blockquote><p>This target hook returns the number of bytes of its own arguments that
 a function pops on returning, or 0 if the function pops no arguments
 and the caller must therefore pop them all after the function returns.
@@ -204,7 +202,7 @@ number of arguments.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>CALL_POPS_ARGS</b> (<var>cum</var>)<var><a name="index-CALL_005fPOPS_005fARGS-4141"></a></var><br>
+&mdash; Macro: <b>CALL_POPS_ARGS</b> (<var>cum</var>)<var><a name="index-CALL_005fPOPS_005fARGS-4181"></a></var><br>
 <blockquote><p>A C expression that should indicate the number of bytes a call sequence
 pops off the stack.  It is added to the value of <code>RETURN_POPS_ARGS</code>
 when compiling a function call.

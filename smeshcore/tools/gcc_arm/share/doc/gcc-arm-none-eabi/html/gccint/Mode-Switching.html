@@ -10,9 +10,7 @@
 <link rel="next" href="Target-Attributes.html#Target-Attributes" title="Target Attributes">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -56,10 +54,10 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Target-Macros.html#Target-Macros">Targe
 
 <h3 class="section">17.24 Mode Switching Instructions</h3>
 
-<p><a name="index-mode-switching-4719"></a>The following macros control mode switching optimizations:
+<p><a name="index-mode-switching-4758"></a>The following macros control mode switching optimizations:
 
 <div class="defun">
-&mdash; Macro: <b>OPTIMIZE_MODE_SWITCHING</b> (<var>entity</var>)<var><a name="index-OPTIMIZE_005fMODE_005fSWITCHING-4720"></a></var><br>
+&mdash; Macro: <b>OPTIMIZE_MODE_SWITCHING</b> (<var>entity</var>)<var><a name="index-OPTIMIZE_005fMODE_005fSWITCHING-4759"></a></var><br>
 <blockquote><p>Define this macro if the port needs extra instructions inserted for mode
 switching in an optimizing compilation.
 
@@ -82,7 +80,7 @@ are optional.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>NUM_MODES_FOR_MODE_SWITCHING</b><var><a name="index-NUM_005fMODES_005fFOR_005fMODE_005fSWITCHING-4721"></a></var><br>
+&mdash; Macro: <b>NUM_MODES_FOR_MODE_SWITCHING</b><var><a name="index-NUM_005fMODES_005fFOR_005fMODE_005fSWITCHING-4760"></a></var><br>
 <blockquote><p>If you define <code>OPTIMIZE_MODE_SWITCHING</code>, you have to define this as
 initializer for an array of integers.  Each initializer element
 N refers to an entity that needs mode switching, and specifies the number
@@ -96,7 +94,7 @@ switch is needed / supplied.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>MODE_NEEDED</b> (<var>entity, insn</var>)<var><a name="index-MODE_005fNEEDED-4722"></a></var><br>
+&mdash; Macro: <b>MODE_NEEDED</b> (<var>entity, insn</var>)<var><a name="index-MODE_005fNEEDED-4761"></a></var><br>
 <blockquote><p><var>entity</var> is an integer specifying a mode-switched entity.  If
 <code>OPTIMIZE_MODE_SWITCHING</code> is defined, you must define this macro to
 return an integer value not larger than the corresponding element in
@@ -105,14 +103,15 @@ be switched into prior to the execution of <var>insn</var>.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>MODE_AFTER</b> (<var>mode, insn</var>)<var><a name="index-MODE_005fAFTER-4723"></a></var><br>
-<blockquote><p>If this macro is defined, it is evaluated for every <var>insn</var> during
+&mdash; Macro: <b>MODE_AFTER</b> (<var>entity, mode, insn</var>)<var><a name="index-MODE_005fAFTER-4762"></a></var><br>
+<blockquote><p><var>entity</var> is an integer specifying a mode-switched entity.  If
+this macro is defined, it is evaluated for every <var>insn</var> during
 mode switching.  It determines the mode that an insn results in (if
 different from the incoming mode). 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>MODE_ENTRY</b> (<var>entity</var>)<var><a name="index-MODE_005fENTRY-4724"></a></var><br>
+&mdash; Macro: <b>MODE_ENTRY</b> (<var>entity</var>)<var><a name="index-MODE_005fENTRY-4763"></a></var><br>
 <blockquote><p>If this macro is defined, it is evaluated for every <var>entity</var> that needs
 mode switching.  It should evaluate to an integer, which is a mode that
 <var>entity</var> is assumed to be switched to at function entry.  If <code>MODE_ENTRY</code>
@@ -120,7 +119,7 @@ is defined then <code>MODE_EXIT</code> must be defined.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>MODE_EXIT</b> (<var>entity</var>)<var><a name="index-MODE_005fEXIT-4725"></a></var><br>
+&mdash; Macro: <b>MODE_EXIT</b> (<var>entity</var>)<var><a name="index-MODE_005fEXIT-4764"></a></var><br>
 <blockquote><p>If this macro is defined, it is evaluated for every <var>entity</var> that needs
 mode switching.  It should evaluate to an integer, which is a mode that
 <var>entity</var> is assumed to be switched to at function exit.  If <code>MODE_EXIT</code>
@@ -128,7 +127,7 @@ is defined then <code>MODE_ENTRY</code> must be defined.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>MODE_PRIORITY_TO_MODE</b> (<var>entity, n</var>)<var><a name="index-MODE_005fPRIORITY_005fTO_005fMODE-4726"></a></var><br>
+&mdash; Macro: <b>MODE_PRIORITY_TO_MODE</b> (<var>entity, n</var>)<var><a name="index-MODE_005fPRIORITY_005fTO_005fMODE-4765"></a></var><br>
 <blockquote><p>This macro specifies the order in which modes for <var>entity</var> are processed. 
 0 is the highest priority, <code>NUM_MODES_FOR_MODE_SWITCHING[</code><var>entity</var><code>] - 1</code> the
 lowest.  The value of the macro should be an integer designating a mode
@@ -138,7 +137,7 @@ for <var>entity</var>.  For any fixed <var>entity</var>, <code>mode_priority_to_
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>EMIT_MODE_SET</b> (<var>entity, mode, hard_regs_live</var>)<var><a name="index-EMIT_005fMODE_005fSET-4727"></a></var><br>
+&mdash; Macro: <b>EMIT_MODE_SET</b> (<var>entity, mode, hard_regs_live</var>)<var><a name="index-EMIT_005fMODE_005fSET-4766"></a></var><br>
 <blockquote><p>Generate one or more insns to set <var>entity</var> to <var>mode</var>. 
 <var>hard_reg_live</var> is the set of hard registers live at the point where
 the insn(s) are to be inserted. 

@@ -10,8 +10,8 @@
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
 This file documents the GNU linker LD
-(GNU Tools for ARM Embedded Processors)
-version 2.22.0.
+(GNU Binutils)
+version 2.23.2.
 
 Copyright (C) 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000,
 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
@@ -47,17 +47,17 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Machine-Dependent.html#Machine-Dependen
 
 <h3 class="section">4.1 <samp><span class="command">ld</span></samp> and the H8/300</h3>
 
-<p><a name="index-H8_002f300-support-565"></a>For the H8/300, <samp><span class="command">ld</span></samp> can perform these global optimizations when
+<p><a name="index-H8_002f300-support-569"></a>For the H8/300, <samp><span class="command">ld</span></samp> can perform these global optimizations when
 you specify the &lsquo;<samp><span class="samp">--relax</span></samp>&rsquo; command-line option.
 
      
-<a name="index-relaxing-on-H8_002f300-566"></a>
+<a name="index-relaxing-on-H8_002f300-570"></a>
 <dl><dt><em>relaxing address modes</em><dd><samp><span class="command">ld</span></samp> finds all <code>jsr</code> and <code>jmp</code> instructions whose
 targets are within eight bits, and turns them into eight-bit
 program-counter relative <code>bsr</code> and <code>bra</code> instructions,
 respectively.
 
-     <p><a name="index-synthesizing-on-H8_002f300-567"></a><br><dt><em>synthesizing instructions</em><dd><!-- FIXME: specifically mov.b, or any mov instructions really? -->
+     <p><a name="index-synthesizing-on-H8_002f300-571"></a><br><dt><em>synthesizing instructions</em><dd><!-- FIXME: specifically mov.b, or any mov instructions really? -->
 <samp><span class="command">ld</span></samp> finds all <code>mov.b</code> instructions which use the
 sixteen-bit absolute address form, but refer to the top
 page of memory, and changes them to use the eight-bit address form. 

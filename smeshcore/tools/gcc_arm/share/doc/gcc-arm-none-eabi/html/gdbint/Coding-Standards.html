@@ -9,8 +9,7 @@
 <link rel="next" href="Misc-Guidelines.html#Misc-Guidelines" title="Misc Guidelines">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -45,7 +44,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="index.html#Top">Top</a>
 
 <h2 class="chapter">16 Coding Standards</h2>
 
-<p><a name="index-coding-standards-459"></a>
+<p><a name="index-coding-standards-454"></a>
 
 <h3 class="section">16.1 <span class="sc">gdb</span> C Coding Standards</h3>
 
@@ -67,7 +66,7 @@ compiler.
 
 <h4 class="subsection">16.1.2 Formatting</h4>
 
-<p><a name="index-source-code-formatting-460"></a>The standard GNU recommendations for formatting must be followed
+<p><a name="index-source-code-formatting-455"></a>The standard GNU recommendations for formatting must be followed
 strictly.  Any <span class="sc">gdb</span>-specific deviation from GNU
 recomendations is described below.
 
@@ -125,9 +124,24 @@ the following guidelines:
 </td><td valign="top" width="80%">(pointer dereference)
    <br></td></tr></table>
 
-<h4 class="subsection">16.1.3 Comments</h4>
+   <p>Any two or more lines in code should be wrapped in braces, even if
+they are comments, as they look like separate statements:
 
-<p><a name="index-comment-formatting-461"></a>The standard GNU requirements on comments must be followed strictly.
+<pre class="smallexample">     if (i)
+       {
+         /* Return success.  */
+         return 0;
+       }
+</pre>
+   <p class="noindent">and not:
+
+<pre class="smallexample">     if (i)
+       /* Return success.  */
+       return 0;
+</pre>
+   <h4 class="subsection">16.1.3 Comments</h4>
+
+<p><a name="index-comment-formatting-456"></a>The standard GNU requirements on comments must be followed strictly.
 
    <p>Block comments must appear in the following form, with no <code>/*</code>- or
 <code>*/</code>-only lines, and no leading <code>*</code>:
@@ -151,11 +165,11 @@ than will fit, and then somebody will have to move it anyhow.
 
 <h4 class="subsection">16.1.4 C Usage</h4>
 
-<p><a name="index-C-data-types-462"></a>Code must not depend on the sizes of C data types, the format of the
+<p><a name="index-C-data-types-457"></a>Code must not depend on the sizes of C data types, the format of the
 host's floating point numbers, the alignment of anything, or the order
 of evaluation of expressions.
 
-   <p><a name="index-function-usage-463"></a>Use functions freely.  There are only a handful of compute-bound areas
+   <p><a name="index-function-usage-458"></a>Use functions freely.  There are only a handful of compute-bound areas
 in <span class="sc">gdb</span> that might be affected by the overhead of a function
 call, mainly in symbol reading.  Most of <span class="sc">gdb</span>'s performance is
 limited by the target interface (whether serial line or system call).
@@ -167,20 +181,39 @@ are just as hard to understand as a single thousand-line function.
 (But if you have to use a macro, make sure that the macro arguments are
 protected with parentheses.)
 
-   <p><a name="index-types-464"></a>
+   <p><a name="index-types-459"></a>
 Declarations like &lsquo;<samp><span class="samp">struct foo *</span></samp>&rsquo; should be used in preference to
 declarations like &lsquo;<samp><span class="samp">typedef struct foo { ... } *foo_ptr</span></samp>&rsquo;.
 
+   <p>Zero constant (<code>0</code>) is not interchangeable with a null pointer
+constant (<code>NULL</code>) anywhere.  <span class="sc">gcc</span> does not give a warning for
+such interchange.  Specifically:
+
+   <p><table summary=""><tr align="left"><td valign="top" width="20%">incorrect
+</td><td valign="top" width="50%"><code>if (pointervar) {}</code>
+<br></td></tr><tr align="left"><td valign="top" width="20%">incorrect
+</td><td valign="top" width="50%"><code>if (!pointervar) {}</code>
+<br></td></tr><tr align="left"><td valign="top" width="20%">incorrect
+</td><td valign="top" width="50%"><code>if (pointervar != 0) {}</code>
+<br></td></tr><tr align="left"><td valign="top" width="20%">incorrect
+</td><td valign="top" width="50%"><code>if (pointervar == 0) {}</code>
+<br></td></tr><tr align="left"><td valign="top" width="20%">correct
+</td><td valign="top" width="50%"><code>if (pointervar != NULL) {}</code>
+<br></td></tr><tr align="left"><td valign="top" width="20%">correct
+</td><td valign="top" width="50%"><code>if (pointervar == NULL) {}</code>
+   <br></td></tr></table>
+
 <h4 class="subsection">16.1.5 Function Prototypes</h4>
 
-<p><a name="index-function-prototypes-465"></a>
+<p><a name="index-function-prototypes-460"></a>
 Prototypes must be used when both <em>declaring</em> and <em>defining</em>
 a function.  Prototypes for <span class="sc">gdb</span> functions must include both the
 argument type and name, with the name matching that used in the actual
 function definition.
 
    <p>All external functions should have a declaration in a header file that
-callers include, except for <code>_initialize_*</code> functions, which must
+callers include, that declaration should use the <code>extern</code> modifier. 
+The only exception concerns <code>_initialize_*</code> functions, which must
 be external so that <samp><span class="file">init.c</span></samp> construction works, but shouldn't be
 visible to random source files.
 

@@ -45,37 +45,37 @@ Up:&nbsp;<a rel="up" accesskey="u" href="V850_002dDependent.html#V850_002dDepend
 <hr>
 </div>
 
-<h4 class="subsection">9.44.1 Options</h4>
+<h4 class="subsection">9.47.1 Options</h4>
 
-<p><a name="index-V850-options-_0028none_0029-2093"></a><a name="index-options-for-V850-_0028none_0029-2094"></a><code>as</code> supports the following additional command-line options
+<p><a name="index-V850-options-_0028none_0029-2167"></a><a name="index-options-for-V850-_0028none_0029-2168"></a><code>as</code> supports the following additional command-line options
 for the V850 processor family:
 
-   <p><a name="index-command-line-options_002c-V850-2095"></a><a name="index-V850-command-line-options-2096"></a>
+   <p><a name="index-command-line-options_002c-V850-2169"></a><a name="index-V850-command-line-options-2170"></a>
      
-<a name="index-g_t_0040code_007b_002dwsigned_005foverflow_007d-command-line-option_002c-V850-2097"></a>
+<a name="index-g_t_0040code_007b_002dwsigned_005foverflow_007d-command-line-option_002c-V850-2171"></a>
 <dl><dt><code>-wsigned_overflow</code><dd>Causes warnings to be produced when signed immediate values overflow the
 space available for then within their opcodes.  By default this option
 is disabled as it is possible to receive spurious warnings due to using
 exact bit patterns as immediate constants.
 
-     <p><a name="index-g_t_0040code_007b_002dwunsigned_005foverflow_007d-command-line-option_002c-V850-2098"></a><br><dt><code>-wunsigned_overflow</code><dd>Causes warnings to be produced when unsigned immediate values overflow
+     <p><a name="index-g_t_0040code_007b_002dwunsigned_005foverflow_007d-command-line-option_002c-V850-2172"></a><br><dt><code>-wunsigned_overflow</code><dd>Causes warnings to be produced when unsigned immediate values overflow
 the space available for then within their opcodes.  By default this
 option is disabled as it is possible to receive spurious warnings due to
 using exact bit patterns as immediate constants.
 
-     <p><a name="index-g_t_0040code_007b_002dmv850_007d-command-line-option_002c-V850-2099"></a><br><dt><code>-mv850</code><dd>Specifies that the assembled code should be marked as being targeted at
+     <p><a name="index-g_t_0040code_007b_002dmv850_007d-command-line-option_002c-V850-2173"></a><br><dt><code>-mv850</code><dd>Specifies that the assembled code should be marked as being targeted at
 the V850 processor.  This allows the linker to detect attempts to link
 such code with code assembled for other processors.
 
-     <p><a name="index-g_t_0040code_007b_002dmv850e_007d-command-line-option_002c-V850-2100"></a><br><dt><code>-mv850e</code><dd>Specifies that the assembled code should be marked as being targeted at
+     <p><a name="index-g_t_0040code_007b_002dmv850e_007d-command-line-option_002c-V850-2174"></a><br><dt><code>-mv850e</code><dd>Specifies that the assembled code should be marked as being targeted at
 the V850E processor.  This allows the linker to detect attempts to link
 such code with code assembled for other processors.
 
-     <p><a name="index-g_t_0040code_007b_002dmv850e1_007d-command-line-option_002c-V850-2101"></a><br><dt><code>-mv850e1</code><dd>Specifies that the assembled code should be marked as being targeted at
+     <p><a name="index-g_t_0040code_007b_002dmv850e1_007d-command-line-option_002c-V850-2175"></a><br><dt><code>-mv850e1</code><dd>Specifies that the assembled code should be marked as being targeted at
 the V850E1 processor.  This allows the linker to detect attempts to link
 such code with code assembled for other processors.
 
-     <p><a name="index-g_t_0040code_007b_002dmv850any_007d-command-line-option_002c-V850-2102"></a><br><dt><code>-mv850any</code><dd>Specifies that the assembled code should be marked as being targeted at
+     <p><a name="index-g_t_0040code_007b_002dmv850any_007d-command-line-option_002c-V850-2176"></a><br><dt><code>-mv850any</code><dd>Specifies that the assembled code should be marked as being targeted at
 the V850 processor but support instructions that are specific to the
 extended variants of the process.  This allows the production of
 binaries that contain target specific code, but which are also intended
@@ -84,15 +84,15 @@ routines used by the code produced by GCC for all versions of the v850
 architecture, together with support routines only used by the V850E
 architecture.
 
-     <p><a name="index-g_t_0040code_007b_002dmv850e2_007d-command-line-option_002c-V850-2103"></a><br><dt><code>-mv850e2</code><dd>Specifies that the assembled code should be marked as being targeted at
+     <p><a name="index-g_t_0040code_007b_002dmv850e2_007d-command-line-option_002c-V850-2177"></a><br><dt><code>-mv850e2</code><dd>Specifies that the assembled code should be marked as being targeted at
 the V850E2 processor.  This allows the linker to detect attempts to link
 such code with code assembled for other processors.
 
-     <p><a name="index-g_t_0040code_007b_002dmv850e2v3_007d-command-line-option_002c-V850-2104"></a><br><dt><code>-mv850e2v3</code><dd>Specifies that the assembled code should be marked as being targeted at
+     <p><a name="index-g_t_0040code_007b_002dmv850e2v3_007d-command-line-option_002c-V850-2178"></a><br><dt><code>-mv850e2v3</code><dd>Specifies that the assembled code should be marked as being targeted at
 the V850E2V3 processor.  This allows the linker to detect attempts to link
 such code with code assembled for other processors.
 
-     <p><a name="index-g_t_0040code_007b_002dmrelax_007d-command-line-option_002c-V850-2105"></a><br><dt><code>-mrelax</code><dd>Enables relaxation.  This allows the .longcall and .longjump pseudo
+     <p><a name="index-g_t_0040code_007b_002dmrelax_007d-command-line-option_002c-V850-2179"></a><br><dt><code>-mrelax</code><dd>Enables relaxation.  This allows the .longcall and .longjump pseudo
 ops to be used in the assembler source code.  These ops label sections
 of code which are either a long function call or a long branch.  The
 assembler will then flag these sections of code and the linker will

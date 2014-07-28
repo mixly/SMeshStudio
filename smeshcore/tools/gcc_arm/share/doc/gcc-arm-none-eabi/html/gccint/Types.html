@@ -10,9 +10,7 @@
 <link rel="next" href="Declarations.html#Declarations" title="Declarations">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -56,7 +54,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="GENERIC.html#GENERIC">GENERIC</a>
 
 <h3 class="section">11.3 Types</h3>
 
-<p><a name="index-type-2330"></a><a name="index-pointer-2331"></a><a name="index-reference-2332"></a><a name="index-fundamental-type-2333"></a><a name="index-array-2334"></a><a name="index-VOID_005fTYPE-2335"></a><a name="index-INTEGER_005fTYPE-2336"></a><a name="index-TYPE_005fMIN_005fVALUE-2337"></a><a name="index-TYPE_005fMAX_005fVALUE-2338"></a><a name="index-REAL_005fTYPE-2339"></a><a name="index-FIXED_005fPOINT_005fTYPE-2340"></a><a name="index-COMPLEX_005fTYPE-2341"></a><a name="index-ENUMERAL_005fTYPE-2342"></a><a name="index-BOOLEAN_005fTYPE-2343"></a><a name="index-POINTER_005fTYPE-2344"></a><a name="index-REFERENCE_005fTYPE-2345"></a><a name="index-FUNCTION_005fTYPE-2346"></a><a name="index-METHOD_005fTYPE-2347"></a><a name="index-ARRAY_005fTYPE-2348"></a><a name="index-RECORD_005fTYPE-2349"></a><a name="index-UNION_005fTYPE-2350"></a><a name="index-UNKNOWN_005fTYPE-2351"></a><a name="index-OFFSET_005fTYPE-2352"></a><a name="index-TYPE_005fUNQUALIFIED-2353"></a><a name="index-TYPE_005fQUAL_005fCONST-2354"></a><a name="index-TYPE_005fQUAL_005fVOLATILE-2355"></a><a name="index-TYPE_005fQUAL_005fRESTRICT-2356"></a><a name="index-TYPE_005fMAIN_005fVARIANT-2357"></a><a name="index-qualified-type-2358"></a><a name="index-TYPE_005fSIZE-2359"></a><a name="index-TYPE_005fALIGN-2360"></a><a name="index-TYPE_005fPRECISION-2361"></a><a name="index-TYPE_005fARG_005fTYPES-2362"></a><a name="index-TYPE_005fMETHOD_005fBASETYPE-2363"></a><a name="index-TYPE_005fOFFSET_005fBASETYPE-2364"></a><a name="index-TREE_005fTYPE-2365"></a><a name="index-TYPE_005fCONTEXT-2366"></a><a name="index-TYPE_005fNAME-2367"></a><a name="index-TYPENAME_005fTYPE_005fFULLNAME-2368"></a><a name="index-TYPE_005fFIELDS-2369"></a><a name="index-TYPE_005fCANONICAL-2370"></a><a name="index-TYPE_005fSTRUCTURAL_005fEQUALITY_005fP-2371"></a><a name="index-SET_005fTYPE_005fSTRUCTURAL_005fEQUALITY-2372"></a>
+<p><a name="index-type-2331"></a><a name="index-pointer-2332"></a><a name="index-reference-2333"></a><a name="index-fundamental-type-2334"></a><a name="index-array-2335"></a><a name="index-VOID_005fTYPE-2336"></a><a name="index-INTEGER_005fTYPE-2337"></a><a name="index-TYPE_005fMIN_005fVALUE-2338"></a><a name="index-TYPE_005fMAX_005fVALUE-2339"></a><a name="index-REAL_005fTYPE-2340"></a><a name="index-FIXED_005fPOINT_005fTYPE-2341"></a><a name="index-COMPLEX_005fTYPE-2342"></a><a name="index-ENUMERAL_005fTYPE-2343"></a><a name="index-BOOLEAN_005fTYPE-2344"></a><a name="index-POINTER_005fTYPE-2345"></a><a name="index-REFERENCE_005fTYPE-2346"></a><a name="index-FUNCTION_005fTYPE-2347"></a><a name="index-METHOD_005fTYPE-2348"></a><a name="index-ARRAY_005fTYPE-2349"></a><a name="index-RECORD_005fTYPE-2350"></a><a name="index-UNION_005fTYPE-2351"></a><a name="index-UNKNOWN_005fTYPE-2352"></a><a name="index-OFFSET_005fTYPE-2353"></a><a name="index-TYPE_005fUNQUALIFIED-2354"></a><a name="index-TYPE_005fQUAL_005fCONST-2355"></a><a name="index-TYPE_005fQUAL_005fVOLATILE-2356"></a><a name="index-TYPE_005fQUAL_005fRESTRICT-2357"></a><a name="index-TYPE_005fMAIN_005fVARIANT-2358"></a><a name="index-qualified-type-2359"></a><a name="index-TYPE_005fSIZE-2360"></a><a name="index-TYPE_005fALIGN-2361"></a><a name="index-TYPE_005fPRECISION-2362"></a><a name="index-TYPE_005fARG_005fTYPES-2363"></a><a name="index-TYPE_005fMETHOD_005fBASETYPE-2364"></a><a name="index-TYPE_005fOFFSET_005fBASETYPE-2365"></a><a name="index-TREE_005fTYPE-2366"></a><a name="index-TYPE_005fCONTEXT-2367"></a><a name="index-TYPE_005fNAME-2368"></a><a name="index-TYPENAME_005fTYPE_005fFULLNAME-2369"></a><a name="index-TYPE_005fFIELDS-2370"></a><a name="index-TYPE_005fCANONICAL-2371"></a><a name="index-TYPE_005fSTRUCTURAL_005fEQUALITY_005fP-2372"></a><a name="index-SET_005fTYPE_005fSTRUCTURAL_005fEQUALITY-2373"></a>
 All types have corresponding tree nodes.  However, you should not assume
 that there is exactly one tree node corresponding to each type.  There
 are often multiple nodes corresponding to the same type.
@@ -71,20 +69,20 @@ functions under the <code>RECORD_TYPE</code> case label.
 
  <p>The following functions and macros deal with cv-qualification of types:
      <dl>
-<dt><code>TYPE_MAIN_VARIANT</code><a name="index-TYPE_005fMAIN_005fVARIANT-2373"></a><dd>This macro returns the unqualified version of a type.  It may be applied
+<dt><code>TYPE_MAIN_VARIANT</code><a name="index-TYPE_005fMAIN_005fVARIANT-2374"></a><dd>This macro returns the unqualified version of a type.  It may be applied
 to an unqualified type, but it is not always the identity function in
 that case. 
 </dl>
 
  <p>A few other macros and functions are usable with all types:
      <dl>
-<dt><code>TYPE_SIZE</code><a name="index-TYPE_005fSIZE-2374"></a><dd>The number of bits required to represent the type, represented as an
+<dt><code>TYPE_SIZE</code><a name="index-TYPE_005fSIZE-2375"></a><dd>The number of bits required to represent the type, represented as an
 <code>INTEGER_CST</code>.  For an incomplete type, <code>TYPE_SIZE</code> will be
 <code>NULL_TREE</code>.
 
-     <br><dt><code>TYPE_ALIGN</code><a name="index-TYPE_005fALIGN-2375"></a><dd>The alignment of the type, in bits, represented as an <code>int</code>.
+     <br><dt><code>TYPE_ALIGN</code><a name="index-TYPE_005fALIGN-2376"></a><dd>The alignment of the type, in bits, represented as an <code>int</code>.
 
-     <br><dt><code>TYPE_NAME</code><a name="index-TYPE_005fNAME-2376"></a><dd>This macro returns a declaration (in the form of a <code>TYPE_DECL</code>) for
+     <br><dt><code>TYPE_NAME</code><a name="index-TYPE_005fNAME-2377"></a><dd>This macro returns a declaration (in the form of a <code>TYPE_DECL</code>) for
 the type.  (Note this macro does <em>not</em> return an
 <code>IDENTIFIER_NODE</code>, as you might expect, given its name!)  You can
 look at the <code>DECL_NAME</code> of the <code>TYPE_DECL</code> to obtain the
@@ -92,7 +90,7 @@ actual name of the type.  The <code>TYPE_NAME</code> will be <code>NULL_TREE</co
 for a type that is not a built-in type, the result of a typedef, or a
 named class type.
 
-     <br><dt><code>TYPE_CANONICAL</code><a name="index-TYPE_005fCANONICAL-2377"></a><dd>This macro returns the &ldquo;canonical&rdquo; type for the given type
+     <br><dt><code>TYPE_CANONICAL</code><a name="index-TYPE_005fCANONICAL-2378"></a><dd>This macro returns the &ldquo;canonical&rdquo; type for the given type
 node. Canonical types are used to improve performance in the C++ and
 Objective-C++ front ends by allowing efficient comparison between two
 type nodes in <code>same_type_p</code>: if the <code>TYPE_CANONICAL</code> values
@@ -127,14 +125,14 @@ compiler to verify its canonical-type comparisons against the
 structural comparisons; the compiler will then print any warnings if
 the canonical types miscompare.
 
-     <br><dt><code>TYPE_STRUCTURAL_EQUALITY_P</code><a name="index-TYPE_005fSTRUCTURAL_005fEQUALITY_005fP-2378"></a><dd>This predicate holds when the node requires structural equality
+     <br><dt><code>TYPE_STRUCTURAL_EQUALITY_P</code><a name="index-TYPE_005fSTRUCTURAL_005fEQUALITY_005fP-2379"></a><dd>This predicate holds when the node requires structural equality
 checks, e.g., when <code>TYPE_CANONICAL</code> is <code>NULL_TREE</code>.
 
-     <br><dt><code>SET_TYPE_STRUCTURAL_EQUALITY</code><a name="index-SET_005fTYPE_005fSTRUCTURAL_005fEQUALITY-2379"></a><dd>This macro states that the type node it is given requires structural
+     <br><dt><code>SET_TYPE_STRUCTURAL_EQUALITY</code><a name="index-SET_005fTYPE_005fSTRUCTURAL_005fEQUALITY-2380"></a><dd>This macro states that the type node it is given requires structural
 equality checks, e.g., it sets <code>TYPE_CANONICAL</code> to
 <code>NULL_TREE</code>.
 
-     <br><dt><code>same_type_p</code><a name="index-same_005ftype_005fp-2380"></a><dd>This predicate takes two types as input, and holds if they are the same
+     <br><dt><code>same_type_p</code><a name="index-same_005ftype_005fp-2381"></a><dd>This predicate takes two types as input, and holds if they are the same
 type.  For example, if one type is a <code>typedef</code> for the other, or
 both are <code>typedef</code>s for the same type.  This predicate also holds if
 the two trees given as input are simply copies of one another; i.e.,

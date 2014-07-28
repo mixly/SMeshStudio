@@ -47,15 +47,15 @@ Up:&nbsp;<a rel="up" accesskey="u" href="MIPS_002dDependent.html#MIPS_002dDepend
 <hr>
 </div>
 
-<h4 class="subsection">9.24.2 MIPS ECOFF object code</h4>
+<h4 class="subsection">9.26.2 MIPS ECOFF object code</h4>
 
-<p><a name="index-ECOFF-sections-1323"></a><a name="index-MIPS-ECOFF-sections-1324"></a>Assembling for a <span class="sc">mips</span> <span class="sc">ecoff</span> target supports some additional sections
+<p><a name="index-ECOFF-sections-1376"></a><a name="index-MIPS-ECOFF-sections-1377"></a>Assembling for a <span class="sc">mips</span> <span class="sc">ecoff</span> target supports some additional sections
 besides the usual <code>.text</code>, <code>.data</code> and <code>.bss</code>.  The
 additional sections are <code>.rdata</code>, used for read-only data,
 <code>.sdata</code>, used for small data, and <code>.sbss</code>, used for small
 common objects.
 
-   <p><a name="index-small-objects_002c-MIPS-ECOFF-1325"></a><a name="index-g_t_0040code_007bgp_007d-register_002c-MIPS-1326"></a>When assembling for <span class="sc">ecoff</span>, the assembler uses the <code>$gp</code> (<code>$28</code>)
+   <p><a name="index-small-objects_002c-MIPS-ECOFF-1378"></a><a name="index-g_t_0040code_007bgp_007d-register_002c-MIPS-1379"></a>When assembling for <span class="sc">ecoff</span>, the assembler uses the <code>$gp</code> (<code>$28</code>)
 register to form the address of a &ldquo;small object&rdquo;.  Any object in the
 <code>.sdata</code> or <code>.sbss</code> sections is considered &ldquo;small&rdquo; in this sense. 
 For external objects, or for objects in the <code>.bss</code> section, you can use

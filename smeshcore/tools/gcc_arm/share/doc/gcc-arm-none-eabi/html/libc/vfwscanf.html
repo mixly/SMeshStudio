@@ -34,17 +34,19 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdio.html#Stdio">Stdio</a>
 
 <h3 class="section">4.71 <code>vfwscanf</code>, <code>vwscanf</code>, <code>vswscanf</code>&mdash;scan and format argument list from wide character input</h3>
 
-<p><a name="index-vfwscanf-348"></a><a name="index-g_t_005fvfwscanf-349"></a><a name="index-vwscanf-350"></a><a name="index-g_t_005fvwscanf-351"></a><a name="index-vswscanf-352"></a><a name="index-g_t_005fvswscanf-353"></a><strong>Synopsis</strong>
+<p><a name="index-vfwscanf-349"></a><a name="index-g_t_005fvfwscanf-350"></a><a name="index-vwscanf-351"></a><a name="index-g_t_005fvwscanf-352"></a><a name="index-vswscanf-353"></a><a name="index-g_t_005fvswscanf-354"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;stdio.h&gt;
      #include &lt;stdarg.h&gt;
-     int vwscanf(const wchar_t *<var>fmt</var>, va_list <var>list</var>);
-     int vfwscanf(FILE *<var>fp</var>, const wchar_t *<var>fmt</var>, va_list <var>list</var>);
-     int vswscanf(const wchar_t *<var>str</var>, const wchar_t *<var>fmt</var>, va_list <var>list</var>);
+     int vwscanf(const wchar_t *__restrict <var>fmt</var>, va_list <var>list</var>);
+     int vfwscanf(FILE *__restrict <var>fp</var>,
+         const wchar_t *__restrict <var>fmt</var>, va_list <var>list</var>);
+     int vswscanf(const wchar_t *__restrict <var>str</var>,
+         const wchar_t *__restrict <var>fmt</var>, va_list <var>list</var>);
      
      int _vwscanf(struct _reent *<var>reent</var>, const wchar_t *<var>fmt</var>,
          va_list <var>list</var>);
-     int _vfwscanf(struct _reent *<var>reent</var>, FILE *<var>fp</var>, const wchar_t *<var>fmt</var>,
-         va_list <var>list</var>);
+     int _vfwscanf(struct _reent *<var>reent</var>, FILE *<var>fp</var>,
+         const wchar_t *<var>fmt</var>, va_list <var>list</var>);
      int _vswscanf(struct _reent *<var>reent</var>, const wchar_t *<var>str</var>,
          const wchar_t *<var>fmt</var>, va_list <var>list</var>);
      

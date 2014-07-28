@@ -36,8 +36,8 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdlib.html#Stdlib">Stdlib</a>
 
 <p><a name="index-wcstoull-104"></a><a name="index-g_t_005fwcstoull_005fr-105"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;wchar.h&gt;
-     unsigned long long wcstoull(const wchar_t *<var>s</var>, wchar_t **<var>ptr</var>,
-         int <var>base</var>);
+     unsigned long long wcstoull(const wchar_t *__restrict <var>s</var>,
+         wchar_t **__restrict <var>ptr</var>, int <var>base</var>);
      
      unsigned long long _wcstoull_r(void *<var>reent</var>, const wchar_t *<var>s</var>,
          wchar_t **<var>ptr</var>, int <var>base</var>);

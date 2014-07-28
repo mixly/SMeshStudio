@@ -9,9 +9,7 @@
 <link rel="next" href="Identifiers.html#Identifiers" title="Identifiers">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -54,7 +52,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Tree-overview.html#Tree-overview">Tree 
 
 <h4 class="subsection">11.2.1 Trees</h4>
 
-<p><a name="index-tree-2303"></a><a name="index-TREE_005fCHAIN-2304"></a><a name="index-TREE_005fTYPE-2305"></a>
+<p><a name="index-tree-2304"></a><a name="index-TREE_005fCHAIN-2305"></a><a name="index-TREE_005fTYPE-2306"></a>
 All GENERIC trees have two fields in common.  First, <code>TREE_CHAIN</code>
 is a pointer that can be used as a singly-linked list to other trees. 
 The other is <code>TREE_TYPE</code>.  Many trees store the type of an
@@ -63,9 +61,9 @@ expression or declaration in this field.
  <p>These are some other functions for handling trees:
 
      <dl>
-<dt><code>tree_size</code><a name="index-tree_005fsize-2306"></a><dd>Return the number of bytes a tree takes.
+<dt><code>tree_size</code><a name="index-tree_005fsize-2307"></a><dd>Return the number of bytes a tree takes.
 
-     <br><dt><code>build0</code><a name="index-build0-2307"></a><dt><code>build1</code><a name="index-build1-2308"></a><dt><code>build2</code><a name="index-build2-2309"></a><dt><code>build3</code><a name="index-build3-2310"></a><dt><code>build4</code><a name="index-build4-2311"></a><dt><code>build5</code><a name="index-build5-2312"></a><dt><code>build6</code><a name="index-build6-2313"></a><dd>
+     <br><dt><code>build0</code><a name="index-build0-2308"></a><dt><code>build1</code><a name="index-build1-2309"></a><dt><code>build2</code><a name="index-build2-2310"></a><dt><code>build3</code><a name="index-build3-2311"></a><dt><code>build4</code><a name="index-build4-2312"></a><dt><code>build5</code><a name="index-build5-2313"></a><dt><code>build6</code><a name="index-build6-2314"></a><dd>
 These functions build a tree and supply values to put in each
 parameter.  The basic signature is &lsquo;<samp><span class="samp">code,&nbsp;type,&nbsp;[operands]<!-- /@w --></span></samp>&rsquo;. 
 <code>code</code> is the <code>TREE_CODE</code>, and <code>type</code> is a tree

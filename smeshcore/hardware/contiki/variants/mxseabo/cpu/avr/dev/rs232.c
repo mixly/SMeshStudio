@@ -231,7 +231,7 @@ ISR(D_USART0_TX_vect)
 }
 #endif
 
-#if NUMPORTS > 1
+#if NUMPORTS > 1 && !defined(ARDUINO)
 int (* input_handler_1)(unsigned char);
 ISR(D_USART1_RX_vect)
 {

@@ -34,12 +34,12 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdio.html#Stdio">Stdio</a>
 
 <h3 class="section">4.25 <code>freopen</code>&mdash;open a file using an existing file descriptor</h3>
 
-<p><a name="index-freopen-195"></a><a name="index-g_t_005ffreopen_005fr-196"></a><strong>Synopsis</strong>
+<p><a name="index-freopen-196"></a><a name="index-g_t_005ffreopen_005fr-197"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;stdio.h&gt;
-     FILE *freopen(const char *<var>file</var>, const char *<var>mode</var>,
-         FILE *<var>fp</var>);
-     FILE *_freopen_r(struct _reent *<var>ptr</var>, const char *<var>file</var>,
-         const char *<var>mode</var>, FILE *<var>fp</var>);
+     FILE *freopen(const char *restrict <var>file</var>, const char *restrict <var>mode</var>,
+         FILE *restrict <var>fp</var>);
+     FILE *_freopen_r(struct _reent *<var>ptr</var>, const char *restrict <var>file</var>,
+         const char *restrict <var>mode</var>, FILE *restrict <var>fp</var>);
      
 </pre>
    <p><strong>Description</strong><br>

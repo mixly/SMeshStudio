@@ -100,7 +100,13 @@ PROCESS_NAME(border_router_process);
 #include "params.h"
 #endif
 
+#if ARDUINO
+#include "contiki-arduino.h"
 
+unsigned char arduino_node_id[8] = { 0x02, 0x11, 0x22, 0xff, 0xfe, 0x33, 0x44, 0x33 };
+unsigned char arduino_channel = MXCHANNEL;
+unsigned char arduino_power = RF230_MAX_TX_POWER;
+#endif
 
 #ifdef CAMERA_INTERFACE
 #include "camera.h"
@@ -125,13 +131,15 @@ static void
 set_rime_addr(void)
 {
 	linkaddr_t addr;
-#if UIP_CONF_EUI64
-	memset(&addr, 0, sizeof(linkaddr_t));
-	if (params_get_eui64(addr.u8)) {
-		PRINTA("Random EUI64 address generated\n");
-	}
+#if ARDUINO
+  memcpy(addr.u8, arduino_node_id, sizeof(addr.u8));
+#elif UIP_CONF_EUI64
+  memset(&addr, 0, sizeof(linkaddr_t));
+  if (params_get_eui64(addr.u8)) {
+    PRINTA("Random EUI64 address generated\n");
+  }
 #else
-	memcpy(addr.u8, ds2401_id, sizeof(addr.u8));
+  memcpy(addr.u8, ds2401_id, sizeof(addr.u8));
 #endif
 #if UIP_CONF_IPV6
 	memcpy(&uip_lladdr.addr, &addr.u8, sizeof(linkaddr_t));
@@ -149,8 +157,14 @@ set_rime_addr(void)
 	rimeaddr_set_node_addr(&addr);
 	rf230_set_pan_addr(params_get_panid(), params_get_panaddr(), (uint8_t *)&addr.u8);
 #endif
-	 rf230_set_channel(params_get_channel());
-	 rf230_set_txpower(params_get_txpower());
+#if ARDUINO
+	rf230_set_channel(arduino_channel);
+	rf230_set_txpower(arduino_power);
+#else
+	rf230_set_channel(params_get_channel());
+	rf230_set_txpower(params_get_txpower());
+#endif
+
 }
 
 
@@ -351,6 +365,24 @@ initialize(void)
 	}
 #endif
 
+#define CONF_CALIBRATE_OSCCAL 0
+#if CONF_CALIBRATE_OSCCAL
+	void calibrate_rc_osc_32k();
+	{
+		extern uint8_t osccal_calibrated;
+		uint8_t i;
+		PRINTD("\nBefore calibration OSCCAL=%x\n",OSCCAL);
+		for (i=0;i<10;i++) {
+			calibrate_rc_osc_32k();
+			PRINTD("Calibrated=%x\n",osccal_calibrated);
+			//#include <util/delay_basic.h>
+			//#define delay_us( us )   ( _delay_loop_2(1+(us*F_CPU)/4000000UL) )
+			//   delay_us(50000);
+		}
+		clock_init();
+	}
+#endif 
+
 	PRINTA("\n*******Booting %s*******\n",CONTIKI_VERSION_STRING);
 
 	leds_init();
@@ -386,9 +418,10 @@ initialize(void)
 	process_start(&tcpip_process, NULL);
 #endif /* RF230BB || RF212BB */
 
-
+#ifndef ARDUINO
 	/* Autostart other processes */
 	autostart_start(autostart_processes);
+#endif
 
 	/*--------------------------Announce the configuration---------------------*/
 #if ANNOUNCE_BOOT
@@ -425,8 +458,20 @@ ipaddr_add(const uip_ipaddr_t *addr)
 int
 main(void)
 {
+#if ARDUINO
+	setup();
+#endif
 
 	initialize();
+/*
+	i2c_init();
+	i2c_delay_us(100);
+	real_init_i2c();
+	i2c_delay_us(100);
+	i2c_config(I2C_NONE);
+	leds_on(LEDS_RED);
+	leds_off(LEDS_RED);
+*/	
 	leds_on(LEDS_RED);
 #ifdef BORDER_ROUTER
 	process_start(&border_router_process, NULL);

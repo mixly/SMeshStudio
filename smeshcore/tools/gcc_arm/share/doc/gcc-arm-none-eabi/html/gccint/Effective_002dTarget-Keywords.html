@@ -10,9 +10,7 @@
 <link rel="next" href="Add-Options.html#Add-Options" title="Add Options">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -89,6 +87,8 @@ and pointers.
      <br><dt><code>int32plus</code><dd>Target has <code>int</code> that is at 32 bits or longer.
 
      <br><dt><code>int16</code><dd>Target has <code>int</code> that is 16 bits or shorter.
+
+     <br><dt><code>long_neq_int</code><dd>Target has <code>int</code> and <code>long</code> with different sizes.
 
      <br><dt><code>large_double</code><dd>Target supports <code>double</code> that is longer than <code>float</code>.
 
@@ -235,6 +235,10 @@ test system can execute decimal floating point tests.
 
      <br><dt><code>arm_eabi</code><dd>ARM target adheres to the ABI for the ARM Architecture.
 
+     <br><dt><code>arm_hf_eabi</code><dd>ARM target adheres to the VFP and Advanced SIMD Register Arguments
+variant of the ABI for the ARM Architecture (as selected with
+<code>-mfloat-abi=hard</code>).
+
      <br><dt><code>arm_hard_vfp_ok</code><dd>ARM target supports <code>-mfpu=vfp -mfloat-abi=hard</code>. 
 Some multilibs may be incompatible with these options.
 
@@ -245,7 +249,12 @@ Some multilibs may be incompatible with this option.
 
      <br><dt><code>arm_neon_hw</code><dd>Test system supports executing NEON instructions.
 
+     <br><dt><code>arm_neonv2_hw</code><dd>Test system supports executing NEON v2 instructions.
+
      <br><dt><code>arm_neon_ok</code><dd><a name="arm_005fneon_005fok"></a>ARM Target supports <code>-mfpu=neon -mfloat-abi=softfp</code> or compatible
+options.  Some multilibs may be incompatible with these options.
+
+     <br><dt><code>arm_neonv2_ok</code><dd><a name="arm_005fneonv2_005fok"></a>ARM Target supports <code>-mfpu=neon-vfpv4 -mfloat-abi=softfp</code> or compatible
 options.  Some multilibs may be incompatible with these options.
 
      <br><dt><code>arm_neon_fp16_ok</code><dd><a name="arm_005fneon_005ffp16_005fok"></a>ARM Target supports <code>-mfpu=neon-fp16 -mfloat-abi=softfp</code> or compatible
@@ -256,7 +265,17 @@ options.  Some multilibs may be incompatible with these options.
      <br><dt><code>arm_thumb2_ok</code><dd>ARM target generates Thumb-2 code for <code>-mthumb</code>.
 
      <br><dt><code>arm_vfp_ok</code><dd>ARM target supports <code>-mfpu=vfp -mfloat-abi=softfp</code>. 
-Some multilibs may be incompatible with these options. 
+Some multilibs may be incompatible with these options.
+
+     <br><dt><code>arm_v8_vfp_ok</code><dd>ARM target supports <code>-mfpu=fp-armv8 -mfloat-abi=softfp</code>. 
+Some multilibs may be incompatible with these options.
+
+     <br><dt><code>arm_v8_neon_ok</code><dd>ARM target supports <code>-mfpu=neon-fp-armv8 -mfloat-abi=softfp</code>. 
+Some multilibs may be incompatible with these options.
+
+     <br><dt><code>arm_prefer_ldrd_strd</code><dd>ARM target prefers <code>LDRD</code> and <code>STRD</code> instructions over
+<code>LDM</code> and <code>STM</code> instructions.
+
 </dl>
 
 <h5 class="subsubsection">7.2.3.7 MIPS-specific attributes</h5>
@@ -280,15 +299,27 @@ when using the new ABI.
 <h5 class="subsubsection">7.2.3.8 PowerPC-specific attributes</h5>
 
      <dl>
-<dt><code>powerpc64</code><dd>Test system supports executing 64-bit instructions.
+<dt><code>dfp_hw</code><dd>PowerPC target supports executing hardware DFP instructions.
+
+     <br><dt><code>p8vector_hw</code><dd>PowerPC target supports executing VSX instructions (ISA 2.07).
+
+     <br><dt><code>powerpc64</code><dd>Test system supports executing 64-bit instructions.
 
      <br><dt><code>powerpc_altivec</code><dd>PowerPC target supports AltiVec.
 
      <br><dt><code>powerpc_altivec_ok</code><dd>PowerPC target supports <code>-maltivec</code>.
 
+     <br><dt><code>powerpc_eabi_ok</code><dd>PowerPC target supports <code>-meabi</code>.
+
+     <br><dt><code>powerpc_elfv2</code><dd>PowerPC target supports <code>-mabi=elfv2</code>.
+
      <br><dt><code>powerpc_fprs</code><dd>PowerPC target supports floating-point registers.
 
      <br><dt><code>powerpc_hard_double</code><dd>PowerPC target supports hardware double-precision floating-point.
+
+     <br><dt><code>powerpc_htm_ok</code><dd>PowerPC target supports <code>-mhtm</code>
+
+     <br><dt><code>powerpc_p8vector_ok</code><dd>PowerPC target supports <code>-mpower8-vector</code>
 
      <br><dt><code>powerpc_ppu_ok</code><dd>PowerPC target supports <code>-mcpu=cell</code>.
 
@@ -299,14 +330,18 @@ PowerPC target supports PowerPC SPE.
 
      <br><dt><code>powerpc_spu</code><dd>PowerPC target supports PowerPC SPU.
 
-     <br><dt><code>spu_auto_overlay</code><dd>SPU target has toolchain that supports automatic overlay generation.
-
      <br><dt><code>powerpc_vsx_ok</code><dd>PowerPC target supports <code>-mvsx</code>.
 
      <br><dt><code>powerpc_405_nocache</code><dd>Including the options used to compile this particular test, the
 PowerPC target supports PowerPC 405.
 
-     <br><dt><code>vmx_hw</code><dd>PowerPC target supports executing AltiVec instructions. 
+     <br><dt><code>ppc_recip_hw</code><dd>PowerPC target supports executing reciprocal estimate instructions.
+
+     <br><dt><code>spu_auto_overlay</code><dd>SPU target has toolchain that supports automatic overlay generation.
+
+     <br><dt><code>vmx_hw</code><dd>PowerPC target supports executing AltiVec instructions.
+
+     <br><dt><code>vsx_hw</code><dd>PowerPC target supports executing VSX instructions (ISA 2.06). 
 </dl>
 
 <h5 class="subsubsection">7.2.3.9 Other hardware attributes</h5>
@@ -438,6 +473,8 @@ all targets.
 <samp><span class="option">-fno-delete-null-pointer-checks</span></samp> or hardwired into the target.
 
      <br><dt><code>lto</code><dd>Compiler has been configured to support link-time optimization (LTO).
+
+     <br><dt><code>naked_functions</code><dd>Target supports the <code>naked</code> function attribute.
 
      <br><dt><code>named_sections</code><dd>Target supports named sections.
 

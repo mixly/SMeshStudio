@@ -10,8 +10,7 @@
 <link rel="next" href="Functions-and-Variable-to-Analyze-Frames.html#Functions-and-Variable-to-Analyze-Frames" title="Functions and Variable to Analyze Frames">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -46,13 +45,13 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Frame-Interpretation.html#Frame-Interpr
 
 <h4 class="subsection">11.7.3 Prologue Caches</h4>
 
-<p><a name="index-function-prologue-338"></a><a name="index-prologue-of-a-function-339"></a>All the frame sniffing functions typically examine the code at the
+<p><a name="index-function-prologue-334"></a><a name="index-prologue-of-a-function-335"></a>All the frame sniffing functions typically examine the code at the
 start of the corresponding function, to determine the state of
 registers.  The ABI will save old values and set new values of key
 registers at the start of each function in what is known as the
 function <dfn>prologue</dfn>.
 
-   <p><a name="index-prologue-cache-340"></a>For any particular stack frame this data does not change, so all the
+   <p><a name="index-prologue-cache-336"></a>For any particular stack frame this data does not change, so all the
 standard unwinding functions, in addition to receiving a pointer to
 the NEXT frame as their first argument, receive a pointer to a
 <dfn>prologue cache</dfn> as their second argument.  This can be used to store

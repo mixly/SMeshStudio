@@ -34,9 +34,10 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Strings.html#Strings">Strings</a>
 
 <h3 class="section">5.40 <code>strxfrm</code>&mdash;transform string</h3>
 
-<p><a name="index-strxfrm-409"></a><strong>Synopsis</strong>
+<p><a name="index-strxfrm-410"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;string.h&gt;
-     size_t strxfrm(char *<var>s1</var>, const char *<var>s2</var>, size_t <var>n</var>);
+     size_t strxfrm(char *restrict <var>s1</var>, const char *restrict <var>s2</var>,
+         size_t <var>n</var>);
      
 </pre>
    <p><strong>Description</strong><br>

@@ -36,11 +36,11 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdlib.html#Stdlib">Stdlib</a>
 
 <p><a name="index-strtod-79"></a><a name="index-g_t_005fstrtod_005fr-80"></a><a name="index-strtof-81"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;stdlib.h&gt;
-     double strtod(const char *<var>str</var>, char **<var>tail</var>);
-     float strtof(const char *<var>str</var>, char **<var>tail</var>);
+     double strtod(const char *restrict <var>str</var>, char **restrict <var>tail</var>);
+     float strtof(const char *restrict <var>str</var>, char **restrict <var>tail</var>);
      
      double _strtod_r(void *<var>reent</var>,
-         const char *<var>str</var>, char **<var>tail</var>);
+         const char *restrict <var>str</var>, char **restrict <var>tail</var>);
      
 </pre>
    <p><strong>Description</strong><br>

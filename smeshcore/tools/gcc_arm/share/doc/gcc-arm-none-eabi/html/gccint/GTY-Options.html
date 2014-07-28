@@ -6,12 +6,10 @@
 <meta name="generator" content="makeinfo 4.11">
 <link title="Top" rel="start" href="index.html#Top">
 <link rel="up" href="Type-Information.html#Type-Information" title="Type Information">
-<link rel="next" href="GGC-Roots.html#GGC-Roots" title="GGC Roots">
+<link rel="next" href="User-GC.html#User-GC" title="User GC">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -47,7 +45,7 @@ Texts being (a) (see below), and with the Back-Cover Texts being (b)
 <div class="node">
 <p>
 <a name="GTY-Options"></a>
-Next:&nbsp;<a rel="next" accesskey="n" href="GGC-Roots.html#GGC-Roots">GGC Roots</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="User-GC.html#User-GC">User GC</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="Type-Information.html#Type-Information">Type Information</a>
 <hr>
 </div>
@@ -67,7 +65,7 @@ equivalent.
 special escapes may be used in these strings, to refer to pieces of
 the data structure being marked:
 
- <p><a name="index-g_t_0025-in-GTY-option-4947"></a>
+ <p><a name="index-g_t_0025-in-GTY-option-4988"></a>
      <dl>
 <dt><code>%h</code><dd>The current structure. 
 <br><dt><code>%1</code><dd>The structure that immediately contains the current structure. 
@@ -98,11 +96,11 @@ helpful when you have a complicated expression.
  <p>The available options are:
 
      
-<a name="index-length-4948"></a>
+<a name="index-length-4989"></a>
 <dl><dt><code>length ("</code><var>expression</var><code>")</code><dd>
 There are two places the type machinery will need to be explicitly told
-the length of an array.  The first case is when a structure ends in a
-variable-length array, like this:
+the length of an array of non-atomic objects.  The first case is when a
+structure ends in a variable-length array, like this:
      <pre class="smallexample">          struct GTY(()) rtvec_def {
             int num_elem;         /* <span class="roman">number of elements</span> */
             rtx GTY ((length ("%h.num_elem"))) elem[1];
@@ -126,12 +124,17 @@ pointer to an array, like this:
      static GTY((length("reg_known_value_size"))) rtx *reg_known_value;
 </pre>
 
-     <p><a name="index-skip-4949"></a><br><dt><code>skip</code><dd>
+     <p>Note that the <code>length</code> option is only meant for use with arrays of
+non-atomic objects, that is, objects that contain pointers pointing to
+other GTY-managed objects.  For other GC-allocated arrays and strings
+you should use <code>atomic</code>.
+
+     <p><a name="index-skip-4990"></a><br><dt><code>skip</code><dd>
 If <code>skip</code> is applied to a field, the type machinery will ignore it. 
 This is somewhat dangerous; the only safe use is in a union when one
 field really isn't ever used.
 
-     <p><a name="index-desc-4950"></a><a name="index-tag-4951"></a><a name="index-default-4952"></a><br><dt><code>desc ("</code><var>expression</var><code>")</code><dt><code>tag ("</code><var>constant</var><code>")</code><dt><code>default</code><dd>
+     <p><a name="index-desc-4991"></a><a name="index-tag-4992"></a><a name="index-default-4993"></a><br><dt><code>desc ("</code><var>expression</var><code>")</code><dt><code>tag ("</code><var>constant</var><code>")</code><dt><code>default</code><dd>
 The type machinery needs to be told which field of a <code>union</code> is
 currently active.  This is done by giving each field a constant
 <code>tag</code> value, and then specifying a discriminator using <code>desc</code>. 
@@ -161,7 +164,7 @@ constant.
 mechanism will treat the field <code>level</code> as being present and if 0,
 will treat the field <code>scope</code> as being present.
 
-     <p><a name="index-param_005fis-4953"></a><a name="index-use_005fparam-4954"></a><br><dt><code>param_is (</code><var>type</var><code>)</code><dt><code>use_param</code><dd>
+     <p><a name="index-param_005fis-4994"></a><a name="index-use_005fparam-4995"></a><br><dt><code>param_is (</code><var>type</var><code>)</code><dt><code>use_param</code><dd>
 Sometimes it's convenient to define some data structure to work on
 generic pointers (that is, <code>PTR</code>) and then use it with a specific
 type.  <code>param_is</code> specifies the real type pointed to, and
@@ -179,14 +182,14 @@ write the definition of <code>htab_t</code> like this:
      <p>and then declare variables like this:
      <pre class="smallexample">            static htab_t GTY ((param_is (union tree_node))) ict;
 </pre>
-     <p><a name="index-param_0040var_007bn_007d_005fis-4955"></a><a name="index-use_005fparam_0040var_007bn_007d-4956"></a><br><dt><code>param</code><var>n</var><code>_is (</code><var>type</var><code>)</code><dt><code>use_param</code><var>n</var><dd>
+     <p><a name="index-param_0040var_007bn_007d_005fis-4996"></a><a name="index-use_005fparam_0040var_007bn_007d-4997"></a><br><dt><code>param</code><var>n</var><code>_is (</code><var>type</var><code>)</code><dt><code>use_param</code><var>n</var><dd>
 In more complicated cases, the data structure might need to work on
 several different types, which might not necessarily all be pointers. 
 For this, <code>param1_is</code> through <code>param9_is</code> may be used to
 specify the real type of a field identified by <code>use_param1</code> through
 <code>use_param9</code>.
 
-     <p><a name="index-use_005fparams-4957"></a><br><dt><code>use_params</code><dd>
+     <p><a name="index-use_005fparams-4998"></a><br><dt><code>use_params</code><dd>
 When a structure contains another structure that is parameterized,
 there's no need to do anything special, the inner structure inherits the
 parameters of the outer one.  When a structure contains a pointer to a
@@ -196,13 +199,13 @@ the pointed-to structure should use the same parameters as the outer
 structure.  This is done by marking the pointer with the
 <code>use_params</code> option.
 
-     <p><a name="index-deletable-4958"></a><br><dt><code>deletable</code><dd>
+     <p><a name="index-deletable-4999"></a><br><dt><code>deletable</code><dd>
 <code>deletable</code>, when applied to a global variable, indicates that when
 garbage collection runs, there's no need to mark anything pointed to
 by this variable, it can just be set to <code>NULL</code> instead.  This is used
 to keep a list of free structures around for re-use.
 
-     <p><a name="index-if_005fmarked-4959"></a><br><dt><code>if_marked ("</code><var>expression</var><code>")</code><dd>
+     <p><a name="index-if_005fmarked-5000"></a><br><dt><code>if_marked ("</code><var>expression</var><code>")</code><dd>
 Suppose you want some kinds of object to be unique, and so you put them
 in a hash table.  If garbage collection marks the hash table, these
 objects will never be freed, even if the last other reference to them
@@ -217,7 +220,7 @@ will be deleted.
 has been marked already; in fact, the usual case is to use
 <code>if_marked ("ggc_marked_p")</code>.
 
-     <p><a name="index-mark_005fhook-4960"></a><br><dt><code>mark_hook ("</code><var>hook-routine-name</var><code>")</code><dd>
+     <p><a name="index-mark_005fhook-5001"></a><br><dt><code>mark_hook ("</code><var>hook-routine-name</var><code>")</code><dd>
 If provided for a structure or union type, the given
 <var>hook-routine-name</var> (between double-quotes) is the name of a
 routine called when the garbage collector has just marked the data as
@@ -225,14 +228,14 @@ reachable. This routine should not change the data, or call any ggc
 routine. Its only argument is a pointer to the just marked (const)
 structure or union.
 
-     <p><a name="index-maybe_005fundef-4961"></a><br><dt><code>maybe_undef</code><dd>
+     <p><a name="index-maybe_005fundef-5002"></a><br><dt><code>maybe_undef</code><dd>
 When applied to a field, <code>maybe_undef</code> indicates that it's OK if
 the structure that this fields points to is never defined, so long as
 this field is always <code>NULL</code>.  This is used to avoid requiring
 backends to define certain optional structures.  It doesn't work with
 language frontends.
 
-     <p><a name="index-nested_005fptr-4962"></a><br><dt><code>nested_ptr (</code><var>type</var><code>, "</code><var>to expression</var><code>", "</code><var>from expression</var><code>")</code><dd>
+     <p><a name="index-nested_005fptr-5003"></a><br><dt><code>nested_ptr (</code><var>type</var><code>, "</code><var>to expression</var><code>", "</code><var>from expression</var><code>")</code><dd>
 The type machinery expects all pointers to point to the start of an
 object.  Sometimes for abstraction purposes it's convenient to have
 a pointer which points inside an object.  So long as it's possible to
@@ -243,7 +246,7 @@ and the <var>from expression</var> returns the original object given
 the pointer.  The pointer will be available using the <code>%h</code>
 escape.
 
-     <p><a name="index-chain_005fnext-4963"></a><a name="index-chain_005fprev-4964"></a><a name="index-chain_005fcircular-4965"></a><br><dt><code>chain_next ("</code><var>expression</var><code>")</code><dt><code>chain_prev ("</code><var>expression</var><code>")</code><dt><code>chain_circular ("</code><var>expression</var><code>")</code><dd>
+     <p><a name="index-chain_005fnext-5004"></a><a name="index-chain_005fprev-5005"></a><a name="index-chain_005fcircular-5006"></a><br><dt><code>chain_next ("</code><var>expression</var><code>")</code><dt><code>chain_prev ("</code><var>expression</var><code>")</code><dt><code>chain_circular ("</code><var>expression</var><code>")</code><dd>
 It's helpful for the type machinery to know if objects are often
 chained together in long lists; this lets it generate code that uses
 less stack space by iterating along the list instead of recursing down
@@ -254,7 +257,7 @@ both.  The machinery requires that taking the next item of the
 previous item gives the original item.  <code>chain_circular</code> is similar
 to <code>chain_next</code>, but can be used for circular single linked lists.
 
-     <p><a name="index-reorder-4966"></a><br><dt><code>reorder ("</code><var>function name</var><code>")</code><dd>
+     <p><a name="index-reorder-5007"></a><br><dt><code>reorder ("</code><var>function name</var><code>")</code><dd>
 Some data structures depend on the relative ordering of pointers.  If
 the precompiled header machinery needs to change that ordering, it
 will call the function referenced by the <code>reorder</code> option, before
@@ -273,7 +276,7 @@ of pointers.  <code>reorder</code> functions can be expensive.  When
 possible, it is better to depend on properties of the data, like an ID
 number or the hash of a string instead.
 
-     <p><a name="index-variable_005fsize-4967"></a><br><dt><code>variable_size</code><dd>
+     <p><a name="index-variable_005fsize-5008"></a><br><dt><code>variable_size</code><dd>
 The type machinery expects the types to be of constant size.  When this
 is not true, for example, with structs that have array fields or unions,
 the type machinery cannot tell how many bytes need to be allocated at
@@ -297,7 +300,7 @@ memory as follows:
 could be calculated as follows:
      <pre class="smallexample">            size_t size = sizeof (struct sorted_fields_type) + n * sizeof (tree);
 </pre>
-     <p><a name="index-atomic-4968"></a><br><dt><code>atomic</code><dd>
+     <p><a name="index-atomic-5009"></a><br><dt><code>atomic</code><dd>
 The <code>atomic</code> option can only be used with pointers.  It informs
 the GC machinery that the memory that the pointer points to does not
 contain any pointers, and hence it should be treated by the GC and PCH
@@ -322,7 +325,7 @@ the pointer points to does actually contain a pointer.
      <p>Here is an example of how to use it:
      <pre class="smallexample">          struct GTY(()) my_struct {
             int number_of_elements;
-            unsigned int GTY ((atomic)) * elements;
+            unsigned int * GTY ((atomic)) elements;
           };
 </pre>
      <p>In this case, <code>elements</code> is a pointer under GC, and the memory it
@@ -339,11 +342,16 @@ limitation.  It would be useful to be able to mark global pointers
 with <code>atomic</code> to make the PCH machinery aware of them so that
 they are saved and restored correctly to PCH files.
 
-     <p><a name="index-special-4969"></a><br><dt><code>special ("</code><var>name</var><code>")</code><dd>
+     <p><a name="index-special-5010"></a><br><dt><code>special ("</code><var>name</var><code>")</code><dd>
 The <code>special</code> option is used to mark types that have to be dealt
 with by special case machinery.  The parameter is the name of the
 special case.  See <samp><span class="file">gengtype.c</span></samp> for further details.  Avoid
-adding new special cases unless there is no other alternative. 
+adding new special cases unless there is no other alternative.
+
+     <p><a name="index-user-5011"></a><br><dt><code>user</code><dd>
+The <code>user</code> option indicates that the code to mark structure
+fields is completely handled by user-provided routines.  See section
+<a href="User-GC.html#User-GC">User GC</a> for details on what functions need to be provided. 
 </dl>
 
  </body></html>

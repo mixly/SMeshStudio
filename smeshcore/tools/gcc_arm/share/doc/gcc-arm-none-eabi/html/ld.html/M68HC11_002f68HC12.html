@@ -11,8 +11,8 @@
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
 This file documents the GNU linker LD
-(GNU Tools for ARM Embedded Processors)
-version 2.22.0.
+(GNU Binutils)
+version 2.23.2.
 
 Copyright (C) 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000,
 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
@@ -49,7 +49,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Machine-Dependent.html#Machine-Dependen
 
 <h3 class="section">4.3 <samp><span class="command">ld</span></samp> and the Motorola 68HC11 and 68HC12 families</h3>
 
-<p><a name="index-M68HC11-and-68HC12-support-576"></a>
+<p><a name="index-M68HC11-and-68HC12-support-580"></a>
 
 <h4 class="subsection">4.3.1 Linker Relaxation</h4>
 
@@ -57,7 +57,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Machine-Dependent.html#Machine-Dependen
 optimizations when you specify the &lsquo;<samp><span class="samp">--relax</span></samp>&rsquo; command-line option.
 
      
-<a name="index-relaxing-on-M68HC11-577"></a>
+<a name="index-relaxing-on-M68HC11-581"></a>
 <dl><dt><em>relaxing address modes</em><dd><samp><span class="command">ld</span></samp> finds all <code>jsr</code> and <code>jmp</code> instructions whose
 targets are within eight bits, and turns them into eight-bit
 program-counter relative <code>bsr</code> and <code>bra</code> instructions,
@@ -76,7 +76,7 @@ addressing mode. These instructions consists of <code>bclr</code> or
 
 <h4 class="subsection">4.3.2 Trampoline Generation</h4>
 
-<p><a name="index-trampoline-generation-on-M68HC11-578"></a><a name="index-trampoline-generation-on-M68HC12-579"></a>For 68HC11 and 68HC12, <samp><span class="command">ld</span></samp> can generate trampoline code to
+<p><a name="index-trampoline-generation-on-M68HC11-582"></a><a name="index-trampoline-generation-on-M68HC12-583"></a>For 68HC11 and 68HC12, <samp><span class="command">ld</span></samp> can generate trampoline code to
 call a far function using a normal <code>jsr</code> instruction. The linker
 will also change the relocation to some far function to use the
 trampoline address instead of the function address. This is typically the

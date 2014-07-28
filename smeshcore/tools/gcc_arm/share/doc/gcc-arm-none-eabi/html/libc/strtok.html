@@ -34,10 +34,12 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Strings.html#Strings">Strings</a>
 
 <h3 class="section">5.38 <code>strtok</code>, <code>strtok_r</code>, <code>strsep</code>&mdash;get next token from a string</h3>
 
-<p><a name="index-strtok-405"></a><a name="index-strtok_005fr-406"></a><a name="index-strsep-407"></a><strong>Synopsis</strong>
+<p><a name="index-strtok-406"></a><a name="index-strtok_005fr-407"></a><a name="index-strsep-408"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;string.h&gt;
-     char *strtok(char *<var>source</var>, const char *<var>delimiters</var>)
-     char *strtok_r(char *<var>source</var>, const char *<var>delimiters</var>,
+     char *strtok(char *restrict <var>source</var>,
+         const char *restrict <var>delimiters</var>)
+     char *strtok_r(char *restrict <var>source</var>,
+         const char *restrict <var>delimiters</var>,
          char **<var>lasts</var>)
      char *strsep(char **<var>source_ptr</var>, const char *<var>delimiters</var>)
      

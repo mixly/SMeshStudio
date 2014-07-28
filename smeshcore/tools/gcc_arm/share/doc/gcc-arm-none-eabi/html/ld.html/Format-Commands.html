@@ -11,8 +11,8 @@
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
 This file documents the GNU linker LD
-(GNU Tools for ARM Embedded Processors)
-version 2.22.0.
+(GNU Binutils)
+version 2.23.2.
 
 Copyright (C) 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000,
 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
@@ -51,7 +51,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Simple-Commands.html#Simple-Commands">S
 <p>A couple of linker script commands deal with object file formats.
 
      <dl>
-<dt><code>OUTPUT_FORMAT(</code><var>bfdname</var><code>)</code><dt><code>OUTPUT_FORMAT(</code><var>default</var><code>, </code><var>big</var><code>, </code><var>little</var><code>)</code><dd><a name="index-OUTPUT_005fFORMAT_0028_0040var_007bbfdname_007d_0029-368"></a><a name="index-output-file-format-in-linker-script-369"></a>The <code>OUTPUT_FORMAT</code> command names the BFD format to use for the
+<dt><code>OUTPUT_FORMAT(</code><var>bfdname</var><code>)</code><dt><code>OUTPUT_FORMAT(</code><var>default</var><code>, </code><var>big</var><code>, </code><var>little</var><code>)</code><dd><a name="index-OUTPUT_005fFORMAT_0028_0040var_007bbfdname_007d_0029-370"></a><a name="index-output-file-format-in-linker-script-371"></a>The <code>OUTPUT_FORMAT</code> command names the BFD format to use for the
 output file (see <a href="BFD.html#BFD">BFD</a>).  Using <code>OUTPUT_FORMAT(</code><var>bfdname</var><code>)</code> is
 exactly like using &lsquo;<samp><span class="samp">--oformat </span><var>bfdname</var></samp>&rsquo; on the command line
 (see <a href="Options.html#Options">Command Line Options</a>).  If both are used, the command
@@ -76,7 +76,7 @@ command:
 option, the output file will be created in the &lsquo;<samp><span class="samp">elf32-littlemips</span></samp>&rsquo;
 format.
 
-     <br><dt><code>TARGET(</code><var>bfdname</var><code>)</code><dd><a name="index-TARGET_0028_0040var_007bbfdname_007d_0029-370"></a><a name="index-input-file-format-in-linker-script-371"></a>The <code>TARGET</code> command names the BFD format to use when reading input
+     <br><dt><code>TARGET(</code><var>bfdname</var><code>)</code><dd><a name="index-TARGET_0028_0040var_007bbfdname_007d_0029-372"></a><a name="index-input-file-format-in-linker-script-373"></a>The <code>TARGET</code> command names the BFD format to use when reading input
 files.  It affects subsequent <code>INPUT</code> and <code>GROUP</code> commands. 
 This command is like using &lsquo;<samp><span class="samp">-b </span><var>bfdname</var></samp>&rsquo; on the command line
 (see <a href="Options.html#Options">Command Line Options</a>).  If the <code>TARGET</code> command

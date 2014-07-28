@@ -10,8 +10,7 @@
 <link rel="next" href="Address-Classes.html#Address-Classes" title="Address Classes">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -46,7 +45,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Target-Architecture-Definition.html#Tar
 
 <h3 class="section">11.4 Pointers Are Not Always Addresses</h3>
 
-<p><a name="index-pointer-representation-243"></a><a name="index-address-representation-244"></a><a name="index-word_002daddressed-machines-245"></a><a name="index-separate-data-and-code-address-spaces-246"></a><a name="index-spaces_002c-separate-data-and-code-address-247"></a><a name="index-address-spaces_002c-separate-data-and-code-248"></a><a name="index-code-pointers_002c-word_002daddressed-249"></a><a name="index-converting-between-pointers-and-addresses-250"></a><a name="index-D10V-addresses-251"></a>
+<p><a name="index-pointer-representation-239"></a><a name="index-address-representation-240"></a><a name="index-word_002daddressed-machines-241"></a><a name="index-separate-data-and-code-address-spaces-242"></a><a name="index-spaces_002c-separate-data-and-code-address-243"></a><a name="index-address-spaces_002c-separate-data-and-code-244"></a><a name="index-code-pointers_002c-word_002daddressed-245"></a><a name="index-converting-between-pointers-and-addresses-246"></a><a name="index-D10V-addresses-247"></a>
 On almost all 32-bit architectures, the representation of a pointer is
 indistinguishable from the representation of some fixed-length number
 whose value is the byte address of the object pointed to.  On such
@@ -94,7 +93,7 @@ clean up some architecture-independent code.
    <p>Here are functions which convert between pointers and addresses:
 
 <div class="defun">
-&mdash; Function: CORE_ADDR <b>extract_typed_address</b> (<var>void *buf, struct type *type</var>)<var><a name="index-extract_005ftyped_005faddress-252"></a></var><br>
+&mdash; Function: CORE_ADDR <b>extract_typed_address</b> (<var>void *buf, struct type *type</var>)<var><a name="index-extract_005ftyped_005faddress-248"></a></var><br>
 <blockquote><p>Treat the bytes at <var>buf</var> as a pointer or reference of type
 <var>type</var>, and return the address it represents, in a manner
 appropriate for the current architecture.  This yields an address
@@ -113,7 +112,7 @@ will signal an internal error.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Function: CORE_ADDR <b>store_typed_address</b> (<var>void *buf, struct type *type, CORE_ADDR addr</var>)<var><a name="index-store_005ftyped_005faddress-253"></a></var><br>
+&mdash; Function: CORE_ADDR <b>store_typed_address</b> (<var>void *buf, struct type *type, CORE_ADDR addr</var>)<var><a name="index-store_005ftyped_005faddress-249"></a></var><br>
 <blockquote><p>Store the address <var>addr</var> in <var>buf</var>, in the proper format for a
 pointer of type <var>type</var> in the current architecture.  Note that
 <var>buf</var> refers to a buffer in <span class="sc">gdb</span>'s memory, not the
@@ -130,7 +129,7 @@ will signal an internal error.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Function: CORE_ADDR <b>value_as_address</b> (<var>struct value *val</var>)<var><a name="index-value_005fas_005faddress-254"></a></var><br>
+&mdash; Function: CORE_ADDR <b>value_as_address</b> (<var>struct value *val</var>)<var><a name="index-value_005fas_005faddress-250"></a></var><br>
 <blockquote><p>Assuming that <var>val</var> is a pointer, return the address it represents,
 as appropriate for the current architecture.
 
@@ -140,7 +139,7 @@ described above for <code>extract_typed_address</code>.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Function: CORE_ADDR <b>value_from_pointer</b> (<var>struct type *type, CORE_ADDR addr</var>)<var><a name="index-value_005ffrom_005fpointer-255"></a></var><br>
+&mdash; Function: CORE_ADDR <b>value_from_pointer</b> (<var>struct type *type, CORE_ADDR addr</var>)<var><a name="index-value_005ffrom_005fpointer-251"></a></var><br>
 <blockquote><p>Create and return a value representing a pointer of type <var>type</var> to
 the address <var>addr</var>, as appropriate for the current architecture. 
 This function performs architecture-specific conversions as described
@@ -153,7 +152,7 @@ definitions, appropriate for architectures on which all pointers are
 simple unsigned byte addresses.
 
 <div class="defun">
-&mdash; Function: CORE_ADDR <b>gdbarch_pointer_to_address</b> (<var>struct gdbarch *gdbarch, struct type *type, char *buf</var>)<var><a name="index-gdbarch_005fpointer_005fto_005faddress-256"></a></var><br>
+&mdash; Function: CORE_ADDR <b>gdbarch_pointer_to_address</b> (<var>struct gdbarch *gdbarch, struct type *type, char *buf</var>)<var><a name="index-gdbarch_005fpointer_005fto_005faddress-252"></a></var><br>
 <blockquote><p>Assume that <var>buf</var> holds a pointer of type <var>type</var>, in the
 appropriate format for the current architecture.  Return the byte
 address the pointer refers to.
@@ -163,7 +162,7 @@ C<tt>++</tt> reference type.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Function: void <b>gdbarch_address_to_pointer</b> (<var>struct gdbarch *gdbarch, struct type *type, char *buf, CORE_ADDR addr</var>)<var><a name="index-gdbarch_005faddress_005fto_005fpointer-257"></a></var><br>
+&mdash; Function: void <b>gdbarch_address_to_pointer</b> (<var>struct gdbarch *gdbarch, struct type *type, char *buf, CORE_ADDR addr</var>)<var><a name="index-gdbarch_005faddress_005fto_005fpointer-253"></a></var><br>
 <blockquote><p>Store in <var>buf</var> a pointer of type <var>type</var> representing the address
 <var>addr</var>, in the appropriate format for the current architecture.
 

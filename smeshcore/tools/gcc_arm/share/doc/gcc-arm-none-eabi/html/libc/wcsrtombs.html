@@ -36,8 +36,9 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdlib.html#Stdlib">Stdlib</a>
 
 <p><a name="index-wcsrtombs-90"></a><a name="index-g_t_005fwcsrtombs_005fr-91"></a><a name="index-wcsnrtombs-92"></a><a name="index-g_t_005fwcsnrtombs_005fr-93"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;wchar.h&gt;
-     size_t wcsrtombs(char *<var>dst</var>, const wchar_t **<var>src</var>, size_t <var>len</var>,
-         mbstate_t *<var>ps</var>);
+     size_t wcsrtombs(char *__restrict <var>dst</var>,
+         const wchar_t **__restrict <var>src</var>, size_t <var>len</var>,
+         mbstate_t *__restrict <var>ps</var>);
      
      #include &lt;wchar.h&gt;
      size_t _wcsrtombs_r(struct _reent *<var>ptr</var>, char *<var>dst</var>,
@@ -45,8 +46,10 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdlib.html#Stdlib">Stdlib</a>
          mbstate_t *<var>ps</var>);
      
      #include &lt;wchar.h&gt;
-     size_t wcsnrtombs(char *<var>dst</var>, const wchar_t **<var>src</var>,
-         size_t <var>nwc</var>, size_t <var>len</var>, mbstate_t *<var>ps</var>);
+     size_t wcsnrtombs(char *__restrict <var>dst</var>,
+         const wchar_t **__restrict <var>src</var>,
+         size_t <var>nwc</var>, size_t <var>len</var>,
+         mbstate_t *__restrict <var>ps</var>);
      
      #include &lt;wchar.h&gt;
      size_t _wcsnrtombs_r(struct _reent *<var>ptr</var>, char *<var>dst</var>,

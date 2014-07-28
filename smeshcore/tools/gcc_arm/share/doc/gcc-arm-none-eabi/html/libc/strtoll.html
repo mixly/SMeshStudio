@@ -36,10 +36,10 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdlib.html#Stdlib">Stdlib</a>
 
 <p><a name="index-strtoll-84"></a><a name="index-g_t_005fstrtoll_005fr-85"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;stdlib.h&gt;
-     long long strtoll(const char *<var>s</var>, char **<var>ptr</var>,int <var>base</var>);
+     long long strtoll(const char *restrict <var>s</var>, char **restrict <var>ptr</var>,int <var>base</var>);
      
      long long _strtoll_r(void *<var>reent</var>,
-         const char *<var>s</var>, char **<var>ptr</var>,int <var>base</var>);
+         const char *restrict <var>s</var>, char **restrict <var>ptr</var>,int <var>base</var>);
      
 </pre>
    <p><strong>Description</strong><br>

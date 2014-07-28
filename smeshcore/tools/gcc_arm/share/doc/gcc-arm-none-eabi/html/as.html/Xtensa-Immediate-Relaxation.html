@@ -45,15 +45,15 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Xtensa-Relaxation.html#Xtensa-Relaxatio
 <hr>
 </div>
 
-<h5 class="subsubsection">9.46.4.3 Other Immediate Field Relaxation</h5>
+<h5 class="subsubsection">9.50.4.3 Other Immediate Field Relaxation</h5>
 
-<p><a name="index-immediate-fields_002c-relaxation-2202"></a><a name="index-relaxation-of-immediate-fields-2203"></a>
+<p><a name="index-immediate-fields_002c-relaxation-2304"></a><a name="index-relaxation-of-immediate-fields-2305"></a>
 The assembler normally performs the following other relaxations.  They
 can be disabled by using underscore prefixes (see <a href="Xtensa-Opcodes.html#Xtensa-Opcodes">Opcode Names</a>), the &lsquo;<samp><span class="samp">--no-transform</span></samp>&rsquo; command-line option
 (see <a href="Xtensa-Options.html#Xtensa-Options">Command Line Options</a>), or the
 <code>no-transform</code> directive (see <a href="Transform-Directive.html#Transform-Directive">transform</a>).
 
-   <p><a name="index-g_t_0040code_007bMOVI_007d-instructions_002c-relaxation-2204"></a><a name="index-relaxation-of-_0040code_007bMOVI_007d-instructions-2205"></a>The <code>MOVI</code> machine instruction can only materialize values in the
+   <p><a name="index-g_t_0040code_007bMOVI_007d-instructions_002c-relaxation-2306"></a><a name="index-relaxation-of-_0040code_007bMOVI_007d-instructions-2307"></a>The <code>MOVI</code> machine instruction can only materialize values in the
 range from -2048 to 2047.  Values outside this range are best
 materialized with <code>L32R</code> instructions.  Thus:
 
@@ -64,7 +64,7 @@ materialized with <code>L32R</code> instructions.  Thus:
 <pre class="smallexample">         .literal .L1, 100000
          l32r a0, .L1
 </pre>
-   <p><a name="index-g_t_0040code_007bL8UI_007d-instructions_002c-relaxation-2206"></a><a name="index-g_t_0040code_007bL16SI_007d-instructions_002c-relaxation-2207"></a><a name="index-g_t_0040code_007bL16UI_007d-instructions_002c-relaxation-2208"></a><a name="index-g_t_0040code_007bL32I_007d-instructions_002c-relaxation-2209"></a><a name="index-relaxation-of-_0040code_007bL8UI_007d-instructions-2210"></a><a name="index-relaxation-of-_0040code_007bL16SI_007d-instructions-2211"></a><a name="index-relaxation-of-_0040code_007bL16UI_007d-instructions-2212"></a><a name="index-relaxation-of-_0040code_007bL32I_007d-instructions-2213"></a>The <code>L8UI</code> machine instruction can only be used with immediate
+   <p><a name="index-g_t_0040code_007bL8UI_007d-instructions_002c-relaxation-2308"></a><a name="index-g_t_0040code_007bL16SI_007d-instructions_002c-relaxation-2309"></a><a name="index-g_t_0040code_007bL16UI_007d-instructions_002c-relaxation-2310"></a><a name="index-g_t_0040code_007bL32I_007d-instructions_002c-relaxation-2311"></a><a name="index-relaxation-of-_0040code_007bL8UI_007d-instructions-2312"></a><a name="index-relaxation-of-_0040code_007bL16SI_007d-instructions-2313"></a><a name="index-relaxation-of-_0040code_007bL16UI_007d-instructions-2314"></a><a name="index-relaxation-of-_0040code_007bL32I_007d-instructions-2315"></a>The <code>L8UI</code> machine instruction can only be used with immediate
 offsets in the range from 0 to 255. The <code>L16SI</code> and <code>L16UI</code>
 machine instructions can only be used with offsets from 0 to 510.  The
 <code>L32I</code> machine instruction can only be used with offsets from 0 to
@@ -84,7 +84,7 @@ is different than the source address register.  For example:
    <p class="noindent">If the load destination and source address register are the same, an
 out-of-range offset causes an error.
 
-   <p><a name="index-g_t_0040code_007bADDI_007d-instructions_002c-relaxation-2214"></a><a name="index-relaxation-of-_0040code_007bADDI_007d-instructions-2215"></a>The Xtensa <code>ADDI</code> instruction only allows immediate operands in the
+   <p><a name="index-g_t_0040code_007bADDI_007d-instructions_002c-relaxation-2316"></a><a name="index-relaxation-of-_0040code_007bADDI_007d-instructions-2317"></a>The Xtensa <code>ADDI</code> instruction only allows immediate operands in the
 range from -128 to 127.  There are a number of alternate instruction
 sequences for the <code>ADDI</code> operation.  First, if the
 immediate is 0, the <code>ADDI</code> will be turned into a <code>MOV.N</code>

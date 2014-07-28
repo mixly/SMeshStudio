@@ -64,8 +64,12 @@
 #endif
 #define RF230_MAX_TX_POWER 0
 #define RF230_MIN_TX_POWER 0x0f
+#else //RF212BB
+#ifdef RFCHANNEL
+#define MXCHANNEL RFCHANNEL
 #else
 #define MXCHANNEL 0
+#endif
 #define RF230_MAX_TX_POWER  (0xe4) //8db
 #define RF230_MIN_TX_POWER  (0x0A) //-11db
 #endif
@@ -385,7 +389,7 @@ typedef unsigned short uip_stats_t;
 #else //border_router
 
 #ifndef UIP_CONF_BUFFER_SIZE
-#define UIP_CONF_BUFFER_SIZE    1500
+#define UIP_CONF_BUFFER_SIZE    1300
 #endif
 
 #endif//border_router

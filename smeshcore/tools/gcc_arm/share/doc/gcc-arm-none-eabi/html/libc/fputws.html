@@ -34,12 +34,13 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdio.html#Stdio">Stdio</a>
 
 <h3 class="section">4.23 <code>fputws</code>&mdash;write a wide character string in a file or stream</h3>
 
-<p><a name="index-fputws-191"></a><a name="index-g_t_005ffputws_005fr-192"></a><strong>Synopsis</strong>
+<p><a name="index-fputws-192"></a><a name="index-g_t_005ffputws_005fr-193"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;wchar.h&gt;
-     int fputws(const wchar_t *<var>ws</var>, FILE *<var>fp</var>);
+     int fputws(const wchar_t *__restrict <var>ws</var>, FILE *__restrict <var>fp</var>);
      
      #include &lt;wchar.h&gt;
-     int _fputws_r(struct _reent *<var>ptr</var>, const wchar_t *<var>ws</var>, FILE *<var>fp</var>);
+     int _fputws_r(struct _reent *<var>ptr</var>, const wchar_t *<var>ws</var>,
+         FILE *<var>fp</var>);
      
 </pre>
    <p><strong>Description</strong><br>

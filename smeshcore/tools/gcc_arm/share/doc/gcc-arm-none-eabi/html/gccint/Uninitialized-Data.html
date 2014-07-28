@@ -10,9 +10,7 @@
 <link rel="next" href="Label-Output.html#Label-Output" title="Label Output">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -60,7 +58,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Assembler-Format.html#Assembler-Format"
 outputting a single uninitialized variable.
 
 <div class="defun">
-&mdash; Macro: <b>ASM_OUTPUT_COMMON</b> (<var>stream, name, size, rounded</var>)<var><a name="index-ASM_005fOUTPUT_005fCOMMON-4509"></a></var><br>
+&mdash; Macro: <b>ASM_OUTPUT_COMMON</b> (<var>stream, name, size, rounded</var>)<var><a name="index-ASM_005fOUTPUT_005fCOMMON-4549"></a></var><br>
 <blockquote><p>A C statement (sans semicolon) to output to the stdio stream
 <var>stream</var> the assembler definition of a common-label named
 <var>name</var> whose size is <var>size</var> bytes.  The variable <var>rounded</var>
@@ -82,7 +80,7 @@ common global variables are output.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>ASM_OUTPUT_ALIGNED_COMMON</b> (<var>stream, name, size, alignment</var>)<var><a name="index-ASM_005fOUTPUT_005fALIGNED_005fCOMMON-4510"></a></var><br>
+&mdash; Macro: <b>ASM_OUTPUT_ALIGNED_COMMON</b> (<var>stream, name, size, alignment</var>)<var><a name="index-ASM_005fOUTPUT_005fALIGNED_005fCOMMON-4550"></a></var><br>
 <blockquote><p>Like <code>ASM_OUTPUT_COMMON</code> except takes the required alignment as a
 separate, explicit argument.  If you define this macro, it is used in
 place of <code>ASM_OUTPUT_COMMON</code>, and gives you more flexibility in
@@ -91,7 +89,7 @@ as the number of bits.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>ASM_OUTPUT_ALIGNED_DECL_COMMON</b> (<var>stream, decl, name, size, alignment</var>)<var><a name="index-ASM_005fOUTPUT_005fALIGNED_005fDECL_005fCOMMON-4511"></a></var><br>
+&mdash; Macro: <b>ASM_OUTPUT_ALIGNED_DECL_COMMON</b> (<var>stream, decl, name, size, alignment</var>)<var><a name="index-ASM_005fOUTPUT_005fALIGNED_005fDECL_005fCOMMON-4551"></a></var><br>
 <blockquote><p>Like <code>ASM_OUTPUT_ALIGNED_COMMON</code> except that <var>decl</var> of the
 variable to be output, if there is one, or <code>NULL_TREE</code> if there
 is no corresponding variable.  If you define this macro, GCC will use it
@@ -101,7 +99,7 @@ the variable's decl in order to chose what to output.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>ASM_OUTPUT_ALIGNED_BSS</b> (<var>stream, decl, name, size, alignment</var>)<var><a name="index-ASM_005fOUTPUT_005fALIGNED_005fBSS-4512"></a></var><br>
+&mdash; Macro: <b>ASM_OUTPUT_ALIGNED_BSS</b> (<var>stream, decl, name, size, alignment</var>)<var><a name="index-ASM_005fOUTPUT_005fALIGNED_005fBSS-4552"></a></var><br>
 <blockquote><p>A C statement (sans semicolon) to output to the stdio stream
 <var>stream</var> the assembler definition of uninitialized global <var>decl</var> named
 <var>name</var> whose size is <var>size</var> bytes.  The variable <var>alignment</var>
@@ -126,7 +124,7 @@ common in order to save space in the object file.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>ASM_OUTPUT_LOCAL</b> (<var>stream, name, size, rounded</var>)<var><a name="index-ASM_005fOUTPUT_005fLOCAL-4513"></a></var><br>
+&mdash; Macro: <b>ASM_OUTPUT_LOCAL</b> (<var>stream, name, size, rounded</var>)<var><a name="index-ASM_005fOUTPUT_005fLOCAL-4553"></a></var><br>
 <blockquote><p>A C statement (sans semicolon) to output to the stdio stream
 <var>stream</var> the assembler definition of a local-common-label named
 <var>name</var> whose size is <var>size</var> bytes.  The variable <var>rounded</var>
@@ -141,7 +139,7 @@ static variables are output.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>ASM_OUTPUT_ALIGNED_LOCAL</b> (<var>stream, name, size, alignment</var>)<var><a name="index-ASM_005fOUTPUT_005fALIGNED_005fLOCAL-4514"></a></var><br>
+&mdash; Macro: <b>ASM_OUTPUT_ALIGNED_LOCAL</b> (<var>stream, name, size, alignment</var>)<var><a name="index-ASM_005fOUTPUT_005fALIGNED_005fLOCAL-4554"></a></var><br>
 <blockquote><p>Like <code>ASM_OUTPUT_LOCAL</code> except takes the required alignment as a
 separate, explicit argument.  If you define this macro, it is used in
 place of <code>ASM_OUTPUT_LOCAL</code>, and gives you more flexibility in
@@ -150,7 +148,7 @@ as the number of bits.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>ASM_OUTPUT_ALIGNED_DECL_LOCAL</b> (<var>stream, decl, name, size, alignment</var>)<var><a name="index-ASM_005fOUTPUT_005fALIGNED_005fDECL_005fLOCAL-4515"></a></var><br>
+&mdash; Macro: <b>ASM_OUTPUT_ALIGNED_DECL_LOCAL</b> (<var>stream, decl, name, size, alignment</var>)<var><a name="index-ASM_005fOUTPUT_005fALIGNED_005fDECL_005fLOCAL-4555"></a></var><br>
 <blockquote><p>Like <code>ASM_OUTPUT_ALIGNED_DECL</code> except that <var>decl</var> of the
 variable to be output, if there is one, or <code>NULL_TREE</code> if there
 is no corresponding variable.  If you define this macro, GCC will use it

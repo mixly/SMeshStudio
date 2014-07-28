@@ -1,134 +1,94 @@
+// Do not remove the include below
 #include "contiki.h"
-#include "contiki-net.h"
-
-#include "erbium.h"
-
-#include "dev/leds.h"
-#include "dev/adc-sensors.h"
-
-
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "rest-engine.h"
+#include <stdlib.h>
+#include <string.h>
+#include "contiki.h"
+#include "contiki-net.h"
+#include "rest-engine.h"
+#include "dev/temperature-sensor.h"
+#include "dev/light-sensor.h"
+static void temp_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
+static void light_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
+static void voltage_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
+RESOURCE(res_light,
+		"title=\"light, POST/PUT/GET\";rt=\"Text\"",
+		light_get_handler,
+		light_get_handler,
+		light_get_handler,
+		NULL);
 
-
-#include "er-coap.h"
-
-/*---------------------------------------------------------------------------*/
-//char temp[100];
-
-PERIODIC_RESOURCE(temperature, METHOD_GET, "temperature", "title=\"Periodic temperature\";rt=\"Observable\"", 2*CLOCK_SECOND);
-void
-temperature_handler(void* request, void* response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
+static void
+light_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
 {
-	char tbuf[32];
-	int16_t temp = sensor_temp_get(TEMP_UNIT_CELCIUS);
-	sprintf(tbuf, "%d", temp);
 	REST.set_header_content_type(response, REST.type.TEXT_PLAIN);
-	REST.set_response_payload(response, (uint8_t *)tbuf, strlen(tbuf));
+	snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "%d\n",sensor_light_get());
+	REST.set_response_payload(response, (uint8_t *)buffer, strlen((char *)buffer));
+
 }
-void
-temperature_periodic_handler(resource_t *r)
+RESOURCE(res_voltage,
+		"title=\"voltage, POST/PUT/GET\";rt=\"Text\"",
+		voltage_get_handler,
+		voltage_get_handler,
+		voltage_get_handler,
+		NULL);
+static void
+voltage_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
 {
-	static uint32_t obs_counter = 0;
-	char content[32];
-
-	obs_counter++;
-
-	int16_t temp = sensor_temp_get(TEMP_UNIT_CELCIUS);
-
-	/* Build notification. */
-	coap_packet_t notification[1]; /* This way the packet can be treated as pointer as usual. */
-	coap_init_message(notification, COAP_TYPE_NON, CONTENT_2_05, 0 );
-	coap_set_payload(notification, content, snprintf(content, sizeof(content), "%u", temp));
-
-	/* Notify the registered observers with the given message type, observe option, and payload. */
-	REST.notify_subscribers(r, obs_counter, notification);
-}
-
-/*---------------------------------------------------------------------------*/
-PERIODIC_RESOURCE(light, METHOD_GET, "light", "title=\"Periodic light\";rt=\"Observable\"", 1*CLOCK_SECOND);
-void
-light_handler(void* request, void* response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
-{
-	char tbuf[32];
-#ifdef sensor_light_get
-	int16_t light = sensor_light_get();
-#else
-	int16_t light = 0;
-#endif
-	sprintf(tbuf, "%d", light);
 	REST.set_header_content_type(response, REST.type.TEXT_PLAIN);
-	REST.set_response_payload(response, (uint8_t *)tbuf, strlen(tbuf));
+	snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "%d mv\n",(int)voltage_get()*1000);
+	REST.set_response_payload(response, (uint8_t *)buffer, strlen((char *)buffer));
+
 }
-void
-light_periodic_handler(resource_t *r)
+RESOURCE(res_temperature,
+		"title=\"temperature ?unit=c|f, POST/PUT/GET\";rt=\"Text\"",
+		temp_get_handler,
+		temp_get_handler,
+		temp_get_handler,
+		NULL);
+
+static void
+temp_get_handler(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
 {
-	static uint32_t obs_counter = 0;
-	char content[32];
-
-	obs_counter++;
-#ifdef sensor_light_get
-	int16_t light = sensor_light_get();
-#else
-		int16_t light = 0;
-#endif
-
-	/* Build notification. */
-	coap_packet_t notification[1]; /* This way the packet can be treated as pointer as usual. */
-	coap_init_message(notification, COAP_TYPE_NON, CONTENT_2_05, 0 );
-	coap_set_payload(notification, content, snprintf(content, sizeof(content), "%u", light));
-
-	/* Notify the registered observers with the given message type, observe option, and payload. */
-	REST.notify_subscribers(r, obs_counter, notification);
-}
-
-/*---------------------------------------------------------------------------*/
-PERIODIC_RESOURCE(voltage, METHOD_GET, "voltage", "title=\"Periodic voltage\";rt=\"Observable\"", 1*CLOCK_SECOND);
-void
-voltage_handler(void* request, void* response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
-{
-	char tbuf[32];
-	double voltage = voltage_get();
-	sprintf(tbuf, "%d", (int)(voltage * (double)1000));
-	REST.set_header_content_type(response, REST.type.TEXT_PLAIN);
-	REST.set_response_payload(response, (uint8_t *)tbuf, strlen(tbuf));
-}
-void
-voltage_periodic_handler(resource_t *r)
-{
-	static uint32_t obs_counter = 0;
-	char content[32];
-
-	obs_counter++;
-
-	double voltage = voltage_get();
-
-	/* Build notification. */
-	coap_packet_t notification[1]; /* This way the packet can be treated as pointer as usual. */
-	coap_init_message(notification, COAP_TYPE_NON, CONTENT_2_05, 0 );
-	coap_set_payload(notification, content, snprintf(content, sizeof(content), "%d", (int)(voltage * (double)1000)));
-
-	/* Notify the registered observers with the given message type, observe option, and payload. */
-	REST.notify_subscribers(r, obs_counter, notification);
+	size_t len = 0;
+	const char *unit = NULL;
+	temp_unit_t tunit=0;
+	int success = 1;
+	if((len = REST.get_query_variable(request, "unit", &unit))) {
+		if(strncmp(unit, "c", len) == 0) {
+			tunit = TEMP_UNIT_CELCIUS;
+		} else if(strncmp(unit, "f", len) == 0) {
+			tunit = TEMP_UNIT_FAHRENHEIT;
+		} else {
+			success = 0;
+		}
+	}
+	if(!success) {
+		REST.set_response_status(response, REST.status.BAD_REQUEST);
+	}
+	else
+	{
+		REST.set_header_content_type(response, REST.type.TEXT_PLAIN);
+		snprintf((char *)buffer, REST_MAX_CHUNK_SIZE, "%d.%d %s\n",(int)temperature_sensor.value(tunit),(temperature_sensor.value(tunit)*100 ) %100,tunit?"fc":"degc");
+		REST.set_response_payload(response, (uint8_t *)buffer, strlen((char *)buffer));
+	}
 }
 
-
-/*---------------------------------------------------------------------------*/
-PROCESS(coap_sample, "CoAP Sample");
-AUTOSTART_PROCESSES(&coap_sample);
-/*---------------------------------------------------------------------------*/
-PROCESS_THREAD(coap_sample, ev, data)
+extern resource_t res_temperature;
+PROCESS(er_example_server, "Coap Example Server");
+AUTOSTART_PROCESSES(&er_example_server);
+PROCESS_THREAD(er_example_server, ev, data)
 {
+	SENSORS_ACTIVATE(temperature_sensor); //由于温度传感器一直可用,所以这不是必须的
 	PROCESS_BEGIN();
-
-	/* Initialize the REST engine. */
 	rest_init_engine();
-
-	rest_activate_periodic_resource(&periodic_resource_temperature);
-	rest_activate_periodic_resource(&periodic_resource_light);
-	rest_activate_periodic_resource(&periodic_resource_voltage);
-
+	rest_activate_resource(&res_temperature, "sensors/temperature");
+	rest_activate_resource(&res_light, "sensors/light");
+	rest_activate_resource(&res_voltage, "sensors/voltage");
+	while(1) {
+		PROCESS_YIELD();
+	}
 	PROCESS_END();
 }
-/*---------------------------------------------------------------------------*/

@@ -6,13 +6,11 @@
 <meta name="generator" content="makeinfo 4.11">
 <link title="Top" rel="start" href="index.html#Top">
 <link rel="up" href="Type-Information.html#Type-Information" title="Type Information">
-<link rel="prev" href="GTY-Options.html#GTY-Options" title="GTY Options">
+<link rel="prev" href="User-GC.html#User-GC" title="User GC">
 <link rel="next" href="Files.html#Files" title="Files">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -49,14 +47,14 @@ Texts being (a) (see below), and with the Back-Cover Texts being (b)
 <p>
 <a name="GGC-Roots"></a>
 Next:&nbsp;<a rel="next" accesskey="n" href="Files.html#Files">Files</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="GTY-Options.html#GTY-Options">GTY Options</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="User-GC.html#User-GC">User GC</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="Type-Information.html#Type-Information">Type Information</a>
 <hr>
 </div>
 
-<h3 class="section">22.2 Marking Roots for the Garbage Collector</h3>
+<h3 class="section">22.3 Marking Roots for the Garbage Collector</h3>
 
-<p><a name="index-roots_002c-marking-4970"></a><a name="index-marking-roots-4971"></a>
+<p><a name="index-roots_002c-marking-5013"></a><a name="index-marking-roots-5014"></a>
 In addition to keeping track of types, the type machinery also locates
 the global variables (<dfn>roots</dfn>) that the garbage collector starts
 at.  Roots must be declared using one of the following syntaxes:

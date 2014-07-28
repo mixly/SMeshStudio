@@ -10,9 +10,7 @@
 <link rel="next" href="Expression-trees.html#Expression-trees" title="Expression trees">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -56,7 +54,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="GENERIC.html#GENERIC">GENERIC</a>
 
 <h3 class="section">11.5 Attributes in trees</h3>
 
-<p><a name="index-attributes-2405"></a>
+<p><a name="index-attributes-2406"></a>
 Attributes, as specified using the <code>__attribute__</code> keyword, are
 represented internally as a <code>TREE_LIST</code>.  The <code>TREE_PURPOSE</code>
 is the name of the attribute, as an <code>IDENTIFIER_NODE</code>.  The
@@ -74,12 +72,12 @@ are stored in this way, and many also cause other changes to the
 declaration or type or to other internal compiler data structures.
 
 <div class="defun">
-&mdash; Tree Macro: tree <b>DECL_ATTRIBUTES</b> (<var>tree decl</var>)<var><a name="index-DECL_005fATTRIBUTES-2406"></a></var><br>
+&mdash; Tree Macro: tree <b>DECL_ATTRIBUTES</b> (<var>tree decl</var>)<var><a name="index-DECL_005fATTRIBUTES-2407"></a></var><br>
 <blockquote><p>This macro returns the attributes on the declaration <var>decl</var>. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Tree Macro: tree <b>TYPE_ATTRIBUTES</b> (<var>tree type</var>)<var><a name="index-TYPE_005fATTRIBUTES-2407"></a></var><br>
+&mdash; Tree Macro: tree <b>TYPE_ATTRIBUTES</b> (<var>tree type</var>)<var><a name="index-TYPE_005fATTRIBUTES-2408"></a></var><br>
 <blockquote><p>This macro returns the attributes on the type <var>type</var>. 
 </p></blockquote></div>
 

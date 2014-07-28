@@ -9,8 +9,7 @@
 <link rel="next" href="Hints.html#Hints" title="Hints">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -45,7 +44,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="index.html#Top">Top</a>
 
 <h2 class="chapter">22 Testsuite</h2>
 
-<p><a name="index-test-suite-497"></a>
+<p><a name="index-test-suite-492"></a>
 The testsuite is an important component of the <span class="sc">gdb</span> package. 
 While it is always worthwhile to encourage user testing, in practice
 this is rarely sufficient; users typically use only a small subset of
@@ -58,7 +57,7 @@ runs all the procs and summarizes the passes and fails.
 
 <h3 class="section">22.1 Using the Testsuite</h3>
 
-<p><a name="index-running-the-test-suite-498"></a>To run the testsuite, simply go to the <span class="sc">gdb</span> object directory (or to the
+<p><a name="index-running-the-test-suite-493"></a>To run the testsuite, simply go to the <span class="sc">gdb</span> object directory (or to the
 testsuite's objdir) and type <code>make check</code>.  This just sets up some
 environment variables and invokes DejaGNU's <code>runtest</code> script.  While
 the testsuite is running, you'll get mentions of which test file is in use,
@@ -175,7 +174,7 @@ different gdbserver.
      <p>When running the testsuite normally one doesn't want whatever is in
 <samp><span class="file">~/.gdbinit</span></samp> to interfere with the tests, therefore the test harness
 passes <samp><span class="option">-nx</span></samp> to <span class="sc">gdb</span>.  One also doesn't want any windowed
-version of <span class="sc">gdb</span>, e.g., <samp><span class="command">gdbtui</span></samp>, to run. 
+version of <span class="sc">gdb</span>, e.g., &lsquo;<samp><span class="samp">gdb -tui</span></samp>&rsquo;, to run. 
 This is achieved via <code>INTERNAL_GDBFLAGS</code>.
 
      <pre class="smallexample">          set INTERNAL_GDBFLAGS "-nw -nx"
@@ -210,7 +209,7 @@ makefile variable &lsquo;<samp><span class="samp">RUNTESTFLAGS</span></samp>&rsq
 </pre>
    <h3 class="section">22.3 Testsuite Configuration</h3>
 
-<p><a name="index-Testsuite-Configuration-499"></a>
+<p><a name="index-Testsuite-Configuration-494"></a>
 It is possible to adjust the behavior of the testsuite by defining
 the global variables listed below, either in a <samp><span class="file">site.exp</span></samp> file,
 or in a board file.
@@ -240,7 +239,7 @@ test suite<a rel="footnote" href="#fn-1" name="fnd-1"><sup>1</sup></a>.
 
 <h3 class="section">22.4 Testsuite Organization</h3>
 
-<p><a name="index-test-suite-organization-500"></a>The testsuite is entirely contained in <samp><span class="file">gdb/testsuite</span></samp>.  While the
+<p><a name="index-test-suite-organization-495"></a>The testsuite is entirely contained in <samp><span class="file">gdb/testsuite</span></samp>.  While the
 testsuite includes some makefiles and configury, these are very minimal,
 and used for little besides cleaning up, since the tests themselves
 handle the compilation of the programs that <span class="sc">gdb</span> will run.  The file
@@ -288,7 +287,7 @@ instance, <samp><span class="file">gdb.disasm</span></samp> exercises various di
 
 <h3 class="section">22.5 Writing Tests</h3>
 
-<p><a name="index-writing-tests-501"></a>
+<p><a name="index-writing-tests-496"></a>
 In many areas, the <span class="sc">gdb</span> tests are already quite comprehensive; you
 should be able to copy existing tests to handle new cases.
 
@@ -314,6 +313,74 @@ styles, it's worth having a mix of styles in the testsuite; for
 instance, some <span class="sc">gdb</span> bugs involving the display of source lines would
 never manifest themselves if the programs used GNU coding style
 uniformly.
+
+   <p>Some testcase results need more detailed explanation:
+
+     <dl>
+<dt><code>KFAIL</code><dd>Known problem of <span class="sc">gdb</span> itself.  You must specify the <span class="sc">gdb</span> bug
+report number like in these sample tests:
+     <pre class="smallexample">          kfail "gdb/13392" "continue to marker 2"
+</pre>
+     <p>or
+     <pre class="smallexample">          setup_kfail gdb/13392 "*-*-*"
+          kfail "continue to marker 2"
+</pre>
+     <br><dt><code>XFAIL</code><dd>Known problem of environment.  This typically includes <span class="sc">gcc</span> but it
+includes also many other system components which cannot be fixed in the
+<span class="sc">gdb</span> project.  Sample test with sanity check not knowing the specific
+cause of the problem:
+     <pre class="smallexample">          # On x86_64 it is commonly about 4MB.
+          if {$stub_size &gt; 25000000} {
+              xfail "stub size $stub_size is too large"
+              return
+          }
+</pre>
+     <p>You should provide bug report number for the failing component of the
+environment, if such bug report is available:
+     <pre class="smallexample">          if {[test_compiler_info {gcc-[0-3]-*}]
+             || [test_compiler_info {gcc-4-[0-5]-*}]} {
+             setup_xfail "gcc/46955" *-*-*
+          }
+          gdb_test "python print ttype.template_argument(2)" "&amp;C::c"
+</pre>
+     </dl>
+
+<h3 class="section">22.6 Board settings</h3>
+
+<p>In <span class="sc">gdb</span> testsuite, the tests can be configured or customized in the board
+file by means of <dfn>Board Settings</dfn>.  Each setting   should be consulted by
+test cases that depend on the corresponding feature.
+
+   <p>Here are the supported board settings:
+
+     <dl>
+<dt><code>gdb,cannot_call_functions</code><dd>The board does not support inferior call, that is, invoking inferior functions
+in <span class="sc">gdb</span>. 
+<br><dt><code>gdb,can_reverse</code><dd>The board supports reverse execution. 
+<br><dt><code>gdb,no_hardware_watchpoints</code><dd>The board does not support hardware watchpoints. 
+<br><dt><code>gdb,nofileio</code><dd><span class="sc">gdb</span> is unable to intercept target file operations in remote and perform
+them on the host. 
+<br><dt><code>gdb,noinferiorio</code><dd>The board is unable to provide I/O capability to the inferior. 
+<!-- @item gdb,noresults -->
+<!-- NEED DOCUMENT. -->
+<br><dt><code>gdb,nosignals</code><dd>The board does not support signals. 
+<br><dt><code>gdb,skip_huge_test</code><dd>Skip time-consuming tests on the board with slow connection. 
+<br><dt><code>gdb,skip_float_tests</code><dd>Skip tests related to float points on target board. 
+<br><dt><code>gdb,use_precord</code><dd>The board supports process record. 
+<br><dt><code>gdb_server_prog</code><dd>The location of GDBserver.  If GDBserver somewhere other than its default
+location is used in test, specify the location of GDBserver in this variable. 
+The location is a file name of GDBserver that can be either absolute or
+relative to testsuite subdirectory in build directory. 
+<br><dt><code>in_proc_agent</code><dd>The location of in-process agent.  If in-process agent other than its default
+location is used in test, specify the location of in-process agent in
+this variable.  The location is a file name of in-process agent that can be
+either  absolute or relative to testsuite subdirectory in build directory. 
+<br><dt><code>noargs</code><dd><span class="sc">gdb</span> does not support argument passing for inferior. 
+<br><dt><code>no_long_long</code><dd>The board does not support type <code>long long</code>. 
+<!-- @item use_cygmon -->
+<!-- NEED DOCUMENT. -->
+<br><dt><code>use_gdb_stub</code><dd>The tests are running with gdb stub. 
+</dl>
 
    <div class="footnote">
 <hr>

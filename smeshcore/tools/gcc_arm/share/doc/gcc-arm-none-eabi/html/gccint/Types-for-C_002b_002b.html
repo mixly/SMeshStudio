@@ -9,9 +9,7 @@
 <link rel="next" href="Namespaces.html#Namespaces" title="Namespaces">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -55,7 +53,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="C-and-C_002b_002b-Trees.html#C-and-C_00
 
 <h4 class="subsection">11.10.1 Types for C++</h4>
 
-<p><a name="index-UNKNOWN_005fTYPE-2563"></a><a name="index-TYPENAME_005fTYPE-2564"></a><a name="index-TYPEOF_005fTYPE-2565"></a><a name="index-cp_005ftype_005fquals-2566"></a><a name="index-TYPE_005fUNQUALIFIED-2567"></a><a name="index-TYPE_005fQUAL_005fCONST-2568"></a><a name="index-TYPE_005fQUAL_005fVOLATILE-2569"></a><a name="index-TYPE_005fQUAL_005fRESTRICT-2570"></a><a name="index-TYPE_005fMAIN_005fVARIANT-2571"></a><a name="index-qualified-type-2572"></a><a name="index-TYPE_005fSIZE-2573"></a><a name="index-TYPE_005fALIGN-2574"></a><a name="index-TYPE_005fPRECISION-2575"></a><a name="index-TYPE_005fARG_005fTYPES-2576"></a><a name="index-TYPE_005fMETHOD_005fBASETYPE-2577"></a><a name="index-TYPE_005fPTRMEM_005fP-2578"></a><a name="index-TYPE_005fOFFSET_005fBASETYPE-2579"></a><a name="index-TREE_005fTYPE-2580"></a><a name="index-TYPE_005fCONTEXT-2581"></a><a name="index-TYPE_005fNAME-2582"></a><a name="index-TYPENAME_005fTYPE_005fFULLNAME-2583"></a><a name="index-TYPE_005fFIELDS-2584"></a><a name="index-TYPE_005fPTROBV_005fP-2585"></a>
+<p><a name="index-UNKNOWN_005fTYPE-2565"></a><a name="index-TYPENAME_005fTYPE-2566"></a><a name="index-TYPEOF_005fTYPE-2567"></a><a name="index-cp_005ftype_005fquals-2568"></a><a name="index-TYPE_005fUNQUALIFIED-2569"></a><a name="index-TYPE_005fQUAL_005fCONST-2570"></a><a name="index-TYPE_005fQUAL_005fVOLATILE-2571"></a><a name="index-TYPE_005fQUAL_005fRESTRICT-2572"></a><a name="index-TYPE_005fMAIN_005fVARIANT-2573"></a><a name="index-qualified-type-2574"></a><a name="index-TYPE_005fSIZE-2575"></a><a name="index-TYPE_005fALIGN-2576"></a><a name="index-TYPE_005fPRECISION-2577"></a><a name="index-TYPE_005fARG_005fTYPES-2578"></a><a name="index-TYPE_005fMETHOD_005fBASETYPE-2579"></a><a name="index-TYPE_005fPTRDATAMEM_005fP-2580"></a><a name="index-TYPE_005fOFFSET_005fBASETYPE-2581"></a><a name="index-TREE_005fTYPE-2582"></a><a name="index-TYPE_005fCONTEXT-2583"></a><a name="index-TYPE_005fNAME-2584"></a><a name="index-TYPENAME_005fTYPE_005fFULLNAME-2585"></a><a name="index-TYPE_005fFIELDS-2586"></a><a name="index-TYPE_005fPTROBV_005fP-2587"></a>
 In C++, an array type is not qualified; rather the type of the array
 elements is qualified.  This situation is reflected in the intermediate
 representation.  The macros described here will always examine the
@@ -67,20 +65,20 @@ the type <code>const int ()[7]</code>, denoting an array of seven <code>int</cod
 
  <p>The following functions and macros deal with cv-qualification of types:
      <dl>
-<dt><code>cp_type_quals</code><a name="index-cp_005ftype_005fquals-2586"></a><dd>This function returns the set of type qualifiers applied to this type. 
+<dt><code>cp_type_quals</code><a name="index-cp_005ftype_005fquals-2588"></a><dd>This function returns the set of type qualifiers applied to this type. 
 This value is <code>TYPE_UNQUALIFIED</code> if no qualifiers have been
 applied.  The <code>TYPE_QUAL_CONST</code> bit is set if the type is
 <code>const</code>-qualified.  The <code>TYPE_QUAL_VOLATILE</code> bit is set if the
 type is <code>volatile</code>-qualified.  The <code>TYPE_QUAL_RESTRICT</code> bit is
 set if the type is <code>restrict</code>-qualified.
 
-     <br><dt><code>CP_TYPE_CONST_P</code><a name="index-CP_005fTYPE_005fCONST_005fP-2587"></a><dd>This macro holds if the type is <code>const</code>-qualified.
+     <br><dt><code>CP_TYPE_CONST_P</code><a name="index-CP_005fTYPE_005fCONST_005fP-2589"></a><dd>This macro holds if the type is <code>const</code>-qualified.
 
-     <br><dt><code>CP_TYPE_VOLATILE_P</code><a name="index-CP_005fTYPE_005fVOLATILE_005fP-2588"></a><dd>This macro holds if the type is <code>volatile</code>-qualified.
+     <br><dt><code>CP_TYPE_VOLATILE_P</code><a name="index-CP_005fTYPE_005fVOLATILE_005fP-2590"></a><dd>This macro holds if the type is <code>volatile</code>-qualified.
 
-     <br><dt><code>CP_TYPE_RESTRICT_P</code><a name="index-CP_005fTYPE_005fRESTRICT_005fP-2589"></a><dd>This macro holds if the type is <code>restrict</code>-qualified.
+     <br><dt><code>CP_TYPE_RESTRICT_P</code><a name="index-CP_005fTYPE_005fRESTRICT_005fP-2591"></a><dd>This macro holds if the type is <code>restrict</code>-qualified.
 
-     <br><dt><code>CP_TYPE_CONST_NON_VOLATILE_P</code><a name="index-CP_005fTYPE_005fCONST_005fNON_005fVOLATILE_005fP-2590"></a><dd>This predicate holds for a type that is <code>const</code>-qualified, but
+     <br><dt><code>CP_TYPE_CONST_NON_VOLATILE_P</code><a name="index-CP_005fTYPE_005fCONST_005fNON_005fVOLATILE_005fP-2592"></a><dd>This predicate holds for a type that is <code>const</code>-qualified, but
 <em>not</em> <code>volatile</code>-qualified; other cv-qualifiers are ignored as
 well: only the <code>const</code>-ness is tested.
 
@@ -88,13 +86,13 @@ well: only the <code>const</code>-ness is tested.
 
  <p>A few other macros and functions are usable with all types:
      <dl>
-<dt><code>TYPE_SIZE</code><a name="index-TYPE_005fSIZE-2591"></a><dd>The number of bits required to represent the type, represented as an
+<dt><code>TYPE_SIZE</code><a name="index-TYPE_005fSIZE-2593"></a><dd>The number of bits required to represent the type, represented as an
 <code>INTEGER_CST</code>.  For an incomplete type, <code>TYPE_SIZE</code> will be
 <code>NULL_TREE</code>.
 
-     <br><dt><code>TYPE_ALIGN</code><a name="index-TYPE_005fALIGN-2592"></a><dd>The alignment of the type, in bits, represented as an <code>int</code>.
+     <br><dt><code>TYPE_ALIGN</code><a name="index-TYPE_005fALIGN-2594"></a><dd>The alignment of the type, in bits, represented as an <code>int</code>.
 
-     <br><dt><code>TYPE_NAME</code><a name="index-TYPE_005fNAME-2593"></a><dd>This macro returns a declaration (in the form of a <code>TYPE_DECL</code>) for
+     <br><dt><code>TYPE_NAME</code><a name="index-TYPE_005fNAME-2595"></a><dd>This macro returns a declaration (in the form of a <code>TYPE_DECL</code>) for
 the type.  (Note this macro does <em>not</em> return an
 <code>IDENTIFIER_NODE</code>, as you might expect, given its name!)  You can
 look at the <code>DECL_NAME</code> of the <code>TYPE_DECL</code> to obtain the
@@ -102,24 +100,24 @@ actual name of the type.  The <code>TYPE_NAME</code> will be <code>NULL_TREE</co
 for a type that is not a built-in type, the result of a typedef, or a
 named class type.
 
-     <br><dt><code>CP_INTEGRAL_TYPE</code><a name="index-CP_005fINTEGRAL_005fTYPE-2594"></a><dd>This predicate holds if the type is an integral type.  Notice that in
+     <br><dt><code>CP_INTEGRAL_TYPE</code><a name="index-CP_005fINTEGRAL_005fTYPE-2596"></a><dd>This predicate holds if the type is an integral type.  Notice that in
 C++, enumerations are <em>not</em> integral types.
 
-     <br><dt><code>ARITHMETIC_TYPE_P</code><a name="index-ARITHMETIC_005fTYPE_005fP-2595"></a><dd>This predicate holds if the type is an integral type (in the C++ sense)
+     <br><dt><code>ARITHMETIC_TYPE_P</code><a name="index-ARITHMETIC_005fTYPE_005fP-2597"></a><dd>This predicate holds if the type is an integral type (in the C++ sense)
 or a floating point type.
 
-     <br><dt><code>CLASS_TYPE_P</code><a name="index-CLASS_005fTYPE_005fP-2596"></a><dd>This predicate holds for a class-type.
+     <br><dt><code>CLASS_TYPE_P</code><a name="index-CLASS_005fTYPE_005fP-2598"></a><dd>This predicate holds for a class-type.
 
-     <br><dt><code>TYPE_BUILT_IN</code><a name="index-TYPE_005fBUILT_005fIN-2597"></a><dd>This predicate holds for a built-in type.
+     <br><dt><code>TYPE_BUILT_IN</code><a name="index-TYPE_005fBUILT_005fIN-2599"></a><dd>This predicate holds for a built-in type.
 
-     <br><dt><code>TYPE_PTRMEM_P</code><a name="index-TYPE_005fPTRMEM_005fP-2598"></a><dd>This predicate holds if the type is a pointer to data member.
+     <br><dt><code>TYPE_PTRDATAMEM_P</code><a name="index-TYPE_005fPTRDATAMEM_005fP-2600"></a><dd>This predicate holds if the type is a pointer to data member.
 
-     <br><dt><code>TYPE_PTR_P</code><a name="index-TYPE_005fPTR_005fP-2599"></a><dd>This predicate holds if the type is a pointer type, and the pointee is
+     <br><dt><code>TYPE_PTR_P</code><a name="index-TYPE_005fPTR_005fP-2601"></a><dd>This predicate holds if the type is a pointer type, and the pointee is
 not a data member.
 
-     <br><dt><code>TYPE_PTRFN_P</code><a name="index-TYPE_005fPTRFN_005fP-2600"></a><dd>This predicate holds for a pointer to function type.
+     <br><dt><code>TYPE_PTRFN_P</code><a name="index-TYPE_005fPTRFN_005fP-2602"></a><dd>This predicate holds for a pointer to function type.
 
-     <br><dt><code>TYPE_PTROB_P</code><a name="index-TYPE_005fPTROB_005fP-2601"></a><dd>This predicate holds for a pointer to object type.  Note however that it
+     <br><dt><code>TYPE_PTROB_P</code><a name="index-TYPE_005fPTROB_005fP-2603"></a><dd>This predicate holds for a pointer to object type.  Note however that it
 does not hold for the generic pointer to object type <code>void *</code>.  You
 may use <code>TYPE_PTROBV_P</code> to test for a pointer to object type as
 well as <code>void *</code>.
@@ -132,7 +130,7 @@ language-dependent info about GENERIC types.
      <dl>
 <dt><code>POINTER_TYPE</code><dd>Used to represent pointer types, and pointer to data member types.  If
 <code>TREE_TYPE</code>
-is a pointer to data member type, then <code>TYPE_PTRMEM_P</code> will hold. 
+is a pointer to data member type, then <code>TYPE_PTRDATAMEM_P</code> will hold. 
 For a pointer to data member type of the form &lsquo;<samp><span class="samp">T X::*</span></samp>&rsquo;,
 <code>TYPE_PTRMEM_CLASS_TYPE</code> will be the type <code>X</code>, while
 <code>TYPE_PTRMEM_POINTED_TO_TYPE</code> will be the type <code>T</code>.

@@ -48,30 +48,30 @@ Up:&nbsp;<a rel="up" accesskey="u" href="M68K_002dDependent.html#M68K_002dDepend
 <hr>
 </div>
 
-<h4 class="subsection">9.21.5 680x0 Machine Directives</h4>
+<h4 class="subsection">9.23.5 680x0 Machine Directives</h4>
 
-<p><a name="index-M680x0-directives-1222"></a><a name="index-directives_002c-M680x0-1223"></a>In order to be compatible with the Sun assembler the 680x0 assembler
+<p><a name="index-M680x0-directives-1272"></a><a name="index-directives_002c-M680x0-1273"></a>In order to be compatible with the Sun assembler the 680x0 assembler
 understands the following directives.
 
      
-<a name="index-g_t_0040code_007bdata1_007d-directive_002c-M680x0-1224"></a>
+<a name="index-g_t_0040code_007bdata1_007d-directive_002c-M680x0-1274"></a>
 <dl><dt><code>.data1</code><dd>This directive is identical to a <code>.data 1</code> directive.
 
-     <p><a name="index-g_t_0040code_007bdata2_007d-directive_002c-M680x0-1225"></a><br><dt><code>.data2</code><dd>This directive is identical to a <code>.data 2</code> directive.
+     <p><a name="index-g_t_0040code_007bdata2_007d-directive_002c-M680x0-1275"></a><br><dt><code>.data2</code><dd>This directive is identical to a <code>.data 2</code> directive.
 
-     <p><a name="index-g_t_0040code_007beven_007d-directive_002c-M680x0-1226"></a><br><dt><code>.even</code><dd>This directive is a special case of the <code>.align</code> directive; it
+     <p><a name="index-g_t_0040code_007beven_007d-directive_002c-M680x0-1276"></a><br><dt><code>.even</code><dd>This directive is a special case of the <code>.align</code> directive; it
 aligns the output to an even byte boundary.
 
-     <p><a name="index-g_t_0040code_007bskip_007d-directive_002c-M680x0-1227"></a><br><dt><code>.skip</code><dd>This directive is identical to a <code>.space</code> directive.
+     <p><a name="index-g_t_0040code_007bskip_007d-directive_002c-M680x0-1277"></a><br><dt><code>.skip</code><dd>This directive is identical to a <code>.space</code> directive.
 
-     <p><a name="index-g_t_0040code_007barch_007d-directive_002c-M680x0-1228"></a><br><dt><code>.arch </code><var>name</var><dd>Select the target architecture and extension features.  Valid values
+     <p><a name="index-g_t_0040code_007barch_007d-directive_002c-M680x0-1278"></a><br><dt><code>.arch </code><var>name</var><dd>Select the target architecture and extension features.  Valid values
 for <var>name</var> are the same as for the <samp><span class="option">-march</span></samp> command line
 option.  This directive cannot be specified after
 any instructions have been assembled.  If it is given multiple times,
 or in conjunction with the <samp><span class="option">-march</span></samp> option, all uses must be for
 the same architecture and extension set.
 
-     <p><a name="index-g_t_0040code_007bcpu_007d-directive_002c-M680x0-1229"></a><br><dt><code>.cpu </code><var>name</var><dd>Select the target cpu.  Valid valuse
+     <p><a name="index-g_t_0040code_007bcpu_007d-directive_002c-M680x0-1279"></a><br><dt><code>.cpu </code><var>name</var><dd>Select the target cpu.  Valid valuse
 for <var>name</var> are the same as for the <samp><span class="option">-mcpu</span></samp> command line
 option.  This directive cannot be specified after
 any instructions have been assembled.  If it is given multiple times,

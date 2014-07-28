@@ -34,14 +34,14 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdio.html#Stdio">Stdio</a>
 
 <h3 class="section">4.24 <code>fread</code>&mdash;read array elements from a file</h3>
 
-<p><a name="index-fread-193"></a><a name="index-g_t_005ffread_005fr-194"></a><strong>Synopsis</strong>
+<p><a name="index-fread-194"></a><a name="index-g_t_005ffread_005fr-195"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;stdio.h&gt;
-     size_t fread(void *<var>buf</var>, size_t <var>size</var>, size_t <var>count</var>,
-         FILE *<var>fp</var>);
+     size_t fread(void *restrict <var>buf</var>, size_t <var>size</var>, size_t <var>count</var>,
+         FILE *restrict <var>fp</var>);
      
      #include &lt;stdio.h&gt;
-     size_t _fread_r(struct _reent *<var>ptr</var>, void *<var>buf</var>,
-         size_t <var>size</var>, size_t <var>count</var>, FILE *<var>fp</var>);
+     size_t _fread_r(struct _reent *<var>ptr</var>, void *restrict <var>buf</var>,
+         size_t <var>size</var>, size_t <var>count</var>, FILE *restrict <var>fp</var>);
      
 </pre>
    <p><strong>Description</strong><br>

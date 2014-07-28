@@ -10,8 +10,7 @@
 <link rel="next" href="Register-Representation.html#Register-Representation" title="Register Representation">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -46,7 +45,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Target-Architecture-Definition.html#Tar
 
 <h3 class="section">11.5 Address Classes</h3>
 
-<p><a name="index-address-classes-258"></a><a name="index-DW_005fAT_005fbyte_005fsize-259"></a><a name="index-DW_005fAT_005faddress_005fclass-260"></a>
+<p><a name="index-address-classes-254"></a><a name="index-DW_005fAT_005fbyte_005fsize-255"></a><a name="index-DW_005fAT_005faddress_005fclass-256"></a>
 Sometimes information about different kinds of addresses is available
 via the debug information.  For example, some programming environments
 define addresses of several different sizes.  If the debug information
@@ -58,7 +57,7 @@ types within <span class="sc">gdb</span> as well as provide the added informatio
 a <span class="sc">gdb</span> user when printing type expressions.
 
 <div class="defun">
-&mdash; Function: int <b>gdbarch_address_class_type_flags</b> (<var>struct gdbarch *gdbarch, int byte_size, int dwarf2_addr_class</var>)<var><a name="index-gdbarch_005faddress_005fclass_005ftype_005fflags-261"></a></var><br>
+&mdash; Function: int <b>gdbarch_address_class_type_flags</b> (<var>struct gdbarch *gdbarch, int byte_size, int dwarf2_addr_class</var>)<var><a name="index-gdbarch_005faddress_005fclass_005ftype_005fflags-257"></a></var><br>
 <blockquote><p>Returns the type flags needed to construct a pointer type whose size
 is <var>byte_size</var> and whose address class is <var>dwarf2_addr_class</var>. 
 This function is normally called from within a symbol reader.  See
@@ -66,13 +65,13 @@ This function is normally called from within a symbol reader.  See
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Function: char * <b>gdbarch_address_class_type_flags_to_name</b> (<var>struct gdbarch *gdbarch, int type_flags</var>)<var><a name="index-gdbarch_005faddress_005fclass_005ftype_005fflags_005fto_005fname-262"></a></var><br>
+&mdash; Function: char * <b>gdbarch_address_class_type_flags_to_name</b> (<var>struct gdbarch *gdbarch, int type_flags</var>)<var><a name="index-gdbarch_005faddress_005fclass_005ftype_005fflags_005fto_005fname-258"></a></var><br>
 <blockquote><p>Given the type flags representing an address class qualifier, return
 its name. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Function: int <b>gdbarch_address_class_name_to_type_flags</b> (<var>struct gdbarch *gdbarch, int name, int *type_flags_ptr</var>)<var><a name="index-gdbarch_005faddress_005fclass_005fname_005fto_005ftype_005fflags-263"></a></var><br>
+&mdash; Function: int <b>gdbarch_address_class_name_to_type_flags</b> (<var>struct gdbarch *gdbarch, int name, int *type_flags_ptr</var>)<var><a name="index-gdbarch_005faddress_005fclass_005fname_005fto_005ftype_005fflags-259"></a></var><br>
 <blockquote><p>Given an address qualifier name, set the <code>int</code> referenced by <var>type_flags_ptr</var> to the type flags
 for that address class qualifier. 
 </p></blockquote></div>

@@ -10,8 +10,7 @@
 <link rel="next" href="Functions-to-Access-Frame-Data.html#Functions-to-Access-Frame-Data" title="Functions to Access Frame Data">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -51,7 +50,7 @@ to provide analysis of the stack frame and allow it to be adjusted as
 required.
 
 <div class="defun">
-&mdash; Architecture Function: CORE_ADDR <b>skip_prologue</b> (<var>struct gdbarch *gdbarch, CORE_ADDR pc</var>)<var><a name="index-skip_005fprologue-341"></a></var><br>
+&mdash; Architecture Function: CORE_ADDR <b>skip_prologue</b> (<var>struct gdbarch *gdbarch, CORE_ADDR pc</var>)<var><a name="index-skip_005fprologue-337"></a></var><br>
 <blockquote>
         <p>The prologue of a function is the code at the beginning of the
 function which sets up the stack frame, saves the return address
@@ -72,8 +71,8 @@ if that is available.
         </blockquote></div>
 
 <div class="defun">
-&mdash; Architecture Function: int <b>inner_than</b> (<var>CORE_ADDR lhs, CORE_ADDR rhs</var>)<var><a name="index-inner_005fthan-342"></a></var><br>
-<blockquote><p><a name="index-core_005faddr_005flessthan-343"></a><a name="index-core_005faddr_005fgreaterthan-344"></a>
+&mdash; Architecture Function: int <b>inner_than</b> (<var>CORE_ADDR lhs, CORE_ADDR rhs</var>)<var><a name="index-inner_005fthan-338"></a></var><br>
+<blockquote><p><a name="index-core_005faddr_005flessthan-339"></a><a name="index-core_005faddr_005fgreaterthan-340"></a>
 Given two frame or stack pointers, return non-zero (true) if the first
 represents the <dfn>inner</dfn> stack frame and 0 (false) otherwise.  This
 is used to determine whether the target has a stack which grows up in
@@ -92,8 +91,8 @@ in memory).
    <p><a name="frame_005falign"></a>
 
 <div class="defun">
-&mdash; Architecture Function: CORE_ADDR <b>frame_align</b> (<var>struct gdbarch *gdbarch, CORE_ADDR address</var>)<var><a name="index-frame_005falign-345"></a></var><br>
-<blockquote><p><a name="index-align_005fdown-346"></a><a name="index-align_005fup-347"></a>
+&mdash; Architecture Function: CORE_ADDR <b>frame_align</b> (<var>struct gdbarch *gdbarch, CORE_ADDR address</var>)<var><a name="index-frame_005falign-341"></a></var><br>
+<blockquote><p><a name="index-align_005fdown-342"></a><a name="index-align_005fup-343"></a>
 The architecture may have constraints on how its frames are
 aligned.  For example the OpenRISC 1000 ABI requires stack frames to be
 double-word aligned, but 32-bit versions of the architecture allocate
@@ -112,7 +111,7 @@ implementation of this function.
         </blockquote></div>
 
 <div class="defun">
-&mdash; Architecture Variable: int <b>frame_red_zone_size</b><var><a name="index-frame_005fred_005fzone_005fsize-348"></a></var><br>
+&mdash; Architecture Variable: int <b>frame_red_zone_size</b><var><a name="index-frame_005fred_005fzone_005fsize-344"></a></var><br>
 <blockquote>
         <p>Some ABIs reserve space beyond the end of the stack for use by leaf
 functions without prologue or epilogue or by exception handlers (for

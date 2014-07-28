@@ -9,8 +9,7 @@
 <link rel="prev" href="Functions-to-Access-Frame-Data.html#Functions-to-Access-Frame-Data" title="Functions to Access Frame Data">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -56,13 +55,13 @@ be required and a sniffer may be suitable for more than one
 architectures using the following functions.
 
      <ul>
-<li><a name="index-frame_005funwind_005fappend_005fsniffer-352"></a><code>frame_unwind_append_sniffer</code> is used to add a new sniffer to
+<li><a name="index-frame_005funwind_005fappend_005fsniffer-348"></a><code>frame_unwind_append_sniffer</code> is used to add a new sniffer to
 analyze THIS frame when given a pointer to the NEXT frame.
 
-     <li><a name="index-frame_005fbase_005fappend_005fsniffer-353"></a><code>frame_base_append_sniffer</code> is used to add a new sniffer
+     <li><a name="index-frame_005fbase_005fappend_005fsniffer-349"></a><code>frame_base_append_sniffer</code> is used to add a new sniffer
 which can determine information about the base of a stack frame.
 
-     <li><a name="index-frame_005fbase_005fset_005fdefault-354"></a><code>frame_base_set_default</code> is used to specify the default base
+     <li><a name="index-frame_005fbase_005fset_005fdefault-350"></a><code>frame_base_set_default</code> is used to specify the default base
 sniffer.
 
    </ul>
@@ -77,7 +76,7 @@ most recently appended sniffer will be tried first.
 <code>frame_unwind_append_sniffer)</code> returns a structure specifying
 a set of sniffing functions:
 
-   <p><a name="index-g_t_0040code_007bframe_005funwind_007d-355"></a>
+   <p><a name="index-g_t_0040code_007bframe_005funwind_007d-351"></a>
 <pre class="smallexample">     struct frame_unwind
      {
         enum frame_type            type;
@@ -129,7 +128,7 @@ fields that need be defined for custom sniffers.
 struct and whose fields refer to functions yielding various addresses
 within the frame.
 
-   <p><a name="index-g_t_0040code_007bframe_005fbase_007d-356"></a>
+   <p><a name="index-g_t_0040code_007bframe_005fbase_007d-352"></a>
 <pre class="smallexample">     struct frame_base
      {
         const struct frame_unwind *unwind;

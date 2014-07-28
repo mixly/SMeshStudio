@@ -36,7 +36,8 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Strings.html#Strings">Strings</a>
 
 <p><strong>Synopsis</strong>
 <pre class="example">     #include &lt;string.h&gt;
-     void* memcpy(void *<var>out</var>, const void *<var>in</var>, size_t <var>n</var>);
+     void* memcpy(void *restrict <var>out</var>, const void *restrict <var>in</var>,
+         size_t <var>n</var>);
      
 </pre>
    <p><strong>Description</strong><br>

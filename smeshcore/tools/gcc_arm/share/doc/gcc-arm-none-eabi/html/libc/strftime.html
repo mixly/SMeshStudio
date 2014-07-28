@@ -34,10 +34,11 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Timefns.html#Timefns">Timefns</a>
 
 <h3 class="section">8.8 <code>strftime</code>&mdash;convert date and time to a formatted string</h3>
 
-<p><a name="index-strftime-437"></a><strong>Synopsis</strong>
+<p><a name="index-strftime-439"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;time.h&gt;
-     size_t strftime(char *<var>s</var>, size_t <var>maxsize</var>,
-         const char *<var>format</var>, const struct tm *<var>timp</var>);
+     size_t strftime(char *restrict <var>s</var>, size_t <var>maxsize</var>,
+         const char *restrict <var>format</var>,
+         const struct tm *restrict <var>timp</var>);
      
 </pre>
    <p><strong>Description</strong><br>

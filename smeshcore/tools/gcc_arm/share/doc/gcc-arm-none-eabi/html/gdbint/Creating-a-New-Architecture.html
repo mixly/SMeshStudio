@@ -9,8 +9,7 @@
 <link rel="prev" href="Looking-Up-an-Existing-Architecture.html#Looking-Up-an-Existing-Architecture" title="Looking Up an Existing Architecture">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -44,8 +43,8 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Initialize-New-Architecture.html#Initia
 
 <h4 class="subsection">11.2.3 Creating a New Architecture</h4>
 
-<p><a name="index-g_t_0040code_007bstruct-gdbarch_007d-creation-237"></a>
-<a name="index-gdbarch_005falloc-238"></a><a name="index-g_t_0040code_007bgdbarch_005ftdep_007d-when-allocating-new-_0040code_007bgdbarch_007d-239"></a>If no architecture is found, then a new architecture must be created,
+<p><a name="index-g_t_0040code_007bstruct-gdbarch_007d-creation-233"></a>
+<a name="index-gdbarch_005falloc-234"></a><a name="index-g_t_0040code_007bgdbarch_005ftdep_007d-when-allocating-new-_0040code_007bgdbarch_007d-235"></a>If no architecture is found, then a new architecture must be created,
 by calling <code>gdbarch_alloc</code> using the supplied <code>struct&nbsp;gdbarch_info<!-- /@w --></code> and any additional custom target specific
 information in a <code>struct gdbarch_tdep</code>.  The prototype for
 <code>gdbarch_alloc</code> is:
@@ -53,7 +52,7 @@ information in a <code>struct gdbarch_tdep</code>.  The prototype for
 <pre class="smallexample">     struct gdbarch *gdbarch_alloc (const struct gdbarch_info *<var>info</var>,
                                     struct gdbarch_tdep       *<var>tdep</var>);
 </pre>
-   <p><a name="index-g_t_0040code_007bset_005fgdbarch_007d-functions-240"></a><a name="index-g_t_0040code_007bgdbarch_007d-accessor-functions-241"></a>The newly created struct gdbarch must then be populated.  Although
+   <p><a name="index-g_t_0040code_007bset_005fgdbarch_007d-functions-236"></a><a name="index-g_t_0040code_007bgdbarch_007d-accessor-functions-237"></a>The newly created struct gdbarch must then be populated.  Although
 there are default values, in most cases they are not what is
 required.
 
@@ -75,7 +74,7 @@ header file <samp><span class="file">gdbarch.h</span></samp>.
    <p>This is the main work in defining a new architecture.  Implementing the
 set of functions to populate the <code>struct gdbarch</code>.
 
-   <p><a name="index-g_t_0040code_007bgdbarch_005ftdep_007d-definition-242"></a><code>struct gdbarch_tdep</code> is not defined within <span class="sc">gdb</span>&mdash;it is up
+   <p><a name="index-g_t_0040code_007bgdbarch_005ftdep_007d-definition-238"></a><code>struct gdbarch_tdep</code> is not defined within <span class="sc">gdb</span>&mdash;it is up
 to the user to define this struct if it is needed to hold custom target
 information that is not covered by the standard <code>struct&nbsp;gdbarch<!-- /@w --></code>. For example with the OpenRISC 1000 architecture it is used to
 hold the number of matchpoints available in the target (along with other

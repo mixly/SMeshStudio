@@ -34,18 +34,18 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdio.html#Stdio">Stdio</a>
 
 <h3 class="section">4.61 <code>sscanf</code>, <code>fscanf</code>, <code>scanf</code>&mdash;scan and format input</h3>
 
-<p><a name="index-scanf-296"></a><a name="index-g_t_005fscanf_005fr-297"></a><a name="index-fscanf-298"></a><a name="index-g_t_005ffscanf_005fr-299"></a><a name="index-sscanf-300"></a><a name="index-g_t_005fsscanf_005fr-301"></a><strong>Synopsis</strong>
+<p><a name="index-scanf-297"></a><a name="index-g_t_005fscanf_005fr-298"></a><a name="index-fscanf-299"></a><a name="index-g_t_005ffscanf_005fr-300"></a><a name="index-sscanf-301"></a><a name="index-g_t_005fsscanf_005fr-302"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;stdio.h&gt;
      
-     int scanf(const char *<var>format</var>, ...);
-     int fscanf(FILE *<var>fd</var>, const char *<var>format</var>, ...);
-     int sscanf(const char *<var>str</var>, const char *<var>format</var>, ...);
+     int scanf(const char *restrict <var>format</var>, ...);
+     int fscanf(FILE *restrict <var>fd</var>, const char *restrict <var>format</var>, ...);
+     int sscanf(const char *restrict <var>str</var>, const char *restrict <var>format</var>, ...);
      
-     int _scanf_r(struct _reent *<var>ptr</var>, const char *<var>format</var>, ...);
-     int _fscanf_r(struct _reent *<var>ptr</var>, FILE *<var>fd</var>,
-         const char *<var>format</var>, ...);
-     int _sscanf_r(struct _reent *<var>ptr</var>, const char *<var>str</var>,
-         const char *<var>format</var>, ...);
+     int _scanf_r(struct _reent *<var>ptr</var>, const char *restrict <var>format</var>, ...);
+     int _fscanf_r(struct _reent *<var>ptr</var>, FILE *restrict <var>fd</var>,
+         const char *restrict <var>format</var>, ...);
+     int _sscanf_r(struct _reent *<var>ptr</var>, const char *restrict <var>str</var>,
+         const char *restrict <var>format</var>, ...);
      
 </pre>
    <p><strong>Description</strong><br>

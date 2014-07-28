@@ -9,8 +9,7 @@
 <link rel="next" href="Coding-Standards.html#Coding-Standards" title="Coding Standards">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -47,7 +46,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="index.html#Top">Top</a>
 
 <h3 class="section">15.1 BFD</h3>
 
-<p><a name="index-BFD-library-451"></a>
+<p><a name="index-BFD-library-446"></a>
 BFD provides support for <span class="sc">gdb</span> in several ways:
 
      <dl>
@@ -74,18 +73,18 @@ string table, etc.
 
 <h3 class="section">15.2 opcodes</h3>
 
-<p><a name="index-opcodes-library-452"></a>
+<p><a name="index-opcodes-library-447"></a>
 The opcodes library provides <span class="sc">gdb</span>'s disassembler.  (It's a separate
 library because it's also used in binutils, for <samp><span class="file">objdump</span></samp>).
 
 <h3 class="section">15.3 readline</h3>
 
-<p><a name="index-readline-library-453"></a>The <code>readline</code> library provides a set of functions for use by applications
+<p><a name="index-readline-library-448"></a>The <code>readline</code> library provides a set of functions for use by applications
 that allow users to edit command lines as they are typed in.
 
 <h3 class="section">15.4 libiberty</h3>
 
-<p><a name="index-g_t_0040code_007blibiberty_007d-library-454"></a>
+<p><a name="index-g_t_0040code_007blibiberty_007d-library-449"></a>
 The <code>libiberty</code> library provides a set of functions and features
 that integrate and improve on functionality found in modern operating
 systems.  Broadly speaking, such features can be divided into three
@@ -102,7 +101,7 @@ floating format support functions, the input options parser
 
 <h4 class="subsection">15.4.1 <code>obstacks</code> in <span class="sc">gdb</span></h4>
 
-<p><a name="index-g_t_0040code_007bobstacks_007d-455"></a>
+<p><a name="index-g_t_0040code_007bobstacks_007d-450"></a>
 The obstack mechanism provides a convenient way to allocate and free
 chunks of memory.  Each obstack is a pool of memory that is managed
 like a stack.  Objects (of any nature, size and alignment) are
@@ -147,7 +146,7 @@ new symbol file.
 
 <h3 class="section">15.5 gnu-regex</h3>
 
-<p><a name="index-regular-expressions-library-456"></a>
+<p><a name="index-regular-expressions-library-451"></a>
 Regex conditionals.
 
      <dl>
@@ -162,7 +161,7 @@ Regex conditionals.
 
 <h3 class="section">15.6 Array Containers</h3>
 
-<p><a name="index-Array-Containers-457"></a><a name="index-VEC-458"></a>
+<p><a name="index-Array-Containers-452"></a><a name="index-VEC-453"></a>
 Often it is necessary to manipulate a dynamic array of a set of
 objects.  C forces some bookkeeping on this, which can get cumbersome
 and repetitive.  The <samp><span class="file">vec.h</span></samp> file contains macros for defining

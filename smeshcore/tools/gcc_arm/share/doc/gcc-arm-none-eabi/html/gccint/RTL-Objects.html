@@ -9,9 +9,7 @@
 <link rel="next" href="RTL-Classes.html#RTL-Classes" title="RTL Classes">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -54,8 +52,8 @@ Up:&nbsp;<a rel="up" accesskey="u" href="RTL.html#RTL">RTL</a>
 
 <h3 class="section">10.1 RTL Object Types</h3>
 
-<p><a name="index-RTL-object-types-1695"></a>
-<a name="index-RTL-integers-1696"></a><a name="index-RTL-strings-1697"></a><a name="index-RTL-vectors-1698"></a><a name="index-RTL-expression-1699"></a><a name="index-RTX-_0028See-RTL_0029-1700"></a>RTL uses five kinds of objects: expressions, integers, wide integers,
+<p><a name="index-RTL-object-types-1696"></a>
+<a name="index-RTL-integers-1697"></a><a name="index-RTL-strings-1698"></a><a name="index-RTL-vectors-1699"></a><a name="index-RTL-expression-1700"></a><a name="index-RTX-_0028See-RTL_0029-1701"></a>RTL uses five kinds of objects: expressions, integers, wide integers,
 strings and vectors.  Expressions are the most important ones.  An RTL
 expression (&ldquo;RTX&rdquo;, for short) is a C structure, but it is usually
 referred to with a pointer; a type that is given the typedef name
@@ -96,7 +94,7 @@ The written form of a vector consists of square brackets
 whitespace separating them.  Vectors of length zero are not created;
 null pointers are used instead.
 
- <p><a name="index-expression-codes-1701"></a><a name="index-codes_002c-RTL-expression-1702"></a><a name="index-GET_005fCODE-1703"></a><a name="index-PUT_005fCODE-1704"></a>Expressions are classified by <dfn>expression codes</dfn> (also called RTX
+ <p><a name="index-expression-codes-1702"></a><a name="index-codes_002c-RTL-expression-1703"></a><a name="index-GET_005fCODE-1704"></a><a name="index-PUT_005fCODE-1705"></a>Expressions are classified by <dfn>expression codes</dfn> (also called RTX
 codes).  The expression code is a name defined in <samp><span class="file">rtl.def</span></samp>, which is
 also (in uppercase) a C enumeration constant.  The possible expression
 codes and their meanings are machine-independent.  The code of an RTX can
@@ -121,7 +119,7 @@ of the expression (separated by spaces).
 but when they appear in C code they are written in uppercase.  In this
 manual, they are shown as follows: <code>const_int</code>.
 
- <p><a name="index-g_t_0028nil_0029-1705"></a><a name="index-nil-1706"></a>In a few contexts a null pointer is valid where an expression is normally
+ <p><a name="index-g_t_0028nil_0029-1706"></a><a name="index-nil-1707"></a>In a few contexts a null pointer is valid where an expression is normally
 wanted.  The written form of this is <code>(nil)</code>.
 
  </body></html>

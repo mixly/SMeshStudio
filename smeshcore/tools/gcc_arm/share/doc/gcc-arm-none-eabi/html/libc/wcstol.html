@@ -36,7 +36,8 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdlib.html#Stdlib">Stdlib</a>
 
 <p><a name="index-wcstol-98"></a><a name="index-g_t_005fwcstol_005fr-99"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;wchar.h&gt;
-     long wcstol(const wchar_t *<var>s</var>, wchar_t **<var>ptr</var>,int <var>base</var>);
+     long wcstol(const wchar_t *__restrict <var>s</var>,
+         wchar_t **__restrict <var>ptr</var>,int <var>base</var>);
      
      long _wcstol_r(void *<var>reent</var>,
          const wchar_t *<var>s</var>, wchar_t **<var>ptr</var>,int <var>base</var>);

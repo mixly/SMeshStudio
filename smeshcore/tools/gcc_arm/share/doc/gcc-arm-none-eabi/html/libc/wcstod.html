@@ -36,8 +36,10 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdlib.html#Stdlib">Stdlib</a>
 
 <p><a name="index-wcstod-94"></a><a name="index-g_t_005fwcstod_005fr-95"></a><a name="index-wcstof-96"></a><a name="index-g_t_005fwcstof_005fr-97"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;stdlib.h&gt;
-     double wcstod(const wchar_t *<var>str</var>, wchar_t **<var>tail</var>);
-     float wcstof(const wchar_t *<var>str</var>, wchar_t **<var>tail</var>);
+     double wcstod(const wchar_t *__restrict <var>str</var>,
+         wchar_t **__restrict <var>tail</var>);
+     float wcstof(const wchar_t *__restrict <var>str</var>,
+         wchar_t **__restrict <var>tail</var>);
      
      double _wcstod_r(void *<var>reent</var>,
          const wchar_t *<var>str</var>, wchar_t **<var>tail</var>);

@@ -10,9 +10,7 @@
 <link rel="next" href="Elimination.html#Elimination" title="Elimination">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -60,14 +58,14 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stack-and-Calling.html#Stack-and-Callin
 <p>This discusses registers that address the stack frame.
 
 <div class="defun">
-&mdash; Macro: <b>STACK_POINTER_REGNUM</b><var><a name="index-STACK_005fPOINTER_005fREGNUM-4103"></a></var><br>
+&mdash; Macro: <b>STACK_POINTER_REGNUM</b><var><a name="index-STACK_005fPOINTER_005fREGNUM-4142"></a></var><br>
 <blockquote><p>The register number of the stack pointer register, which must also be a
 fixed register according to <code>FIXED_REGISTERS</code>.  On most machines,
 the hardware determines which register this is. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>FRAME_POINTER_REGNUM</b><var><a name="index-FRAME_005fPOINTER_005fREGNUM-4104"></a></var><br>
+&mdash; Macro: <b>FRAME_POINTER_REGNUM</b><var><a name="index-FRAME_005fPOINTER_005fREGNUM-4143"></a></var><br>
 <blockquote><p>The register number of the frame pointer register, which is used to
 access automatic variables in the stack frame.  On some machines, the
 hardware determines which register this is.  On other machines, you can
@@ -75,7 +73,7 @@ choose any register you wish for this purpose.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>HARD_FRAME_POINTER_REGNUM</b><var><a name="index-HARD_005fFRAME_005fPOINTER_005fREGNUM-4105"></a></var><br>
+&mdash; Macro: <b>HARD_FRAME_POINTER_REGNUM</b><var><a name="index-HARD_005fFRAME_005fPOINTER_005fREGNUM-4144"></a></var><br>
 <blockquote><p>On some machines the offset between the frame pointer and starting
 offset of the automatic variables is not known until after register
 allocation has been done (for example, because the saved registers are
@@ -98,7 +96,7 @@ or <code>STACK_POINTER_REGNUM</code>.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>ARG_POINTER_REGNUM</b><var><a name="index-ARG_005fPOINTER_005fREGNUM-4106"></a></var><br>
+&mdash; Macro: <b>ARG_POINTER_REGNUM</b><var><a name="index-ARG_005fPOINTER_005fREGNUM-4145"></a></var><br>
 <blockquote><p>The register number of the arg pointer register, which is used to access
 the function's argument list.  On some machines, this is the same as the
 frame pointer register.  On some machines, the hardware determines which
@@ -110,7 +108,7 @@ pointer register, then you must mark it as a fixed register according to
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>HARD_FRAME_POINTER_IS_FRAME_POINTER</b><var><a name="index-HARD_005fFRAME_005fPOINTER_005fIS_005fFRAME_005fPOINTER-4107"></a></var><br>
+&mdash; Macro: <b>HARD_FRAME_POINTER_IS_FRAME_POINTER</b><var><a name="index-HARD_005fFRAME_005fPOINTER_005fIS_005fFRAME_005fPOINTER-4146"></a></var><br>
 <blockquote><p>Define this to a preprocessor constant that is nonzero if
 <code>hard_frame_pointer_rtx</code> and <code>frame_pointer_rtx</code> should be
 the same.  The default definition is &lsquo;<samp><span class="samp">(HARD_FRAME_POINTER_REGNUM
@@ -119,7 +117,7 @@ definition is not suitable for use in preprocessor conditionals.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>HARD_FRAME_POINTER_IS_ARG_POINTER</b><var><a name="index-HARD_005fFRAME_005fPOINTER_005fIS_005fARG_005fPOINTER-4108"></a></var><br>
+&mdash; Macro: <b>HARD_FRAME_POINTER_IS_ARG_POINTER</b><var><a name="index-HARD_005fFRAME_005fPOINTER_005fIS_005fARG_005fPOINTER-4147"></a></var><br>
 <blockquote><p>Define this to a preprocessor constant that is nonzero if
 <code>hard_frame_pointer_rtx</code> and <code>arg_pointer_rtx</code> should be the
 same.  The default definition is &lsquo;<samp><span class="samp">(HARD_FRAME_POINTER_REGNUM ==
@@ -128,7 +126,7 @@ definition is not suitable for use in preprocessor conditionals.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>RETURN_ADDRESS_POINTER_REGNUM</b><var><a name="index-RETURN_005fADDRESS_005fPOINTER_005fREGNUM-4109"></a></var><br>
+&mdash; Macro: <b>RETURN_ADDRESS_POINTER_REGNUM</b><var><a name="index-RETURN_005fADDRESS_005fPOINTER_005fREGNUM-4148"></a></var><br>
 <blockquote><p>The register number of the return address pointer register, which is used to
 access the current function's return address from the stack.  On some
 machines, the return address is not at a fixed offset from the frame
@@ -141,8 +139,8 @@ address from the stack.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>STATIC_CHAIN_REGNUM</b><var><a name="index-STATIC_005fCHAIN_005fREGNUM-4110"></a></var><br>
-&mdash; Macro: <b>STATIC_CHAIN_INCOMING_REGNUM</b><var><a name="index-STATIC_005fCHAIN_005fINCOMING_005fREGNUM-4111"></a></var><br>
+&mdash; Macro: <b>STATIC_CHAIN_REGNUM</b><var><a name="index-STATIC_005fCHAIN_005fREGNUM-4149"></a></var><br>
+&mdash; Macro: <b>STATIC_CHAIN_INCOMING_REGNUM</b><var><a name="index-STATIC_005fCHAIN_005fINCOMING_005fREGNUM-4150"></a></var><br>
 <blockquote><p>Register numbers used for passing a function's static chain pointer.  If
 register windows are used, the register number as seen by the called
 function is <code>STATIC_CHAIN_INCOMING_REGNUM</code>, while the register
@@ -157,7 +155,7 @@ defined; instead, the <code>TARGET_STATIC_CHAIN</code> hook should be used.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: rtx <b>TARGET_STATIC_CHAIN</b> (<var>const_tree fndecl, bool incoming_p</var>)<var><a name="index-TARGET_005fSTATIC_005fCHAIN-4112"></a></var><br>
+&mdash; Target Hook: rtx <b>TARGET_STATIC_CHAIN</b> (<var>const_tree fndecl, bool incoming_p</var>)<var><a name="index-TARGET_005fSTATIC_005fCHAIN-4151"></a></var><br>
 <blockquote><p>This hook replaces the use of <code>STATIC_CHAIN_REGNUM</code> et al for
 targets that may use different static chain locations for different
 nested functions.  This may be required if the target has function
@@ -171,13 +169,13 @@ provide rtx giving <code>mem</code> expressions that denote where they are store
 Often the <code>mem</code> expression as seen by the caller will be at an offset
 from the stack pointer and the <code>mem</code> expression as seen by the callee
 will be at an offset from the frame pointer. 
-<a name="index-stack_005fpointer_005frtx-4113"></a><a name="index-frame_005fpointer_005frtx-4114"></a><a name="index-arg_005fpointer_005frtx-4115"></a>The variables <code>stack_pointer_rtx</code>, <code>frame_pointer_rtx</code>, and
+<a name="index-stack_005fpointer_005frtx-4152"></a><a name="index-frame_005fpointer_005frtx-4153"></a><a name="index-arg_005fpointer_005frtx-4154"></a>The variables <code>stack_pointer_rtx</code>, <code>frame_pointer_rtx</code>, and
 <code>arg_pointer_rtx</code> will have been initialized and should be used
 to refer to those items. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>DWARF_FRAME_REGISTERS</b><var><a name="index-DWARF_005fFRAME_005fREGISTERS-4116"></a></var><br>
+&mdash; Macro: <b>DWARF_FRAME_REGISTERS</b><var><a name="index-DWARF_005fFRAME_005fREGISTERS-4155"></a></var><br>
 <blockquote><p>This macro specifies the maximum number of hard registers that can be
 saved in a call frame.  This is used to size data structures used in
 DWARF2 exception handling.
@@ -195,7 +193,7 @@ registers that are not call-saved.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>PRE_GCC3_DWARF_FRAME_REGISTERS</b><var><a name="index-PRE_005fGCC3_005fDWARF_005fFRAME_005fREGISTERS-4117"></a></var><br>
+&mdash; Macro: <b>PRE_GCC3_DWARF_FRAME_REGISTERS</b><var><a name="index-PRE_005fGCC3_005fDWARF_005fFRAME_005fREGISTERS-4156"></a></var><br>
 <blockquote>
       <p>This macro is similar to <code>DWARF_FRAME_REGISTERS</code>, but is provided
 for backward compatibility in pre GCC 3.0 compiled code.
@@ -205,7 +203,7 @@ for backward compatibility in pre GCC 3.0 compiled code.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>DWARF_REG_TO_UNWIND_COLUMN</b> (<var>regno</var>)<var><a name="index-DWARF_005fREG_005fTO_005fUNWIND_005fCOLUMN-4118"></a></var><br>
+&mdash; Macro: <b>DWARF_REG_TO_UNWIND_COLUMN</b> (<var>regno</var>)<var><a name="index-DWARF_005fREG_005fTO_005fUNWIND_005fCOLUMN-4157"></a></var><br>
 <blockquote>
       <p>Define this macro if the target's representation for dwarf registers
 is different than the internal representation for unwind column. 
@@ -216,7 +214,7 @@ column number to use instead.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>DWARF_FRAME_REGNUM</b> (<var>regno</var>)<var><a name="index-DWARF_005fFRAME_005fREGNUM-4119"></a></var><br>
+&mdash; Macro: <b>DWARF_FRAME_REGNUM</b> (<var>regno</var>)<var><a name="index-DWARF_005fFRAME_005fREGNUM-4158"></a></var><br>
 <blockquote>
       <p>Define this macro if the target's representation for dwarf registers
 used in .eh_frame or .debug_frame is different from that used in other
@@ -227,7 +225,7 @@ should return the .eh_frame register number.  The default is
       </blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>DWARF2_FRAME_REG_OUT</b> (<var>regno, for_eh</var>)<var><a name="index-DWARF2_005fFRAME_005fREG_005fOUT-4120"></a></var><br>
+&mdash; Macro: <b>DWARF2_FRAME_REG_OUT</b> (<var>regno, for_eh</var>)<var><a name="index-DWARF2_005fFRAME_005fREG_005fOUT-4159"></a></var><br>
 <blockquote>
       <p>Define this macro to map register numbers held in the call frame info
 that GCC has collected using <code>DWARF_FRAME_REGNUM</code> to those that
@@ -238,7 +236,7 @@ return <var>regno</var>.
       </blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>REG_VALUE_IN_UNWIND_CONTEXT</b><var><a name="index-REG_005fVALUE_005fIN_005fUNWIND_005fCONTEXT-4121"></a></var><br>
+&mdash; Macro: <b>REG_VALUE_IN_UNWIND_CONTEXT</b><var><a name="index-REG_005fVALUE_005fIN_005fUNWIND_005fCONTEXT-4160"></a></var><br>
 <blockquote>
       <p>Define this macro if the target stores register values as
 <code>_Unwind_Word</code> type in unwind context.  It should be defined if
@@ -248,7 +246,7 @@ default is to store register values as <code>void *</code> type.
       </blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>ASSUME_EXTENDED_UNWIND_CONTEXT</b><var><a name="index-ASSUME_005fEXTENDED_005fUNWIND_005fCONTEXT-4122"></a></var><br>
+&mdash; Macro: <b>ASSUME_EXTENDED_UNWIND_CONTEXT</b><var><a name="index-ASSUME_005fEXTENDED_005fUNWIND_005fCONTEXT-4161"></a></var><br>
 <blockquote>
       <p>Define this macro to be 1 if the target always uses extended unwind
 context with version, args_size and by_value fields.  If it is undefined,

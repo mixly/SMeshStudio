@@ -52,6 +52,11 @@
 #define F_CPU          8000000UL
 #endif
 
+#define PLATFORM_HAS_LEDS    1
+#define PLATFORM_HAS_BUTTON  1
+#define PLATFORM_HAS_LIGHT   1
+#define PLATFORM_HAS_BATTERY 1
+#define PLATFORM_HAS_SHT11   1
 #define AVR_CONF_TMR0_PRESCALE 1024
 
 /* The AVR tick interrupt usually is done with an 8 bit counter around 128 Hz.
@@ -60,7 +65,7 @@
  */
 /* Clock ticks per second */
 #define CLOCK_CONF_SECOND 128
-#if 1
+#if 0
 /* 16 bit counter overflows every ~10 minutes */
 typedef unsigned short clock_time_t;
 #define CLOCK_LT(a,b)  ((signed short)((a)-(b)) < 0)

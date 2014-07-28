@@ -242,14 +242,14 @@ mx2xxcc: LDSECTION  = --section-start=.text=0x1F000
 mx2xxcc: $(PROGRAM)_atmega1284_8M.hex
 mx2xxcc: $(PROGRAM)_atmega1284_8M.elf
 
-mx2xxcc2: TARGET = atmega1284p
-mx2xxcc2: MCU_TARGET = atmega1284p
+mxseabo: TARGET = atmega1284p
+mxseabo: MCU_TARGET = atmega1284p
 #mx2xxcc: CFLAGS += '-DMAX_TIME_COUNT=F_CPU>>4' '-DNUM_LED_FLASHES=5' -DBAUD_RATE=38400
-mx2xxcc2: CFLAGS += '-DMAX_TIME_COUNT=F_CPU>>1' '-DNUM_LED_FLASHES=5' -DBAUD_RATE=57600 
-mx2xxcc2: AVR_FREQ =7372800L 
-mx2xxcc2: LDSECTION  = --section-start=.text=0x1F000
-mx2xxcc2: $(PROGRAM)_atmega1284_73728M.hex
-mx2xxcc2: $(PROGRAM)_atmega1284_73728M.elf
+mxseabo: CFLAGS += '-DMAX_TIME_COUNT=F_CPU>>1' '-DNUM_LED_FLASHES=5' -DBAUD_RATE=38400 
+mxseabo: AVR_FREQ =7372800L 
+mxseabo: LDSECTION  = --section-start=.text=0x1F000
+mxseabo: $(PROGRAM)_atmega1284_73728M.hex
+mxseabo: $(PROGRAM)_atmega1284_73728M.elf
 
 iduino_isp: iduino
 iduino_isp: TARGET = atmega128rfa1

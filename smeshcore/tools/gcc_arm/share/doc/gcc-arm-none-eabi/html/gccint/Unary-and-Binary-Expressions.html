@@ -10,9 +10,7 @@
 <link rel="next" href="Vectors.html#Vectors" title="Vectors">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -56,7 +54,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Expression-trees.html#Expression-trees"
 
 <h4 class="subsection">11.6.3 Unary and Binary Expressions</h4>
 
-<p><a name="index-NEGATE_005fEXPR-2431"></a><a name="index-ABS_005fEXPR-2432"></a><a name="index-BIT_005fNOT_005fEXPR-2433"></a><a name="index-TRUTH_005fNOT_005fEXPR-2434"></a><a name="index-PREDECREMENT_005fEXPR-2435"></a><a name="index-PREINCREMENT_005fEXPR-2436"></a><a name="index-POSTDECREMENT_005fEXPR-2437"></a><a name="index-POSTINCREMENT_005fEXPR-2438"></a><a name="index-FIX_005fTRUNC_005fEXPR-2439"></a><a name="index-FLOAT_005fEXPR-2440"></a><a name="index-COMPLEX_005fEXPR-2441"></a><a name="index-CONJ_005fEXPR-2442"></a><a name="index-REALPART_005fEXPR-2443"></a><a name="index-IMAGPART_005fEXPR-2444"></a><a name="index-NON_005fLVALUE_005fEXPR-2445"></a><a name="index-NOP_005fEXPR-2446"></a><a name="index-CONVERT_005fEXPR-2447"></a><a name="index-FIXED_005fCONVERT_005fEXPR-2448"></a><a name="index-THROW_005fEXPR-2449"></a><a name="index-LSHIFT_005fEXPR-2450"></a><a name="index-RSHIFT_005fEXPR-2451"></a><a name="index-BIT_005fIOR_005fEXPR-2452"></a><a name="index-BIT_005fXOR_005fEXPR-2453"></a><a name="index-BIT_005fAND_005fEXPR-2454"></a><a name="index-TRUTH_005fANDIF_005fEXPR-2455"></a><a name="index-TRUTH_005fORIF_005fEXPR-2456"></a><a name="index-TRUTH_005fAND_005fEXPR-2457"></a><a name="index-TRUTH_005fOR_005fEXPR-2458"></a><a name="index-TRUTH_005fXOR_005fEXPR-2459"></a><a name="index-POINTER_005fPLUS_005fEXPR-2460"></a><a name="index-PLUS_005fEXPR-2461"></a><a name="index-MINUS_005fEXPR-2462"></a><a name="index-MULT_005fEXPR-2463"></a><a name="index-RDIV_005fEXPR-2464"></a><a name="index-TRUNC_005fDIV_005fEXPR-2465"></a><a name="index-FLOOR_005fDIV_005fEXPR-2466"></a><a name="index-CEIL_005fDIV_005fEXPR-2467"></a><a name="index-ROUND_005fDIV_005fEXPR-2468"></a><a name="index-TRUNC_005fMOD_005fEXPR-2469"></a><a name="index-FLOOR_005fMOD_005fEXPR-2470"></a><a name="index-CEIL_005fMOD_005fEXPR-2471"></a><a name="index-ROUND_005fMOD_005fEXPR-2472"></a><a name="index-EXACT_005fDIV_005fEXPR-2473"></a><a name="index-LT_005fEXPR-2474"></a><a name="index-LE_005fEXPR-2475"></a><a name="index-GT_005fEXPR-2476"></a><a name="index-GE_005fEXPR-2477"></a><a name="index-EQ_005fEXPR-2478"></a><a name="index-NE_005fEXPR-2479"></a><a name="index-ORDERED_005fEXPR-2480"></a><a name="index-UNORDERED_005fEXPR-2481"></a><a name="index-UNLT_005fEXPR-2482"></a><a name="index-UNLE_005fEXPR-2483"></a><a name="index-UNGT_005fEXPR-2484"></a><a name="index-UNGE_005fEXPR-2485"></a><a name="index-UNEQ_005fEXPR-2486"></a><a name="index-LTGT_005fEXPR-2487"></a><a name="index-MODIFY_005fEXPR-2488"></a><a name="index-INIT_005fEXPR-2489"></a><a name="index-COMPOUND_005fEXPR-2490"></a><a name="index-COND_005fEXPR-2491"></a><a name="index-CALL_005fEXPR-2492"></a><a name="index-STMT_005fEXPR-2493"></a><a name="index-BIND_005fEXPR-2494"></a><a name="index-LOOP_005fEXPR-2495"></a><a name="index-EXIT_005fEXPR-2496"></a><a name="index-CLEANUP_005fPOINT_005fEXPR-2497"></a><a name="index-CONSTRUCTOR-2498"></a><a name="index-COMPOUND_005fLITERAL_005fEXPR-2499"></a><a name="index-SAVE_005fEXPR-2500"></a><a name="index-TARGET_005fEXPR-2501"></a><a name="index-VA_005fARG_005fEXPR-2502"></a>
+<p><a name="index-NEGATE_005fEXPR-2432"></a><a name="index-ABS_005fEXPR-2433"></a><a name="index-BIT_005fNOT_005fEXPR-2434"></a><a name="index-TRUTH_005fNOT_005fEXPR-2435"></a><a name="index-PREDECREMENT_005fEXPR-2436"></a><a name="index-PREINCREMENT_005fEXPR-2437"></a><a name="index-POSTDECREMENT_005fEXPR-2438"></a><a name="index-POSTINCREMENT_005fEXPR-2439"></a><a name="index-FIX_005fTRUNC_005fEXPR-2440"></a><a name="index-FLOAT_005fEXPR-2441"></a><a name="index-COMPLEX_005fEXPR-2442"></a><a name="index-CONJ_005fEXPR-2443"></a><a name="index-REALPART_005fEXPR-2444"></a><a name="index-IMAGPART_005fEXPR-2445"></a><a name="index-NON_005fLVALUE_005fEXPR-2446"></a><a name="index-NOP_005fEXPR-2447"></a><a name="index-CONVERT_005fEXPR-2448"></a><a name="index-FIXED_005fCONVERT_005fEXPR-2449"></a><a name="index-THROW_005fEXPR-2450"></a><a name="index-LSHIFT_005fEXPR-2451"></a><a name="index-RSHIFT_005fEXPR-2452"></a><a name="index-BIT_005fIOR_005fEXPR-2453"></a><a name="index-BIT_005fXOR_005fEXPR-2454"></a><a name="index-BIT_005fAND_005fEXPR-2455"></a><a name="index-TRUTH_005fANDIF_005fEXPR-2456"></a><a name="index-TRUTH_005fORIF_005fEXPR-2457"></a><a name="index-TRUTH_005fAND_005fEXPR-2458"></a><a name="index-TRUTH_005fOR_005fEXPR-2459"></a><a name="index-TRUTH_005fXOR_005fEXPR-2460"></a><a name="index-POINTER_005fPLUS_005fEXPR-2461"></a><a name="index-PLUS_005fEXPR-2462"></a><a name="index-MINUS_005fEXPR-2463"></a><a name="index-MULT_005fEXPR-2464"></a><a name="index-MULT_005fHIGHPART_005fEXPR-2465"></a><a name="index-RDIV_005fEXPR-2466"></a><a name="index-TRUNC_005fDIV_005fEXPR-2467"></a><a name="index-FLOOR_005fDIV_005fEXPR-2468"></a><a name="index-CEIL_005fDIV_005fEXPR-2469"></a><a name="index-ROUND_005fDIV_005fEXPR-2470"></a><a name="index-TRUNC_005fMOD_005fEXPR-2471"></a><a name="index-FLOOR_005fMOD_005fEXPR-2472"></a><a name="index-CEIL_005fMOD_005fEXPR-2473"></a><a name="index-ROUND_005fMOD_005fEXPR-2474"></a><a name="index-EXACT_005fDIV_005fEXPR-2475"></a><a name="index-LT_005fEXPR-2476"></a><a name="index-LE_005fEXPR-2477"></a><a name="index-GT_005fEXPR-2478"></a><a name="index-GE_005fEXPR-2479"></a><a name="index-EQ_005fEXPR-2480"></a><a name="index-NE_005fEXPR-2481"></a><a name="index-ORDERED_005fEXPR-2482"></a><a name="index-UNORDERED_005fEXPR-2483"></a><a name="index-UNLT_005fEXPR-2484"></a><a name="index-UNLE_005fEXPR-2485"></a><a name="index-UNGT_005fEXPR-2486"></a><a name="index-UNGE_005fEXPR-2487"></a><a name="index-UNEQ_005fEXPR-2488"></a><a name="index-LTGT_005fEXPR-2489"></a><a name="index-MODIFY_005fEXPR-2490"></a><a name="index-INIT_005fEXPR-2491"></a><a name="index-COMPOUND_005fEXPR-2492"></a><a name="index-COND_005fEXPR-2493"></a><a name="index-CALL_005fEXPR-2494"></a><a name="index-STMT_005fEXPR-2495"></a><a name="index-BIND_005fEXPR-2496"></a><a name="index-LOOP_005fEXPR-2497"></a><a name="index-EXIT_005fEXPR-2498"></a><a name="index-CLEANUP_005fPOINT_005fEXPR-2499"></a><a name="index-CONSTRUCTOR-2500"></a><a name="index-COMPOUND_005fLITERAL_005fEXPR-2501"></a><a name="index-SAVE_005fEXPR-2502"></a><a name="index-TARGET_005fEXPR-2503"></a><a name="index-VA_005fARG_005fEXPR-2504"></a>
      <dl>
 <dt><code>NEGATE_EXPR</code><dd>These nodes represent unary negation of the single operand, for both
 integer and floating-point types.  The type of negation can be
@@ -149,7 +147,8 @@ shift.  Right shift should be treated as arithmetic, i.e., the
 high-order bits should be zero-filled when the expression has unsigned
 type and filled with the sign bit when the expression has signed type. 
 Note that the result is undefined if the second operand is larger
-than or equal to the first operand's type size.
+than or equal to the first operand's type size. Unlike most nodes, these
+can have a vector as first operand and a scalar as second operand.
 
      <br><dt><code>BIT_IOR_EXPR</code><dt><code>BIT_XOR_EXPR</code><dt><code>BIT_AND_EXPR</code><dd>These nodes represent bitwise inclusive or, bitwise exclusive or, and
 bitwise and, respectively.  Both operands will always have integral
@@ -182,6 +181,10 @@ one operand is of floating type and the other is of integral type.
      <p>The behavior of these operations on signed arithmetic overflow is
 controlled by the <code>flag_wrapv</code> and <code>flag_trapv</code> variables.
 
+     <br><dt><code>MULT_HIGHPART_EXPR</code><dd>This node represents the &ldquo;high-part&rdquo; of a widening multiplication. 
+For an integral type with <var>b</var> bits of precision, the result is
+the most significant <var>b</var> bits of the full 2<var>b</var> product.
+
      <br><dt><code>RDIV_EXPR</code><dd>This node represents a floating point division operation.
 
      <br><dt><code>TRUNC_DIV_EXPR</code><dt><code>FLOOR_DIV_EXPR</code><dt><code>CEIL_DIV_EXPR</code><dt><code>ROUND_DIV_EXPR</code><dd>These nodes represent integer division operations that return an integer
@@ -209,11 +212,12 @@ allows the backend to choose between the faster of <code>TRUNC_DIV_EXPR</code>,
 
      <br><dt><code>LT_EXPR</code><dt><code>LE_EXPR</code><dt><code>GT_EXPR</code><dt><code>GE_EXPR</code><dt><code>EQ_EXPR</code><dt><code>NE_EXPR</code><dd>These nodes represent the less than, less than or equal to, greater
 than, greater than or equal to, equal, and not equal comparison
-operators.  The first and second operand with either be both of integral
-type or both of floating type.  The result type of these expressions
-will always be of integral or boolean type.  These operations return
-the result type's zero value for false, and the result type's one value
-for true.
+operators.  The first and second operands will either be both of integral
+type, both of floating type or both of vector type.  The result type of
+these expressions will always be of integral, boolean or signed integral
+vector type.  These operations return the result type's zero value for
+false, the result type's one value for true, and a vector whose elements
+are zero (false) or minus one (true) for vectors.
 
      <p>For floating point comparisons, if we honor IEEE NaNs and either operand
 is NaN, then <code>NE_EXPR</code> always returns true and the remaining operators
@@ -343,7 +347,7 @@ particular order.  However, in the middle end, fields must appear in
 declaration order.  You should not assume that all fields will be
 represented.  Unrepresented fields will be set to zero.
 
-     <br><dt><code>COMPOUND_LITERAL_EXPR</code><dd><a name="index-COMPOUND_005fLITERAL_005fEXPR_005fDECL_005fEXPR-2503"></a><a name="index-COMPOUND_005fLITERAL_005fEXPR_005fDECL-2504"></a>These nodes represent ISO C99 compound literals.  The
+     <br><dt><code>COMPOUND_LITERAL_EXPR</code><dd><a name="index-COMPOUND_005fLITERAL_005fEXPR_005fDECL_005fEXPR-2505"></a><a name="index-COMPOUND_005fLITERAL_005fEXPR_005fDECL-2506"></a>These nodes represent ISO C99 compound literals.  The
 <code>COMPOUND_LITERAL_EXPR_DECL_EXPR</code> is a <code>DECL_EXPR</code>
 containing an anonymous <code>VAR_DECL</code> for
 the unnamed object represented by the compound literal; the

@@ -35,9 +35,13 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Strings.html#Strings">Strings</a>
 
 <h3 class="section">5.25 <code>strerror_r</code>&mdash;convert error number to string and copy to buffer</h3>
 
-<p><a name="index-strerror_005fr-392"></a><strong>Synopsis</strong>
+<p><a name="index-strerror_005fr-393"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;string.h&gt;
+     #ifdef _GNU_SOURCE
      char *strerror_r(int <var>errnum</var>, char *<var>buffer</var>, size_t <var>n</var>);
+     #else
+     int strerror_r(int <var>errnum</var>, char *<var>buffer</var>, size_t <var>n</var>);
+     #endif
      
 </pre>
    <p><strong>Description</strong><br>
@@ -51,12 +55,34 @@ error number, the result is the empty string.
 
    <p><br>
 <strong>Returns</strong><br>
-This function returns a pointer to a string.  Your application must
-not modify that string.
+There are two variants: the GNU version always returns a NUL-terminated
+string, which is <var>buffer</var> if all went well, but which is another
+pointer if <var>n</var> was too small (leaving <var>buffer</var> untouched).  If the
+return is not <var>buffer</var>, your application must not modify that string. 
+The POSIX version returns 0 on success, <var>EINVAL</var> if <code>errnum</code> was not
+recognized, and <var>ERANGE</var> if <var>n</var> was too small.  The variant chosen
+depends on macros that you define before inclusion of <code>string.h</code>.
 
    <p><br>
 <strong>Portability</strong><br>
-<code>strerror_r</code> is a GNU extension.
+<code>strerror_r</code> with a <var>char *</var> result is a GNU extension. 
+<code>strerror_r</code> with an <var>int</var> result is required by POSIX 2001. 
+This function is compliant only if <code>_user_strerror</code> is not provided,
+or if it is thread-safe and uses separate storage according to whether
+the second argument of that function is non-zero.  For more details
+on <code>_user_strerror</code>, see the <code>strerror</code> documentation.
+
+   <p>POSIX states that the contents of <var>buf</var> are unspecified on error,
+although this implementation guarantees a NUL-terminated string for
+all except <var>n</var> of 0.
+
+   <p>POSIX recommends that unknown <var>errnum</var> result in a message including
+that value, however it is not a requirement and this implementation
+provides only an empty string (unless you provide <code>_user_strerror</code>). 
+POSIX also recommends that unknown <var>errnum</var> fail with EINVAL even
+when providing such a message, however it is not a requirement and
+this implementation will return success if <code>_user_strerror</code> provided
+a non-empty alternate string without assigning into its third argument.
 
    <p><code>strerror_r</code> requires no supporting OS subroutines.
 

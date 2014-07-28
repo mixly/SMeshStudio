@@ -91,10 +91,16 @@
 #else
 #define RF230_SUPPORTED_INTERRUPT_MASK          ( HAL_TRX_END_MASK | HAL_RX_START_MASK | HAL_BAT_LOW_MASK | HAL_AMI_MASK ) //( 0x0C )  //disable bat low, trx underrun, pll lock/unlock
 #endif
+
 #define RF230_MIN_CHANNEL                       ( 11 )
 #define RF230_MAX_CHANNEL                       ( 26 )
+#define RF230_MIN_ED_THRESHOLD                  ( 0 )
+#define RF230_MAX_ED_THRESHOLD                  ( 15 )
+#define RF230_MAX_TX_FRAME_LENGTH               ( 127 ) /**< 127 Byte PSDU. */
+
 #define TX_PWR_3DBM                             ( 0 )
 #define TX_PWR_17_2DBM                          ( 15 )
+
 #define TX_PWR_MAX                             TX_PWR_3DBM
 #define TX_PWR_MIN                             TX_PWR_17_2DBM
 #define TX_PWR_UNDEFINED                       (TX_PWR_MIN+1)

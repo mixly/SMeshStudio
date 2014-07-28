@@ -36,10 +36,12 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdio.html#Stdio">Stdio</a>
 
 <p><a name="index-fgetws-174"></a><a name="index-g_t_005ffgetws_005fr-175"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;wchar.h&gt;
-     wchar_t *fgetws(wchar_t *<var>ws</var>, int <var>n</var>, FILE *<var>fp</var>);
+     wchar_t *fgetws(wchar_t *__restrict <var>ws</var>, int <var>n</var>,
+         FILE *__restrict <var>fp</var>);
      
      #include &lt;wchar.h&gt;
-     wchar_t *_fgetws_r(struct _reent *<var>ptr</var>, wchar_t *<var>ws</var>, int <var>n</var>, FILE *<var>fp</var>);
+     wchar_t *_fgetws_r(struct _reent *<var>ptr</var>, wchar_t *<var>ws</var>,
+         int <var>n</var>, FILE *<var>fp</var>);
      
 </pre>
    <p><strong>Description</strong><br>

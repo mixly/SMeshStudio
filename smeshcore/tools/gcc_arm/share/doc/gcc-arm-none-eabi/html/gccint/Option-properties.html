@@ -9,9 +9,7 @@
 <link rel="prev" href="Option-file-format.html#Option-file-format" title="Option file format">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -191,23 +189,13 @@ for the option.  If the option is attached to &lsquo;<samp><span class="samp">ta
 the script will set the macro <code>MASK_</code><var>name</var> to the appropriate
 bitmask.  It will also declare a <code>TARGET_</code><var>name</var> macro that has
 the value 1 when the option is active and 0 otherwise.  If you use <code>Var</code>
-to attach the option to a different variable, the associated macros are
-called <code>OPTION_MASK_</code><var>name</var> and <code>OPTION_</code><var>name</var> respectively.
-
-     <p>You can disable automatic bit allocation using <code>MaskExists</code>.
+to attach the option to a different variable, the bitmask macro with be
+called <code>OPTION_MASK_</code><var>name</var>.
 
      <br><dt><code>InverseMask(</code><var>othername</var><code>)</code><dt><code>InverseMask(</code><var>othername</var><code>, </code><var>thisname</var><code>)</code><dd>The option is the inverse of another option that has the
 <code>Mask(</code><var>othername</var><code>)</code> property.  If <var>thisname</var> is given,
 the options-processing script will declare a <code>TARGET_</code><var>thisname</var>
 macro that is 1 when the option is active and 0 otherwise.
-
-     <br><dt><code>MaskExists</code><dd>The mask specified by the <code>Mask</code> property already exists. 
-No <code>MASK</code> or <code>TARGET</code> definitions should be added to
-<samp><span class="file">options.h</span></samp> in response to this option record.
-
-     <p>The main purpose of this property is to support synonymous options. 
-The first option should use &lsquo;<samp><span class="samp">Mask(</span><var>name</var><span class="samp">)</span></samp>&rsquo; and the others
-should use &lsquo;<samp><span class="samp">Mask(</span><var>name</var><span class="samp">) MaskExists</span></samp>&rsquo;.
 
      <br><dt><code>Enum(</code><var>name</var><code>)</code><dd>The option's argument is a string from the set of strings associated
 with the corresponding &lsquo;<samp><span class="samp">Enum</span></samp>&rsquo; record.  The string is checked and
@@ -299,12 +287,25 @@ combined option.  For example, some front ends use this to prevent
 value of <samp><span class="option">-fmath-errno</span></samp> for languages that do not use
 <code>errno</code>.
 
- </dl>
+     <br><dt><code>EnabledBy(</code><var>opt</var><code>)</code><dt><code>EnabledBy(</code><var>opt</var><code> &amp;&amp; </code><var>opt2</var><code>)</code><dd>If not explicitly set, the option is set to the value of
+<samp><span class="option">-</span><var>opt</var></samp>.  The second form specifies that the option is
+only set if both <var>opt</var> and <var>opt2</var> are set.
+
+     <br><dt><code>LangEnabledBy(</code><var>language</var><code>, </code><var>opt</var><code>)</code><dt><code>LangEnabledBy(</code><var>language</var><code>, </code><var>opt</var><code>, </code><var>posarg</var><code>, </code><var>negarg</var><code>)</code><dd>When compiling for the given language, the option is set to the value
+of <samp><span class="option">-</span><var>opt</var></samp>, if not explicitly set. In the second form, if
+<var>opt</var> is used in the positive form then <var>posarg</var> is considered
+to be passed to the option, and if <var>opt</var> is used in the negative
+form then <var>negarg</var> is considered to be passed to the option.  It
+is possible to specify several different languages.  Each
+<var>language</var> must have been declared by an earlier <code>Language</code>
+record.  See <a href="Option-file-format.html#Option-file-format">Option file format</a>.
+
+     <br><dt><code>NoDWARFRecord</code><dd>The option is omitted from the producer string written by
+<samp><span class="option">-grecord-gcc-switches</span></samp>. 
+</dl>
 
 <!-- markers: BUG TODO -->
-<!-- Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, -->
-<!-- 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 -->
-<!-- Free Software Foundation, Inc. -->
+<!-- Copyright (C) 1988-2013 Free Software Foundation, Inc. -->
 <!-- This is part of the GCC manual. -->
 <!-- For copying conditions, see the file gcc.texi. -->
  </body></html>

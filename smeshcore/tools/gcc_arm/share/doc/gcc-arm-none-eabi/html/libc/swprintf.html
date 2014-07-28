@@ -34,13 +34,14 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdio.html#Stdio">Stdio</a>
 
 <h3 class="section">4.62 <code>swprintf</code>, <code>fwprintf</code>, <code>wprintf</code>&mdash;wide character format output</h3>
 
-<p><a name="index-fwprintf-302"></a><a name="index-g_t_005ffwprintf_005fr-303"></a><a name="index-wprintf-304"></a><a name="index-g_t_005fwprintf_005fr-305"></a><a name="index-swprintf-306"></a><a name="index-g_t_005fswprintf_005fr-307"></a><strong>Synopsis</strong>
+<p><a name="index-fwprintf-303"></a><a name="index-g_t_005ffwprintf_005fr-304"></a><a name="index-wprintf-305"></a><a name="index-g_t_005fwprintf_005fr-306"></a><a name="index-swprintf-307"></a><a name="index-g_t_005fswprintf_005fr-308"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;wchar.h&gt;
      
      int wprintf(const wchar_t *<var>format</var>, ...);
-     int fwprintf(FILE *<var>fd</var>, const wchar_t *<var>format</var>, ...);
-     int swprintf(wchar_t *<var>str</var>, size_t <var>size</var>,
-         const wchar_t *<var>format</var>, ...);
+     int fwprintf(FILE *__restrict <var>fd</var>,
+         const wchar_t *__restrict <var>format</var>, ...);
+     int swprintf(wchar_t *__restrict <var>str</var>, size_t <var>size</var>,
+         const wchar_t *__restrict <var>format</var>, ...);
      
      int _wprintf_r(struct _reent *<var>ptr</var>, const wchar_t *<var>format</var>, ...);
      int _fwprintf_r(struct _reent *<var>ptr</var>, FILE *<var>fd</var>,
@@ -455,6 +456,9 @@ output is created.
 an implementation-defined format.  This
 implementation is similar to <code>%#tx</code>), except
 that <code>0x</code> appears even for the NULL pointer.
+
+          <br><dt><code>m</code><dd>Prints the output of <code>strerror(errno)</code>; no
+argument is required.  A GNU extension.
 
      </dl>
 

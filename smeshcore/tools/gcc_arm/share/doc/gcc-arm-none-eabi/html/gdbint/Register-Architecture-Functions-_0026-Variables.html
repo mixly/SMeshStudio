@@ -10,8 +10,7 @@
 <link rel="next" href="Register-Information-Functions.html#Register-Information-Functions" title="Register Information Functions">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -47,16 +46,16 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Register-Representation.html#Register-R
 
 <h4 class="subsection">11.6.2 Functions and Variables Specifying the Register Architecture</h4>
 
-<p><a name="index-g_t_0040code_007bgdbarch_007d-register-architecture-functions-267"></a>
+<p><a name="index-g_t_0040code_007bgdbarch_007d-register-architecture-functions-263"></a>
 These <code>struct gdbarch</code> functions and variables specify the number
 and type of registers in the architecture.
 
 <div class="defun">
-&mdash; Architecture Function: CORE_ADDR <b>read_pc</b> (<var>struct regcache *regcache</var>)<var><a name="index-read_005fpc-268"></a></var><br>
+&mdash; Architecture Function: CORE_ADDR <b>read_pc</b> (<var>struct regcache *regcache</var>)<var><a name="index-read_005fpc-264"></a></var><br>
         </div>
 
 <div class="defun">
-&mdash; Architecture Function: void <b>write_pc</b> (<var>struct regcache *regcache, CORE_ADDR val</var>)<var><a name="index-write_005fpc-269"></a></var><br>
+&mdash; Architecture Function: void <b>write_pc</b> (<var>struct regcache *regcache, CORE_ADDR val</var>)<var><a name="index-write_005fpc-265"></a></var><br>
 <blockquote>
         <p>Read or write the program counter.  The default value of both
 functions is <code>NULL</code> (no function available).  If the program
@@ -72,11 +71,11 @@ cache, <var>regcache</var>.  See <a href="Register-Caching.html#Register-Caching
         </blockquote></div>
 
 <div class="defun">
-&mdash; Architecture Function: void <b>pseudo_register_read</b> (<var>struct gdbarch *gdbarch, struct regcache *regcache, int regnum, const gdb_byte *buf</var>)<var><a name="index-pseudo_005fregister_005fread-270"></a></var><br>
+&mdash; Architecture Function: void <b>pseudo_register_read</b> (<var>struct gdbarch *gdbarch, struct regcache *regcache, int regnum, const gdb_byte *buf</var>)<var><a name="index-pseudo_005fregister_005fread-266"></a></var><br>
         </div>
 
 <div class="defun">
-&mdash; Architecture Function: void <b>pseudo_register_write</b> (<var>struct gdbarch *gdbarch, struct regcache *regcache, int regnum, const gdb_byte *buf</var>)<var><a name="index-pseudo_005fregister_005fwrite-271"></a></var><br>
+&mdash; Architecture Function: void <b>pseudo_register_write</b> (<var>struct gdbarch *gdbarch, struct regcache *regcache, int regnum, const gdb_byte *buf</var>)<var><a name="index-pseudo_005fregister_005fwrite-267"></a></var><br>
 <blockquote>
         <p>These functions should be defined if there are any pseudo-registers. 
 The default value is <code>NULL</code>.  <var>regnum</var> is the number of the
@@ -93,8 +92,8 @@ supplied register cache, <var>regcache</var>.  See <a href="Register-Caching.htm
         </blockquote></div>
 
 <div class="defun">
-&mdash; Architecture Variable: int <b>sp_regnum</b><var><a name="index-sp_005fregnum-272"></a></var><br>
-<blockquote><p><a name="index-sp_005fregnum-273"></a><a name="index-stack-pointer-274"></a><a name="index-g_t_0040kbd_007b_0024sp_007d-275"></a>
+&mdash; Architecture Variable: int <b>sp_regnum</b><var><a name="index-sp_005fregnum-268"></a></var><br>
+<blockquote><p><a name="index-sp_005fregnum-269"></a><a name="index-stack-pointer-270"></a><a name="index-g_t_0040kbd_007b_0024sp_007d-271"></a>
 This specifies the register holding the stack pointer, which may be a
 raw or pseudo-register.  It defaults to -1 (not defined), but it is an
 error for it not to be defined.
@@ -105,8 +104,8 @@ error for it not to be defined.
         </blockquote></div>
 
 <div class="defun">
-&mdash; Architecture Variable: int <b>pc_regnum</b><var><a name="index-pc_005fregnum-276"></a></var><br>
-<blockquote><p><a name="index-pc_005fregnum-277"></a><a name="index-program-counter-278"></a><a name="index-g_t_0040kbd_007b_0024pc_007d-279"></a>
+&mdash; Architecture Variable: int <b>pc_regnum</b><var><a name="index-pc_005fregnum-272"></a></var><br>
+<blockquote><p><a name="index-pc_005fregnum-273"></a><a name="index-program-counter-274"></a><a name="index-g_t_0040kbd_007b_0024pc_007d-275"></a>
 This specifies the register holding the program counter, which may be a
 raw or pseudo-register.  It defaults to -1 (not defined).  If
 <code>pc_regnum</code> is not defined, then the functions <code>read_pc</code> and
@@ -119,8 +118,8 @@ through <code>read_pc</code> and <code>write_pc</code>) can be accessed withing
         </blockquote></div>
 
 <div class="defun">
-&mdash; Architecture Variable: int <b>ps_regnum</b><var><a name="index-ps_005fregnum-280"></a></var><br>
-<blockquote><p><a name="index-ps_005fregnum-281"></a><a name="index-processor-status-register-282"></a><a name="index-status-register-283"></a><a name="index-g_t_0040kbd_007b_0024ps_007d-284"></a>
+&mdash; Architecture Variable: int <b>ps_regnum</b><var><a name="index-ps_005fregnum-276"></a></var><br>
+<blockquote><p><a name="index-ps_005fregnum-277"></a><a name="index-processor-status-register-278"></a><a name="index-status-register-279"></a><a name="index-g_t_0040kbd_007b_0024ps_007d-280"></a>
 This specifies the register holding the processor status (often called
 the status register), which may be a raw or pseudo-register.  It
 defaults to -1 (not defined).
@@ -131,8 +130,8 @@ defaults to -1 (not defined).
         </blockquote></div>
 
 <div class="defun">
-&mdash; Architecture Variable: int <b>fp0_regnum</b><var><a name="index-fp0_005fregnum-285"></a></var><br>
-<blockquote><p><a name="index-fp0_005fregnum-286"></a><a name="index-first-floating-point-register-287"></a>
+&mdash; Architecture Variable: int <b>fp0_regnum</b><var><a name="index-fp0_005fregnum-281"></a></var><br>
+<blockquote><p><a name="index-fp0_005fregnum-282"></a><a name="index-first-floating-point-register-283"></a>
 This specifies the first floating point register.  It defaults to
 0.  <code>fp0_regnum</code> is not needed unless the target offers support
 for floating point.

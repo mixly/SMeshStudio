@@ -9,9 +9,7 @@
 <link rel="prev" href="MODE_005fCC-Condition-Codes.html#MODE_005fCC-Condition-Codes" title="MODE_CC Condition Codes">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -54,24 +52,10 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Condition-Code.html#Condition-Code">Con
 
 <h4 class="subsection">17.16.3 Macros to control conditional execution</h4>
 
-<p><a name="index-conditional-execution-4340"></a><a name="index-predication-4341"></a>
+<p><a name="index-conditional-execution-4381"></a><a name="index-predication-4382"></a>
 There is one macro that may need to be defined for targets
 supporting conditional execution, independent of how they
 represent conditional branches.
-
-<div class="defun">
-&mdash; Macro: <b>REVERSE_CONDEXEC_PREDICATES_P</b> (<var>op1, op2</var>)<var><a name="index-REVERSE_005fCONDEXEC_005fPREDICATES_005fP-4342"></a></var><br>
-<blockquote><p>A C expression that returns true if the conditional execution predicate
-<var>op1</var>, a comparison operation, is the inverse of <var>op2</var> and vice
-versa.  Define this to return 0 if the target has conditional execution
-predicates that cannot be reversed safely.  There is no need to validate
-that the arguments of op1 and op2 are the same, this is done separately. 
-If no expansion is specified, this macro is defined as follows:
-
-     <pre class="smallexample">          #define REVERSE_CONDEXEC_PREDICATES_P (x, y) \
-             (GET_CODE ((x)) == reversed_comparison_code ((y), NULL))
-</pre>
-      </blockquote></div>
 
  </body></html>
 

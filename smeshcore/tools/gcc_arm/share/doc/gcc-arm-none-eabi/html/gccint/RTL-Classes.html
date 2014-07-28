@@ -10,9 +10,7 @@
 <link rel="next" href="Accessors.html#Accessors" title="Accessors">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -56,7 +54,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="RTL.html#RTL">RTL</a>
 
 <h3 class="section">10.2 RTL Classes and Formats</h3>
 
-<p><a name="index-RTL-classes-1707"></a><a name="index-classes-of-RTX-codes-1708"></a><a name="index-RTX-codes_002c-classes-of-1709"></a><a name="index-GET_005fRTX_005fCLASS-1710"></a>
+<p><a name="index-RTL-classes-1708"></a><a name="index-classes-of-RTX-codes-1709"></a><a name="index-RTX-codes_002c-classes-of-1710"></a><a name="index-GET_005fRTX_005fCLASS-1711"></a>
 The various expression codes are divided into several <dfn>classes</dfn>,
 which are represented by single characters.  You can determine the class
 of an RTX code with the macro <code>GET_RTX_CLASS (</code><var>code</var><code>)</code>. 
@@ -114,12 +112,12 @@ chain, such as <code>NOTE</code>, <code>BARRIER</code>, and <code>CODE_LABEL</co
 <code>SUBREG</code> is also part of this class. 
 </dl>
 
- <p><a name="index-RTL-format-1711"></a>For each expression code, <samp><span class="file">rtl.def</span></samp> specifies the number of
+ <p><a name="index-RTL-format-1712"></a>For each expression code, <samp><span class="file">rtl.def</span></samp> specifies the number of
 contained objects and their kinds using a sequence of characters
 called the <dfn>format</dfn> of the expression code.  For example,
 the format of <code>subreg</code> is &lsquo;<samp><span class="samp">ei</span></samp>&rsquo;.
 
- <p><a name="index-RTL-format-characters-1712"></a>These are the most commonly used format characters:
+ <p><a name="index-RTL-format-characters-1713"></a>These are the most commonly used format characters:
 
      <dl>
 <dt><code>e</code><dd>An expression (actually a pointer to an expression).
@@ -164,10 +162,10 @@ special ways by small parts of the compiler.
 of an expression code:
 
      
-<a name="index-GET_005fRTX_005fLENGTH-1713"></a>
+<a name="index-GET_005fRTX_005fLENGTH-1714"></a>
 <dl><dt><code>GET_RTX_LENGTH (</code><var>code</var><code>)</code><dd>Number of operands of an RTX of code <var>code</var>.
 
-     <p><a name="index-GET_005fRTX_005fFORMAT-1714"></a><br><dt><code>GET_RTX_FORMAT (</code><var>code</var><code>)</code><dd>The format of an RTX of code <var>code</var>, as a C string. 
+     <p><a name="index-GET_005fRTX_005fFORMAT-1715"></a><br><dt><code>GET_RTX_FORMAT (</code><var>code</var><code>)</code><dd>The format of an RTX of code <var>code</var>, as a C string. 
 </dl>
 
  <p>Some classes of RTX codes always have the same format.  For example, it

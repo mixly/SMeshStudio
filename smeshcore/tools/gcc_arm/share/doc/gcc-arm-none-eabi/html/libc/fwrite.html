@@ -34,14 +34,14 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdio.html#Stdio">Stdio</a>
 
 <h3 class="section">4.31 <code>fwrite</code>&mdash;write array elements</h3>
 
-<p><a name="index-fwrite-212"></a><a name="index-g_t_005ffwrite_005fr-213"></a><strong>Synopsis</strong>
+<p><a name="index-fwrite-213"></a><a name="index-g_t_005ffwrite_005fr-214"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;stdio.h&gt;
-     size_t fwrite(const void *<var>buf</var>, size_t <var>size</var>,
-         size_t <var>count</var>, FILE *<var>fp</var>);
+     size_t fwrite(const void *restrict <var>buf</var>, size_t <var>size</var>,
+         size_t <var>count</var>, FILE *restrict <var>fp</var>);
      
      #include &lt;stdio.h&gt;
-     size_t _fwrite_r(struct _reent *<var>ptr</var>, const void *<var>buf</var>, size_t <var>size</var>,
-         size_t <var>count</var>, FILE *<var>fp</var>);
+     size_t _fwrite_r(struct _reent *<var>ptr</var>, const void *restrict <var>buf</var>, size_t <var>size</var>,
+         size_t <var>count</var>, FILE *restrict <var>fp</var>);
      
 </pre>
    <p><strong>Description</strong><br>

@@ -9,8 +9,7 @@
 <link rel="next" href="Debugging-GDB.html#Debugging-GDB" title="Debugging GDB">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -101,7 +100,7 @@ principle applies&mdash;when the code you are looking at calls something
 else, just try to understand generally what the code being called does,
 rather than worrying about all its details.
 
-   <p><a name="index-command-implementation-502"></a>A good place to start when tracking down some particular area is with
+   <p><a name="index-command-implementation-497"></a>A good place to start when tracking down some particular area is with
 a command which invokes that feature.  Suppose you want to know how
 single-stepping works.  As a <span class="sc">gdb</span> user, you know that the
 <code>step</code> command invokes single-stepping.  The command is invoked
@@ -115,7 +114,7 @@ not followed, you might have to use <code>grep</code> or <kbd>M-x
 tags-search</kbd> in emacs, or run <span class="sc">gdb</span> on itself and set a
 breakpoint in <code>execute_command</code>.
 
-   <p><a name="index-g_t_0040code_007bbug_002dgdb_007d-mailing-list-503"></a>If all of the above fail, it may be appropriate to ask for information
+   <p><a name="index-g_t_0040code_007bbug_002dgdb_007d-mailing-list-498"></a>If all of the above fail, it may be appropriate to ask for information
 on <code>bug-gdb</code>.  But <em>never</em> post a generic question like &ldquo;I was
 wondering if anyone could give me some tips about understanding
 <span class="sc">gdb</span>&rdquo;&mdash;if we had some magic secret we would put it in this manual. 

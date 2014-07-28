@@ -69,7 +69,7 @@
 #include <string.h> /* for memcpy() */
 #include <stdio.h> /* for printf() */
 
-#define DEBUG 1
+#define DEBUG 0
 
 #if DEBUG
 #undef PRINTF

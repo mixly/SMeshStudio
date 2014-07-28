@@ -166,7 +166,7 @@ set_rime_addr(void)
   
 }
 
-#ifndef ARDUINO
+
 void
 init_usart(void)
 {
@@ -184,7 +184,7 @@ init_usart(void)
   rs232_redirect_stdout(RS232_PORT_0);
 #endif /* WITH_UIP */
 }
-#endif
+
 
 void
 init_net(void)
@@ -196,12 +196,7 @@ init_net(void)
   /* Set addresses BEFORE starting tcpip process */
   set_rime_addr();
 
-  /* Setup nullmac-like MAC for 802.15.4 */
-  /* sicslowpan_init(sicslowmac_init(&cc2420_driver)); */
-  /* printf(" %s channel %u\n", sicslowmac_driver.name, RF_CHANNEL); */
-
-  /* Setup X-MAC for 802.15.4 */
-  queuebuf_init();
+	queuebuf_init();
 
   NETSTACK_RDC.init();
   NETSTACK_MAC.init();
@@ -263,7 +258,7 @@ uint8_t debugflowsize,debugflow[DEBUGFLOWSIZE];
 /* Get periodic prints from idle loop, from clock seconds or rtimer interrupts */
 /* Use of rtimer will conflict with other rtimer interrupts such as contikimac radio cycling */
 /* STAMPS will print ENERGEST outputs if that is enabled. */
-#define PERIODICPRINTS 1
+#define PERIODICPRINTS 0
 #if PERIODICPRINTS
 //#define PINGS 64
 #define ROUTES 600
@@ -346,15 +341,13 @@ initialize(void)
   watchdog_init();
   watchdog_start();
 
-#ifndef ARDUINO
+
 #ifdef CAMERA_INTERFACE
   camera_init();
 #else
   init_usart();
 #endif
-#endif
-
-  clock_init();
+	clock_init();
 
 
 
@@ -435,42 +428,7 @@ uint8_t i;
 
 /*--------------------------Announce the configuration---------------------*/
 #if ANNOUNCE_BOOT
-#if AVR_WEBSERVER
-{ uint8_t i;
-  char buf[80];
-  unsigned int size;
-
-  for (i=0;i<UIP_DS6_ADDR_NB;i++) {
-	if (uip_ds6_if.addr_list[i].isused) {	  
-	   httpd_cgi_sprint_ip6(uip_ds6_if.addr_list[i].ipaddr,buf);
-       PRINTA("IPv6 Address: %s\n",buf);
-	}
-  }
-   cli();
-   eeprom_read_block (buf,eemem_server_name, sizeof(eemem_server_name));
-   sei();
-   buf[sizeof(eemem_server_name)]=0;
-   PRINTA("%s",buf);
-   cli();
-   eeprom_read_block (buf,eemem_domain_name, sizeof(eemem_domain_name));
-   sei();
-   buf[sizeof(eemem_domain_name)]=0;
-   size=httpd_fs_get_size();
-#ifndef COFFEE_FILES
-   PRINTA(".%s online with fixed %u byte web content\n",buf,size);
-#elif COFFEE_FILES==1
-   PRINTA(".%s online with static %u byte EEPROM file system\n",buf,size);
-#elif COFFEE_FILES==2
-   PRINTA(".%s online with dynamic %u KB EEPROM file system\n",buf,size>>10);
-#elif COFFEE_FILES==3
-   PRINTA(".%s online with static %u byte program memory file system\n",buf,size);
-#elif COFFEE_FILES==4
-   PRINTA(".%s online with dynamic %u KB program memory file system\n",buf,size>>10);
-#endif /* COFFEE_FILES */
-}
-#else
-   PRINTA("Online\n");
-#endif
+	PRINTA("Online\n");
 #endif /* ANNOUNCE_BOOT */
 
 }
@@ -506,40 +464,38 @@ main(void)
 #if ARDUINO
   setup();
 #endif
-#if UIP_CONF_IPV6
-  uip_ds6_nbr_t *nbr;
-#endif /* UIP_CONF_IPV6 */
-  initialize();
 
-  leds_on(LEDS_RED);
+	initialize();
+/*
+	i2c_init();
+	i2c_delay_us(100);
+	real_init_i2c();
+	i2c_delay_us(100);
+	i2c_config(I2C_NONE);
+	leds_on(LEDS_RED);
+	leds_off(LEDS_RED);
+*/	
+	leds_on(LEDS_RED);
 #ifdef BORDER_ROUTER
   process_start(&border_router_process, NULL);
   //process_start(&webserver_nogui_process, NULL);
 #endif
-  while(1) {
-    process_run();
-    watchdog_periodic();
-
-
-
-/* Set DEBUGFLOWSIZE in contiki-conf.h to track path through MAC, RDC, and RADIO */
-#if DEBUGFLOWSIZE
-  if (debugflowsize) {
-    debugflow[debugflowsize]=0;
-    PRINTF("%s",debugflow);
-    debugflowsize=0;
-   }
-#endif
+	while(1) {
+		process_run();
+		watchdog_periodic();
+#if UIP_CONF_IPV6
+	uip_ds6_nbr_t *nbr;
+#endif /* UIP_CONF_IPV6 */
 
 #if PERIODICPRINTS
 #if TESTRTIMER
-/* Timeout can be increased up to 8 seconds maximum.
- * A one second cycle is convenient for triggering the various debug printouts.
- * The triggers are staggered to avoid printing everything at once.
- */
-    if (rtimerflag) {
-      rtimer_set(&rt, RTIMER_NOW()+ RTIMER_ARCH_SECOND*1UL, 1,(void *) rtimercycle, NULL);
-      rtimerflag=0;
+		/* Timeout can be increased up to 8 seconds maximum.
+		 * A one second cycle is convenient for triggering the various debug printouts.
+		 * The triggers are staggered to avoid printing everything at once.
+		 */
+		if (rtimerflag) {
+			rtimer_set(&rt, RTIMER_NOW()+ RTIMER_ARCH_SECOND*1UL, 1,(void *) rtimercycle, NULL);
+			rtimerflag=0;
 #else
   if (clocktime!=clock_seconds()) {
      clocktime=clock_seconds();

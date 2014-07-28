@@ -10,8 +10,7 @@
 <link rel="next" href="Register-Caching.html#Register-Caching" title="Register Caching">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1990-1994, 1996, 1998-2006, 2008-2012 Free
-Software Foundation, Inc.
+Copyright (C) 1990-2013 Free Software Foundation, Inc.
 Contributed by Cygnus Solutions.  Written by John Gilmore.
 Second Edition by Stan Shebs.
 
@@ -46,7 +45,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Register-Representation.html#Register-R
 
 <h4 class="subsection">11.6.4 Using Different Register and Memory Data Representations</h4>
 
-<p><a name="index-register-representation-297"></a><a name="index-memory-representation-298"></a><a name="index-representations_002c-register-and-memory-299"></a><a name="index-register-data-formats_002c-converting-300"></a><a name="index-g_t_0040code_007bstruct-value_007d_002c-converting-register-contents-to-301"></a>
+<p><a name="index-register-representation-293"></a><a name="index-memory-representation-294"></a><a name="index-representations_002c-register-and-memory-295"></a><a name="index-register-data-formats_002c-converting-296"></a><a name="index-g_t_0040code_007bstruct-value_007d_002c-converting-register-contents-to-297"></a>
 Some architectures have different representations of data objects,
 depending whether the object is held in a register or memory.  For
 example:
@@ -73,7 +72,7 @@ following <code>struct gdbarch</code> functions to request conversions
 between the register and memory representations of a data type:
 
 <div class="defun">
-&mdash; Architecture Function: int <b>gdbarch_convert_register_p</b> (<var>struct gdbarch *gdbarch, int reg</var>)<var><a name="index-gdbarch_005fconvert_005fregister_005fp-302"></a></var><br>
+&mdash; Architecture Function: int <b>gdbarch_convert_register_p</b> (<var>struct gdbarch *gdbarch, int reg</var>)<var><a name="index-gdbarch_005fconvert_005fregister_005fp-298"></a></var><br>
 <blockquote>
         <p>Return non-zero (true) if the representation of a data value stored in
 this register may be different to the representation of that same data
@@ -90,7 +89,7 @@ type, when no conversion is necessary.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Architecture Function: void <b>gdbarch_register_to_value</b> (<var>struct gdbarch *gdbarch, int reg, struct type *type, char *from, char *to</var>)<var><a name="index-gdbarch_005fregister_005fto_005fvalue-303"></a></var><br>
+&mdash; Architecture Function: void <b>gdbarch_register_to_value</b> (<var>struct gdbarch *gdbarch, int reg, struct type *type, char *from, char *to</var>)<var><a name="index-gdbarch_005fregister_005fto_005fvalue-299"></a></var><br>
 <blockquote>
         <p>Convert the value of register number <var>reg</var> to a data object of
 type <var>type</var>.  The buffer at <var>from</var> holds the register's value
@@ -110,7 +109,7 @@ non-zero value.
         </blockquote></div>
 
 <div class="defun">
-&mdash; Architecture Function: void <b>gdbarch_value_to_register</b> (<var>struct gdbarch *gdbarch, struct type *type, int reg, char *from, char *to</var>)<var><a name="index-gdbarch_005fvalue_005fto_005fregister-304"></a></var><br>
+&mdash; Architecture Function: void <b>gdbarch_value_to_register</b> (<var>struct gdbarch *gdbarch, struct type *type, int reg, char *from, char *to</var>)<var><a name="index-gdbarch_005fvalue_005fto_005fregister-300"></a></var><br>
 <blockquote>
         <p>Convert a data value of type <var>type</var> to register number <var>reg</var>'
 raw format.

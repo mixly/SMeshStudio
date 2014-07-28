@@ -84,6 +84,7 @@ static volatile uint8_t scount;
 #endif
 /* seconds is available globally but non-atomic update during interrupt can cause time reversals */
 volatile unsigned long seconds;
+volatile unsigned short milliseconds;  //for arduino
 /* sleepseconds is the number of seconds sleeping since startup, available globally */
 long sleepseconds;
 
@@ -288,8 +289,14 @@ clock_delay_msec(uint16_t howlong)
 void
 clock_adjust_ticks(clock_time_t howmany)
 {
-  uint8_t sreg = SREG;cli();
-  count  += howmany;
+	uint8_t sreg = SREG;cli();
+	count  += howmany;
+	//
+	milliseconds=howmany*(1024 / CLOCK_SECOND) +milliseconds; //for arduino
+	while(milliseconds >= 1024) {
+		milliseconds -= 1024;
+	}
+	//
 #if TWO_COUNTERS
   howmany+= scount;
 #endif
@@ -325,7 +332,11 @@ void AVR_OUTPUT_COMPARE_INT(void);
 #else
 ISR(AVR_OUTPUT_COMPARE_INT)
 {
-    count++;
+	count++;
+	milliseconds=1024 / CLOCK_SECOND+milliseconds;
+	while(milliseconds >= 1024) {
+		milliseconds -= 1024;
+	} //for arduino
 #if TWO_COUNTERS
   if(++scount >= CLOCK_SECOND) {
     scount = 0;

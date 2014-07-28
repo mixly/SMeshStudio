@@ -36,7 +36,8 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Wchar-strings.html#Wchar-strings">Wchar
 
 <p><strong>Synopsis</strong>
 <pre class="example">     #include &lt;wchar.h&gt;
-     wchar_t *wmemcpy(wchar_t *<var>d</var>, const wchar_t *<var>s</var>, size_t <var>n</var>);
+     wchar_t *wmemcpy(wchar_t *__restrict <var>d</var>,
+         const wchar_t *__restrict <var>s</var>, size_t <var>n</var>);
      
 </pre>
    <p><strong>Description</strong><br>

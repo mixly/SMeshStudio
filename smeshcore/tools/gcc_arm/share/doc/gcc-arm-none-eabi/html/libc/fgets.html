@@ -36,10 +36,10 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdio.html#Stdio">Stdio</a>
 
 <p><a name="index-fgets-168"></a><a name="index-g_t_005ffgets_005fr-169"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;stdio.h&gt;
-     char *fgets(char *<var>buf</var>, int <var>n</var>, FILE *<var>fp</var>);
+     char *fgets(char *restrict <var>buf</var>, int <var>n</var>, FILE *restrict <var>fp</var>);
      
      #include &lt;stdio.h&gt;
-     char *_fgets_r(struct _reent *<var>ptr</var>, char *<var>buf</var>, int <var>n</var>, FILE *<var>fp</var>);
+     char *_fgets_r(struct _reent *<var>ptr</var>, char *restrict <var>buf</var>, int <var>n</var>, FILE *restrict <var>fp</var>);
      
 </pre>
    <p><strong>Description</strong><br>

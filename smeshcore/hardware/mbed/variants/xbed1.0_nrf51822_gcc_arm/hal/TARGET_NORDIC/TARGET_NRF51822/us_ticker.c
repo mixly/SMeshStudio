@@ -28,8 +28,9 @@ volatile uint16_t timeStamp=0;
 #ifdef __cplusplus
 extern "C" {
 #endif 
-void TIMER1_IRQHandler(void){
-    if ((US_TICKER_TIMER->EVENTS_COMPARE[1] != 0) && 
+void TIMER1_IRQHandler(void){ 
+
+     if ((US_TICKER_TIMER->EVENTS_COMPARE[1] != 0) && 
        ((US_TICKER_TIMER->INTENSET & TIMER_INTENSET_COMPARE1_Msk) != 0))
     {
 		US_TICKER_TIMER->EVENTS_COMPARE[1] = 0;
@@ -61,7 +62,7 @@ void TIMER1_IRQHandler(void){
 }
 #endif 
 void us_ticker_init(void){
-    if (us_ticker_inited){
+    if (us_ticker_inited && US_TICKER_TIMER->POWER){
         return;
     }
     
@@ -74,18 +75,18 @@ void us_ticker_init(void){
     
     US_TICKER_TIMER->PRESCALER = 4;
     US_TICKER_TIMER->BITMODE = TIMER_BITMODE_BITMODE_16Bit; 
-	US_TICKER_TIMER->TASKS_CLEAR =1;
-	US_TICKER_TIMER->CC[1] = 0xFFFF;
-	US_TICKER_TIMER->INTENSET = TIMER_INTENSET_COMPARE1_Set << TIMER_INTENSET_COMPARE1_Pos;
+    US_TICKER_TIMER->TASKS_CLEAR =1;
+    US_TICKER_TIMER->CC[1] = 0xFFFF;
+    US_TICKER_TIMER->INTENSET = TIMER_INTENSET_COMPARE1_Set << TIMER_INTENSET_COMPARE1_Pos;
 	
-	NVIC_SetPriority(US_TICKER_TIMER_IRQn, 3);
+    NVIC_SetPriority(US_TICKER_TIMER_IRQn, 3);
     NVIC_EnableIRQ(US_TICKER_TIMER_IRQn);
     
     US_TICKER_TIMER->TASKS_START = 0x01;
 }
 
 uint32_t us_ticker_read(){
-    if (!us_ticker_inited){
+    if (!us_ticker_inited || US_TICKER_TIMER->POWER==0){
         us_ticker_init();
     }
     
@@ -100,7 +101,7 @@ uint32_t us_ticker_read(){
 }
 
 void us_ticker_set_interrupt(unsigned int timestamp){
-    if (!us_ticker_inited)
+    if (!us_ticker_inited || US_TICKER_TIMER->POWER==0)
     {
         us_ticker_init();
     }	

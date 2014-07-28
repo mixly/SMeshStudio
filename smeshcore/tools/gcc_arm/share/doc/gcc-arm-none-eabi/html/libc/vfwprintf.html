@@ -34,14 +34,15 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdio.html#Stdio">Stdio</a>
 
 <h3 class="section">4.70 <code>vfwprintf</code>, <code>vwprintf</code>, <code>vswprintf</code>&mdash;wide character format argument list</h3>
 
-<p><a name="index-vfwprintf-342"></a><a name="index-g_t_005fvfwprintf_005fr-343"></a><a name="index-vwprintf-344"></a><a name="index-g_t_005fvwprintf_005fr-345"></a><a name="index-vswprintf-346"></a><a name="index-g_t_005fvswprintf_005fr-347"></a><strong>Synopsis</strong>
+<p><a name="index-vfwprintf-343"></a><a name="index-g_t_005fvfwprintf_005fr-344"></a><a name="index-vwprintf-345"></a><a name="index-g_t_005fvwprintf_005fr-346"></a><a name="index-vswprintf-347"></a><a name="index-g_t_005fvswprintf_005fr-348"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;stdio.h&gt;
      #include &lt;stdarg.h&gt;
      #include &lt;wchar.h&gt;
-     int vwprintf(const wchar_t *<var>fmt</var>, va_list <var>list</var>);
-     int vfwprintf(FILE *<var>fp</var>, const wchar_t *<var>fmt</var>, va_list <var>list</var>);
-     int vswprintf(wchar_t *<var>str</var>, size_t <var>size</var>, const wchar_t *<var>fmt</var>,
-         va_list <var>list</var>);
+     int vwprintf(const wchar_t *__restrict <var>fmt</var>, va_list <var>list</var>);
+     int vfwprintf(FILE *__restrict <var>fp</var>,
+         const wchar_t *__restrict <var>fmt</var>, va_list <var>list</var>);
+     int vswprintf(wchar_t * __restrict <var>str</var>, size_t <var>size</var>,
+         const wchar_t *__ restrict <var>fmt</var>, va_list <var>list</var>);
      
      int _vwprintf_r(struct _reent *<var>reent</var>, const wchar_t *<var>fmt</var>,
          va_list <var>list</var>);

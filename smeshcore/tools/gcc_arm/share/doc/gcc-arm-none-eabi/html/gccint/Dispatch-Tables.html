@@ -10,9 +10,7 @@
 <link rel="next" href="Exception-Region-Output.html#Exception-Region-Output" title="Exception Region Output">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
-Copyright (C) 1988, 1989, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
-1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
-2008, 2010 Free Software Foundation, Inc.
+Copyright (C) 1988-2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -59,10 +57,10 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Assembler-Format.html#Assembler-Format"
 <!-- prevent bad page break with this line -->
 <p>This concerns dispatch tables.
 
- <p><a name="index-dispatch-table-4609"></a>
+ <p><a name="index-dispatch-table-4651"></a>
 
 <div class="defun">
-&mdash; Macro: <b>ASM_OUTPUT_ADDR_DIFF_ELT</b> (<var>stream, body, value, rel</var>)<var><a name="index-ASM_005fOUTPUT_005fADDR_005fDIFF_005fELT-4610"></a></var><br>
+&mdash; Macro: <b>ASM_OUTPUT_ADDR_DIFF_ELT</b> (<var>stream, body, value, rel</var>)<var><a name="index-ASM_005fOUTPUT_005fADDR_005fDIFF_005fELT-4652"></a></var><br>
 <blockquote><p>A C statement to output to the stdio stream <var>stream</var> an assembler
 pseudo-instruction to generate a difference between two labels. 
 <var>value</var> and <var>rel</var> are the numbers of two internal labels.  The
@@ -81,7 +79,7 @@ mode and flags can be read.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>ASM_OUTPUT_ADDR_VEC_ELT</b> (<var>stream, value</var>)<var><a name="index-ASM_005fOUTPUT_005fADDR_005fVEC_005fELT-4611"></a></var><br>
+&mdash; Macro: <b>ASM_OUTPUT_ADDR_VEC_ELT</b> (<var>stream, value</var>)<var><a name="index-ASM_005fOUTPUT_005fADDR_005fVEC_005fELT-4653"></a></var><br>
 <blockquote><p>This macro should be provided on machines where the addresses
 in a dispatch table are absolute.
 
@@ -96,7 +94,7 @@ For example,
       </blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>ASM_OUTPUT_CASE_LABEL</b> (<var>stream, prefix, num, table</var>)<var><a name="index-ASM_005fOUTPUT_005fCASE_005fLABEL-4612"></a></var><br>
+&mdash; Macro: <b>ASM_OUTPUT_CASE_LABEL</b> (<var>stream, prefix, num, table</var>)<var><a name="index-ASM_005fOUTPUT_005fCASE_005fLABEL-4654"></a></var><br>
 <blockquote><p>Define this if the label before a jump-table needs to be output
 specially.  The first three arguments are the same as for
 <code>(*targetm.asm_out.internal_label)</code>; the fourth argument is the
@@ -111,7 +109,7 @@ for the table.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Macro: <b>ASM_OUTPUT_CASE_END</b> (<var>stream, num, table</var>)<var><a name="index-ASM_005fOUTPUT_005fCASE_005fEND-4613"></a></var><br>
+&mdash; Macro: <b>ASM_OUTPUT_CASE_END</b> (<var>stream, num, table</var>)<var><a name="index-ASM_005fOUTPUT_005fCASE_005fEND-4655"></a></var><br>
 <blockquote><p>Define this if something special must be output at the end of a
 jump-table.  The definition should be a C statement to be executed
 after the assembler code for the table is written.  It should write
@@ -124,7 +122,7 @@ the jump-table.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: void <b>TARGET_ASM_EMIT_UNWIND_LABEL</b> (<var>FILE *stream, tree decl, int for_eh, int empty</var>)<var><a name="index-TARGET_005fASM_005fEMIT_005fUNWIND_005fLABEL-4614"></a></var><br>
+&mdash; Target Hook: void <b>TARGET_ASM_EMIT_UNWIND_LABEL</b> (<var>FILE *stream, tree decl, int for_eh, int empty</var>)<var><a name="index-TARGET_005fASM_005fEMIT_005fUNWIND_005fLABEL-4656"></a></var><br>
 <blockquote><p>This target hook emits a label at the beginning of each FDE.  It
 should be defined on targets where FDEs need special labels, and it
 should write the appropriate label, for the FDE associated with the
@@ -137,7 +135,7 @@ true if this is a placeholder label for an omitted FDE.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: void <b>TARGET_ASM_EMIT_EXCEPT_TABLE_LABEL</b> (<var>FILE *stream</var>)<var><a name="index-TARGET_005fASM_005fEMIT_005fEXCEPT_005fTABLE_005fLABEL-4615"></a></var><br>
+&mdash; Target Hook: void <b>TARGET_ASM_EMIT_EXCEPT_TABLE_LABEL</b> (<var>FILE *stream</var>)<var><a name="index-TARGET_005fASM_005fEMIT_005fEXCEPT_005fTABLE_005fLABEL-4657"></a></var><br>
 <blockquote><p>This target hook emits a label at the beginning of the exception table. 
 It should be defined on targets where it is desirable for the table
 to be broken up according to function.
@@ -146,19 +144,19 @@ to be broken up according to function.
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: void <b>TARGET_ASM_EMIT_EXCEPT_PERSONALITY</b> (<var>rtx personality</var>)<var><a name="index-TARGET_005fASM_005fEMIT_005fEXCEPT_005fPERSONALITY-4616"></a></var><br>
+&mdash; Target Hook: void <b>TARGET_ASM_EMIT_EXCEPT_PERSONALITY</b> (<var>rtx personality</var>)<var><a name="index-TARGET_005fASM_005fEMIT_005fEXCEPT_005fPERSONALITY-4658"></a></var><br>
 <blockquote><p>If the target implements <code>TARGET_ASM_UNWIND_EMIT</code>, this hook may be used to emit a directive to install a personality hook into the unwind info.  This hook should not be used if dwarf2 unwind info is used. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: void <b>TARGET_ASM_UNWIND_EMIT</b> (<var>FILE *stream, rtx insn</var>)<var><a name="index-TARGET_005fASM_005fUNWIND_005fEMIT-4617"></a></var><br>
+&mdash; Target Hook: void <b>TARGET_ASM_UNWIND_EMIT</b> (<var>FILE *stream, rtx insn</var>)<var><a name="index-TARGET_005fASM_005fUNWIND_005fEMIT-4659"></a></var><br>
 <blockquote><p>This target hook emits assembly directives required to unwind the
 given instruction.  This is only used when <code>TARGET_EXCEPT_UNWIND_INFO</code>
 returns <code>UI_TARGET</code>. 
 </p></blockquote></div>
 
 <div class="defun">
-&mdash; Target Hook: bool <b>TARGET_ASM_UNWIND_EMIT_BEFORE_INSN</b><var><a name="index-TARGET_005fASM_005fUNWIND_005fEMIT_005fBEFORE_005fINSN-4618"></a></var><br>
+&mdash; Target Hook: bool <b>TARGET_ASM_UNWIND_EMIT_BEFORE_INSN</b><var><a name="index-TARGET_005fASM_005fUNWIND_005fEMIT_005fBEFORE_005fINSN-4660"></a></var><br>
 <blockquote><p>True if the <code>TARGET_ASM_UNWIND_EMIT</code> hook should be called before the assembly for <var>insn</var> has been emitted, false if the hook should be called afterward. 
 </p></blockquote></div>
 

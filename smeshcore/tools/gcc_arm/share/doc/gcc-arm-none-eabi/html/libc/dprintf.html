@@ -37,12 +37,13 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Stdio.html#Stdio">Stdio</a>
 <p><a name="index-dprintf-150"></a><a name="index-g_t_005fdprintf_005fr-151"></a><a name="index-vdprintf-152"></a><a name="index-g_t_005fvdprintf_005fr-153"></a><strong>Synopsis</strong>
 <pre class="example">     #include &lt;stdio.h&gt;
      #include &lt;stdarg.h&gt;
-     int dprintf(int <var>fd</var>, const char *<var>format</var>, ...);
-     int vdprintf(int <var>fd</var>, const char *<var>format</var>, va_list <var>ap</var>);
+     int dprintf(int <var>fd</var>, const char *restrict <var>format</var>, ...);
+     int vdprintf(int <var>fd</var>, const char *restrict <var>format</var>,
+         va_list <var>ap</var>);
      int _dprintf_r(struct _reent *<var>ptr</var>, int <var>fd</var>,
-         const char *<var>format</var>, ...);
+         const char *restrict <var>format</var>, ...);
      int _vdprintf_r(struct _reent *<var>ptr</var>, int <var>fd</var>,
-         const char *<var>format</var>, va_list <var>ap</var>);
+         const char *restrict <var>format</var>, va_list <var>ap</var>);
      
 </pre>
    <p><strong>Description</strong><br>

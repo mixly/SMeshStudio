@@ -596,7 +596,7 @@ uip_ds6_defrt_choose(void)
       PRINTF("\n");
       return &d->ipaddr;
     } else {
-      addr = &d->ipaddr;
+      //addr = &d->ipaddr; for ip64
       PRINTF("Defrt INCOMPLETE found, IP address ");
       PRINT6ADDR(&d->ipaddr);
       PRINTF("\n");

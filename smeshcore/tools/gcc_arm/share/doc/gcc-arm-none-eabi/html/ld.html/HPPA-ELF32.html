@@ -11,8 +11,8 @@
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
 <!--
 This file documents the GNU linker LD
-(GNU Tools for ARM Embedded Processors)
-version 2.22.0.
+(GNU Binutils)
+version 2.23.2.
 
 Copyright (C) 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000,
 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
@@ -48,13 +48,13 @@ Up:&nbsp;<a rel="up" accesskey="u" href="Machine-Dependent.html#Machine-Dependen
 
 <h3 class="section">4.5 <samp><span class="command">ld</span></samp> and HPPA 32-bit ELF Support</h3>
 
-<p><a name="index-HPPA-multiple-sub_002dspace-stubs-613"></a><a name="index-g_t_002d_002dmulti_002dsubspace-614"></a>When generating a shared library, <samp><span class="command">ld</span></samp> will by default generate
+<p><a name="index-HPPA-multiple-sub_002dspace-stubs-617"></a><a name="index-g_t_002d_002dmulti_002dsubspace-618"></a>When generating a shared library, <samp><span class="command">ld</span></samp> will by default generate
 import stubs suitable for use with a single sub-space application. 
 The &lsquo;<samp><span class="samp">--multi-subspace</span></samp>&rsquo; switch causes <samp><span class="command">ld</span></samp> to generate export
 stubs, and different (larger) import stubs suitable for use with
 multiple sub-spaces.
 
-   <p><a name="index-HPPA-stub-grouping-615"></a><a name="index-g_t_002d_002dstub_002dgroup_002dsize_003d_0040var_007bN_007d-616"></a>Long branch stubs and import/export stubs are placed by <samp><span class="command">ld</span></samp> in
+   <p><a name="index-HPPA-stub-grouping-619"></a><a name="index-g_t_002d_002dstub_002dgroup_002dsize_003d_0040var_007bN_007d-620"></a>Long branch stubs and import/export stubs are placed by <samp><span class="command">ld</span></samp> in
 stub sections located between groups of input sections. 
 &lsquo;<samp><span class="samp">--stub-group-size</span></samp>&rsquo; specifies the maximum size of a group of input
 sections handled by one stub section.  Since branch offsets are signed,
