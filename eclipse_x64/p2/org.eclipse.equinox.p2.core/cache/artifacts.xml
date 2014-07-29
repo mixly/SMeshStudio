@@ -3,7 +3,7 @@
 <repository name='download cache' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1.0.0'>
   <properties size='2'>
     <property name='p2.system' value='true'/>
-    <property name='p2.timestamp' value='1406541184913'/>
+    <property name='p2.timestamp' value='1406615719828'/>
   </properties>
   <mappings size='3'>
     <rule filter='(&amp; (classifier=osgi.bundle))' output='${repoUrl}/plugins/${id}_${version}.jar'/>
@@ -21,14 +21,14 @@
         <property name='download.size' value='36407'/>
       </properties>
     </artifact>
+    <artifact classifier='binary' id='it.baeyens.arduino.product_root.win32.win32.x86_64' version='1.0.0.201407291434'>
+      <properties size='1'>
+        <property name='download.size' value='32307'/>
+      </properties>
+    </artifact>
     <artifact classifier='binary' id='org.eclipse.cvs_root' version='1.4.100.v20140606-1215'>
       <properties size='1'>
         <property name='download.size' value='8902'/>
-      </properties>
-    </artifact>
-    <artifact classifier='binary' id='it.baeyens.arduino.product_root.win32.win32.x86_64' version='1.0.0.201407281751'>
-      <properties size='1'>
-        <property name='download.size' value='32307'/>
       </properties>
     </artifact>
     <artifact classifier='binary' id='org.eclipse.cdt_root' version='8.4.0.201406111759'>
