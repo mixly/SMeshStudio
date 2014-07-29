@@ -1,0 +1,67 @@
+#if UIP_CONF_IPV6_RPL
+#include <avr/pgmspace.h>
+#include "rpl.h"
+
+//extern uip_ds6_nbr_t uip_ds6_nbr_cache[];
+//extern uip_ds6_route_t uip_ds6_routing_table[];
+
+static char buf[512];
+static uint8_t blen;
+#define ADD(FORMAT,args...) do {                                                 \
+		blen += snprintf_P(&buf[blen], sizeof(buf) - blen, PSTR(FORMAT),##args);      \
+} while(0)
+
+static void
+ipaddr_add(const uip_ipaddr_t *addr)
+{
+	uint16_t a;
+	int i, f;
+	for(i = 0, f = 0; i < sizeof(uip_ipaddr_t); i += 2) {
+		a = (addr->u8[i] << 8) + addr->u8[i + 1];
+		if(a == 0 && f >= 0) {
+			if(f++ == 0 && sizeof(buf) - blen >= 2) {
+				buf[blen++] = ':';
+				buf[blen++] = ':';
+			}
+		} else {
+			if(f > 0) {
+				f = -1;
+			} else if(i > 0 && blen < sizeof(buf)) {
+				buf[blen++] = ':';
+			}
+			ADD("%x", a);
+		}
+	}
+}
+
+void
+route_handler(void* request, void* response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
+{
+	//int i;
+	blen = 0;
+	ADD("Routes [%u max]\n\r", UIP_DS6_ROUTE_NB);
+
+	{
+		uip_ds6_route_t *r;
+		for(r = uip_ds6_route_list_head();
+				r != NULL;
+				r = list_item_next(r)) {
+			ipaddr_add(&r->ipaddr);
+			ADD("/%u (via ", r->length);
+            ipaddr_add(uip_ds6_route_nexthop(r));
+			if(r->state.lifetime < 600) {
+			  ADD(") %lus<br>", r->state.lifetime);
+			} else {
+			  PRINTF(")\n");
+			}
+		}
+	}
+
+
+	REST.set_header_content_type(response, REST.type.TEXT_PLAIN);
+	REST.set_response_payload(response, (uint8_t *)buf, strlen(buf));
+}
+
+RESOURCE(res_route, "title=\"route\"",
+		route_handler, route_handler, NULL, NULL);
+#endif

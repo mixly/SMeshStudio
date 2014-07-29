@@ -1,0 +1,6 @@
+#encoding=UTF-8
+#version=1
+org.apache.commons.codec.source,1.6.0.v201305230611,plugins/org.apache.commons.codec.source_1.6.0.v201305230611.jar,-1,false
+org.apache.commons.logging.source,1.1.1.v201101211721,plugins/org.apache.commons.logging.source_1.1.1.v201101211721.jar,-1,false
+org.apache.httpcomponents.httpclient.source,4.2.6.v201311072007,plugins/org.apache.httpcomponents.httpclient.source_4.2.6.v201311072007.jar,-1,false
+org.apache.httpcomponents.httpcore.source,4.2.5.v201311072007,plugins/org.apache.httpcomponents.httpcore.source_4.2.5.v201311072007.jar,-1,false

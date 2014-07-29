@@ -1,0 +1,48 @@
+Manifest-Version: 1.0
+Bundle-Localization: plugin
+Fragment-Host: org.eclipse.cdt.core.native;bundle-version="[5.7.0,6.0.
+ 0)"
+Built-By: genie.tools.cdt
+Bundle-SymbolicName: org.eclipse.cdt.core.win32.x86;singleton:=true
+Bundle-Version: 5.3.0.201406111759
+Eclipse-PlatformFilter: (&(osgi.os=win32)(osgi.arch=x86))
+Build-Jdk: 1.7.0_51
+Bundle-Vendor: %providerName
+Bundle-Name: %fragmentName.win32.x86
+Eclipse-BundleShape: dir
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Bundle-ManifestVersion: 2
+
+Name: os/win32/x86/pty.dll
+SHA1-Digest: w/vnxzv6eMfaYufshyrVTKYE3JA=
+
+Name: os/win32/x86/winreg.dll
+SHA1-Digest: zj8k0Xw5BBY+wkUdrlkklTn9DoM=
+
+Name: os/win32/x86/spawner.dll
+SHA1-Digest: yk4PKyA8DLObSBIdJhOjfU7u/Ao=
+
+Name: os/win32/x86/winpty.dll
+SHA1-Digest: xlgonjUr2NnFBMnYInbD54kEbYg=
+
+Name: META-INF/maven/org.eclipse.cdt/org.eclipse.cdt.core.win32.x86/po
+ m.properties
+SHA1-Digest: bCPPdYaKH6u8c2XKMfKgbM+7rUo=
+
+Name: os/win32/x86/starter.exe
+SHA1-Digest: GdQuPkMygNo7RGWV4BQNMb0bMhk=
+
+Name: os/win32/x86/listtasks.exe
+SHA1-Digest: KZ/kDiPN3YO3xC+61xIYYxEcYvU=
+
+Name: about.html
+SHA1-Digest: aTb+cxOL/sCJQPzqHdtJ8Hd0+1k=
+
+Name: os/win32/x86/winpty-agent.exe
+SHA1-Digest: 6pp4AEQHrFYQ+zze7aGh3snqEyg=
+
+Name: META-INF/maven/org.eclipse.cdt/org.eclipse.cdt.core.win32.x86/po
+ m.xml
+SHA1-Digest: SuIs+gGI4h0FvoJruJ44qW3M2HE=
+

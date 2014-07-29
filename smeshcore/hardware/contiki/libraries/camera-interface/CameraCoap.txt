@@ -1,0 +1,217 @@
+/*
+ * Copyright (c) 2011-2012, SmeshLink Technology Ltd.
+ * All rights reserved.
+ *
+ */
+
+/**
+ * \file
+ *         Restful interface (HTTP or CoAP based) for camera application.
+ * \author
+ *         SmeshLink
+ */
+
+#include "contiki.h"
+#include "contiki-net.h"
+
+#include "er-coap.h"
+
+#include "dev/leds.h"
+#include "dev/adc-sensors.h"
+#include "camera.h"
+
+#include <stdio.h>
+#include <string.h>
+
+/*---------------------------------------------------------------------------*/
+PROCESS(coap_sample, "Camera CoAP Server");
+AUTOSTART_PROCESSES(&coap_sample);
+/*---------------------------------------------------------------------------*/
+void voltage_handler(void*, void*, uint8_t*, uint16_t, int32_t*);
+void voltage_periodic_handler(resource_t*);
+PERIODIC_RESOURCE(res_voltage_periodic,
+		"title=\"Observable voltage \";obs",
+		voltage_handler,
+		NULL,
+		NULL,
+		NULL,
+		5 * CLOCK_SECOND,
+		voltage_periodic_handler);
+void
+voltage_handler(void* request, void* response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
+{
+  char buf[32];
+  double voltage = voltage_get();
+  sprintf(buf, "%d", (int)(voltage * (double)1000));
+  REST.set_header_content_type(response, REST.type.TEXT_PLAIN);
+  REST.set_response_payload(response, (uint8_t *)buf, strlen(buf));
+}
+void
+voltage_periodic_handler(resource_t *r)
+{
+	REST.notify_subscribers(&res_voltage_periodic);
+}
+
+/*---------------------------------------------------------------------------*/
+/*
+ * Take a picture.
+ */
+void
+take_handler(void* request, void* response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
+{
+  const char *temp;
+  char buf[64] = "";
+  camera_size_t camera_size = CAMERA_SIZE_1;
+  uint16_t count;
+  uint32_t size;
+
+  /* Determine the size of picture. 1 for the smallest and 3 for the largest. */
+  if (!REST.get_query_variable(request, "size", &temp)) {
+    REST.get_post_variable(request, "size", &temp);
+  }
+
+  if (temp) {
+    camera_size = camera_parse_size(temp[0]);
+  }
+
+  camera_take_picture(camera_size, DEFAULT_CAMERA_PACKET_SIZE, &size, &count);
+  sprintf(buf, "{'t':'OK','s':%lu,'n':%u}", size, count);
+
+  REST.set_header_content_type(response, TEXT_PLAIN);
+  REST.set_response_payload(response, buf, strlen(buf));
+}
+RESOURCE(res_take, "title=\"take\"",
+		take_handler, take_handler, NULL, NULL);
+
+/*
+ * Get the size of the taken picture.
+ */
+void
+size_handler(void* request, void* response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
+{
+  char temp[64] = "";
+
+  uint32_t size = camera_get_picture_size();
+  sprintf(temp, "%lu", size);
+
+  REST.set_header_content_type(response, TEXT_PLAIN);
+  REST.set_response_payload(response, temp, strlen(temp));
+}
+RESOURCE(res_size, "title=\"size\"",
+		size_handler, NULL, NULL, NULL);
+
+/*
+ * Get the total count of the picture's packets.
+ */
+void
+count_handler(void* request, void* response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
+{
+  char temp[64] = "";
+
+  uint16_t count = camera_get_packet_count();
+  sprintf(temp, "%u", count);
+
+  REST.set_header_content_type(response, TEXT_PLAIN);
+  REST.set_response_payload(response, temp, strlen(temp));
+}
+RESOURCE(res_count, "title=\"count\"",
+		count_handler, NULL, NULL, NULL);
+
+/*
+ * Get one packet of the picture.
+ */
+void
+packet_handler(void* request, void* response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
+{
+  const char *temp;
+  char buf[128];
+  int no = 0, len = 0, tries = 0;
+
+  /* Get the index of the specified packet. */
+  len = REST.get_query_variable(request, "no", &temp);
+  if (!len) {
+    len = REST.get_post_variable(request, "no", &temp);
+  }
+  memcpy(buf, temp, len);
+  buf[len] = '\0';
+  no = atoi(buf);
+
+  /* Get count of tries. Unused right now. */
+  len = REST.get_query_variable(request, "try", &temp);
+  if (!len) {
+    len = REST.get_post_variable(request, "try", &temp);
+  }
+  if (len) {
+    memcpy(buf, temp, len);
+    buf[len] = '\0';
+    tries = atoi(buf);
+  }
+  if (tries <= 0) {
+    tries = 10;
+  }
+  len = camera_try_get_packet(no, buf, tries);
+  REST.set_response_payload(response, buf, len);
+  REST.set_header_content_type(response, TEXT_PLAIN);
+}
+RESOURCE(res_packet, "title=\"packet\"",
+		packet_handler, packet_handler, packet_handler, NULL);
+
+void
+camera_handler(void* request, void* response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
+{
+  const char *temp;
+  uint8_t buff[128];
+  camera_size_t camera_size = CAMERA_SIZE_1;
+  uint16_t count;
+  uint32_t size;
+  int index = 0, len = 0, tries = 10;
+
+  if (0 == *offset) {
+    /* Determine the size of picture. 1 for the smallest and 3 for the largest. */
+    if (!REST.get_query_variable(request, "size", &temp)) {
+      REST.get_post_variable(request, "size", &temp);
+    }
+    if (temp) {
+      camera_size = camera_parse_size(temp[0]);
+    }
+    leds_toggle(LEDS_GREEN);
+    camera_take_picture(camera_size, preferred_size, &size, &count);
+  }
+
+  index = *offset / preferred_size + 1;
+  count = camera_get_packet_count();
+  len = camera_try_get_packet(index, buff, tries);
+  *offset += len;
+  if (index >= count) {
+    *offset = -1;
+  }
+  REST.set_header_content_type(response, REST.type.IMAGE_JPEG);
+  REST.set_response_payload(response, buff, len);
+}
+RESOURCE(res_camera, "title=\"camera\"",
+		camera_handler, camera_handler, NULL, NULL);
+
+/*---------------------------------------------------------------------------*/
+PROCESS_THREAD(coap_sample, ev, data)
+{
+  PROCESS_BEGIN();
+
+  /* Initialize the REST engine. */
+  rest_init_engine();
+
+  /* Activate the application-specific resources. */
+  rest_activate_resource(&res_camera, "camera");
+  rest_activate_resource(&res_take, "take");
+  rest_activate_resource(&res_size, "size");
+  rest_activate_resource(&res_count, "count");
+  rest_activate_resource(&res_packet, "packet");
+
+  rest_activate_resource(&res_voltage_periodic, "voltage");
+
+  while(1) {
+  		PROCESS_YIELD();
+  	}
+
+  PROCESS_END();
+}
+/*---------------------------------------------------------------------------*/
