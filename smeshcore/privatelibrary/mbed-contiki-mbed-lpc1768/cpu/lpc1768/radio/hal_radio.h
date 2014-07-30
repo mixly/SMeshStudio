@@ -11,14 +11,13 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "platform.h"
-
-#include "SPI.h"
 #include "radio_api.h"
 #include "radio_platform.h"
 #ifdef __cplusplus
 } /* extern "C" */
 #endif
+#include "SPI.h"
+#include "platform.h"
 #include "mbed.h"
 
 namespace mbed {

@@ -14,7 +14,7 @@
 //#include "slip_uart.h"
 extern void slip_arch_init(unsigned long ubr);
 //extern const struct uip_fallback_interface rpl_interface;
-#define BAUD2UBR(x) x
+//#define BAUD2UBR(x) x
 
 /* Let slip know mist is here */
 #endif /* SLIP_UART_H_ */
