@@ -45,8 +45,9 @@ extern "C" {
 //#define IP64_CONF_UIP_FALLBACK_INTERFACE_SLIP 1
 #define IP64_CONF_UIP_FALLBACK_INTERFACE ip64_eth_interface
 #define IP64_CONF_INPUT                  ip64_eth_interface_input
-#define IP64_CONF_ETH_DRIVER             dp83848_ip64_driver
+
 #define IP64_CONF_DHCP                   1
 //#endif /* IP64_ENABLE */
 
+#define IP64_CONF_ETH_DRIVER             dp83848_ip64_driver
 #endif /* IP64_CONF_H */

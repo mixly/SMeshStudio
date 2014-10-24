@@ -35,7 +35,7 @@
 #include "sys/clock.h"
 
 #include <stdlib.h>
-
+#ifndef CONTIKI_TARGET_CC2538DK
 /*---------------------------------------------------------------------------*/
 void
 random_init(unsigned short seed)
@@ -52,3 +52,4 @@ random_rand(void)
   return (unsigned short)rand();
 }
 /*---------------------------------------------------------------------------*/
+#endif

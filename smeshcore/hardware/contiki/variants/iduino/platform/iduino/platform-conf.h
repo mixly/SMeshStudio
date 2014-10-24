@@ -123,5 +123,22 @@ void clock_adjust_ticks(clock_time_t howmany);
 
 
 #define CSN            0
+///************************************* for enc28j60
+#define ENC28J60_CONTROL_PORT   PORTF //now for v2 v3, v4 PORTF
+#define ENC28J60_CONTROL_DDR    DDRF//now for v2 v3 ,v4 DDRF
+#define ENC28J60_CONTROL_CS     7	//now for v2 v3 ,v4 7
+#define ENC28J60_POWER_PORT   	PORTF //now for v2 v3, v4 PORTF
+#define ENC28J60_POWER_DDR    	DDRF//now for v2 v3 ,v4 DDRF
+#define ENC28J60_POWER_CS     	6 //now for v2 v3 ,v4 7
+
+// set CS to 0 = active
+#define CSACTIVE ENC28J60_CONTROL_PORT&=~(1<<ENC28J60_CONTROL_CS)
+// set CS to 1 = passive
+#define CSPASSIVE ENC28J60_CONTROL_PORT|=(1<<ENC28J60_CONTROL_CS)
+//
+#define waitspi() while(!(SPSR&(1<<SPIF)))
+
+/* Delay in us */
+#define DELAY 0
 
 #endif /* __PLATFORM_CONF_H__ */
