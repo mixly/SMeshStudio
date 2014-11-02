@@ -67,9 +67,7 @@ typedef enum
 }event_clear_type;
 
 // Temporary "fix", until the proper macros are integrated in the on-line build system
-#ifndef FSL_RTOS_MBED
 #define FSL_RTOS_MBED
-#endif
 
 /* Include required header file based on RTOS selection */
 #if defined (FSL_RTOS_MQX)
