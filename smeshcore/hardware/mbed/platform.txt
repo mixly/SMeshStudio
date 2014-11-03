@@ -7,6 +7,7 @@ compiler.keil.path.windows=C:\Keil\ARM
 compiler.keil.binpath.windows=C:/Keil/ARM/ARMCC/bin/
 
 tools.mbed_cp.upload.pattern="{runtime.ide.path}/tools/utils/cp" {build.path}/{build.project_name}.bin DISKDRIVE/new.bin
+tools.mbed_cp_ble.upload.pattern="{runtime.ide.path}/tools/utils/cp" {build.path}/combined.hex DISKDRIVE/combined.hex
 tools.mbed_isp.upload.pattern="{runtime.ide.path}/tools/utils/lpc21isp"   {build.path}/{build.project_name}.hex COMCOMPORT 115200 12000
 tools.mbed_fm.upload.pattern="{runtime.ide.path}/tools/utils/fm"  COM(COMPORT, 115200) HARDWARE(BOOTEXECRTS, 50, 100) DEVICE({build.cpu}, 0.000000, 0) ERASE(DEVICE, PROTECTISP) HEXFILE({build.path}/{build.project_name}.hex, NOCHECKSUMS, NOFILL, PROTECTISP) VERIFY({build.path}/{build.project_name}.hex, NOCHECKSUMS)
 tools.mbed_dfu.upload.pattern="{runtime.ide.path}/tools/utils/dfu-util" -a1 -d 0x1EAF:0x0003 -D  {build.path}/{build.project_name}.bin -R
