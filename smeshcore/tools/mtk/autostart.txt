@@ -1,0 +1,2 @@
+[autostart]
+App=C:\MRE\test.vxp
