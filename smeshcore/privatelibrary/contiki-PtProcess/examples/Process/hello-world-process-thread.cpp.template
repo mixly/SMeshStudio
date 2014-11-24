@@ -1,0 +1,38 @@
+/*
+ * Copyright (c) 2011-2014, SmeshLink Technology Ltd.
+ * All rights reserved.
+ * 
+ * This example demonstrates how to set up a process
+ * with PtProcess to run a certain function.
+ */
+
+#include <stdio.h>
+#include "PtProcess.h"
+
+/*
+ * Define a function of Contiki process thread with the
+ * PROCESS_THREAD macro to print "Hello world" per second.
+ */
+PROCESS_THREAD(hello_world, ev, data)
+{
+	static struct etimer timer;
+	static uint16_t count = 0;
+
+	PROCESS_BEGIN();
+
+	etimer_set(&timer, CLOCK_CONF_SECOND * 1);
+
+	while(1) {
+		PROCESS_WAIT_EVENT_UNTIL(ev == PROCESS_EVENT_TIMER);
+		printf("Hello world #%u!\n", count++);
+		etimer_reset(&timer);
+	}
+
+	PROCESS_END();
+}
+
+/*
+ * Then, pass the function above to a PtProcess instance.
+ * The process will be started once the system boots.
+ */
+PtProcess hello(process_thread_hello_world);

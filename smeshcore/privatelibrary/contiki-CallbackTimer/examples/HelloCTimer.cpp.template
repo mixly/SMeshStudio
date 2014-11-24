@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+extern "C" {
+#include "dev/leds.h"
+}
+
+#include "CallbackTimer.h"
+
+/*
+ * Define a function to say hello.
+ */
+static void hello(void *ctx)
+{
+	printf("Hello %s!\n", ctx);
+}
+
+/*
+ * Define another function to light up all leds,
+ * and then say hello after 3s.
+ */
+static void blink(void *ctx)
+{
+	static char *world = "world";
+	leds_on(LEDS_ALL);
+	CTimer.setTimeout(3, hello, world);
+}
+
+/*
+ * Define a Contiki process to call blink 2s later.
+ */
+PROCESS(callback_timer_process, "Callback Timer Process");
+AUTOSTART_PROCESSES(&callback_timer_process);
+PROCESS_THREAD(callback_timer_process, ev, data)
+{
+	PROCESS_BEGIN();
+	if (PROCESS_EVENT_INIT == ev) {
+		CTimer.setTimeout(2, blink);
+	}
+	PROCESS_END();
+}

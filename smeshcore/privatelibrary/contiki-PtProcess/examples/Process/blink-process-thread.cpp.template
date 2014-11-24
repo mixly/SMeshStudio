@@ -1,0 +1,40 @@
+/*
+ * Copyright (c) 2011-2014, SmeshLink Technology Ltd.
+ * All rights reserved.
+ * 
+ * This example demonstrates how to set up a process
+ * with PtProcess to run a certain function.
+ */
+
+#include <stdio.h>
+
+extern "C" {
+#include "dev/leds.h"
+}
+
+#include "PtProcess.h"
+
+/*
+ * Define a function of Contiki process thread with the
+ * PROCESS_THREAD macro to blink one led every second.
+ */
+PROCESS_THREAD(blink, ev, data)
+{
+	static struct etimer timer;
+
+	PROCESS_BEGIN();
+
+	while(1) {
+		etimer_set(&timer, CLOCK_CONF_SECOND * 1);
+		PROCESS_WAIT_EVENT_UNTIL(ev == PROCESS_EVENT_TIMER);
+		leds_toggle(LEDS_YELLOW);
+	}
+
+	PROCESS_END();
+}
+
+/*
+ * Then, pass the function above to a PtProcess instance.
+ * The process will be started once the system boots.
+ */
+PtProcess blink(process_thread_blink);

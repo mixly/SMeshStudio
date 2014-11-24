@@ -1,0 +1,53 @@
+/*
+ * Copyright (c) 2011-2014, SmeshLink Technology Ltd.
+ * All rights reserved.
+ *
+ * This example demonstrates how to set up a timer
+ * with PtTimer to run a certain function.
+ */
+
+#include <stdio.h>
+
+extern "C" {
+#include "dev/leds.h"
+}
+
+#include "PtTimer.h"
+
+/*
+ * Define a function of Contiki protothread to blink the yellow led.
+ * To stop the timer, return PT_ENDED, otherwise return 0.
+ */
+static
+PT_THREAD(blink_yellow())
+{
+	static uint8_t count = 0;
+	leds_toggle(LEDS_YELLOW);
+	if (++count >= 6)
+		return PT_ENDED;
+	return 0;
+}
+
+/*
+ * Define a function of Contiki protothread to blink the red led.
+ * To stop the timer, return PT_ENDED, otherwise return 0.
+ */
+static
+PT_THREAD(blink_red())
+{
+	leds_toggle(LEDS_RED);
+	return 0;
+}
+
+/*
+ * Then, pass the functions above to PtTimer instances.
+ * The first will blink the yellow led every 3 seconds,
+ * but will stop after 6 times.
+ * The other will blink the red led every second,
+ * but will not be fired until the yellow one has blinked twice,
+ * which is 6 seconds later.
+ *
+ * The timers will be started once the system boots.
+ */
+PtTimer blinkYellow(blink_yellow, 3);
+PtTimer blinkRed(blink_red, 1, 6);

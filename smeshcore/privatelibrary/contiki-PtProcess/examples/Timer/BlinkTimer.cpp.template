@@ -1,0 +1,56 @@
+/*
+ * Copyright (c) 2011-2014, SmeshLink Technology Ltd.
+ * All rights reserved.
+ * 
+ * This example demonstrates how to set up a custom timer
+ * by subclassing the PtTimer class.
+ */
+
+#include <stdio.h>
+
+extern "C" {
+#include "dev/leds.h"
+}
+
+#include "PtTimer.h"
+
+/*
+ * Define a timer to blink one led.
+ */
+class BlinkTimer : public PtTimer {
+private:
+	/* the led to blink */
+	uint8_t led;
+public:
+	/*
+	 * led      the led to blink
+	 * interval the interval to timeout in seconds
+	 * delay    the delay before starting timing in seconds
+	 */
+	BlinkTimer(uint8_t led, float interval, float delay = 0) :
+			PtTimer(interval, delay) {
+		this->led = led;
+	}
+protected:
+	/*
+	 * Overrides this method below to do the work.
+	 * To stop this timer, return PT_ENDED, otherwise return 0.
+	 */
+	PT_THREAD(run())
+	{
+		leds_toggle(led);
+		return 0;
+	}
+};
+
+/*
+ * Then, instantiates two instances of BlinkTimer.
+ * The first will blink the yellow led every 3 seconds.
+ * The other will blink the red led every second,
+ * but will not be fired until the yellow one has blinked twice,
+ * which is 6 seconds later.
+ *
+ * Both of these timers will be started once the system boots.
+ */
+BlinkTimer blinkYellow(LEDS_YELLOW, 3);
+BlinkTimer blinkRed(LEDS_RED, 1, 6);

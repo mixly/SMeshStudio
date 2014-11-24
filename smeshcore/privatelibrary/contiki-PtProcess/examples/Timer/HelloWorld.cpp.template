@@ -1,0 +1,29 @@
+/*
+ * Copyright (c) 2011-2014, SmeshLink Technology Ltd.
+ * All rights reserved.
+ *
+ * This example demonstrates how to set up a custom timer
+ * by subclassing the PtTimer class.
+ */
+
+#include <stdio.h>
+#include "PtTimer.h"
+
+/*
+ * Define a timer to print "Hello world" per second.
+ */
+class HelloWorldTimer : public PtTimer {
+public:
+	HelloWorldTimer() : PtTimer(1) { }
+protected:
+	/*
+	 * Overrides this method below to do the work.
+	 * To stop this timer, return PT_ENDED, otherwise return 0.
+	 */
+	PT_THREAD(run())
+	{
+		static uint16_t count = 0;
+		printf("Hello world #%u!\n", count++);
+		return 0;
+	}
+} hello;

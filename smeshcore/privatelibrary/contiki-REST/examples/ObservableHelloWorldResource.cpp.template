@@ -1,0 +1,44 @@
+/*
+ * Copyright (c) 2011-2014, SmeshLink Technology Ltd.
+ * All rights reserved.
+ *
+ * This example demonstrates how to set up a custom
+ * REST periodic (observable) resource.
+ */
+#include "RestServer.h"
+
+/*
+ * Define a handler function to say "Hello" to every request.
+ */
+static void _hello(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
+/*
+ * Define a periodic handler to notify the observers.
+ */
+static void _hello_periodic();
+
+/*
+ * Define a periodic resource with the function above as handler.
+ */
+PeriodicResource obsHello("hello", 3, "title=\"Hello world\";rt=\"Text\"", _hello, NULL, NULL, NULL, _hello_periodic);
+
+static void
+_hello(void *request, void *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
+{
+	static uint16_t count = 0;
+
+	// wrap the response as a RestResponse
+	RestResponse restResponse(response, buffer, offset);
+
+	// set Content-Type to text/plain.
+	restResponse.setContentType(REST.type.TEXT_PLAIN);
+
+	// print a hello message.
+	restResponse.printf("Hello world #%u!\n", count++);
+}
+
+static void
+_hello_periodic()
+{
+	// just call to say hello
+	obsHello.notify();
+}

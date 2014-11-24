@@ -1,0 +1,46 @@
+/*
+ * Copyright (c) 2011-2014, SmeshLink Technology Ltd.
+ * All rights reserved.
+ *
+ * This example demonstrates how to set up a custom REST resource
+ * by subclassing the RestResource class.
+ */
+
+#include "RestServer.h"
+
+/*
+ * Define a resource to print "Hello world" to every request.
+ */
+class HelloWorldResource : public RestResource {
+public:
+	HelloWorldResource() : RestResource("hello", "title=\"Hello world\";rt=\"Text\"") { }
+protected:
+	/*
+	 * Overrides this method to handle GET.
+	 */
+	void get(RestRequest& request, RestResponse& response)
+	{
+		static uint16_t count = 0;
+		const char *name;
+
+		// get parameter name from query string
+		int len = request.getQueryVariable("name", &name);
+
+		// set Content-Type to text/plain.
+		response.setContentType(REST.type.TEXT_PLAIN);
+
+		// print a hello message.
+		if (len) {
+			response.print("Hello world ");
+			response.write(name, len);
+			response.print("!\n");
+		} else {
+			response.printf("Hello world #%u!\n", count++);
+		}
+	}
+
+	// Overrides the others to handle other requests.
+	// void post(RestRequest& request, RestResponse& response);
+	// void put(RestRequest& request, RestResponse& response);
+	// void del(RestRequest& request, RestResponse& response);
+} hello;

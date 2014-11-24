@@ -1,0 +1,37 @@
+/*
+ * Copyright (c) 2011-2014, SmeshLink Technology Ltd.
+ * All rights reserved.
+ *
+ * This example demonstrates how to set up a custom REST resource
+ * with certain handlers.
+ */
+#include "RestServer.h"
+
+/*
+ * Define a handler function to say "Bonjour" to every request.
+ */
+static void
+_bonjour(RestRequest& request, RestResponse& response)
+{
+	const char *name;
+
+	// get parameter name from query string or POST data
+	int len = request.getVariable("name", &name);
+
+	// set Content-Type to text/plain.
+	response.setContentType(REST.type.TEXT_PLAIN);
+
+	// print a hello message.
+	if (len) {
+		response.print("Bonjour ");
+		response.write(name, len);
+		response.print("!\n");
+	} else {
+		response.printf("Bonjour %d!\n", request.getMethod());
+	}
+}
+
+/*
+ * Then define a resource with the function above as handler for GET and POST request.
+ */
+RestResource bonjour("bonjour", "title=\"Hello world\";rt=\"Text\"", _bonjour, _bonjour);

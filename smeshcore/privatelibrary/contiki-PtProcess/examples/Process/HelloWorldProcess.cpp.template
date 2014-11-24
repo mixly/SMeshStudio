@@ -1,0 +1,46 @@
+/*
+ * Copyright (c) 2011-2014, SmeshLink Technology Ltd.
+ * All rights reserved.
+ * 
+ * This example demonstrates how to set up a custom process
+ * by subclassing the PtProcess class.
+ */
+
+#include <stdio.h>
+#include "PtProcess.h"
+
+/*
+ * Define a process to print "Hello world" per second.
+ */
+class HelloWorldProcess : public PtProcess {
+public:
+	HelloWorldProcess() : PtProcess("Hello") { }
+protected:
+	/*
+	 * Overrides this method below to do the work, with the same routines
+	 * as Contiki processes defined via the PROCESS_THREAD macro.
+	 */
+	PT_THREAD(run(struct pt *process_pt, process_event_t ev, process_data_t data))
+	{
+		static struct etimer timer;
+		static uint16_t count = 0;
+
+		PROCESS_BEGIN();
+
+		etimer_set(&timer, CLOCK_CONF_SECOND * 1);
+
+		while(1) {
+			PROCESS_WAIT_EVENT_UNTIL(ev == PROCESS_EVENT_TIMER);
+			printf("Hello world #%u!\n", count++);
+			etimer_reset(&timer);
+		}
+
+		PROCESS_END();
+	}
+};
+
+/*
+ * Then, instantiates a HelloWorldProcess.
+ * The process will be started once the system boots.
+ */
+HelloWorldProcess hello;

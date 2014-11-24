@@ -1,0 +1,28 @@
+/*
+ * Copyright (c) 2011-2014, SmeshLink Technology Ltd.
+ * All rights reserved.
+ *
+ * This example demonstrates how to set up a timer
+ * with PtTimer to run a certain function.
+ */
+
+#include <stdio.h>
+#include "PtTimer.h"
+
+/*
+ * Define a function of Contiki protothread to print "Hello world" per second.
+ * To stop the timer, return PT_ENDED, otherwise return 0.
+ */
+static
+PT_THREAD(hello())
+{
+	static uint16_t count = 0;
+	printf("Hello world #%u!\n", count++);
+	return 0;
+}
+
+/*
+ * Then, pass the function above to a PtTimer instance.
+ * The timer will be started once the system boots.
+ */
+PtTimer helloTimer(hello, 1);

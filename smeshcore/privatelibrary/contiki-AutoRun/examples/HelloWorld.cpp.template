@@ -1,0 +1,20 @@
+/*
+ * Copyright (c) 2011-2014, SmeshLink Technology Ltd.
+ * All rights reserved.
+ *
+ * This example demonstrates how to run a task with AutoRun class.
+ */
+
+#include "AutoRun.h"
+
+/*
+ * Defines a function as a task to print a message of hello.
+ */
+static void bonjour(void) {
+	printf("Hello world!\n");
+}
+
+/*
+ * Then schedule it to automatically run.
+ */
+AutoRun(bonjour);

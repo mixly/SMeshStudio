@@ -1,0 +1,32 @@
+/*
+ * Copyright (c) 2011-2014, SmeshLink Technology Ltd.
+ * All rights reserved.
+ *
+ * This example demonstrates how to set up a REST server.
+ */
+
+#include "RestServer.h"
+
+// Include HelloWorldResource here.
+class HelloWorldResource;
+extern HelloWorldResource hello;
+
+// Include bonjour resource here.
+extern RestResource bonjour;
+
+// Creates the REST server with resources.
+RestServer(&bonjour, &hello);
+
+/*
+ * If the REST_SERVER_AUTOSTART_ENABLE is disabled,
+ * remember to call RestServer.init() in a setup process or task.
+ *
+ * e.g.
+ *
+ * #include "AutoRun.h"
+ *
+ * AutoTask(setup)
+ * {
+ *   RestServer.init();
+ * }
+ */
