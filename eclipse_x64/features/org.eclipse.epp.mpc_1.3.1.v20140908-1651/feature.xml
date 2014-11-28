@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.epp.mpc"
+      label="%featureName"
+      version="1.3.1.v20140908-1651"
+      provider-name="%providerName"
+      plugin="org.eclipse.epp.mpc.ui">
+
+   <description url="http://www.eclipse.org/epp/mpc/">
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <requires>
+      <import feature="org.eclipse.equinox.p2.discovery.feature" version="1.0.0.v201004" match="compatible"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.epp.mpc.core"
+         download-size="125"
+         install-size="251"
+         version="1.3.1.v20140820-1706"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.epp.mpc.ui"
+         download-size="344"
+         install-size="751"
+         version="1.3.1.v20140908-1651"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.epp.mpc.help.ui"
+         download-size="532"
+         install-size="562"
+         version="1.3.1.v20140820-1706"
+         unpack="false"/>
+</feature>

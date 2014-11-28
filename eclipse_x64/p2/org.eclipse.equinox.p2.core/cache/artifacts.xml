@@ -3,7 +3,7 @@
 <repository name='download cache' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1.0.0'>
   <properties size='2'>
     <property name='p2.system' value='true'/>
-    <property name='p2.timestamp' value='1415074944174'/>
+    <property name='p2.timestamp' value='1417163792397'/>
   </properties>
   <mappings size='3'>
     <rule filter='(&amp; (classifier=osgi.bundle))' output='${repoUrl}/plugins/${id}_${version}.jar'/>
@@ -11,34 +11,34 @@
     <rule filter='(&amp; (classifier=org.eclipse.update.feature))' output='${repoUrl}/features/${id}_${version}.jar'/>
   </mappings>
   <artifacts size='6'>
-    <artifact classifier='binary' id='it.baeyens.arduino.product_root.win32.win32.x86_64' version='1.0.0.201411041221'>
-      <properties size='1'>
-        <property name='download.size' value='32307'/>
-      </properties>
-    </artifact>
-    <artifact classifier='binary' id='org.eclipse.jdt_root' version='3.10.0.v20140606-1536'>
+    <artifact classifier='binary' id='org.eclipse.jdt_root' version='3.10.0.v20140925-0400'>
       <properties size='1'>
         <property name='download.size' value='8802'/>
       </properties>
     </artifact>
-    <artifact classifier='binary' id='org.eclipse.rcp_root' version='4.4.0.v20140606-1445'>
+    <artifact classifier='binary' id='it.baeyens.arduino.product_root.win32.win32.x86_64' version='1.0.0.201411281635'>
+      <properties size='1'>
+        <property name='download.size' value='32300'/>
+      </properties>
+    </artifact>
+    <artifact classifier='binary' id='org.eclipse.rcp_root' version='4.4.0.v20140925-0400'>
       <properties size='1'>
         <property name='download.size' value='36407'/>
       </properties>
     </artifact>
-    <artifact classifier='binary' id='org.eclipse.cvs_root' version='1.4.100.v20140606-1215'>
+    <artifact classifier='binary' id='org.eclipse.platform_root' version='4.4.0.v20140925-0400'>
       <properties size='1'>
-        <property name='download.size' value='8902'/>
+        <property name='download.size' value='8139'/>
       </properties>
     </artifact>
-    <artifact classifier='binary' id='org.eclipse.cdt_root' version='8.4.0.201406111759'>
+    <artifact classifier='binary' id='org.eclipse.cdt_root' version='8.5.0.201409172108'>
       <properties size='1'>
         <property name='download.size' value='2410'/>
       </properties>
     </artifact>
-    <artifact classifier='binary' id='org.eclipse.platform_root' version='4.4.0.v20140606-1558'>
+    <artifact classifier='binary' id='org.eclipse.cvs_root' version='1.4.100.v20140925-0400'>
       <properties size='1'>
-        <property name='download.size' value='8139'/>
+        <property name='download.size' value='8902'/>
       </properties>
     </artifact>
   </artifacts>
