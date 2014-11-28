@@ -67,7 +67,6 @@
 /* Uncomment the line below according to the target STM32 device used in your
    application 
   */
-
 #if !defined (STM32F405xx) && !defined (STM32F415xx) && !defined (STM32F407xx) && !defined (STM32F417xx) && \
     !defined (STM32F427xx) && !defined (STM32F437xx) && !defined (STM32F429xx) && !defined (STM32F439xx) && \
     !defined (STM32F401xC) && !defined (STM32F401xE) && !defined (STM32F411xE)
