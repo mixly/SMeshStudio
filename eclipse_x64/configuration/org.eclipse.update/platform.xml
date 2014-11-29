@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config date="1417163797240" transient="false">
+<config date="1417220773108" transient="false">
 	<site updateable="true" url="platform:/base/" enabled="true" policy="USER-EXCLUDE">
 		<feature id="org.eclipse.ecf.filetransfer.httpclient4.ssl.feature" version="1.0.0.v20140827-1444" url="features/org.eclipse.ecf.filetransfer.httpclient4.ssl.feature_1.0.0.v20140827-1444/">
 		</feature>
@@ -19,6 +19,8 @@
 		</feature>
 		<feature id="org.eclipse.emf.ecore" version="2.10.1.v20140901-1043" url="features/org.eclipse.emf.ecore_2.10.1.v20140901-1043/">
 		</feature>
+		<feature id="it.baeyens.arduino.feature" version="2.4.0.201411290825" url="features/it.baeyens.arduino.feature_2.4.0.201411290825/">
+		</feature>
 		<feature id="org.eclipse.cdt.launch.remote" version="8.5.0.201409172108" url="features/org.eclipse.cdt.launch.remote_8.5.0.201409172108/">
 		</feature>
 		<feature id="org.eclipse.equinox.p2.rcp.feature" version="1.2.0.v20140523-0116" url="features/org.eclipse.equinox.p2.rcp.feature_1.2.0.v20140523-0116/">
@@ -26,8 +28,6 @@
 		<feature id="org.eclipse.cdt.gnu.dsf" version="8.5.0.201409172108" url="features/org.eclipse.cdt.gnu.dsf_8.5.0.201409172108/">
 		</feature>
 		<feature id="org.eclipse.mylyn.commons.identity" version="1.5.0.v20140702-2248" url="features/org.eclipse.mylyn.commons.identity_1.5.0.v20140702-2248/" plugin-identifier="org.eclipse.mylyn.commons.core">
-		</feature>
-		<feature id="it.baeyens.arduino.feature" version="2.4.0.201411281635" url="features/it.baeyens.arduino.feature_2.4.0.201411281635/">
 		</feature>
 		<feature id="org.eclipse.tm.terminal" version="3.2.300.201406060905" url="features/org.eclipse.tm.terminal_3.2.300.201406060905/">
 		</feature>

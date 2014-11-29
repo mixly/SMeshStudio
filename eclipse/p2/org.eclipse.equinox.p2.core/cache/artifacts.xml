@@ -3,7 +3,7 @@
 <repository name='download cache' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1.0.0'>
   <properties size='2'>
     <property name='p2.system' value='true'/>
-    <property name='p2.timestamp' value='1417164277742'/>
+    <property name='p2.timestamp' value='1417220357700'/>
   </properties>
   <mappings size='3'>
     <rule filter='(&amp; (classifier=osgi.bundle))' output='${repoUrl}/plugins/${id}_${version}.jar'/>
@@ -36,7 +36,7 @@
         <property name='download.size' value='8902'/>
       </properties>
     </artifact>
-    <artifact classifier='binary' id='it.baeyens.arduino.product_root.win32.win32.x86' version='1.0.0.201411281643'>
+    <artifact classifier='binary' id='it.baeyens.arduino.product_root.win32.win32.x86' version='1.0.0.201411290818'>
       <properties size='1'>
         <property name='download.size' value='30555'/>
       </properties>
