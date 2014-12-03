@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config date="1417220773108" transient="false">
+<config date="1417573936190" transient="false">
 	<site updateable="true" url="platform:/base/" enabled="true" policy="USER-EXCLUDE">
 		<feature id="org.eclipse.ecf.filetransfer.httpclient4.ssl.feature" version="1.0.0.v20140827-1444" url="features/org.eclipse.ecf.filetransfer.httpclient4.ssl.feature_1.0.0.v20140827-1444/">
 		</feature>
@@ -18,8 +18,6 @@
 		<feature id="org.eclipse.ecf.core.feature" version="1.1.0.v20140827-1444" url="features/org.eclipse.ecf.core.feature_1.1.0.v20140827-1444/">
 		</feature>
 		<feature id="org.eclipse.emf.ecore" version="2.10.1.v20140901-1043" url="features/org.eclipse.emf.ecore_2.10.1.v20140901-1043/">
-		</feature>
-		<feature id="it.baeyens.arduino.feature" version="2.4.0.201411290825" url="features/it.baeyens.arduino.feature_2.4.0.201411290825/">
 		</feature>
 		<feature id="org.eclipse.cdt.launch.remote" version="8.5.0.201409172108" url="features/org.eclipse.cdt.launch.remote_8.5.0.201409172108/">
 		</feature>
@@ -46,6 +44,8 @@
 		<feature id="org.eclipse.cdt.msw" version="8.5.0.201409172108" url="features/org.eclipse.cdt.msw_8.5.0.201409172108/">
 		</feature>
 		<feature id="org.eclipse.cdt.debug.ui.memory" version="8.5.0.201409172108" url="features/org.eclipse.cdt.debug.ui.memory_8.5.0.201409172108/">
+		</feature>
+		<feature id="it.baeyens.arduino.feature" version="2.4.0.201412031031" url="features/it.baeyens.arduino.feature_2.4.0.201412031031/">
 		</feature>
 		<feature id="org.eclipse.equinox.p2.user.ui" version="2.2.0.v20140911-0143" url="features/org.eclipse.equinox.p2.user.ui_2.2.0.v20140911-0143/">
 		</feature>
