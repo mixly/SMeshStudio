@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config date="1417573936190" transient="false">
+<config date="1417743710805" transient="false">
 	<site updateable="true" url="platform:/base/" enabled="true" policy="USER-EXCLUDE">
 		<feature id="org.eclipse.ecf.filetransfer.httpclient4.ssl.feature" version="1.0.0.v20140827-1444" url="features/org.eclipse.ecf.filetransfer.httpclient4.ssl.feature_1.0.0.v20140827-1444/">
 		</feature>
@@ -45,8 +45,6 @@
 		</feature>
 		<feature id="org.eclipse.cdt.debug.ui.memory" version="8.5.0.201409172108" url="features/org.eclipse.cdt.debug.ui.memory_8.5.0.201409172108/">
 		</feature>
-		<feature id="it.baeyens.arduino.feature" version="2.4.0.201412031031" url="features/it.baeyens.arduino.feature_2.4.0.201412031031/">
-		</feature>
 		<feature id="org.eclipse.equinox.p2.user.ui" version="2.2.0.v20140911-0143" url="features/org.eclipse.equinox.p2.user.ui_2.2.0.v20140911-0143/">
 		</feature>
 		<feature id="org.eclipse.ecf.filetransfer.feature" version="3.9.0.v20140827-1444" url="features/org.eclipse.ecf.filetransfer.feature_3.9.0.v20140827-1444/">
@@ -60,6 +58,8 @@
 		<feature id="org.eclipse.mylyn.commons.notifications" version="1.5.0.v20140702-2248" url="features/org.eclipse.mylyn.commons.notifications_1.5.0.v20140702-2248/" plugin-identifier="org.eclipse.mylyn.commons.core">
 		</feature>
 		<feature id="org.eclipse.jdt" version="3.10.0.v20140925-0400" url="features/org.eclipse.jdt_3.10.0.v20140925-0400/">
+		</feature>
+		<feature id="it.baeyens.arduino.feature" version="2.4.0.201412050940" url="features/it.baeyens.arduino.feature_2.4.0.201412050940/">
 		</feature>
 		<feature id="org.eclipse.help" version="2.0.102.v20140925-0400" url="features/org.eclipse.help_2.0.102.v20140925-0400/" plugin-identifier="org.eclipse.help.base">
 		</feature>
