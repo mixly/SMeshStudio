@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config date="1417744145048" transient="false">
+<config date="1418892079907" transient="false">
 	<site updateable="true" url="platform:/base/" enabled="true" policy="USER-EXCLUDE">
 		<feature id="org.eclipse.ecf.filetransfer.httpclient4.ssl.feature" version="1.0.0.v20140827-1444" url="features/org.eclipse.ecf.filetransfer.httpclient4.ssl.feature_1.0.0.v20140827-1444/">
 		</feature>
@@ -67,8 +67,6 @@
 		</feature>
 		<feature id="org.eclipse.equinox.p2.core.feature" version="1.3.0.v20140523-0116" url="features/org.eclipse.equinox.p2.core.feature_1.3.0.v20140523-0116/">
 		</feature>
-		<feature id="it.baeyens.arduino.feature" version="2.4.0.201412050948" url="features/it.baeyens.arduino.feature_2.4.0.201412050948/">
-		</feature>
 		<feature id="org.eclipse.mylyn.team_feature" version="3.13.0.v20140702-2225" url="features/org.eclipse.mylyn.team_feature_3.13.0.v20140702-2225/" plugin-identifier="org.eclipse.mylyn.context.core">
 		</feature>
 		<feature id="org.eclipse.egit" version="3.4.1.201406201815-r" url="features/org.eclipse.egit_3.4.1.201406201815-r/">
@@ -86,6 +84,8 @@
 		<feature id="org.eclipse.cdt.gnu.build" version="8.5.0.201409172108" url="features/org.eclipse.cdt.gnu.build_8.5.0.201409172108/">
 		</feature>
 		<feature id="org.eclipse.mylyn.commons.repositories" version="1.5.0.v20140905-0008" url="features/org.eclipse.mylyn.commons.repositories_1.5.0.v20140905-0008/" plugin-identifier="org.eclipse.mylyn.commons.core">
+		</feature>
+		<feature id="it.baeyens.arduino.feature" version="2.4.0.201412181640" url="features/it.baeyens.arduino.feature_2.4.0.201412181640/">
 		</feature>
 		<feature id="org.eclipse.rse.core" version="3.4.100.201406091451" url="features/org.eclipse.rse.core_3.4.100.201406091451/">
 		</feature>
