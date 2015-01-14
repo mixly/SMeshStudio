@@ -83,6 +83,19 @@ public:
   LUDP();
 
   // DESCRIPTION
+  //   Destructor. LUDP will close resources when it is destroyed.
+  //
+  // EXAMPLE
+  // <code>
+  //     do{
+  //        LWiFiUDP u;
+  //        u.begin(1234);   // start UDP on port 1234
+  //     }while(0);
+  //     // LWiFiUDP will release the resource
+  // </code>
+  ~LUDP();
+
+  // DESCRIPTION
   //   Initializes UDP function, and start listening on specified local port.
   // 
   // PARAMETERS

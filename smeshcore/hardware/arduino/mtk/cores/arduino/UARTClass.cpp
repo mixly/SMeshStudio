@@ -39,12 +39,12 @@ void UartIrqHandler(void* parameter, VM_DCL_EVENT event, VM_DCL_HANDLE device_ha
 {
     if(event == VM_UART_READY_TO_READ)
     {
-        char data[32];
+        char data[SERIAL_BUFFER_SIZE];
         int i;
         VM_DCL_STATUS status;
         VM_DCL_BUFF_LEN returned_len;
 
-        status = vm_dcl_read(device_handle,(VM_DCL_BUFF*)data,32,&returned_len,vm_dcl_get_ownerid());
+        status = vm_dcl_read(device_handle,(VM_DCL_BUFF*)data,SERIAL_BUFFER_SIZE,&returned_len,vm_dcl_get_ownerid());
         if(status<VM_DCL_STATUS_OK)
         {
             vm_log_info((char*)"read failed");

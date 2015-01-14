@@ -115,6 +115,7 @@ enum{
     VM_CE_INFO_AUTO_START,        /* 0x32,   app auto start when power on*/
     VM_CE_INFO_IDLE_SHORTCUT,     /* 0x33,  app set idle shortcut when install*/
     VM_CE_INFO_CLOCK_APP,     /* 0x34,  1 means app is clock app,0 means not*/
+    VM_CE_INFO_AUTH,     /* 0x35,  app defined authorization info*/
 	VM_CE_INFO_TOTAL
 };
 

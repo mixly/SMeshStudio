@@ -134,7 +134,6 @@ void SharedHandle::decRef()
 LTcpClient::LTcpClient():
 	m_handle(),
 	m_peekByte(-1),
-	m_apn(APN_ID),
 	m_peekBuffered(false)
 {
 
@@ -142,7 +141,6 @@ LTcpClient::LTcpClient():
 
 LTcpClient::LTcpClient(const LTcpClient &rhs):
 	m_handle(rhs.m_handle),
-	m_apn(rhs.m_apn),
 	m_peekByte(-1),
 	m_peekBuffered(false)
 {
@@ -151,7 +149,6 @@ LTcpClient::LTcpClient(const LTcpClient &rhs):
 LTcpClient::LTcpClient(VMINT handle):
 	m_handle(handle),
 	m_peekByte(-1),
-	m_apn(APN_ID),
 	m_peekBuffered(false)
 {
 }
@@ -159,7 +156,6 @@ LTcpClient::LTcpClient(VMINT handle):
 LTcpClient::LTcpClient(VMINT handle, VMINT serverHandle):
 	m_handle(handle, serverHandle),
 	m_peekByte(-1),
-	m_apn(APN_ID),
 	m_peekBuffered(false)
 {
 }
@@ -506,6 +502,7 @@ void LTcpClient::flush()
 
 VMINT LTcpClient::getAPN() const
 {
-	return m_apn;
+	vm_log_error("LTcpClient::getAPN called. return -1");
+	return -1;
 }
 

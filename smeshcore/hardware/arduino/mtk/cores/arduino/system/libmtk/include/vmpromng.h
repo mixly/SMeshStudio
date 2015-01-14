@@ -241,11 +241,6 @@ void vm_main(void);
 #define VM_MSG_LOW_BATTERY			16
 
 /**
- * when the power off
- */
-#define VM_MSG_SHUTDOWN			17
-
-/**
  * atci message 
  */
 #define VM_MSG_ATCI_IND			60001
@@ -506,9 +501,6 @@ VM_P_HANDLE vm_pmng_get_current_handle(void);
 
 /* LinkIt application messge id base, application should define its own message id started from this. */
 #define VM_MESSAGE_ID_BASE  1000
-
-/* LINKIT application messge id maximum, application should define its own message id less than this. */
-#define VM_MESSAGE_ID_MAX  60000
 
 typedef VMINT (*VM_MESSAGE_PROC) (VM_P_HANDLE sender, VMUINT msg_id, VMINT wparam, VMINT lparam);
 /*****************************************************************************

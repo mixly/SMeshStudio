@@ -94,7 +94,6 @@ typedef enum
     VM_SRV_BT_CM_EVENT_SET_AUTHORIZE               = 0x00010000, /* set authorize */
     VM_SRV_BT_CM_EVENT_UNBLOCK                     = 0x00020000, /* unblock device */
     VM_SRV_BT_CM_EVENT_MYDEV_DEL                   = 0x00040000, /* mydevice delete */
-    VM_SRV_BT_CM_EVENT_BLE_ACTIVATE                = 0x00080000, /*BLE active notify*/
     VM_SRV_BT_CM_EVENT_SET_VISIBILITY              = 0x00100000, /* set visibility */
     VM_SRV_BT_CM_EVENT_SET_NAME                    = 0x00200000, /* set name */
     VM_SRV_BT_CM_EVENT_SET_AUTHENTICATION          = 0x00400000, /* set authentication */
@@ -228,7 +227,6 @@ typedef struct
     VMINT result;                 /* set name result in vm_srv_bt_cm_result_codes_enum */
 }vm_srv_bt_cm_set_name_struct;
 
-
 //Pairing method
 typedef enum 
 {
@@ -236,7 +234,6 @@ typedef enum
 	 VM_FIXED_PIN_ONLY,							//Pairing no need UI,auto accept pairing ,only adopt FIXED PIN CODE method
 	 VM_FIXED_PIN_AND_SSP_JUST_WORK				//Pairing no need UI,auto accept pairing ,adopt FIXED PIN CODE and JUST WORK of SSP
 }vm_bt_pairing_Type;
-
 
 /****************************************************************************** 
  * FUNCTION
@@ -420,6 +417,20 @@ VMINT vm_btcm_get_dev_info_by_index(VMUINT idx, vm_srv_bt_cm_dev_type_enum dev_t
 
 /*****************************************************************************
  * FUNCTION
+ *  vm_bt_cm_release_all_conn
+ * DESCRIPTION
+ *  This function is to process release the designated device's all live connection,
+ *  after the procedure is completed, it will notify the notifier VM_SRV_BT_CM_EVENT_RELEASE_ALL_CONN.
+ * PARAMETERS
+ *  void
+ * RETURNS
+ *  VMINT : refer to vm_srv_bt_cm_result_codes_enum
+ *****************************************************************************/
+VMINT vm_bt_cm_release_all_conn(void);
+
+
+/*****************************************************************************
+ * FUNCTION
  *  vm_bt_cm_send_passkey
  * DESCRIPTION
  *  This function is to process pair request and send passkey
@@ -444,7 +455,6 @@ VMINT vm_bt_cm_send_passkey(vm_srv_bt_cm_bt_addr* dev_addr, VMUINT8* dev_passkey
  * None
  *****************************************************************************/
 void vm_custom_set_bt_pairing_method(vm_bt_pairing_Type config_type);
-
 
 #ifdef __cplusplus
 }

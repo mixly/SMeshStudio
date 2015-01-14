@@ -113,6 +113,24 @@ typedef enum
     VM_APPMGR_APP_POSITION_END_OF_ENUM
 } vm_appmgr_app_storage_position;
 
+/* Application authotization infomation */
+typedef enum
+{
+    VM_APPMGR_APP_AUTH_CALLOUT = 0x00000001, /* call out */
+    VM_APPMGR_APP_AUTH_SMS_SEND = 0x00000002, /* send sms */
+    VM_APPMGR_APP_AUTH_MMS_SEND = 0x00000004, /* send mms */
+    VM_APPMGR_APP_AUTH_GPRS_CONNECT = 0x00000010, /* GPRS connect */
+    VM_APPMGR_APP_AUTH_WLAN_CONNECT = 0x00000040, /* WLAN connect */
+    VM_APPMGR_APP_AUTH_GPS = 0x00000080, /* GPS */
+    VM_APPMGR_APP_AUTH_RECORDER = 0x00000200, /* recorder */
+    VM_APPMGR_APP_AUTH_CAMERA = 0x00000400, /* camera */
+    VM_APPMGR_APP_AUTH_CALLLOG_READ = 0x00001000, /* read calllog */
+    VM_APPMGR_APP_AUTH_SMS_READ = 0x00002000, /* read sms */
+    VM_APPMGR_APP_AUTH_MMS_READ = 0x00004000, /* read mms */
+    VM_APPMGR_APP_AUTH_BT_SWITCH = 0x00008000, /* BT */
+    VM_APPMGR_APP_AUTH_ALL  = 0x80000000, /* full authorization */
+} vm_appmgr_app_authorization_enum;
+
 typedef struct
 {
     VMUINT app_id;
@@ -124,6 +142,8 @@ typedef struct
     VMUINT16 tel[VM_APPMGR_TEL_NUM_LEN]; 
     VMUINT16 app_name[VM_APPMGR_APP_NAME_LEN]; 
     VMUINT16 app_path[VM_APPMGR_FILEPATH_LEN]; 
+    VMUINT32 app_auth;
+    VMUINT32 user_auth;
 }vm_install_info;
 
 typedef enum 

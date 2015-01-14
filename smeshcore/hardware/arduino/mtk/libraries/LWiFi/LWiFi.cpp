@@ -62,6 +62,8 @@ LWiFiClass::LWiFiClass()
   memset(&m_apParam, 0, sizeof(m_apParam));
 }
 
+static void onWiFiEnabled(void *userData, vm_wlan_req_res_enum result);
+
 static void onWifiInitialized(void *userData, vm_wlan_req_res_enum result)
 {
   if (result != VM_WLAN_REQ_RES_DONE)
@@ -127,13 +129,14 @@ struct LWiFiConnectContext
   vm_wlan_conned_ap_info_struct connectedInfo;
   vm_wlan_ip_info_struct ipInfo;
   vm_wlan_conn_res_struct result;
-
+  bool isWaitApInfo;
   LWiFiConnectContext()
   {
     memset(&apInfo, 0, sizeof(apInfo));
     memset(&ipInfo, 0, sizeof(ipInfo));
     memset(&result, 0, sizeof(result));
     memset(&connectedInfo, 0, sizeof(connectedInfo));
+    isWaitApInfo = false;
   }
 
   ~LWiFiConnectContext()
@@ -195,6 +198,56 @@ static void onWiFiIPReady(void *userData, vm_wlan_noti_struct *noti)
   }
 }
 
+static void onWiFiSnifferOff(void *userData, vm_wlan_sniffer_res_enum res)
+{
+    LWiFiConnectContext *pContext = (LWiFiConnectContext*)userData;
+
+    if(VM_WLAN_SNIFFER_SUCCESS == res)
+    {
+        pContext->isWaitApInfo = false;
+        onWiFiEnabled(pContext, VM_WLAN_REQ_RES_DONE);
+    }
+    else
+    {
+        vm_log_info("vm_wlan_sniffer_off fails, result=%d", res);
+        pContext->result.result = VM_WLAN_RESULT_FAILED;
+        LTask.post_signal();
+    }
+}
+
+static void onWiFiSnifferOn(void *userData, vm_wlan_sniffer_on_res_struct *res)
+{
+    LWiFiConnectContext *pContext = (LWiFiConnectContext*)userData;
+
+    vm_log_info("onWiFiSnifferOn result=%d, cb_type=%d", res->result, res->cb_type);
+    if(VM_WLAN_SNIFFER_SUCCESS == res->result)
+    {
+        if(VM_WLAN_SNIFFER_ON_RES == res->cb_type)
+        {
+            
+        }
+        else if(VM_WLAN_SNIFFER_ON_AP_INFO == res->cb_type)
+        {
+            vm_wlan_prof_struct prof;
+            memset(&prof, 0, sizeof(vm_wlan_prof_struct));
+            memcpy(&prof, &(res->profile), sizeof(vm_wlan_prof_struct));
+            pContext->apInfo.auth_mode = prof.auth_mode;
+            strncpy((char*)pContext->apInfo.ssid, (char*)prof.ssid, VM_WLAN_PROF_MAX_SSID_LEN);
+            strncpy((char*)pContext->apInfo.password, (char*)prof.password, VM_WLAN_PROF_PSWD_MAX_LEN);
+            
+            vm_log_info("auth_mode: %d", res->profile.auth_mode);            
+            vm_log_info("ssid: %s", (char*)pContext->apInfo.ssid);
+            vm_log_info("password: %s", (char*)pContext->apInfo.password);
+            vm_wlan_sniffer_off(onWiFiSnifferOff, pContext);
+        }
+    }
+    else
+    {
+        vm_log_info("vm_wlan_sniffer_on fails, result=%d", res->result);
+        pContext->result.result = VM_WLAN_RESULT_FAILED;
+        LTask.post_signal();
+    }
+}
 static void onWiFiEnabled(void *userData, vm_wlan_req_res_enum result)
 {
   LWiFiConnectContext *pContext = (LWiFiConnectContext*)userData;
@@ -207,6 +260,18 @@ static void onWiFiEnabled(void *userData, vm_wlan_req_res_enum result)
     {
       vm_log_info("wifi status change error=%d", result);
       break;
+    }
+
+    if(true == pContext->isWaitApInfo)
+    {
+        VMINT snifferOnRet = vm_wlan_sniffer_on(NULL, &onWiFiSnifferOn, pContext);
+        if(VM_WLAN_RESULT_PROCESSING != snifferOnRet)
+        {
+            vm_log_info("wlan sniffer on fails ret=%d", snifferOnRet);
+            break;
+        }
+        vm_log_info("start waiting AP info");
+        return;
     }
 
     vm_log_info("vm_wlan_reg_noti");

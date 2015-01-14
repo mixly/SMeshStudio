@@ -25,7 +25,7 @@
  *****************************************************************************/
 typedef enum
 {
- 	vm_spi_port0 = VM_DCL_SPI_GROUP_START,  /*spi 1*/ 
+    vm_spi_port0=VM_DCL_SPI_GROUP_START,
     vm_spi_port1       
  
 } VM_DCL_SPI_DEV_T;

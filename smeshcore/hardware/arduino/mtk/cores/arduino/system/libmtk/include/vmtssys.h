@@ -131,6 +131,9 @@ typedef void (*vm_ts_timer_func_ptr)(void *param_ptr);
 /* prototype of msg handler callback function */
 typedef void* (*vm_ts_service_hdlr_t)(VMINT func_id);
 
+/* prototype of callback function when exit tiny mode */
+typedef void (*vm_ts_exit_hdlr_t)(void);
+
 typedef void (*vm_ts_swatch_pedometer_cb)(void* data);
 
 /*****************************************************************************
@@ -442,6 +445,19 @@ VMBOOL vm_ts_reg_service(char* name, vm_ts_service_hdlr_t hdlr);
 *  function interface pointer
 *****************************************************************************/
 void* vm_ts_get_service(char* service_name, VMINT func_id );
+
+/*****************************************************************************
+* FUNCTION
+*  vm_ts_reg_service 
+* DESCRIPTION
+*  This interface used in tiny mode, the handler will invoke before exit tiny mode
+* PARAMETERS
+*  hdlr : [IN] exit handler
+* RETURN VALUES
+*  TRUE : if register success
+*  FALSE : failed
+*****************************************************************************/
+VMBOOL vm_ts_reg_exit_hdlr(vm_ts_exit_hdlr_t hdlr);
 
 /*****************************************************************************
 * FUNCTION

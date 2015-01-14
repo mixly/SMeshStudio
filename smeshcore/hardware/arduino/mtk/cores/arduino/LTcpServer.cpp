@@ -23,8 +23,7 @@
 
 LTcpServer::LTcpServer(uint16_t port):
 	m_port(port),
-	m_handle(-1),
-	m_apn(VM_TCP_APN_WIFI)
+	m_handle(-1)
 {
 }
 
@@ -212,5 +211,6 @@ IPAddress LTcpServer::serverIP()
 
 VMINT LTcpServer::getAPN() const
 {
-	return m_apn;
+	vm_log_error("LTcpServer::getAPN called. return -1");
+	return -1;
 }

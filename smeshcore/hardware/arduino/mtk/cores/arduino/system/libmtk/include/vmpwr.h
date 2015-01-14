@@ -312,10 +312,10 @@ extern VMBOOL vm_fly_mode_is_network_service_available(void);
  *  Switch to flight mode or back to normal mode 
  *  If check_sim is MMI_TRUE, the phone will only turn on RF of inserted SIM
  * PARAMETERS
- *  flight_mode_on      : [IN] is switch to flight mode
- *  check_sim           : [IN] is switch the RF according to SIM insert status
- *  callback            : [IN] mode switch callback
- *  user_data           : [IN] the user data in callback
+ *  flight_mode_on      [IN]    is switch to flight mode
+ *  check_sim           [IN]    is switch the RF according to SIM insert status
+ *  callback            [IN]
+ *  user_data
  * RETURNS
  *  MMI_BOOL
  *****************************************************************************/

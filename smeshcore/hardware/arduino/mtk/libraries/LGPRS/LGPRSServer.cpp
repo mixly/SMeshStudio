@@ -19,7 +19,6 @@
 LGPRSServer::LGPRSServer(uint16_t port):
   LTcpServer(port)
 {
-  m_apn = LGPRS.getAPN();
 }
 
 LGPRSClient LGPRSServer::available()
@@ -31,4 +30,9 @@ LGPRSClient LGPRSServer::available()
 	// Note that we rely on move-constructor optimization
 	// to prevent temp object destructor, which stop() the connection.
 	return LGPRSClient(hClient, hServer);
+}
+
+VMINT LGPRSServer::getAPN() const
+{
+  return LGPRS.getAPN();
 }

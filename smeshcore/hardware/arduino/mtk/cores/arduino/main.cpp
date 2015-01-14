@@ -82,6 +82,8 @@ void vm_main( void )
 	VM_THREAD_HANDLE handle;
 	spi_w_data = (unsigned char*)vm_malloc_nc(2);
 	spi_r_data = (unsigned char*)vm_malloc_nc(2);
+	srand(0);
+	rand();
 	spi_data_memory = (unsigned char*)vm_malloc_nc(64*1024);
 	memset(spi_data_memory,0, 64*1024);
 	vm_reg_sysevt_callback(__handle_sysevt);

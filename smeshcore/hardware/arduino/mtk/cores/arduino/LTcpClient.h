@@ -259,7 +259,6 @@ public:
 protected:
   /* DOM-NOT_FOR_SDK-BEGIN */
   SharedHandle m_handle;    // Manages underlying TCP resource handles. Reference counted, copy-constructable.
-  VMINT m_apn;              // APN id to use. Child class should change this.
   VMINT8 m_peekByte;        // buffer to store the peek byte
   boolean m_peekBuffered;   // is the buffer valid or not
 
@@ -269,7 +268,8 @@ protected:
   static boolean wifiWrite(void *userData);
   static boolean wifiPeek(void *userData);
     
-  VMINT getAPN() const;
+
+  virtual VMINT getAPN() const = 0;
   /* DOM-NOT_FOR_SDK-END */
 };
 

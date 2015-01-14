@@ -13,6 +13,7 @@
 #include "SPI.h"
 #include "vmdcl_spi.h"
 #include "Vmlog.h"
+#include <math.h>
 
 static char buff[128];
 
@@ -203,12 +204,9 @@ byte SPIClass::transfer(uint8_t _data)
     return *spi_r_data;
 }
 
-
-
-uint32_t SPIClass::write(uint8_t* _data, uint32_t size) 
+uint32_t SPIClass::write_2x(uint8_t* _data, uint32_t size) 
 {
     uint8_t* p = _data;
-    //VM_SPI_CTRL_WRITE_AND_READE_T  write_and_read;
 	
     VM_DCL_BUFF_LEN count, datalen;
     VM_DCL_STATUS status;
@@ -242,17 +240,48 @@ uint32_t SPIClass::write(uint8_t* _data, uint32_t size)
     }
 	
     memcpy(spi_data_memory, _data, size);
-    //write_and_read.pu1InData =  (VMUINT8*)spi_data_memory;
-    //write_and_read.pu1OutData = (VMUINT8*)spi_data_memory;
-    //write_and_read.u4DataLen = datalen;
-    //write_and_read.uCount = count; 
-    //vm_dcl_control(spi_handle,VM_SPI_IOCTL_WRITE_AND_READ,(void *)&write_and_read);
     status = vm_dcl_write(spi_handle,(VM_DCL_BUFF*)spi_data_memory,datalen,&count,0);
     if(status == VM_DCL_STATUS_OK)
 		return size;
     else
 		return 0;
     
+}
+
+uint32_t SPIClass::write(uint8_t* _data, uint32_t size) 
+{
+    	int x = 1, y = 1, k;
+
+	while(y <= size)
+	{
+	  x++;
+	  y = (double)pow(2, (double)x);
+	}
+	
+	k = size-y/2;
+
+	write_2x(_data, y/2);
+	
+	if(k>2)
+		return write(&_data[y/2], k);
+	
+	else if(k==2)
+	{
+		if(conf_data.rx_endian == VM_SPI_ENDIAN_BIG)
+		{
+			transfer(_data[y/2+1]);
+			return transfer(_data[y/2]);
+		}
+		else
+		{
+			transfer(_data[y/2]);
+			return transfer(_data[y/2+1]);
+		}
+	}
+	else
+	{
+		return transfer(_data[y/2]);
+	}
 }
 
 SPIClass SPI;

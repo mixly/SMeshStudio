@@ -189,9 +189,10 @@ void detachInterrupt(uint32_t pin)
     	vm_dcl_close(gExinterruptsPio[pin].handle);
     }
 	gExinterruptsPio[pin].handle = VM_DCL_HANDLE_INVALID;
-       gExinterruptsPio[pin].cb = NULL;
+    gExinterruptsPio[pin].cb = NULL;
 	g_APinDescription[gExinterruptsPio[pin].pin].ulHandle = VM_DCL_HANDLE_INVALID;
 	g_APinDescription[gExinterruptsPio[pin].pin].ulPinType= PIO_DIGITAL;
+	gExinterruptsPio[pin].first = 0;
 }
 
 

@@ -70,13 +70,6 @@ boolean LGPRSClass::gprsCheckSIM(void *userData)
 	VMINT simStatus = vm_get_sim_card_status(VM_SIM_SIM1);
 	vm_log_info("SIM card state=%d", simStatus);
 
-    // Query HOME PLMN à this is added to read home plmn
-                char plmnName[255] = {0};
-                vm_sim_get_home_plmn(VM_SIM_SIM1, plmnName, sizeof(plmnName));
-                Serial.print("Home PLMN is: ");
-                Serial.println(plmnName);
-
-                
 	// Let's enable GPRS
 	VMINT32 result = vm_setting_srv_command(VM_SETTING_CELLULAR_GPRS_SERVICE, 
 											VM_OPERATION_GPRS_SERVICE_ON, 

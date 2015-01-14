@@ -41,6 +41,7 @@ public:
   LWiFiClient(const LTcpClient &rhs);
   LWiFiClient(VMINT handle);
   LWiFiClient(VMINT handle, VMINT serverHandle);
+  virtual VMINT getAPN() const;
   /* DOM-NOT_FOR_SDK-END */
 };
 

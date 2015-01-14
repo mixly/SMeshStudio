@@ -51,8 +51,8 @@ void TwoWire::begin(void) {
 	else
 	   i2c_handle = g_APinDescription[18].ulHandle;
 
-	if(VM_DCL_HANDLE_INVALID == i2c_handle)
-	{
+	if(VM_DCL_HANDLE_INVALID == i2c_handle)	 
+	{	  	
 		vm_log_info("begin, failed.i2c_handle:%d",i2c_handle);	
 	}	
 
@@ -91,7 +91,7 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint8_t sendStop
 	conf_data.Reserved1 = 0;
 	conf_data.u1DelayLen = 0;
 	conf_data.u1SlaveAddress = address<<1;
-	conf_data.u4FastModeSpeed = 50;
+	conf_data.u4FastModeSpeed = 100;
 	conf_data.u4HSModeSpeed = 0;
 	ret = vm_dcl_control(i2c_handle,VM_I2C_CMD_CONFIG,(void *)&conf_data);
 	read_data.pu1Data = &(rxBuffer[0]);
@@ -152,7 +152,7 @@ uint8_t TwoWire::endTransmission(uint8_t sendStop) {
 		conf_data.u1DelayLen = 0;
 		conf_data.u1SlaveAddress = txAddress;
 
-		conf_data.u4FastModeSpeed = 50;
+		conf_data.u4FastModeSpeed = 100;
 		conf_data.u4HSModeSpeed = 0;
 		ret = vm_dcl_control(i2c_handle,VM_I2C_CMD_CONFIG,(void *)&conf_data);
 	

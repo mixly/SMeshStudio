@@ -19,7 +19,6 @@
 LWiFiServer::LWiFiServer(uint16_t port):
     LTcpServer(port)
 {
-  m_apn = VM_TCP_APN_WIFI;
 }
 
 LWiFiClient LWiFiServer::available()
@@ -31,4 +30,9 @@ LWiFiClient LWiFiServer::available()
   // Note that we rely on move-constructor optimization
   // to prevent temp object destructor, which stop() the connection.
   return LWiFiClient(hClient, hServer);
+}
+
+VMINT LWiFiServer::getAPN() const
+{
+  return VM_TCP_APN_WIFI;
 }

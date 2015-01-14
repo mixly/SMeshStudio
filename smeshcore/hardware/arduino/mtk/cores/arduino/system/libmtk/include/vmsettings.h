@@ -184,7 +184,6 @@ typedef enum
     VM_SETTING_SCHEDULE_POWER_ON_OFF,   //system schedule power on/off
     VM_SETTING_NETWORK_TIME_AUTO_UPDATE,//network time auto update on/off
     VM_SETTING_SIM_GPRS_TRANSFER_PREFER,//call perfer or data prefer
-    VM_SETTING_GPS_SYNC_TIME,//GPS sync time setting
     VM_SETTING_ENUM_NUM
 }vmsettingModuleTypes;
 
@@ -276,19 +275,6 @@ typedef enum
     VM_OPERATION_SIM_GPRS_TRANSFER_GET_STATUS,    //get GPRS transfer status
     VM_OPERATION_SIM_GPRS_TRANSFER_PREFER_NUM
 }vmoperationTypesGPRSTranferPref;
-
-
-/*
-**OPERATION TYPE FOR 
-*/
-typedef enum
-{
-    VM_OPERATION_DATETIME_GPS_TIME_SYNC_ON, //ALLOW GPS TO UPDATE TIME
-    VM_OPERATION_DATETIME_GPS_TIME_SYNC_OFF,//DEFUSE GPS TO UPDATE TIME
-    VM_OPERATION_DATETIME_GPS_TIME_SYNC_GET,//GET GPS UPDATED TIME
-    VM_OPERATION_DATETIME_GPS_TIME_SYNC_NUM
-}vmoperationTypesDTGPSSyncTime;
-
 
 
 /*

@@ -36,6 +36,7 @@ public:
   LGPRSClient(const LTcpClient &rhs);
   LGPRSClient(VMINT handle);
   LGPRSClient(VMINT handle, VMINT serverHandle);
+  virtual VMINT getAPN() const;
   /* DOM-NOT_FOR_SDK-END */
 };
 

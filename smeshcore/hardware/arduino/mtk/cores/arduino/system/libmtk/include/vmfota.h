@@ -108,6 +108,15 @@ typedef enum
     VM_FUDIFFNET_UPDATE_FAIL//VM_FUDIFFNET_UPDATE_FAIL
 }vm_fudiffnet_update_ret_enum;
 
+/* srv_fudiffnet_fota_pre_info_struct */
+typedef struct
+{
+    VMUINT8 brand[50]; //brand
+    VMUINT8 model[50]; //model
+    VMUINT8 domain[30]; //domain
+    VMUINT8 pin_code[30]; //pin_code
+}vm_fudiffnet_fota_pre_info_struct;
+
 /*****************************************************************************
  * FUNCTION
  *	vm_srv_funet_trigger
@@ -191,6 +200,20 @@ extern vm_fudiffnet_update_ret_enum vm_fudiffnet_get_fota_result(void);
  * </code>
  *****************************************************************************/
 extern VMWCHAR* vm_fudiffnet_get_firmware_path(void);
+
+/*****************************************************************************
+ * FUNCTION
+ *  vm_fudiffnet_get_fota_pre_info
+ * DESCRIPTION
+ *  get some pre info which need to be used to check new version in fota process.
+ * PARAMETERS
+ * pre_info        [OUT] fota pre info structure  
+ * RETURNS
+ *  void
+ *****************************************************************************/
+extern void vm_fudiffnet_get_fota_pre_info(vm_fudiffnet_fota_pre_info_struct* pre_info);
+
+
 #ifdef __cplusplus
 }
 #endif/*__cplusplus*/

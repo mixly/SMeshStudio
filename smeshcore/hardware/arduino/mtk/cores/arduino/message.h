@@ -15,7 +15,7 @@
 
 #ifndef _MESSAGE_
 #define _MESSAGE_
-#include "arduino.h"
+#include "Arduino.h"
 #include "vmsys.h"
 #include "vmthread.h"
 

@@ -46,6 +46,10 @@ public:
   //   An LTcpClient object representing the connection between this server object and the remote client.
   //   This object will turn to false if there is no incoming connection.
   LWiFiClient available();
+
+  /* DOM-NOT_FOR_SDK-BEGIN */
+  virtual VMINT getAPN() const;
+  /* DOM-NOT_FOR_SDK-END */
 };
 
 #endif

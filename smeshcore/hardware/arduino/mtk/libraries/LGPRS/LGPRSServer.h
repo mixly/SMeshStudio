@@ -43,6 +43,10 @@ public:
   //   An LGPRSClient object representing the connection between this server object and the remote client.
   //   This object will turn to false if there is no incoming connection.
   LGPRSClient available();
+
+  /* DOM-NOT_FOR_SDK-BEGIN */
+  virtual VMINT getAPN() const;
+  /* DOM-NOT_FOR_SDK-END */
 };
 
 #endif

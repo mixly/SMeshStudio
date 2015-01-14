@@ -33,6 +33,11 @@ LUDP::LUDP():
 
 }
 
+LUDP::~LUDP()
+{
+	stop();
+}
+
 void LUDP::udpCallback(VMINT hdl, VMINT event)
 {
 	switch(event)

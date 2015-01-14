@@ -233,9 +233,8 @@ public:
 // </code>
     uint32_t write(
         uint8_t* _data,   // [IN]  the porint of data sent from master to slave
-        uint32_t size   //     [IN] data size to send, this size need to be 2^X. 
+        uint32_t size   //     [IN] data size to send
         );
-
   private:
 
     // SPI config data
@@ -258,6 +257,9 @@ public:
 
     // read buffer length
     VMUINT32 read_len;
+
+    uint32_t write_2x(uint8_t* _data,uint32_t size);
+
 };
 
 //the SPI object

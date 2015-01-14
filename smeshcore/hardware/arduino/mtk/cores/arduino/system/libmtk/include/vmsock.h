@@ -129,12 +129,6 @@ typedef struct
  *****************************************************************************/
 VMINT vm_bearer_open_ex(VMINT apn, void *user_data, void (*callback_ex)(VMINT handle, VMINT event, void *param, void *user_data), vm_cbm_ip_type_enum ip);
 
-/* The structure for DNS A RR entry */
-typedef struct
-{
-    VMUINT8 address[4];   /* resolved IP address for queried domain name */
-}vm_soc_dns_a_struct;
-
 typedef struct
 {
 	VMUINT8 addr[16];   /* resolved IP address for queried domain name of ipv6*/
@@ -174,8 +168,6 @@ VMINT vm_soc_gethostbynamev6(VMINT apn,
                                  const VMCHAR * host, 
                                  vm_soc_dns_v6_result * result, 
                                  VMINT (*callback)(VMINT, vm_soc_dns_v6_result *, void *), void *user_data);
-
-
 /*****************************************************************************
  * FUNCTION
  *  vm_bearer_open
@@ -264,7 +256,6 @@ VMINT vm_bearer_close(VMINT hdl);
 
 #define PF_INET         (0)  /* ipv4 */
 #define PF_INET6         (1)  /* ipv6 */
-
 
 #define SOCK_STREAM     (0)  /* stream socket, TCP */
 #define SOCK_DGRAM      (1)  /* datagram socket, UDP */
@@ -1323,166 +1314,6 @@ VMINT vm_soc_get_account_localip(VMINT8 sock, VMUINT8 *local_ip);
  * </code>
  *****************************************************************************/
 VMINT vm_soc_get_account_localipv6(int sock, VMUINT8 *local_ipv6);
-
-
-
-
-typedef struct
-{
-	VMUSHORT		sa_family;
-	VMCHAR 		    sa_data[16];
-}vm_soc_addr;
-
-/* this struct is for getaddrinfo function only */
-typedef struct 
-{
-	VMINT32 		ai_flags;
-	VMINT32 		ai_family;
-	VMINT32 		ai_socktype;
-	VMINT32 		ai_protocol;
-	VMUINT16 		ai_addrlen;
-	VMCHAR			*ai_canonname;
-	VMBOOL		    ai_ipv6_first;
-	vm_soc_addr		*ai_addr;
-	
-}vm_soc_addrinfo;
-
-typedef enum
-{
-	VM_DNS_AF_INET = 0,		/* INET QUERY */
-	VM_DNS_AF_INET6,			/* IPV6 QUERY */
-	VM_DNS_AF_UNSPEC,			/* UNSPEC QUERY */
-	VM_DNS_AF_END
-}vm_soc_dns_family_enum;
-
-typedef enum
-{
-	VM_DNS_NO_RESPONSE_YET = 0,
-	VM_DNS_IPV4_WAIT 		= 0x01,
-	VM_DNS_IPV4_COMPLETE 	= 0x02,
-	VM_DNS_IPV6_WAIT		= 0x04,
-	VM_DNS_IPV6_COMPLETE   = 0x08,
-	VM_DNS_IPV4_FAILED		= 0x10,
-	VM_DNS_IPV6_FAILED		= 0x20,
-	VM_DNS_STATUS_SUCCESS,
-	VM_DNS_STATUS_END
-}vm_dns_getaddrinfo_status_enum;
-
-#define VM_SOC_MAX_A_ENTRY              (5)
-
-
-/* For vm_soc_getaddrinfo() */
-typedef struct vm_soc_addrinfo_struct
-{
-    VMINT32 ai_flags; /* soc_ai_flags_enum */
-    VMINT32 ai_family;
-    VMINT32 ai_socktype;
-    VMINT32 ai_protocol;
-    VMUINT32 ai_addrlen;
-    VMCHAR *ai_canonname;
-    vm_sockaddr_struct *ai_addr;
-    struct vm_soc_addrinfo_struct *ai_next;    
-}vm_soc_addrinfo_struct;
-
-typedef struct
-{
-    VMUINT8   ref_count;
-    VMUINT16  msg_len;
-    VMINT8    error_cause;   /* bearer fail */
-    VMINT32   detail_cause;  	/* refer to vm_ps_cause_enum if error_cause
-                                			* is VM_E_SOC_BEARER_FAIL */    
-    VMINT32	request_id; /* request id */
-    VMUINT32  account_id; /* network account id */    
-    VMUINT8   access_id;  /* access id */
-    VMBOOL    result;     /* the result of soc_gethostbyname */
-    void *res;  /* vm_soc_addrinfo_struct */
-} vm_app_soc_get_addr_info_ind_struct;
-
-
-typedef void (*FP_dns_cb)(vm_app_soc_get_addr_info_ind_struct *ind);
-
-
-/*****************************************************************************
- * FUNCTION
- *  vm_soc_getaddrinfo
- * DESCRIPTION
- *  This function gets the address information (both ipv6 and ipv4 address) of the given domain name.
- *  Get a host address (i.e., IP address) by its domain name. 
- *  If the bearer is not activated when this API is called, 
- *  the bearer activation would be triggered. However, 
- *  if the account id is not specified in soc_gethostbyname, 
- *  an account query would be displayed to ask the user which account 
- *  s/he wants to use.
- *  
- *  This API only supports the non-blokcing mode, i.e., 
- *  is_blocking shall be set to KAL_FALSE.
- *  Thus, soc_getaddrinfo will be returned immediately instead of 
- *  blocking and waiting for the result. 
- *  If user doesn't get the returned value directly after it calls this API,
- *  the returned value "VM_E_SOC_WOULDBLOCK" will be returned normally.
- *  SOC will send a notification to application when it gets the response 
- *  of previous DNS query later.
- *  On the contrary, if user gets the result directly, the result will be 
- *  returned directly in the parameter "addr".
- *
- *	this api can query ipv4 and ipv6 at same time and also can query ipv4 or ipv6 single. 
- *	hits->ai_family = VM_DNS_AF_UNSPEC; query ipv4 and ipv6 same time
- *	hits->ai_family = VM_DNS_AF_INET6; only query ipv6
- *	hits->ai_family = VM_DNS_AF_INET; only query ipv4
- *
- * PARAMETERS
- *  is_blocking         : [IN]        whether block or non-block mode are used,
- *                                  currently only support non-block mode
- *  mod_id              : [IN]        module id
- *  request_id          : [IN]        embedded in response message
- *  nodename         : [IN]        Domain_name
- *  servicename      : [IN]        pass NULL now
- *  hits			  : [IN]		set some query method
- *  addr                : [IN]        resolved address
- *  addr_len            : [IN/OUT]    address length     
- *  access_id           : [IN]        embedded in response message
- *  res                    : [IN]        pass NULL now
- *  nwk_account_id      : [IN]        Nwk_account_id
- * RETURN VALUES
- *  VM_E_SOC_INVAL :			         invalid arguments: null domain_name, etc.
- *  VM_E_SOC_ERROR :			         unspecified error
- *  VM_E_SOC_WOULDBLOCK :		     wait response from network
- *  VM_E_SOC_LIMIT_RESOURCE :		 socket resources not available
- * EXAMPLE
- * <code>
- * vm_soc_addrinfo info;
- * vm_soc_addrinfo *hits = &info;
- * memset(hits, 0, sizeof(vm_soc_addrinfo));
- * hits->ai_family = VM_DNS_AF_UNSPEC;   // query ipv4 and ipv6 at same time.
- * hits->ai_ipv6_first = KAL_TRUE;	   // if query both ipv4 and ipv6, app can decide which query first
- * ret = soc_getaddrinfo(
- *           KAL_FALSE,
- *           soc_id,
- *           (const kal_char*)domain_name,
- *		 hits
- *           ch->stun_ip_addr.addr,
- *           (kal_uint8*) & ch->stun_ip_addr.addr_len,
- *           0,
- *           ch->data_account_id);
- *
- *   if (ret == VM_E_SOC_WOULDBLOCK)
- *   {
- *      //processing the wouldblock state
- *      ¡K..
- *   }
- *
- * </code>
- *****************************************************************************/
-VMINT vm_soc_getaddrinfo(VMBOOL is_blocking,
-                                VMINT32      request_id,
-                                const VMCHAR *nodename,
-                                const VMCHAR *servicename,
-                                const vm_soc_addrinfo_struct *hits,
-                                vm_soc_addrinfo_struct    **res,
-                                VMINT32      access_id,
-                                VMUINT32     nwk_account_id,
-                                FP_dns_cb dns_cb);
-
 
 
 /* refer to vm_socket */

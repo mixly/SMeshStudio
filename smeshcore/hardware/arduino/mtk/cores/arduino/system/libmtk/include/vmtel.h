@@ -254,13 +254,23 @@ typedef enum
 {
 	VM_UCM_INCOMING_CALL_IND = 0,//incomming
 	VM_UCM_OUTGOING_CALL_IND, //outcomming
+	VM_UCM_CONNECT_IND, // answered
     VM_UCM_CALL_END, //call end normally
 }vm_ucm_ind_opcode_enum;
+
+/* Call type enum */
+typedef enum
+{
+    VM_UCM_VOICE_CALL_TYPE         = 0x0001, /* SIM1 voice call type */
+    VM_UCM_VOICE_CALL_TYPE_SIM2    = 0x0020, /* SIM2 voice call type */
+    VM_UCM_VOICE_CALL_TYPE_SIM3    = 0x0200, /* SIM3 voice call type */
+    VM_UCM_VOICE_CALL_TYPE_SIM4    = 0x1000, /* SIM4 voice call type */
+} vm_ucm_call_type_enum;
 
 /* Call id struct, should be unique */
 typedef struct
 {
-    vm_ucm_ind_opcode_enum call_type; /* Call type */
+    vm_ucm_call_type_enum call_type; /* Call type */
     VMUINT16 group_id; /* group id */
     VMUINT16 call_id; /* call id*/
 } vm_ucm_id_info_struct;
@@ -279,12 +289,19 @@ typedef struct
     VMUINT8 num_uri[VM_UCM_MAX_NUM_URI_LEN + 1]; /* Number, ascii */
 } vm_ucm_outgoing_call_ind_struct;
 
+/* Answer indication struct */
+typedef struct
+{
+    vm_ucm_id_info_struct uid_info; /* Call id */
+}vm_ucm_connect_ind_struct;
+
 /* Listen call event callback structure */
 typedef struct
 {
     vm_ucm_ind_opcode_enum   type_op; // vm_call_type incomming ,outcomming
     void*   data; //data of the event
 }vm_call_listener_data;
+
 
 typedef void (*vm_call_listener_func)(vm_call_listener_data* data);
 
@@ -299,16 +316,6 @@ typedef enum
     VM_UCM_HOLD_ACT, /* Hold action, vm_ucm_single_group_act_req_struct, vm_ucm_act_rsp_struct*/
     VM_UCM_END_SINGLE_ACT, /* End single action, vm_ucm_single_call_act_req_struct, vm_ucm_act_rsp_struct */
 }vm_call_action_type;
-
-/* Call type enum */
-typedef enum
-{
-    VM_UCM_VOICE_CALL_TYPE         = 0x0001, /* SIM1 voice call type */
-    VM_UCM_VOICE_CALL_TYPE_SIM2    = 0x0020, /* SIM2 voice call type */
-    VM_UCM_VOICE_CALL_TYPE_SIM3    = 0x0200, /* SIM3 voice call type */
-    VM_UCM_VOICE_CALL_TYPE_SIM4    = 0x1000, /* SIM4 voice call type */
-} vm_ucm_call_type_enum;
-
 
 
 /* action struct VM_UCM_DIAL_ACT */

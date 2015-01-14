@@ -16,7 +16,7 @@
 #include "vmsys.h"
 #include "vmthread.h"
 #include "LTask.h"
-#include "arduino.h"
+#include "Arduino.h"
 
 
 _LTaskClass::_LTaskClass()

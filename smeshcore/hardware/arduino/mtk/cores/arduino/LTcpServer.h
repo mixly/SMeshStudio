@@ -40,7 +40,6 @@ public:
   /* DOM-NOT_FOR_SDK-BEGIN */	
   VMINT m_port;		// server port
   VMINT m_handle;   // server handle;
-  VMINT m_apn;		// APN used. Child classes should properly set APN in the constructor.
   /* DOM-NOT_FOR_SDK-END */	
 
 public:
@@ -130,7 +129,7 @@ protected:
 
 protected:
   /* DOM-NOT_FOR_SDK-BEGIN */
-  VMINT getAPN() const;
+  virtual VMINT getAPN() const = 0;
   
   static boolean initServer(void *userData);
   static boolean deinitServer(void *userData);
