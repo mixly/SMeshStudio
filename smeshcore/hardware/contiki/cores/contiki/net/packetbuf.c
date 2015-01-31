@@ -1,8 +1,3 @@
-/**
- * \addtogroup packetbuf
- * @{
- */
-
 /*
  * Copyright (c) 2006, Swedish Institute of Computer Science.
  * All rights reserved.
@@ -40,6 +35,11 @@
  *         Rime buffer (packetbuf) management
  * \author
  *         Adam Dunkels <adam@sics.se>
+ */
+
+/**
+ * \addtogroup packetbuf
+ * @{
  */
 
 #include <string.h>
@@ -244,7 +244,16 @@ packetbuf_datalen(void)
 uint8_t
 packetbuf_hdrlen(void)
 {
-  return PACKETBUF_HDR_SIZE - hdrptr;
+  uint8_t hdrlen;
+  
+  hdrlen = PACKETBUF_HDR_SIZE - hdrptr;
+  if(hdrlen) {
+    /* outbound packet */
+    return hdrlen;
+  } else {
+    /* inbound packet */
+    return bufptr;
+  }
 }
 /*---------------------------------------------------------------------------*/
 uint16_t
@@ -311,4 +320,11 @@ packetbuf_addr(uint8_t type)
 }
 /*---------------------------------------------------------------------------*/
 #endif /* PACKETBUF_CONF_ATTRS_INLINE */
+int
+packetbuf_holds_broadcast(void)
+{
+  return linkaddr_cmp(&packetbuf_addrs[PACKETBUF_ADDR_RECEIVER - PACKETBUF_ADDR_FIRST].addr, &linkaddr_null);
+}
+/*---------------------------------------------------------------------------*/
+
 /** @} */

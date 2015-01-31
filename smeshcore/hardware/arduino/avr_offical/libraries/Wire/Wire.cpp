@@ -23,7 +23,7 @@ extern "C" {
   #include <stdlib.h>
   #include <string.h>
   #include <inttypes.h>
-  #include "twi.h"
+  #include "utility/twi.h"
 }
 
 #include "Wire.h"
@@ -73,11 +73,6 @@ void TwoWire::begin(uint8_t address)
 void TwoWire::begin(int address)
 {
   begin((uint8_t)address);
-}
-
-void TwoWire::setClock(uint32_t frequency)
-{
-  TWBR = ((F_CPU / frequency) - 16) / 2;
 }
 
 uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint8_t sendStop)

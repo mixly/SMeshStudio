@@ -1,16 +1,3 @@
-/**
- * \addtogroup uip6
- * @{
- */
-
-/**
- * \file
- *         The uIP TCP/IPv6 stack code.
- *
- * \author Adam Dunkels <adam@sics.se>
- * \author Julien Abeille <jabeille@cisco.com> (IPv6 related code)
- * \author Mathilde Durvy <mdurvy@cisco.com> (IPv6 related code)
- */
 /*
  * Copyright (c) 2001-2003, Adam Dunkels.
  * All rights reserved.
@@ -42,6 +29,20 @@
  * This file is part of the uIP TCP/IP stack.
  *
  *
+ */
+
+/**
+ * \file
+ *         The uIP TCP/IPv6 stack code.
+ *
+ * \author Adam Dunkels <adam@sics.se>
+ * \author Julien Abeille <jabeille@cisco.com> (IPv6 related code)
+ * \author Mathilde Durvy <mdurvy@cisco.com> (IPv6 related code)
+ */
+
+/**
+ * \addtogroup uip6
+ * @{
  */
 
 /*
@@ -79,7 +80,6 @@
 
 #include <string.h>
 
-#if UIP_CONF_IPV6
 /*---------------------------------------------------------------------------*/
 /* For Debug, logging, statistics                                            */
 /*---------------------------------------------------------------------------*/
@@ -1206,7 +1206,11 @@ uip_process(uint8_t flag)
       }
 
 #if UIP_CONF_IPV6_RPL
-      rpl_update_header_empty();
+      if(rpl_update_header_empty()) {
+        /* Packet can not be forwarded */
+        PRINTF("RPL Forward Option Error\n");
+        goto drop;
+      }
 #endif /* UIP_CONF_IPV6_RPL */
 
       UIP_IP_BUF->ttl = UIP_IP_BUF->ttl - 1;
@@ -1547,10 +1551,6 @@ uip_process(uint8_t flag)
 
   uip_appdata = &uip_buf[UIP_LLH_LEN + UIP_IPTCPH_LEN];
 
-#if UIP_CONF_IPV6_RPL
-  rpl_insert_header();
-#endif /* UIP_CONF_IPV6_RPL */
-
 #if UIP_UDP_CHECKSUMS
   /* Calculate UDP checksum. */
   UIP_UDP_BUF->udpchksum = ~(uip_udpchksum());
@@ -1558,6 +1558,11 @@ uip_process(uint8_t flag)
     UIP_UDP_BUF->udpchksum = 0xffff;
   }
 #endif /* UIP_UDP_CHECKSUMS */
+
+#if UIP_CONF_IPV6_RPL
+  rpl_insert_header();
+#endif /* UIP_CONF_IPV6_RPL */
+
   UIP_STAT(++uip_stat.udp.sent);
   goto ip_send_nolen;
 #endif /* UIP_UDP */
@@ -2234,8 +2239,6 @@ uip_process(uint8_t flag)
   UIP_TCP_BUF->seqno[2] = uip_connr->snd_nxt[2];
   UIP_TCP_BUF->seqno[3] = uip_connr->snd_nxt[3];
 
-  UIP_IP_BUF->proto = UIP_PROTO_TCP;
-
   UIP_TCP_BUF->srcport  = uip_connr->lport;
   UIP_TCP_BUF->destport = uip_connr->rport;
 
@@ -2257,6 +2260,8 @@ uip_process(uint8_t flag)
   }
 
  tcp_send_noconn:
+  UIP_IP_BUF->proto = UIP_PROTO_TCP;
+
   UIP_IP_BUF->ttl = uip_ds6_if.cur_hop_limit;
   UIP_IP_BUF->len[0] = ((uip_len - UIP_IPH_LEN) >> 8);
   UIP_IP_BUF->len[1] = ((uip_len - UIP_IPH_LEN) & 0xff);
@@ -2331,4 +2336,3 @@ uip_send(const void *data, int len)
 }
 /*---------------------------------------------------------------------------*/
 /** @} */
-#endif /* UIP_CONF_IPV6 */

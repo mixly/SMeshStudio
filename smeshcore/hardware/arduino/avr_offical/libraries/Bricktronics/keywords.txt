@@ -1,0 +1,27 @@
+#######################################
+# Syntax Coloring Map For Bricktronics
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Bricktronics	KEYWORD1
+Motor	KEYWORD1
+PIDMotor	KEYWORD1
+Button	KEYWORD1
+ColorSensor	KEYWORD1
+Ultrasonic	KEYWORD1
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin	KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+

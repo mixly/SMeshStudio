@@ -1,7 +1,3 @@
-/**
- * \addtogroup uip6
- * @{
- */
 /*
  * Copyright (c) 2010, Swedish Institute of Computer Science.
  * All rights reserved.
@@ -33,6 +29,7 @@
  * This file is part of the Contiki operating system.
  *
  */
+
 /**
  * \file
  *         Logic for Directed Acyclic Graphs in RPL.
@@ -41,6 +38,10 @@
  * Contributors: George Oikonomou <oikonomou@users.sourceforge.net> (multicast)
  */
 
+/**
+ * \addtogroup uip6
+ * @{
+ */
 
 #include "contiki.h"
 #include "net/rpl/rpl-private.h"
@@ -58,7 +59,6 @@
 #define DEBUG DEBUG_NONE
 #include "net/ip/uip-debug.h"
 
-#if UIP_CONF_IPV6
 /*---------------------------------------------------------------------------*/
 extern rpl_of_t RPL_OF;
 static rpl_of_t * const objective_functions[] = {&RPL_OF};
@@ -90,6 +90,13 @@ void
 rpl_dag_init(void)
 {
   nbr_table_register(rpl_parents, (nbr_table_callback *)nbr_callback);
+}
+/*---------------------------------------------------------------------------*/
+rpl_parent_t *
+rpl_get_parent(uip_lladdr_t *addr)
+{
+  rpl_parent_t *p = nbr_table_get_from_lladdr(rpl_parents, (linkaddr_t *)addr);
+  return p;
 }
 /*---------------------------------------------------------------------------*/
 rpl_rank_t
@@ -325,6 +332,7 @@ rpl_repair_root(uint8_t instance_id)
     PRINTF("RPL: rpl_repair_root triggered but not root\n");
     return 0;
   }
+  RPL_STAT(rpl_stats.root_repairs++);
 
   RPL_LOLLIPOP_INCREMENT(instance->current_dag->version);
   RPL_LOLLIPOP_INCREMENT(instance->dtsn_out);
@@ -512,6 +520,7 @@ rpl_free_instance(rpl_instance_t *instance)
 
   ctimer_stop(&instance->dio_timer);
   ctimer_stop(&instance->dao_timer);
+  ctimer_stop(&instance->dao_lifetime_timer);
 
   if(default_instance == instance) {
     default_instance = NULL;
@@ -1310,5 +1319,4 @@ rpl_lock_parent(rpl_parent_t *p)
   nbr_table_lock(rpl_parents, p);
 }
 /*---------------------------------------------------------------------------*/
-#endif /* UIP_CONF_IPV6 */
 /** @} */

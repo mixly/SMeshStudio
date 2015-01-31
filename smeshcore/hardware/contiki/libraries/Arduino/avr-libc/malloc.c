@@ -30,7 +30,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 */
  
- 
+
 /* $Id: malloc.c 2149 2010-06-09 20:45:37Z joerg_wunsch $ */
 
 #include <stdlib.h>

@@ -140,48 +140,48 @@ set_rime_addr(void)
 #else
   memcpy(addr.u8, ds2401_id, sizeof(addr.u8));
 #endif
-#if UIP_CONF_IPV6
-  memcpy(&uip_lladdr.addr, &addr.u8, sizeof(linkaddr_t));
-  linkaddr_set_node_addr(&addr);
-  rf230_set_pan_addr(params_get_panid(), params_get_panaddr(), (uint8_t *)&addr.u8);
+#if NETSTACK_CONF_WITH_IPV6
+	memcpy(&uip_lladdr.addr, &addr.u8, sizeof(linkaddr_t));
+	linkaddr_set_node_addr(&addr);
+	rf230_set_pan_addr(params_get_panid(), params_get_panaddr(), (uint8_t *)&addr.u8);
 #elif WITH_NODE_ID
-  node_id = get_panaddr_from_eeprom();
-  addr.u8[1] = node_id&0xff;
-  addr.u8[0] = (node_id&0xff00) >> 8;
-  PRINTA("Node ID from eeprom: %X\n", node_id);
-  uint16_t inv_node_id=((node_id & 0xff00) >> 8) + ((node_id & 0xff) << 8); // change order of bytes for rf23x
-  rimeaddr_set_node_addr(&addr);
-  rf230_set_pan_addr(params_get_panid(), inv_node_id, NULL);
+	node_id = get_panaddr_from_eeprom();
+	addr.u8[1] = node_id&0xff;
+	addr.u8[0] = (node_id&0xff00) >> 8;
+	PRINTA("Node ID from eeprom: %X\n", node_id);
+	uint16_t inv_node_id=((node_id & 0xff00) >> 8) + ((node_id & 0xff) << 8); // change order of bytes for rf23x
+	rimeaddr_set_node_addr(&addr);
+	rf230_set_pan_addr(params_get_panid(), inv_node_id, NULL);
 #else
-  rimeaddr_set_node_addr(&addr);
-  rf230_set_pan_addr(params_get_panid(), params_get_panaddr(), (uint8_t *)&addr.u8);
+	rimeaddr_set_node_addr(&addr);
+	rf230_set_pan_addr(params_get_panid(), params_get_panaddr(), (uint8_t *)&addr.u8);
 #endif
 #if ARDUINO
-  rf230_set_channel(arduino_channel);
-  rf230_set_txpower(arduino_power);
+	rf230_set_channel(arduino_channel);
+	rf230_set_txpower(arduino_power);
 #else
-  rf230_set_channel(params_get_channel());
-  rf230_set_txpower(params_get_txpower());
+	rf230_set_channel(params_get_channel());
+	rf230_set_txpower(params_get_txpower());
 #endif
-  
+
 }
 
 
 void
 init_usart(void)
 {
-  /* First rs232 port for debugging */
-  rs232_init(RS232_PORT_0, USART_BAUD_38400,
-      USART_PARITY_NONE | USART_STOP_BITS_1 | USART_DATA_BITS_8);
-  /* if you need you can use it
+	/* First rs232 port for debugging */
+	rs232_init(RS232_PORT_0, USART_BAUD_38400,
+			USART_PARITY_NONE | USART_STOP_BITS_1 | USART_DATA_BITS_8);
+	/* if you need you can use it
   rs232_init(RS232_PORT_1, USART_BAUD_38400,
       USART_PARITY_NONE | USART_STOP_BITS_1 | USART_DATA_BITS_8);
-*/
+	 */
 #if WITH_UIP || WITH_UIP6
-  //slip_arch_init(USART_BAUD_38400);
-  rs232_redirect_stdout(RS232_PORT_0);
+	//slip_arch_init(USART_BAUD_38400);
+	rs232_redirect_stdout(RS232_PORT_0);
 #else
-  rs232_redirect_stdout(RS232_PORT_0);
+	rs232_redirect_stdout(RS232_PORT_0);
 #endif /* WITH_UIP */
 }
 
@@ -189,59 +189,59 @@ init_usart(void)
 void
 init_net(void)
 {
-  /* Start radio and radio receive process */
+	/* Start radio and radio receive process */
 
-  NETSTACK_RADIO.init();
+	NETSTACK_RADIO.init();
 
-  /* Set addresses BEFORE starting tcpip process */
-  set_rime_addr();
+	/* Set addresses BEFORE starting tcpip process */
+	set_rime_addr();
 
 	queuebuf_init();
 
-  NETSTACK_RDC.init();
-  NETSTACK_MAC.init();
+	NETSTACK_RDC.init();
+	NETSTACK_MAC.init();
 
-  NETSTACK_NETWORK.init();
+	NETSTACK_NETWORK.init();
 
-  PRINTA("%s %s, channel %u , check rate %u Hz tx power %u\n", NETSTACK_MAC.name, NETSTACK_RDC.name, rf230_get_channel(),
-      CLOCK_SECOND / (NETSTACK_RDC.channel_check_interval() == 0 ? 1 : NETSTACK_RDC.channel_check_interval()),
-      rf230_get_txpower());
+	PRINTA("%s %s, channel %u , check rate %u Hz tx power %u\n", NETSTACK_MAC.name, NETSTACK_RDC.name, rf230_get_channel(),
+			CLOCK_SECOND / (NETSTACK_RDC.channel_check_interval() == 0 ? 1 : NETSTACK_RDC.channel_check_interval()),
+			rf230_get_txpower());
 #if UIP_CONF_IPV6_RPL
-  PRINTA("RPL Enabled\n");
+	PRINTA("RPL Enabled\n");
 #endif
 #if UIP_CONF_ROUTER
-  PRINTA("Routing Enabled\n");
+	PRINTA("Routing Enabled\n");
 #endif
 
-  process_start(&tcpip_process, NULL);
+	process_start(&tcpip_process, NULL);
 
-#if ANNOUNCE_BOOT && UIP_CONF_IPV6
-  PRINTA("Tentative link-local IPv6 address ");
-  {
-    uip_ds6_addr_t *lladdr;
-    int i;
-    lladdr = uip_ds6_get_link_local(-1);
-    for(i = 0; i < 7; ++i) {
-      PRINTA("%02x%02x:", lladdr->ipaddr.u8[i * 2],
-          lladdr->ipaddr.u8[i * 2 + 1]);
-    }
-    PRINTA("%02x%02x\n", lladdr->ipaddr.u8[14], lladdr->ipaddr.u8[15]);
-  }
+#if ANNOUNCE_BOOT && NETSTACK_CONF_WITH_IPV6
+	PRINTA("Tentative link-local IPv6 address ");
+	{
+		uip_ds6_addr_t *lladdr;
+		int i;
+		lladdr = uip_ds6_get_link_local(-1);
+		for(i = 0; i < 7; ++i) {
+			PRINTA("%02x%02x:", lladdr->ipaddr.u8[i * 2],
+					lladdr->ipaddr.u8[i * 2 + 1]);
+		}
+		PRINTA("%02x%02x\n", lladdr->ipaddr.u8[14], lladdr->ipaddr.u8[15]);
+	}
 
-  if(!UIP_CONF_IPV6_RPL) {
-    uip_ipaddr_t ipaddr;
-    int i;
-    uip_ip6addr(&ipaddr, 0xaaaa, 0, 0, 0, 0, 0, 0, 0);
-    uip_ds6_set_addr_iid(&ipaddr, &uip_lladdr);
-    uip_ds6_addr_add(&ipaddr, 0, ADDR_TENTATIVE);
-    PRINTA("Tentative global IPv6 address ");
-    for(i = 0; i < 7; ++i) {
-      PRINTA("%02x%02x:",
-          ipaddr.u8[i * 2], ipaddr.u8[i * 2 + 1]);
-    }
-    PRINTA("%02x%02x\n",
-        ipaddr.u8[7 * 2], ipaddr.u8[7 * 2 + 1]);
-  }
+	if(!UIP_CONF_IPV6_RPL) {
+		uip_ipaddr_t ipaddr;
+		int i;
+		uip_ip6addr(&ipaddr, 0xaaaa, 0, 0, 0, 0, 0, 0, 0);
+		uip_ds6_set_addr_iid(&ipaddr, &uip_lladdr);
+		uip_ds6_addr_add(&ipaddr, 0, ADDR_TENTATIVE);
+		PRINTA("Tentative global IPv6 address ");
+		for(i = 0; i < 7; ++i) {
+			PRINTA("%02x%02x:",
+					ipaddr.u8[i * 2], ipaddr.u8[i * 2 + 1]);
+		}
+		PRINTA("%02x%02x\n",
+				ipaddr.u8[7 * 2], ipaddr.u8[7 * 2 + 1]);
+	}
 #endif /* ANNOUNCE_BOOT */
 
 
@@ -433,7 +433,7 @@ uint8_t i;
 
 }
 
-#if ROUTES && UIP_CONF_IPV6
+#if ROUTES && NETSTACK_CONF_WITH_IPV6
 static void
 ipaddr_add(const uip_ipaddr_t *addr)
 {
@@ -477,15 +477,15 @@ main(void)
 */	
 	leds_on(LEDS_RED);
 #ifdef BORDER_ROUTER
-  process_start(&border_router_process, NULL);
-  //process_start(&webserver_nogui_process, NULL);
+	process_start(&border_router_process, NULL);
+	//process_start(&webserver_nogui_process, NULL);
 #endif
 	while(1) {
 		process_run();
 		watchdog_periodic();
-#if UIP_CONF_IPV6
+#if NETSTACK_CONF_WITH_IPV6
 	uip_ds6_nbr_t *nbr;
-#endif /* UIP_CONF_IPV6 */
+#endif /* NETSTACK_CONF_WITH_IPV6 */
 
 #if PERIODICPRINTS
 #if TESTRTIMER
@@ -497,18 +497,18 @@ main(void)
 			rtimer_set(&rt, RTIMER_NOW()+ RTIMER_ARCH_SECOND*1UL, 1,(void *) rtimercycle, NULL);
 			rtimerflag=0;
 #else
-  if (clocktime!=clock_seconds()) {
-     clocktime=clock_seconds();
+			if (clocktime!=clock_seconds()) {
+				clocktime=clock_seconds();
 #endif
 
 #if STAMPS
-if ((clocktime%STAMPS)==0) {
+				if ((clocktime%STAMPS)==0) {
 #if ENERGEST_CONF_ON
 #include "lib/print-stats.h"
-  print_stats();
+					print_stats();
 #elif RADIOSTATS
-extern volatile unsigned long radioontime;
-  PRINTF("%u(%u)s\n",clocktime,radioontime);
+					extern volatile unsigned long radioontime;
+					PRINTF("%u(%u)s\n",clocktime,radioontime);
 #else
   PRINTF("%us\n",clocktime);
 #endif
@@ -519,18 +519,18 @@ extern volatile unsigned long radioontime;
       clocktime+=1;
 #endif
 
-#if PINGS && UIP_CONF_IPV6
-extern void raven_ping6(void); 
-if ((clocktime%PINGS)==1) {
-  PRINTF("**Ping\n");
-  raven_ping6();
-}
+#if PINGS && NETSTACK_CONF_WITH_IPV6
+				extern void raven_ping6(void);
+				if ((clocktime%PINGS)==1) {
+					PRINTF("**Ping\n");
+					raven_ping6();
+				}
 #endif
 
-#if ROUTES && UIP_CONF_IPV6
-if ((clocktime%ROUTES)==2) {
-      
-extern uip_ds6_netif_t uip_ds6_if;
+#if ROUTES && NETSTACK_CONF_WITH_IPV6
+				if ((clocktime%ROUTES)==2) {
+
+					extern uip_ds6_netif_t uip_ds6_if;
 
   uint8_t i,j=0;
   PRINTF("\nAddresses [%u max]\n",UIP_DS6_ADDR_NB);

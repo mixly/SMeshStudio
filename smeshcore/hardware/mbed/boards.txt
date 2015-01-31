@@ -37,7 +37,7 @@ xbed_lpc1768_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none
 xbed_lpc1768_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
 xbed_lpc1768_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 ###################################################################################################################
-mbed_arch_lpc11u24_gcc_arm.name=Seeed Arch mbed LPC11U24 make by gcc_arm 
+mbed_arch_lpc11u24_gcc_arm.name=Seeed Arch mbed LPC11U24 make by gcc_arm and upload by copy  
 mbed_arch_lpc11u24_gcc_arm.upload.protocol=copy
 mbed_arch_lpc11u24_gcc_arm.upload.tool=mbed_cp
 mbed_arch_lpc11u24_gcc_arm.build.mcu=cortex-m0
@@ -70,11 +70,12 @@ mbed_arch_lpc11u24_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-e
 mbed_arch_lpc11u24_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
 mbed_arch_lpc11u24_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
 mbed_arch_lpc11u24_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hardware/mbed/variants/mbed_arch_lpc11u24_gcc_arm/cmsis/TARGET_NXP/TARGET_LPC11UXX/TOOLCHAIN_GCC_ARM/TARGET_LPC11U24_401" {build.LD_SYS_LIBS}
-mbed_arch_lpc11u24_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+#mbed_arch_lpc11u24_gcc_arm.recipe.objcopy.hex.pattern="{runtime.ide.path}/tools/avr/utils/bin/rm" -f "{build.path}/{build.project_name}.bin"  & "{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
 mbed_arch_lpc11u24_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+mbed_arch_lpc11u24_gcc_arm.recipe.objcopy.bin.pattern= "{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin" & "{runtime.ide.path}/tools/fix_checksum.exe" "{build.path}/{build.project_name}.bin"
 mbed_arch_lpc11u24_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 ###################################################################################################################
-mbed_xdow_lpc11u35_gcc_arm.name=Seeed XDOW mbed LPC11U35 make by gcc_arm 
+mbed_xdow_lpc11u35_gcc_arm.name=Seeed XDOW mbed LPC11U35 make by gcc_arm and upload by copy(can't work)
 mbed_xdow_lpc11u35_gcc_arm.upload.protocol=copy
 mbed_xdow_lpc11u35_gcc_arm.upload.tool=mbed_cp
 mbed_xdow_lpc11u35_gcc_arm.build.mcu=cortex-m0
@@ -107,12 +108,13 @@ mbed_xdow_lpc11u35_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-e
 mbed_xdow_lpc11u35_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
 mbed_xdow_lpc11u35_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
 mbed_xdow_lpc11u35_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hardware/mbed/variants/mbed_xdow_lpc11u35_gcc_arm/cmsis/TARGET_NXP/TARGET_LPC11UXX/TOOLCHAIN_GCC_ARM/TARGET_LPC11U35_401" {build.LD_SYS_LIBS}
-mbed_xdow_lpc11u35_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+mbed_xdow_lpc11u35_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin" 
+#& "{runtime.ide.path}/tools/fix_checksum.exe" "{build.path}/{build.project_name}.bin"
 mbed_xdow_lpc11u35_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
 mbed_xdow_lpc11u35_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 
 ###################################################################################################################
-mbed_arch_max_f407vg_gcc_arm.name= Seeed Arch Max mbed STM32F407VG make by gcc_arm
+mbed_arch_max_f407vg_gcc_arm.name= Seeed Arch Max mbed STM32F407VG make by gcc_arm and upload by copy
 mbed_arch_max_f407vg_gcc_arm.upload.protocol=copy
 mbed_arch_max_f407vg_gcc_arm.upload.tool=mbed_cp
 mbed_arch_max_f407vg_gcc_arm.build.mcu=cortex-m4
@@ -151,7 +153,7 @@ mbed_arch_max_f407vg_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}
 mbed_arch_max_f407vg_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 
 ###################################################################################################################
-mbed_arch_pro_lpc1768_gcc_arm.name=Seeed Arch Pro mbed LPC1768 make by gcc_arm 
+mbed_arch_pro_lpc1768_gcc_arm.name=Seeed Arch Pro mbed LPC1768 make by gcc_arm and upload by copy 
 mbed_arch_pro_lpc1768_gcc_arm.upload.protocol=copy
 mbed_arch_pro_lpc1768_gcc_arm.upload.tool=mbed_cp
 mbed_arch_pro_lpc1768_gcc_arm.build.mcu=cortex-m3
@@ -266,7 +268,7 @@ mbed_lpc1549_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none
 mbed_lpc1549_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 
 ###################################################################################################################
-mbed_f103rb_gcc_arm.name=  ST Nucleo F103RB mbed boards  by gcc_arm 
+mbed_f103rb_gcc_arm.name=  ST Nucleo F103RB mbed boards  by gcc_arm and upload by copy
 mbed_f103rb_gcc_arm.upload.protocol=copy
 mbed_f103rb_gcc_arm.upload.tool=mbed_cp
 mbed_f103rb_gcc_arm.build.mcu=cortex-m3
@@ -304,7 +306,7 @@ mbed_f103rb_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-
 mbed_f103rb_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 
 ###################################################################################################################
-mbed_f401re_gcc_arm.name=  ST Nucleo F401RE mbed boards  by gcc_arm 
+mbed_f401re_gcc_arm.name=  ST Nucleo F401RE mbed boards  by gcc_arm and upload by copy
 mbed_f401re_gcc_arm.upload.protocol=copy
 mbed_f401re_gcc_arm.upload.tool=mbed_cp
 mbed_f401re_gcc_arm.build.mcu=cortex-m4
@@ -341,7 +343,7 @@ mbed_f401re_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-
 mbed_f401re_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
 mbed_f401re_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 ###################################################################################################################
-mbed_f411re_gcc_arm.name=  ST Nucleo F411RE mbed boards  by gcc_arm 
+mbed_f411re_gcc_arm.name=  ST Nucleo F411RE mbed boards  by gcc_arm and upload by copy
 mbed_f411re_gcc_arm.upload.protocol=copy
 mbed_f411re_gcc_arm.upload.tool=mbed_cp
 mbed_f411re_gcc_arm.build.mcu=cortex-m4
@@ -379,7 +381,7 @@ mbed_f411re_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-
 mbed_f411re_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 
 ###################################################################################################################
-mbed_f334r8_gcc_arm.name=  ST Nucleo F334R8 mbed boards  by gcc_arm 
+mbed_f334r8_gcc_arm.name=  ST Nucleo F334R8 mbed boards  by gcc_arm and upload by copy
 mbed_f334r8_gcc_arm.upload.protocol=copy
 mbed_f334r8_gcc_arm.upload.tool=mbed_cp
 mbed_f334r8_gcc_arm.build.mcu=cortex-m4
@@ -416,7 +418,7 @@ mbed_f334r8_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-
 mbed_f334r8_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 
 ###################################################################################################################
-mbed_kl46z_gcc_arm.name=Freescale FRDM-KL46Z mbed boards by gcc_arm
+mbed_kl46z_gcc_arm.name=Freescale FRDM-KL46Z mbed boards by gcc_arm and upload by copy
 mbed_kl46z_gcc_arm.upload.protocol=copy
 mbed_kl46z_gcc_arm.upload.tool=mbed_cp
 mbed_kl46z_gcc_arm.build.mcu=cortex-m0plus
@@ -455,7 +457,7 @@ mbed_kl46z_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-e
 mbed_kl46z_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 
 ###################################################################################################################
-mbed_kl25z_gcc_arm.name=Freescale FRDM-KL25Z mbed boards by gcc_arm
+mbed_kl25z_gcc_arm.name=Freescale FRDM-KL25Z mbed boards by gcc_arm and upload by copy
 mbed_kl25z_gcc_arm.upload.protocol=copy
 mbed_kl25z_gcc_arm.upload.tool=mbed_cp
 mbed_kl25z_gcc_arm.build.mcu=cortex-m0plus
@@ -492,7 +494,7 @@ mbed_kl25z_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-e
 mbed_kl25z_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 
 ###################################################################################################################
-mbed_k20d50m_gcc_arm.name=Freescale FRDM-K20D50M mbed boards by gcc_arm
+mbed_k20d50m_gcc_arm.name=Freescale FRDM-K20D50M mbed boards by gcc_arm and upload by copy
 mbed_k20d50m_gcc_arm.upload.protocol=copy
 mbed_k20d50m_gcc_arm.upload.tool=mbed_cp
 mbed_k20d50m_gcc_arm.build.mcu=cortex-m4
@@ -530,7 +532,7 @@ mbed_k20d50m_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none
 mbed_k20d50m_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 
 ###################################################################################################################
-mbed_k22f_gcc_arm.name=Freescale FRDM-k22F mbed boards by gcc_arm
+mbed_k22f_gcc_arm.name=Freescale FRDM-k22F mbed boards by gcc_arm and upload by copy
 mbed_k22f_gcc_arm.upload.protocol=copy
 mbed_k22f_gcc_arm.upload.tool=mbed_cp
 mbed_k22f_gcc_arm.build.mcu=cortex-m4
@@ -567,7 +569,7 @@ mbed_k22f_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-ea
 mbed_k22f_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 
 ###################################################################################################################
-mbed_k64f_gcc_arm.name=Freescale FRDM-K64F mbed boards by gcc_arm
+mbed_k64f_gcc_arm.name=Freescale FRDM-K64F mbed boards by gcc_arm and upload by copy
 mbed_k64f_gcc_arm.upload.protocol=copy
 mbed_k64f_gcc_arm.upload.tool=mbed_cp
 mbed_k64f_gcc_arm.build.mcu=cortex-m4
@@ -604,7 +606,7 @@ mbed_k64f_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-ea
 mbed_k64f_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 
 ###################################################################################################################
-mbed_ble_arch_nrf51822_gcc_arm.name=Seeed Arch Ble mbed nrf51822 make by gcc_arm 
+mbed_ble_arch_nrf51822_gcc_arm.name=Seeed Arch Ble mbed nrf51822 make by gcc_arm and upload by copy 
 mbed_ble_arch_nrf51822_gcc_arm.upload.protocol=copy
 mbed_ble_arch_nrf51822_gcc_arm.upload.tool=mbed_cp_ble
 mbed_ble_arch_nrf51822_gcc_arm.build.mcu=cortex-m0
@@ -646,7 +648,7 @@ mbed_ble_arch_nrf51822_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-n
 
 ###################################################################################################################
 
-mbed_kl05z_gcc_arm.name=Freescale FRDM-KL05Z mbed boards by gcc_arm
+mbed_kl05z_gcc_arm.name=Freescale FRDM-KL05Z mbed boards by gcc_arm and upload by copy
 mbed_kl05z_gcc_arm.upload.protocol=copy
 mbed_kl05z_gcc_arm.upload.tool=mbed_cp
 mbed_kl05z_gcc_arm.build.mcu=cortex-m0plus

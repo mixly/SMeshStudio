@@ -69,6 +69,36 @@ uno.build.variant=standard
 
 ##############################################################
 
+uno2.name=4WD Robot Controller
+
+uno2.vid.0=0x2341
+uno2.pid.0=0x0043
+uno2.vid.1=0x2341
+uno2.pid.1=0x0001
+
+uno2.upload.tool=avrdude
+uno2.upload.protocol=arduino
+uno2.upload.maximum_size=32256
+uno2.upload.maximum_data_size=2048
+uno2.upload.speed=57600
+
+uno2.bootloader.tool=avrdude
+uno2.bootloader.low_fuses=0xFF
+uno2.bootloader.high_fuses=0xDE
+uno2.bootloader.extended_fuses=0x05
+uno2.bootloader.unlock_bits=0x3F
+uno2.bootloader.lock_bits=0x0F
+uno2.bootloader.file=optiboot/optiboot_atmega328.hex
+
+uno2.build.mcu=atmega328p
+uno2.build.f_cpu=16000000L
+uno2.build.board=AVR_UNO
+uno2.build.core=arduino
+uno2.build.variant=standard
+
+
+##############################################################
+
 diecimila.name=Arduino Duemilanove or Diecimila
 
 diecimila.upload.tool=avrdude

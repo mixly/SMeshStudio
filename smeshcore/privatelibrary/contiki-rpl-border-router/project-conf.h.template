@@ -8,7 +8,7 @@
 #define EUI64_ADDRESS {0x02, 0, 0, 0, 0, 0, 0, 0x11};
 #define RFCHANNEL 26
 //#define AUTOSTART_ENABLE 1
-//#define UIP_CONF_IPV6 1 
+//#define NETSTACK_CONF_WITH_IPV6 1 
 //#define RF230BB 1 
 //#define WATCHDOG_CONF_TIMEOUT WDTO_8S
 //#define AUTO_CRC_PADDING=2

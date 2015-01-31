@@ -141,7 +141,7 @@ set_rime_addr(void)
 #else
   memcpy(addr.u8, ds2401_id, sizeof(addr.u8));
 #endif
-#if UIP_CONF_IPV6
+#if NETSTACK_CONF_WITH_IPV6
 	memcpy(&uip_lladdr.addr, &addr.u8, sizeof(linkaddr_t));
 	linkaddr_set_node_addr(&addr);
 	rf230_set_pan_addr(params_get_panid(), params_get_panaddr(), (uint8_t *)&addr.u8);
@@ -216,7 +216,7 @@ init_net(void)
 
 	process_start(&tcpip_process, NULL);
 
-#if ANNOUNCE_BOOT && UIP_CONF_IPV6
+#if ANNOUNCE_BOOT && NETSTACK_CONF_WITH_IPV6
 	PRINTA("Tentative link-local IPv6 address ");
 	{
 		uip_ds6_addr_t *lladdr;
@@ -430,7 +430,7 @@ initialize(void)
 
 }
 
-#if ROUTES && UIP_CONF_IPV6
+#if ROUTES && NETSTACK_CONF_WITH_IPV6
 static void
 ipaddr_add(const uip_ipaddr_t *addr)
 {
@@ -480,9 +480,9 @@ main(void)
 	while(1) {
 		process_run();
 		watchdog_periodic();
-#if UIP_CONF_IPV6
+#if NETSTACK_CONF_WITH_IPV6
 	uip_ds6_nbr_t *nbr;
-#endif /* UIP_CONF_IPV6 */
+#endif /* NETSTACK_CONF_WITH_IPV6 */
 
 #if PERIODICPRINTS
 #if TESTRTIMER
@@ -516,7 +516,7 @@ main(void)
 				clocktime+=1;
 #endif
 
-#if PINGS && UIP_CONF_IPV6
+#if PINGS && NETSTACK_CONF_WITH_IPV6
 				extern void raven_ping6(void);
 				if ((clocktime%PINGS)==1) {
 					PRINTF("**Ping\n");
@@ -524,7 +524,7 @@ main(void)
 				}
 #endif
 
-#if ROUTES && UIP_CONF_IPV6
+#if ROUTES && NETSTACK_CONF_WITH_IPV6
 				if ((clocktime%ROUTES)==2) {
 
 					extern uip_ds6_netif_t uip_ds6_if;

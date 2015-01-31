@@ -20,6 +20,6 @@
 void i2c_init();
 void real_init_i2c();
 void i2c_config(unsigned char value);
-void i2c_delay_us(int t);
+void i2c_delay_us();
 
 #endif /* __I2C_H__ */

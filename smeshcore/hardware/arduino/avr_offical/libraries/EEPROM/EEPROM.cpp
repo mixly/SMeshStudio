@@ -15,7 +15,7 @@
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ */
 
 /******************************************************************************
  * Includes
@@ -46,5 +46,11 @@ void EEPROMClass::write(int address, uint8_t value)
 {
 	eeprom_write_byte((unsigned char *) address, value);
 }
-
+void EEPROMClass::checkwrite(int address, uint8_t value)
+{
+	eeprom_write_byte((unsigned char *) address, value);
+	for (int i=0;i<5;i++)
+		if (eeprom_read_byte((unsigned char *) address)==value)
+			break;
+}
 EEPROMClass EEPROM;

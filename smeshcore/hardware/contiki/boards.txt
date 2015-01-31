@@ -46,7 +46,7 @@ iduinormini.recipe.size.pattern="{compiler.path}{compiler.size.cmd}" --format=av
 iduinormini.recipe.size.regex=^(?:\.text|\.data|\.bootloader)\s+([0-9]+).*
 iduinormini.recipe.size.regex.data=^(?:\.data|\.bss|\.noinit)\s+([0-9]+).*
 iduinormini.recipe.size.regex.eeprom=^(?:\.eeprom)\s+([0-9]+).*
-iduinormini.build.extra_flags=-DHAVE_STDINT_H -DRF230BB=1 -DUIP_CONF_IPV6=1 -DWATCHDOG_CONF_TIMEOUT=WDTO_8S -DAUTO_CRC_PADDING=2 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1 -DRS232_CONF_NUMPORTS=2 
+iduinormini.build.extra_flags=-DHAVE_STDINT_H -DRF230BB=1 -DUIP_CONF_IPV6=1 -DNETSTACK_CONF_WITH_IPV6=1 -DWATCHDOG_CONF_TIMEOUT=WDTO_8S -DAUTO_CRC_PADDING=2 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1 -DRS232_CONF_NUMPORTS=2 
 ##############################################################
 mx2xxcc.name=contiki_mx2xxcc
 mx2xxcc.cpu=atmega1284p
@@ -94,7 +94,7 @@ mx2xxcc.recipe.size.pattern="{compiler.path}{compiler.size.cmd}" --format=avr --
 mx2xxcc.recipe.size.regex=^(?:\.text|\.data|\.bootloader)\s+([0-9]+).*
 mx2xxcc.recipe.size.regex.data=^(?:\.data|\.bss|\.noinit)\s+([0-9]+).*
 mx2xxcc.recipe.size.regex.eeprom=^(?:\.eeprom)\s+([0-9]+).*
-mx2xxcc.build.extra_flags=-DHAVE_STDINT_H -DRF230BB=1 -DUIP_CONF_IPV6=1 -DWATCHDOG_CONF_TIMEOUT=WDTO_8S -DAUTO_CRC_PADDING=2 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1  -DRS232_CONF_NUMPORTS=2
+mx2xxcc.build.extra_flags=-DHAVE_STDINT_H -DRF230BB=1 -DUIP_CONF_IPV6=1 -DNETSTACK_CONF_WITH_IPV6=1 -DWATCHDOG_CONF_TIMEOUT=WDTO_8S -DAUTO_CRC_PADDING=2 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1  -DRS232_CONF_NUMPORTS=2
 ##############################################################
 mxseabo.name=contiki_mxseabo_8M
 mxseabo.cpu=atmega1284p
@@ -142,7 +142,7 @@ mxseabo.recipe.size.pattern="{compiler.path}{compiler.size.cmd}" --format=avr --
 mxseabo.recipe.size.regex=^(?:\.text|\.data|\.bootloader)\s+([0-9]+).*
 mxseabo.recipe.size.regex.data=^(?:\.data|\.bss|\.noinit)\s+([0-9]+).*
 mxseabo.recipe.size.regex.eeprom=^(?:\.eeprom)\s+([0-9]+).*
-mxseabo.build.extra_flags=-DHAVE_STDINT_H -DRF230BB=1 -DUIP_CONF_IPV6=1 -DWATCHDOG_CONF_TIMEOUT=WDTO_8S -DAUTO_CRC_PADDING=2 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1  -DRS232_CONF_NUMPORTS=2
+mxseabo.build.extra_flags=-DHAVE_STDINT_H -DRF230BB=1 -DUIP_CONF_IPV6=1 -DNETSTACK_CONF_WITH_IPV6=1 -DWATCHDOG_CONF_TIMEOUT=WDTO_8S -DAUTO_CRC_PADDING=2 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1  -DRS232_CONF_NUMPORTS=2
 ##############################################################
 #mxusbstick.name=contiki_mxusbstick
 #mxusbstick.cpu=atmega128rfa1
@@ -190,7 +190,7 @@ mxseabo.build.extra_flags=-DHAVE_STDINT_H -DRF230BB=1 -DUIP_CONF_IPV6=1 -DWATCHD
 #mxusbstick.recipe.size.regex=^(?:\.text|\.data|\.bootloader)\s+([0-9]+).*
 #mxusbstick.recipe.size.regex.data=^(?:\.data|\.bss|\.noinit)\s+([0-9]+).*
 #mxusbstick.recipe.size.regex.eeprom=^(?:\.eeprom)\s+([0-9]+).*
-#mxusbstick.build.extra_flags=-DHAVE_STDINT_H -DRF230BB=1 -DUIP_CONF_IPV6=1 -DWATCHDOG_CONF_TIMEOUT=WDTO_8S -DAUTO_CRC_PADDING=2 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1 -DJACKDAW=1 -DAVRGCC=1 -DCONTIKI_TARGET_AVR_RAVENUSB=1
+#mxusbstick.build.extra_flags=-DHAVE_STDINT_H -DRF230BB=1 -DUIP_CONF_IPV6=1 -DNETSTACK_CONF_WITH_IPV6=1 -DWATCHDOG_CONF_TIMEOUT=WDTO_8S -DAUTO_CRC_PADDING=2 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1 -DJACKDAW=1 -DAVRGCC=1 -DCONTIKI_TARGET_AVR_RAVENUSB=1
 ##############################################################
 zigduino.name=contiki_zigduino
 zigduino.cpu=atmega128rfa1
@@ -238,7 +238,7 @@ zigduino.recipe.size.pattern="{compiler.path}{compiler.size.cmd}" --format=avr -
 zigduino.recipe.size.regex=^(?:\.text|\.data|\.bootloader)\s+([0-9]+).*
 zigduino.recipe.size.regex.data=^(?:\.data|\.bss|\.noinit)\s+([0-9]+).*
 zigduino.recipe.size.regex.eeprom=^(?:\.eeprom)\s+([0-9]+).*
-zigduino.build.extra_flags=-DHAVE_STDINT_H -DRF230BB=1 -DUIP_CONF_IPV6=1 -DWATCHDOG_CONF_TIMEOUT=WDTO_8S -DAUTO_CRC_PADDING=2 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1 -DRS232_CONF_NUMPORTS=2 
+zigduino.build.extra_flags=-DHAVE_STDINT_H -DRF230BB=1 -DUIP_CONF_IPV6=1 -DNETSTACK_CONF_WITH_IPV6=1 -DWATCHDOG_CONF_TIMEOUT=WDTO_8S -DAUTO_CRC_PADDING=2 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1 -DRS232_CONF_NUMPORTS=2 
 ########################################################################################
 cc2538dk_gcc_arm.name=contiki_cc2538 upload by bsl 
 cc2538dk_gcc_arm.upload.protocol=ti bsl
@@ -262,7 +262,7 @@ cc2538dk_gcc_arm.build.variant=cc2538
 cc2538dk_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m3 -mthumb -mlittle-endian -ffunction-sections -fdata-sections -fshort-enums -fomit-frame-pointer -fno-strict-aliasing -Wall -Os -c
 #cc2538dk_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
 #cc2538dk_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98
-cc2538dk_gcc_arm.build.CC_SYMBOLS = -DUIP_CONF_IPV6=1 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1 -DCONTIKI_TARGET_CC2538DK=1 
+cc2538dk_gcc_arm.build.CC_SYMBOLS = -DUIP_CONF_IPV6=1 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1 -DCONTIKI_TARGET_CC2538DK=1 -DNETSTACK_CONF_WITH_IPV6=1
 cc2538dk_gcc_arm.build.LD_FLAGS = -mcpu=cortex-m3 -mthumb -nostartfiles  -Wl,--gc-sections,--sort-section=alignment -Wl,-Map=$(@:.elf=-cc2538.map),--cref,--no-warn-mismatch -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float
 cc2538dk_gcc_arm.build.LD_SYS_LIBS =  -lstdc++ -lsupc++ -lm -lc -lgcc 
 cc2538dk_gcc_arm.build.ldscript=hardware/contiki/variants/cc2538/cpu/cc2538/cc2538.ld

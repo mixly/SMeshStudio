@@ -1,22 +1,3 @@
-
-/**
- * \addtogroup uip
- * @{
- */
-
-/**
- * \file
- * Header file for the uIP TCP/IP stack.
- * \author  Adam Dunkels <adam@dunkels.com>
- * \author  Julien Abeille <jabeille@cisco.com> (IPv6 related code)
- * \author  Mathilde Durvy <mdurvy@cisco.com> (IPv6 related code)
- *
- * The uIP TCP/IP stack header file contains definitions for a number
- * of C macros that are used by uIP programs as well as internal uIP
- * structures, TCP/IP header structures and function declarations.
- *
- */
-
 /*
  * Copyright (c) 2001-2003, Adam Dunkels.
  * All rights reserved.
@@ -50,16 +31,34 @@
  *
  */
 
+/**
+ * \addtogroup uip
+ * @{
+ */
+
+/**
+ * \file
+ * Header file for the uIP TCP/IP stack.
+ * \author  Adam Dunkels <adam@dunkels.com>
+ * \author  Julien Abeille <jabeille@cisco.com> (IPv6 related code)
+ * \author  Mathilde Durvy <mdurvy@cisco.com> (IPv6 related code)
+ *
+ * The uIP TCP/IP stack header file contains definitions for a number
+ * of C macros that are used by uIP programs as well as internal uIP
+ * structures, TCP/IP header structures and function declarations.
+ *
+ */
+
 #ifndef UIP_H_
 #define UIP_H_
 
 /* Header sizes. */
-#if UIP_CONF_IPV6
+#if NETSTACK_CONF_WITH_IPV6
 #define UIP_IPH_LEN    40
 #define UIP_FRAGH_LEN  8
-#else /* UIP_CONF_IPV6 */
+#else /* NETSTACK_CONF_WITH_IPV6 */
 #define UIP_IPH_LEN    20    /* Size of IP header */
-#endif /* UIP_CONF_IPV6 */
+#endif /* NETSTACK_CONF_WITH_IPV6 */
 
 #define UIP_UDPH_LEN    8    /* Size of UDP header */
 #define UIP_TCPH_LEN   20    /* Size of TCP header */
@@ -76,7 +75,7 @@
                                                          + IP header */
 #define UIP_LLIPH_LEN (UIP_LLH_LEN + UIP_IPH_LEN)    /* size of L2
                                                         + IP header */
-#if UIP_CONF_IPV6
+#if NETSTACK_CONF_WITH_IPV6
 /**
  * The sums below are quite used in ND. When used for uip_buf, we
  * include link layer length when used for uip_len, we do not, hence
@@ -87,10 +86,13 @@
 #define uip_l2_l3_icmp_hdr_len (UIP_LLH_LEN + UIP_IPH_LEN + uip_ext_len + UIP_ICMPH_LEN)
 #define uip_l3_hdr_len (UIP_IPH_LEN + uip_ext_len)
 #define uip_l3_icmp_hdr_len (UIP_IPH_LEN + uip_ext_len + UIP_ICMPH_LEN)
-#endif /*UIP_CONF_IPV6*/
+#endif /*NETSTACK_CONF_WITH_IPV6*/
 
 
 #include "net/ip/uipopt.h"
+
+/* For memcmp */
+#include <string.h>
 
 /**
  * Representation of an IP address.
@@ -106,11 +108,11 @@ typedef union uip_ip6addr_t {
   uint16_t u16[8];
 } uip_ip6addr_t;
 
-#if UIP_CONF_IPV6
+#if NETSTACK_CONF_WITH_IPV6
 typedef uip_ip6addr_t uip_ipaddr_t;
-#else /* UIP_CONF_IPV6 */
+#else /* NETSTACK_CONF_WITH_IPV6 */
 typedef uip_ip4addr_t uip_ipaddr_t;
-#endif /* UIP_CONF_IPV6 */
+#endif /* NETSTACK_CONF_WITH_IPV6 */
 
 
 /*---------------------------------------------------------------------------*/
@@ -182,7 +184,7 @@ typedef uip_eth_addr uip_lladdr_t;
 
  uip_ipaddr(&addr, 192,168,1,2);
  uip_sethostaddr(&addr);
- 
+
  \endcode
  * \param addr A pointer to an IP address of type uip_ipaddr_t;
  *
@@ -531,7 +533,7 @@ CCIF extern uip_buf_t uip_aligned_buf;
  * \defgroup uipappfunc uIP application functions
  * @{
  *
- * Functions used by an application running of top of uIP.
+ * Functions used by an application running on top of uIP.
  */
 
 /**
@@ -848,7 +850,7 @@ CCIF void uip_send(const void *data, int len);
  \code
  uip_ipaddr_t addr;
  struct uip_udp_conn *c;
- 
+
  uip_ipaddr(&addr, 192,168,2,1);
  c = uip_udp_new(&addr, UIP_HTONS(12345));
  if(c != NULL) {
@@ -909,7 +911,7 @@ struct uip_udp_conn *uip_udp_new(const uip_ipaddr_t *ripaddr, uint16_t rport);
  * These functions can be used for converting between different data
  * formats used by uIP.
  */
- 
+
 /**
  * Convert an IP address to four bytes separated by commas.
  *
@@ -935,7 +937,7 @@ struct uip_udp_conn *uip_udp_new(const uip_ipaddr_t *ripaddr, uint16_t rport);
  \code
  uip_ipaddr_t ipaddr;
  struct uip_conn *c;
- 
+
  uip_ipaddr(&ipaddr, 192,168,1,2);
  c = uip_connect(&ipaddr, UIP_HTONS(80));
  \endcode
@@ -1054,11 +1056,11 @@ struct uip_udp_conn *uip_udp_new(const uip_ipaddr_t *ripaddr, uint16_t rport);
 				      (addr1)->u16[1] == (addr2)->u16[1])
 #define uip_ip6addr_cmp(addr1, addr2) (memcmp(addr1, addr2, sizeof(uip_ip6addr_t)) == 0)
 
-#if UIP_CONF_IPV6
+#if NETSTACK_CONF_WITH_IPV6
 #define uip_ipaddr_cmp(addr1, addr2) uip_ip6addr_cmp(addr1, addr2)
-#else /* UIP_CONF_IPV6 */
+#else /* NETSTACK_CONF_WITH_IPV6 */
 #define uip_ipaddr_cmp(addr1, addr2) uip_ip4addr_cmp(addr1, addr2)
-#endif /* UIP_CONF_IPV6 */
+#endif /* NETSTACK_CONF_WITH_IPV6 */
 
 /**
  * Compare two IP addresses with netmasks
@@ -1333,11 +1335,11 @@ extern uint16_t uip_urglen, uip_surglen;
  */
 struct uip_conn {
   uip_ipaddr_t ripaddr;   /**< The IP address of the remote host. */
-  
+
   uint16_t lport;        /**< The local TCP port, in network byte order. */
   uint16_t rport;        /**< The local remote TCP port, in network byte
 			 order. */
-  
+
   uint8_t rcv_nxt[4];    /**< The sequence number that we expect to
 			 receive next. */
   uint8_t snd_nxt[4];    /**< The sequence number that was last sent by
@@ -1440,7 +1442,7 @@ struct uip_stats {
 			     layer. */
     uip_stats_t sent;     /**< Number of sent packets at the IP
 			     layer. */
-    uip_stats_t forwarded;/**< Number of forwarded packets at the IP 
+    uip_stats_t forwarded;/**< Number of forwarded packets at the IP
 			     layer. */
     uip_stats_t drop;     /**< Number of dropped packets at the IP
 			     layer. */
@@ -1492,13 +1494,13 @@ struct uip_stats {
 			     checksum. */
   } udp;                  /**< UDP statistics. */
 #endif /* UIP_UDP */
-#if UIP_CONF_IPV6
+#if NETSTACK_CONF_WITH_IPV6
   struct {
     uip_stats_t drop;     /**< Number of dropped ND6 packets. */
     uip_stats_t recv;     /**< Number of recived ND6 packets */
     uip_stats_t sent;     /**< Number of sent ND6 packets */
   } nd6;
-#endif /*UIP_CONF_IPV6*/
+#endif /*NETSTACK_CONF_WITH_IPV6*/
 };
 
 
@@ -1569,14 +1571,14 @@ uip_ext_hdr_options_process(); */
  * The actual uIP function which does all the work.
  */
 void uip_process(uint8_t flag);
-  
+
   /* The following flags are passed as an argument to the uip_process()
    function. They are used to distinguish between the two cases where
    uip_process() is called. It can be called either because we have
    incoming data that should be processed, or because the periodic
    timer has fired. These values are never used directly, but only in
    the macros defined in this file. */
- 
+
 #define UIP_DATA          1     /* Tells uIP that there is incoming
 				   data in the uip_buf buffer. The
 				   length of the data is stored in the
@@ -1603,12 +1605,12 @@ void uip_process(uint8_t flag);
 #define UIP_TIME_WAIT   7
 #define UIP_LAST_ACK    8
 #define UIP_TS_MASK     15
-  
+
 #define UIP_STOPPED      16
 
 /* The TCP and IP headers. */
 struct uip_tcpip_hdr {
-#if UIP_CONF_IPV6
+#if NETSTACK_CONF_WITH_IPV6
   /* IPv6 header. */
   uint8_t vtc,
     tcflow;
@@ -1616,7 +1618,7 @@ struct uip_tcpip_hdr {
   uint8_t len[2];
   uint8_t proto, ttl;
   uip_ip6addr_t srcipaddr, destipaddr;
-#else /* UIP_CONF_IPV6 */
+#else /* NETSTACK_CONF_WITH_IPV6 */
   /* IPv4 header. */
   uint8_t vhl,
     tos,
@@ -1627,8 +1629,8 @@ struct uip_tcpip_hdr {
     proto;
   uint16_t ipchksum;
   uip_ipaddr_t srcipaddr, destipaddr;
-#endif /* UIP_CONF_IPV6 */
-  
+#endif /* NETSTACK_CONF_WITH_IPV6 */
+
   /* TCP header. */
   uint16_t srcport,
     destport;
@@ -1644,7 +1646,7 @@ struct uip_tcpip_hdr {
 
 /* The ICMP and IP headers. */
 struct uip_icmpip_hdr {
-#if UIP_CONF_IPV6
+#if NETSTACK_CONF_WITH_IPV6
   /* IPv6 header. */
   uint8_t vtc,
     tcf;
@@ -1652,7 +1654,7 @@ struct uip_icmpip_hdr {
   uint8_t len[2];
   uint8_t proto, ttl;
   uip_ip6addr_t srcipaddr, destipaddr;
-#else /* UIP_CONF_IPV6 */
+#else /* NETSTACK_CONF_WITH_IPV6 */
   /* IPv4 header. */
   uint8_t vhl,
     tos,
@@ -1663,21 +1665,21 @@ struct uip_icmpip_hdr {
     proto;
   uint16_t ipchksum;
   uip_ipaddr_t srcipaddr, destipaddr;
-#endif /* UIP_CONF_IPV6 */
-  
+#endif /* NETSTACK_CONF_WITH_IPV6 */
+
   /* ICMP header. */
   uint8_t type, icode;
   uint16_t icmpchksum;
-#if !UIP_CONF_IPV6
+#if !NETSTACK_CONF_WITH_IPV6
   uint16_t id, seqno;
   uint8_t payload[1];
-#endif /* !UIP_CONF_IPV6 */
+#endif /* !NETSTACK_CONF_WITH_IPV6 */
 };
 
 
 /* The UDP and IP headers. */
 struct uip_udpip_hdr {
-#if UIP_CONF_IPV6
+#if NETSTACK_CONF_WITH_IPV6
   /* IPv6 header. */
   uint8_t vtc,
     tcf;
@@ -1685,7 +1687,7 @@ struct uip_udpip_hdr {
   uint8_t len[2];
   uint8_t proto, ttl;
   uip_ip6addr_t srcipaddr, destipaddr;
-#else /* UIP_CONF_IPV6 */
+#else /* NETSTACK_CONF_WITH_IPV6 */
   /* IP header. */
   uint8_t vhl,
     tos,
@@ -1696,8 +1698,8 @@ struct uip_udpip_hdr {
     proto;
   uint16_t ipchksum;
   uip_ipaddr_t srcipaddr, destipaddr;
-#endif /* UIP_CONF_IPV6 */
-  
+#endif /* NETSTACK_CONF_WITH_IPV6 */
+
   /* UDP header. */
   uint16_t srcport,
     destport;
@@ -1712,7 +1714,7 @@ struct uip_udpip_hdr {
  */
 /* The IP header */
 struct uip_ip_hdr {
-#if UIP_CONF_IPV6
+#if NETSTACK_CONF_WITH_IPV6
   /* IPV6 header */
   uint8_t vtc;
   uint8_t tcflow;
@@ -1720,7 +1722,7 @@ struct uip_ip_hdr {
   uint8_t len[2];
   uint8_t proto, ttl;
   uip_ip6addr_t srcipaddr, destipaddr;
-#else /* UIP_CONF_IPV6 */
+#else /* NETSTACK_CONF_WITH_IPV6 */
   /* IPV4 header */
   uint8_t vhl,
     tos,
@@ -1731,7 +1733,7 @@ struct uip_ip_hdr {
     proto;
   uint16_t ipchksum;
   uip_ipaddr_t srcipaddr, destipaddr;
-#endif /* UIP_CONF_IPV6 */
+#endif /* NETSTACK_CONF_WITH_IPV6 */
 };
 
 
@@ -1840,9 +1842,9 @@ struct uip_tcp_hdr {
 struct uip_icmp_hdr {
   uint8_t type, icode;
   uint16_t icmpchksum;
-#if !UIP_CONF_IPV6
+#if !NETSTACK_CONF_WITH_IPV6
   uint16_t id, seqno;
-#endif /* !UIP_CONF_IPV6 */
+#endif /* !NETSTACK_CONF_WITH_IPV6 */
 };
 
 
@@ -1878,7 +1880,7 @@ struct uip_udp_hdr {
 #define UIP_PROTO_ICMP6 58
 
 
-#if UIP_CONF_IPV6
+#if NETSTACK_CONF_WITH_IPV6
 /** @{ */
 /** \brief  extension headers types */
 #define UIP_PROTO_HBHO        0
@@ -1915,7 +1917,7 @@ struct uip_udp_hdr {
 /** @} */
 
 
-#endif /* UIP_CONF_IPV6 */
+#endif /* NETSTACK_CONF_WITH_IPV6 */
 
 
 #if UIP_FIXEDADDR
@@ -1935,7 +1937,7 @@ CCIF extern uip_lladdr_t uip_lladdr;
 
 
 
-#if UIP_CONF_IPV6
+#if NETSTACK_CONF_WITH_IPV6
 /** Length of the link local prefix */
 #define UIP_LLPREF_LEN     10
 
@@ -2032,7 +2034,7 @@ CCIF extern uip_lladdr_t uip_lladdr;
    (((a)->u8[12]) == 0xFF))
 
 /**
- * \briefput in b the solicited node address corresponding to address a
+ * \brief put in b the solicited node address corresponding to address a
  * both a and b are of type uip_ipaddr_t*
  * */
 #define uip_create_solicited_node(a, b)    \
@@ -2083,7 +2085,7 @@ CCIF extern uip_lladdr_t uip_lladdr;
    (((a)->u8[13]) == (m)->addr[3]) &&            \
    (((a)->u8[14]) == (m)->addr[4]) &&            \
    (((a)->u8[15]) == (m)->addr[5]))
-   
+
 #endif /*UIP_CONF_LL_802154*/
 
 /**
@@ -2160,7 +2162,7 @@ CCIF extern uip_lladdr_t uip_lladdr;
    (((a)->u8[14])  == ((b)->u8[14])) &&                 \
    (((a)->u8[15])  == ((b)->u8[15])))
 
-#endif /*UIP_CONF_IPV6*/
+#endif /*NETSTACK_CONF_WITH_IPV6*/
 
 /**
  * Calculate the Internet checksum over a buffer.
