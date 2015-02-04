@@ -41,8 +41,8 @@
 
 #define DEVICE_PWMOUT           1
 
-#define DEVICE_SEMIHOST         1
-#define DEVICE_LOCALFILESYSTEM  1
+#define DEVICE_SEMIHOST         0
+#define DEVICE_LOCALFILESYSTEM  0
 #define DEVICE_ID_LENGTH       32
 #define DEVICE_MAC_OFFSET      20
 
@@ -50,7 +50,7 @@
 
 #define DEVICE_DEBUG_AWARENESS  0
 
-#define DEVICE_STDIO_MESSAGES   1
+#define DEVICE_STDIO_MESSAGES   0
 
 #define DEVICE_ERROR_PATTERN    1
 

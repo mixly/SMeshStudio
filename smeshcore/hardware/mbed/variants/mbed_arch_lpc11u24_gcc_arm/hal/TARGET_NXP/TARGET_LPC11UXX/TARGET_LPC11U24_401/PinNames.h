@@ -93,77 +93,58 @@ typedef enum {
 
     P1_31 = 63,
 
-    // mbed DIP Pin Names
-    p5  = P0_9,
-    p6  = P0_8,
-    p7  = P1_29,
-    p8  = P0_2,
-    p9  = P1_27,
-    p10 = P1_26,
-    p11 = P1_22,
-    p12 = P1_21,
-    p13 = P1_20,
-    p14 = P1_23,
-    p15 = P0_11,
-    p16 = P0_12,
-    p17 = P0_13,
-    p18 = P0_14,
-    p19 = P0_16,
-    p20 = P0_22,
-    p21 = P0_7,
-    p22 = P0_17,
-    p23 = P1_17,
-    p24 = P1_18,
-    p25 = P1_24,
-    p26 = P1_25,
-    p27 = P0_4,
-    p28 = P0_5,
-    p29 = P1_5,
-    p30 = P1_2,
+    // LED Names
+    LED1 = P1_24,
+    LED2 = P1_25,
+    LED3 = P1_26,
+    LED4 = P0_0,
+    LED5 = P1_3,
+    LED6 = P1_2,
+    LED7 = P1_1,
+    LED8 = P1_0,
 
-    p33 = P0_3,
-    p34 = P1_15,
-    p35 = P0_20,
-    p36 = P0_21,
+    // BTN Names
+    BTN1 = P0_16,
+    BTN2 = P0_1,
+    
+    // UART
+    UART_TX = P0_19,
+    UART_RX = P0_18,
 
-    // Other mbed Pin Names
-    LED1 = P1_8,
-    LED2 = P1_9,
-    LED3 = P1_10,
-    LED4 = P1_11,
-
-    USBTX = P0_19,
-    USBRX = P0_18,
-
-    // for Arch V1.1
+    // Arduino Shield Receptacles Names
     D0 = P0_18,
     D1 = P0_19,
-    D2 = P0_17,
-    D3 = P1_17,
-    D4 = P1_18,
-    D5 = P1_24,
-    D6 = P1_25,
-    D7 = P1_5,
-    D8 = P1_26,
-    D9 = P1_27,
-    D10 = P0_2,
-    D11 = P0_9,  // P1_29 for Arch V1.0
-    D12 = P0_8,
-    D13 = P1_29, // P0_9 for Arch V1.0
-
-    D14 = P0_5,
-    D15 = P0_4,
+    D2 = P1_17,
+    D3 = P1_24,
+    D4 = P1_5,
+    D5 = P0_1,
+    D6 = P1_27,
+    D7 = P0_7,
+    D8 = P0_2,
+    D9 = P1_25,
+    D10= P1_23,
+    D11= P0_21,
+    D12= P0_22,
+    D13= P1_15,
+    D14= P0_5,
+    D15= P0_4,
 
     A0 = P0_11,
     A1 = P0_12,
     A2 = P0_13,
-    A3 = P0_14,
-    A4 = P0_16,
-    A5 = P0_22,
-
-    I2C_SCL = D15,
-    I2C_SDA = D14,
-
+    A3 = P0_16,
+    A4 = P0_5, // same port as SDA
+    A5 = P0_4, // same port as SCL
+    
+    SDA= P0_5, // same port as A4
+    SCL= P0_4, // same port as A5
+    
+    //SD Card pins
+    SDMOSI = P0_9,
+    SDMISO = P0_8,
+    SDSCLK = P1_29,
+    SDSSEL = P1_12,
+    
     // Not connected
     NC = (int)0xFFFFFFFF,
 } PinName;

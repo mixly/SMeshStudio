@@ -1,41 +1,42 @@
+mbed_arch_ble_nrf51822_gcc_arm.name=Seeed Arch Ble mbed nrf51822 make by gcc_arm and upload by copy 
+mbed_arch_ble_nrf51822_gcc_arm.upload.protocol=copy
+mbed_arch_ble_nrf51822_gcc_arm.upload.tool=mbed_cp_ble
+mbed_arch_ble_nrf51822_gcc_arm.build.mcu=cortex-m0
+mbed_arch_ble_nrf51822_gcc_arm.build.cpu=NRF51822
 
-xbed_lpc1768_gcc_arm.name=xbed  LPC1768 make by gcc_arm and upload by flashmagic 
-xbed_lpc1768_gcc_arm.upload.protocol=flashmagic
-xbed_lpc1768_gcc_arm.upload.tool=mbed_fm
-xbed_lpc1768_gcc_arm.build.mcu=cortex-m3
-xbed_lpc1768_gcc_arm.build.cpu=LPC1768
+mbed_arch_ble_nrf51822_gcc_arm.build.architecture=arm-none-eabi
+mbed_arch_ble_nrf51822_gcc_arm.build.command.as=arm-none-eabi-as
+mbed_arch_ble_nrf51822_gcc_arm.build.command.gcc=arm-none-eabi-gcc
+mbed_arch_ble_nrf51822_gcc_arm.build.command.g++=arm-none-eabi-g++
+mbed_arch_ble_nrf51822_gcc_arm.build.command.ar=arm-none-eabi-ar
+mbed_arch_ble_nrf51822_gcc_arm.build.command.objcopy=arm-none-eabi-objcopy
+mbed_arch_ble_nrf51822_gcc_arm.build.command.objdump=arm-none-eabi-objdump
+mbed_arch_ble_nrf51822_gcc_arm.build.command.size=arm-none-eabi-size
 
-xbed_lpc1768_gcc_arm.build.architecture=arm-none-eabi
-xbed_lpc1768_gcc_arm.build.command.as=arm-none-eabi-as
-xbed_lpc1768_gcc_arm.build.command.gcc=arm-none-eabi-gcc
-xbed_lpc1768_gcc_arm.build.command.g++=arm-none-eabi-g++
-xbed_lpc1768_gcc_arm.build.command.ar=arm-none-eabi-ar
-xbed_lpc1768_gcc_arm.build.command.objcopy=arm-none-eabi-objcopy
-xbed_lpc1768_gcc_arm.build.command.objdump=arm-none-eabi-objdump
-xbed_lpc1768_gcc_arm.build.command.size=arm-none-eabi-size
+mbed_arch_ble_nrf51822_gcc_arm.build.core=mbed
+mbed_arch_ble_nrf51822_gcc_arm.build.variant=mbed_arch_ble_nrf51822_gcc_arm
 
-xbed_lpc1768_gcc_arm.build.core=mbed
-xbed_lpc1768_gcc_arm.build.variant=xbed1.0_lpc1768_gcc_arm
+mbed_arch_ble_nrf51822_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m0 -mthumb -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer -Wno-unused-function -Wno-unused-variable -fpermissive
+mbed_arch_ble_nrf51822_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
+mbed_arch_ble_nrf51822_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98  -fno-rtti
+mbed_arch_ble_nrf51822_gcc_arm.build.CC_SYMBOLS = -DTARGET_NRF51822 -DTARGET_M0 -DTARGET_NORDIC -DTARGET_NRF51822_MKIT -DTARGET_MCU_NRF51822 -DTARGET_MCU_NORDIC_16K -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M0 -DARM_MATH_CM0 -DMBED_BUILD_TIMESTAMP=1414913665.85 -D__MBED__=1 
+mbed_arch_ble_nrf51822_gcc_arm.build.LD_FLAGS = -mcpu=cortex-m0 -mthumb -Wl,--gc-sections -Wl,--wrap=main --specs=nano.specs -u _printf_float -u _scanf_float
+mbed_arch_ble_nrf51822_gcc_arm.build.LD_SYS_LIBS =  -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+
+mbed_arch_ble_nrf51822_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_arch_ble_nrf51822_gcc_arm/cmsis/TARGET_NORDIC/TARGET_NRF51822/TOOLCHAIN_GCC_ARM/TARGET_MCU_NORDIC_16K/NRF51822.ld
+mbed_arch_ble_nrf51822_gcc_arm.build.use_archiver=false
+mbed_arch_ble_nrf51822_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_arch_ble_nrf51822_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_arch_ble_nrf51822_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
+mbed_arch_ble_nrf51822_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
+mbed_arch_ble_nrf51822_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hardware/mbed/variants/xbed1.0_nrf51822_gcc_arm/cmsis/TARGET_NORDIC/TARGET_NRF51822/TOOLCHAIN_GCC_ARM" {build.LD_SYS_LIBS}
+mbed_arch_ble_nrf51822_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+
+mbed_arch_ble_nrf51822_gcc_arm.recipe.objcopy.bin.pattern="{runtime.ide.path}/tools/utils/srec_cat" "{runtime.ide.path}/hardware/mbed/variants/mbed_arch_ble_nrf51822_gcc_arm/hal/TARGET_NORDIC/TARGET_NRF51822/Lib/s110_nrf51822_7_1_0/s110_nrf51822_7.1.0_softdevice.hex" -intel "{build.path}/{build.project_name}.hex" -intel -o combined.hex -intel --line-length=44
+
+mbed_arch_ble_nrf51822_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 
 
-xbed_lpc1768_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m3 -mthumb -c -Os -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fno-strict-aliasing -Wno-unused-function -Wno-unused-variable 
-xbed_lpc1768_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
-xbed_lpc1768_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98
-xbed_lpc1768_gcc_arm.build.CC_SYMBOLS = -DTARGET_LPC1768 -DTARGET_M3 -DTARGET_NXP -DTARGET_LPC176X -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M3 -DARM_MATH_CM3 -DUIP_CONF_IPV6=1 -DHAVE_STDINT_H -DRF230BB=1 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1
-xbed_lpc1768_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m3 -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float
-xbed_lpc1768_gcc_arm.build.LD_SYS_LIBS =  -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
-
-xbed_lpc1768_gcc_arm.build.ldscript=hardware/mbed/variants/xbed1.0_lpc1768_gcc_arm/cmsis/TARGET_NXP/TARGET_LPC176X/TOOLCHAIN_GCC_ARM/LPC1768.ld
-
-xbed_lpc1768_gcc_arm.build.use_archiver=false
-xbed_lpc1768_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
-xbed_lpc1768_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
-xbed_lpc1768_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
-xbed_lpc1768_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
-xbed_lpc1768_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hardware/mbed/variants/xbed1.0_lpc1768_gcc_arm/cmsis/TARGET_NXP/TARGET_LPC176X/TOOLCHAIN_GCC_ARM" {build.LD_SYS_LIBS}
-xbed_lpc1768_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
-xbed_lpc1768_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
-xbed_lpc1768_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 ###################################################################################################################
 mbed_arch_lpc11u24_gcc_arm.name=Seeed Arch mbed LPC11U24 make by gcc_arm and upload by copy  
 mbed_arch_lpc11u24_gcc_arm.upload.protocol=copy
@@ -140,7 +141,7 @@ mbed_arch_max_f407vg_gcc_arm.build.CC_SYMBOLS =-DTARGET_ARCH_MAX -DTARGET_M4 -DT
 mbed_arch_max_f407vg_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float -Wl,-Map={build.project_name}.map,--cref
 mbed_arch_max_f407vg_gcc_arm.build.LD_SYS_LIBS =   -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
 
-mbed_arch_max_f407vg_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_arch_max_stm32f407_gcc_arm/cmsis/TARGET_STM/TARGET_STM32F407VG/TOOLCHAIN_GCC_ARM/STM32F407.ld
+mbed_arch_max_f407vg_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_arch_max_stm32f407_gcc_arm/cmsis/TARGET_STM/TARGET_STM32F4/TARGET_STM32F407VG/TOOLCHAIN_GCC_ARM/STM32F407XG.ld
 
 mbed_arch_max_f407vg_gcc_arm.build.use_archiver=false
 mbed_arch_max_f407vg_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
@@ -190,89 +191,13 @@ mbed_arch_pro_lpc1768_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}a
 mbed_arch_pro_lpc1768_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
 mbed_arch_pro_lpc1768_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
 mbed_arch_pro_lpc1768_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
-###################################################################################################################
-mbed_lpc1768_gcc_arm.name=mbed LPC1768 make by gcc_arm and upload by copy 
-mbed_lpc1768_gcc_arm.upload.protocol=copy
-mbed_lpc1768_gcc_arm.upload.tool=mbed_cp
-mbed_lpc1768_gcc_arm.build.mcu=cortex-m3
-mbed_lpc1768_gcc_arm.build.cpu=LPC1768
-
-mbed_lpc1768_gcc_arm.build.architecture=arm-none-eabi
-mbed_lpc1768_gcc_arm.build.command.as=arm-none-eabi-as
-mbed_lpc1768_gcc_arm.build.command.gcc=arm-none-eabi-gcc
-mbed_lpc1768_gcc_arm.build.command.g++=arm-none-eabi-g++
-mbed_lpc1768_gcc_arm.build.command.ar=arm-none-eabi-ar
-mbed_lpc1768_gcc_arm.build.command.objcopy=arm-none-eabi-objcopy
-mbed_lpc1768_gcc_arm.build.command.objdump=arm-none-eabi-objdump
-mbed_lpc1768_gcc_arm.build.command.size=arm-none-eabi-size
-
-mbed_lpc1768_gcc_arm.build.core=mbed
-mbed_lpc1768_gcc_arm.build.variant=xbed1.0_lpc1768_gcc_arm
-
-mbed_lpc1768_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m3 -mthumb -c -Os -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -Wno-unused-function -Wno-unused-variable 
-mbed_lpc1768_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
-mbed_lpc1768_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98
-mbed_lpc1768_gcc_arm.build.CC_SYMBOLS = -DTARGET_LPC1768 -DTARGET_M3 -DTARGET_NXP -DTARGET_LPC176X -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M3 -DARM_MATH_CM3  
- 
-mbed_lpc1768_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m3 -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float
-mbed_lpc1768_gcc_arm.build.LD_SYS_LIBS =  -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
-
-mbed_lpc1768_gcc_arm.build.ldscript=hardware/mbed/variants/xbed1.0_lpc1768_gcc_arm/cmsis/TARGET_NXP/TARGET_LPC176X/TOOLCHAIN_GCC_ARM/LPC1768.ld
-
-mbed_lpc1768_gcc_arm.build.use_archiver=false
-mbed_lpc1768_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
-mbed_lpc1768_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
-mbed_lpc1768_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
-mbed_lpc1768_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
-mbed_lpc1768_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hardware/mbed/variants/xbed1.0_lpc1768_gcc_arm/cmsis/TARGET_NXP/TARGET_LPC176X/TOOLCHAIN_GCC_ARM" {build.LD_SYS_LIBS}
-mbed_lpc1768_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
-mbed_lpc1768_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
-mbed_lpc1768_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 
 ###################################################################################################################
-mbed_lpc1549_gcc_arm.name=mbed LPC1549 LPCXpresso make by gcc_arm and upload by copy 
-mbed_lpc1549_gcc_arm.upload.protocol=copy
-mbed_lpc1549_gcc_arm.upload.tool=mbed_cp
-mbed_lpc1549_gcc_arm.build.mcu=cortex-m3
-mbed_lpc1549_gcc_arm.build.cpu=lpc1549
-
-mbed_lpc1549_gcc_arm.build.architecture=arm-none-eabi
-mbed_lpc1549_gcc_arm.build.command.as=arm-none-eabi-as
-mbed_lpc1549_gcc_arm.build.command.gcc=arm-none-eabi-gcc
-mbed_lpc1549_gcc_arm.build.command.g++=arm-none-eabi-g++
-mbed_lpc1549_gcc_arm.build.command.ar=arm-none-eabi-ar
-mbed_lpc1549_gcc_arm.build.command.objcopy=arm-none-eabi-objcopy
-mbed_lpc1549_gcc_arm.build.command.objdump=arm-none-eabi-objdump
-mbed_lpc1549_gcc_arm.build.command.size=arm-none-eabi-size
-
-mbed_lpc1549_gcc_arm.build.core=mbed
-mbed_lpc1549_gcc_arm.build.variant=mbed_lpc1549_gcc_arm
-
-mbed_lpc1549_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m3 -mthumb  -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer  -Wno-unused-function -Wno-unused-variable -MMD -MP
-mbed_lpc1549_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
-mbed_lpc1549_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98 -fno-rtti
-mbed_lpc1549_gcc_arm.build.CC_SYMBOLS = -DTARGET_LPC1549 -DTARGET_M3 -DTARGET_NXP -DTARGET_LPC15XX -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M3 -DARM_MATH_CM3 -DMBED_BUILD_TIMESTAMP=1414315787.71 -D__MBED__=1 -DTARGET_FF_ARDUINO 
-mbed_lpc1549_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m3 -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float
-mbed_lpc1549_gcc_arm.build.LD_SYS_LIBS =  -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
-
-mbed_lpc1549_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_lpc1549_gcc_arm/cmsis/TARGET_NXP/TARGET_LPC15XX/TOOLCHAIN_GCC_ARM/lpc1549.ld
-
-mbed_lpc1549_gcc_arm.build.use_archiver=false
-mbed_lpc1549_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
-mbed_lpc1549_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
-mbed_lpc1549_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
-mbed_lpc1549_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
-mbed_lpc1549_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hardware/mbed/variants/mbed_lpc1549_gcc_arm/cmsis/TARGET_NXP/TARGET_LPC15XX/TOOLCHAIN_GCC_ARM" {build.LD_SYS_LIBS}
-mbed_lpc1549_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
-mbed_lpc1549_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
-mbed_lpc1549_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
-
-###################################################################################################################
-mbed_f103rb_gcc_arm.name=  ST Nucleo F103RB mbed boards  by gcc_arm and upload by copy
+mbed_f103rb_gcc_arm.name=ST Nucleo F103RB mbed boards  by gcc_arm and upload by copy
 mbed_f103rb_gcc_arm.upload.protocol=copy
 mbed_f103rb_gcc_arm.upload.tool=mbed_cp
 mbed_f103rb_gcc_arm.build.mcu=cortex-m3
-mbed_f103rb_gcc_arm.build.cpu=STM32F103RB
+mbed_f103rb_gcc_arm.build.cpu=STM32F103RBT6
 
 mbed_f103rb_gcc_arm.build.architecture=arm-none-eabi
 mbed_f103rb_gcc_arm.build.command.as=arm-none-eabi-as
@@ -286,11 +211,11 @@ mbed_f103rb_gcc_arm.build.command.size=arm-none-eabi-size
 mbed_f103rb_gcc_arm.build.core=mbed
 mbed_f103rb_gcc_arm.build.variant=mbed_f103rb_gcc_arm
 
-mbed_f103rb_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m3 -mthumb -c -Os -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -Wno-unused-function -Wno-unused-variable 
+mbed_f103rb_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m3 -mthumb -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fno-rtti  -DNDEBUG -Os
 mbed_f103rb_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
 mbed_f103rb_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98
-mbed_f103rb_gcc_arm.build.CC_SYMBOLS = -DTARGET_STM -DTARGET_M3  -DSTM32F10X_MD  -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M3 -DARM_MATH_CM3  -DSTM32F1 -DSTM32F103RB -DSTM
-mbed_f103rb_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m3 -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float
+mbed_f103rb_gcc_arm.build.CC_SYMBOLS =  -DTARGET_NUCLEO_F103RB -DTARGET_M3 -DTARGET_CORTEX_M -DTARGET_STM -DTARGET_STM32F1 -DTARGET_STM32F103RB -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M3 -DARM_MATH_CM3 -DMBED_BUILD_TIMESTAMP=1423023642.31 -D__MBED__=1 -DTARGET_FF_ARDUINO -DTARGET_FF_MORPHO 
+mbed_f103rb_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m3 -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float -Wl,--wrap,main  -Wl,-Map={build.project_name}.map,--cref
 mbed_f103rb_gcc_arm.build.LD_SYS_LIBS =  -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
 
 mbed_f103rb_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_f103rb_gcc_arm/cmsis/TARGET_STM/TARGET_NUCLEO_F103RB/TOOLCHAIN_GCC_ARM/STM32F10X.ld
@@ -306,11 +231,11 @@ mbed_f103rb_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-
 mbed_f103rb_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 
 ###################################################################################################################
-mbed_f401re_gcc_arm.name=  ST Nucleo F401RE mbed boards  by gcc_arm and upload by copy
+mbed_f401re_gcc_arm.name=ST Nucleo F401RE mbed boards  by gcc_arm and upload by copy
 mbed_f401re_gcc_arm.upload.protocol=copy
 mbed_f401re_gcc_arm.upload.tool=mbed_cp
 mbed_f401re_gcc_arm.build.mcu=cortex-m4
-mbed_f401re_gcc_arm.build.cpu=STM32f401RE
+mbed_f401re_gcc_arm.build.cpu=STM32F401RET6
 
 mbed_f401re_gcc_arm.build.architecture=arm-none-eabi
 mbed_f401re_gcc_arm.build.command.as=arm-none-eabi-as
@@ -324,14 +249,14 @@ mbed_f401re_gcc_arm.build.command.size=arm-none-eabi-size
 mbed_f401re_gcc_arm.build.core=mbed
 mbed_f401re_gcc_arm.build.variant=mbed_f401re_gcc_arm
 
-mbed_f401re_gcc_arm.build.CC_FLAGS=  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections  -Wno-unused-function -Wno-unused-variable -MMD -MP
+mbed_f401re_gcc_arm.build.CC_FLAGS=  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections  -Wno-unused-function -Wno-unused-variable -MMD -MP  -DNDEBUG -Os
 mbed_f401re_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
 mbed_f401re_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98 -fno-rtti
 mbed_f401re_gcc_arm.build.CC_SYMBOLS =  -DTARGET_NUCLEO_F401RE -DTARGET_M4 -DTARGET_STM -DTARGET_STM32F4 -DTARGET_STM32F401RE -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M4 -DARM_MATH_CM4 -D__FPU_PRESENT=1 -DMBED_BUILD_TIMESTAMP=1413962987.25 -D__MBED__=1 -DTARGET_FF_ARDUINO -DTARGET_FF_MORPHO 
 mbed_f401re_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float -Wl,-Map={build.project_name}.map,--cref
 mbed_f401re_gcc_arm.build.LD_SYS_LIBS =   -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
 
-mbed_f401re_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_f401re_gcc_arm/cmsis/TARGET_STM/TARGET_NUCLEO_f401re/TOOLCHAIN_GCC_ARM/NUCLEO_F401RE.ld
+mbed_f401re_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_f401re_gcc_arm/cmsis/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F401RE/TOOLCHAIN_GCC_ARM/STM32F401XE.ld
 
 mbed_f401re_gcc_arm.build.use_archiver=false
 mbed_f401re_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
@@ -347,7 +272,7 @@ mbed_f411re_gcc_arm.name=  ST Nucleo F411RE mbed boards  by gcc_arm and upload b
 mbed_f411re_gcc_arm.upload.protocol=copy
 mbed_f411re_gcc_arm.upload.tool=mbed_cp
 mbed_f411re_gcc_arm.build.mcu=cortex-m4
-mbed_f411re_gcc_arm.build.cpu=STM32f411RE
+mbed_f411re_gcc_arm.build.cpu=STM32F411RET6
 
 mbed_f411re_gcc_arm.build.architecture=arm-none-eabi
 mbed_f411re_gcc_arm.build.command.as=arm-none-eabi-as
@@ -361,14 +286,14 @@ mbed_f411re_gcc_arm.build.command.size=arm-none-eabi-size
 mbed_f411re_gcc_arm.build.core=mbed
 mbed_f411re_gcc_arm.build.variant=mbed_f411re_gcc_arm
 
-mbed_f411re_gcc_arm.build.CC_FLAGS=  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections  -Wno-unused-function -Wno-unused-variable -MMD -MP
+mbed_f411re_gcc_arm.build.CC_FLAGS=  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections  -Wno-unused-function -Wno-unused-variable -MMD -MP  -DNDEBUG -Os
 mbed_f411re_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
 mbed_f411re_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98 -fno-rtti
 mbed_f411re_gcc_arm.build.CC_SYMBOLS =-DTARGET_NUCLEO_F411RE -DTARGET_M4 -DTARGET_STM -DTARGET_STM32F4 -DTARGET_STM32F411RE -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M4 -DARM_MATH_CM4 -D__FPU_PRESENT=1 -DMBED_BUILD_TIMESTAMP=1414313260.2 -D__MBED__=1 -DTARGET_FF_ARDUINO -DTARGET_FF_MORPHO 
 mbed_f411re_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float -Wl,-Map={build.project_name}.map,--cref
 mbed_f411re_gcc_arm.build.LD_SYS_LIBS =   -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
 
-mbed_f411re_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_f411re_gcc_arm/cmsis/TARGET_STM/TARGET_NUCLEO_f411re/TOOLCHAIN_GCC_ARM/NUCLEO_f411RE.ld
+mbed_f411re_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_f411re_gcc_arm/cmsis/TARGET_STM/TARGET_STM32F4/TARGET_NUCLEO_F411RE/TOOLCHAIN_GCC_ARM/STM32F411XE.ld
 
 mbed_f411re_gcc_arm.build.use_archiver=false
 mbed_f411re_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
@@ -385,7 +310,7 @@ mbed_f334r8_gcc_arm.name=  ST Nucleo F334R8 mbed boards  by gcc_arm and upload b
 mbed_f334r8_gcc_arm.upload.protocol=copy
 mbed_f334r8_gcc_arm.upload.tool=mbed_cp
 mbed_f334r8_gcc_arm.build.mcu=cortex-m4
-mbed_f334r8_gcc_arm.build.cpu=STM32f334R8
+mbed_f334r8_gcc_arm.build.cpu=STM32F334R8T6
 
 mbed_f334r8_gcc_arm.build.architecture=arm-none-eabi
 mbed_f334r8_gcc_arm.build.command.as=arm-none-eabi-as
@@ -399,13 +324,13 @@ mbed_f334r8_gcc_arm.build.command.size=arm-none-eabi-size
 mbed_f334r8_gcc_arm.build.core=mbed
 mbed_f334r8_gcc_arm.build.variant=mbed_f334r8_gcc_arm
 
-mbed_f334r8_gcc_arm.build.CC_FLAGS=  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections  -Wno-unused-function -Wno-unused-variable -MMD -MP
+mbed_f334r8_gcc_arm.build.CC_FLAGS=  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections  -Wno-unused-function -Wno-unused-variable -MMD -MP  -DNDEBUG -Os
 mbed_f334r8_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
 mbed_f334r8_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98 -fno-rtti
 mbed_f334r8_gcc_arm.build.CC_SYMBOLS = -DTARGET_NUCLEO_F334R8 -DTARGET_M4 -DTARGET_STM -DTARGET_STM32F3 -DTARGET_STM32F334R8 -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M4 -DARM_MATH_CM4 -D__FPU_PRESENT=1 -DMBED_BUILD_TIMESTAMP=1414314040.05 -D__MBED__=1 -DTARGET_FF_ARDUINO -DTARGET_FF_MORPHO 
 mbed_f334r8_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float -Wl,-Map={build.project_name}.map,--cref
 mbed_f334r8_gcc_arm.build.LD_SYS_LIBS =   -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
-mbed_f334r8_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_f334r8_gcc_arm/cmsis/TARGET_STM/TARGET_NUCLEO_F334R8/TOOLCHAIN_GCC_ARM/NUCLEO_F334R8.ld
+mbed_f334r8_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_f334r8_gcc_arm/cmsis/TARGET_STM/TARGET_STM32F3/TARGET_NUCLEO_F334R8/TOOLCHAIN_GCC_ARM/STM32F334x8.ld
 
 mbed_f334r8_gcc_arm.build.use_archiver=false
 mbed_f334r8_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
@@ -416,7 +341,224 @@ mbed_f334r8_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-ea
 mbed_f334r8_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
 mbed_f334r8_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
 mbed_f334r8_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
+###################################################################################################################
+mbed_f302r8_gcc_arm.name=  ST Nucleo F302R8 mbed boards  by gcc_arm and upload by copy
+mbed_f302r8_gcc_arm.upload.protocol=copy
+mbed_f302r8_gcc_arm.upload.tool=mbed_cp
+mbed_f302r8_gcc_arm.build.mcu=cortex-m4
+mbed_f302r8_gcc_arm.build.cpu=STM32F302R8T6
 
+mbed_f302r8_gcc_arm.build.architecture=arm-none-eabi
+mbed_f302r8_gcc_arm.build.command.as=arm-none-eabi-as
+mbed_f302r8_gcc_arm.build.command.gcc=arm-none-eabi-gcc
+mbed_f302r8_gcc_arm.build.command.g++=arm-none-eabi-g++
+mbed_f302r8_gcc_arm.build.command.ar=arm-none-eabi-ar
+mbed_f302r8_gcc_arm.build.command.objcopy=arm-none-eabi-objcopy
+mbed_f302r8_gcc_arm.build.command.objdump=arm-none-eabi-objdump
+mbed_f302r8_gcc_arm.build.command.size=arm-none-eabi-size
+
+mbed_f302r8_gcc_arm.build.core=mbed
+mbed_f302r8_gcc_arm.build.variant=mbed_f302r8_gcc_arm
+
+mbed_f302r8_gcc_arm.build.CC_FLAGS=  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections  -Wno-unused-function -Wno-unused-variable -MMD -MP  -DNDEBUG -Os
+mbed_f302r8_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
+mbed_f302r8_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98 -fno-rtti
+mbed_f302r8_gcc_arm.build.CC_SYMBOLS = -DTARGET_NUCLEO_F302R8 -DTARGET_M4 -DTARGET_CORTEX_M -DTARGET_STM -DTARGET_STM32F3 -DTARGET_STM32F302R8 -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M4 -DARM_MATH_CM4 -D__FPU_PRESENT=1 -DMBED_BUILD_TIMESTAMP=1423019726.34 -D__MBED__=1 -DTARGET_FF_ARDUINO -DTARGET_FF_MORPHO  
+mbed_f302r8_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float -Wl,-Map={build.project_name}.map,--cref
+mbed_f302r8_gcc_arm.build.LD_SYS_LIBS =   -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+mbed_f302r8_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_f302r8_gcc_arm/cmsis/TARGET_STM/TARGET_STM32F3/TARGET_NUCLEO_F302R8/TOOLCHAIN_GCC_ARM/STM32F302X8.ld
+
+mbed_f302r8_gcc_arm.build.use_archiver=false
+mbed_f302r8_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_f302r8_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_f302r8_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
+mbed_f302r8_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
+mbed_f302r8_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hardware/mbed/variants/mbed_f302r8_gcc_arm/cmsis/TARGET_STM/TARGET_STM32F3/TARGET_NUCLEO_F302R8/TOOLCHAIN_GCC_ARM" {build.LD_SYS_LIBS}
+mbed_f302r8_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+mbed_f302r8_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+mbed_f302r8_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
+###################################################################################################################
+mbed_l152re_gcc_arm.name=  ST Nucleo L152RE mbed boards  by gcc_arm and upload by copy
+mbed_l152re_gcc_arm.upload.protocol=copy
+mbed_l152re_gcc_arm.upload.tool=mbed_cp
+mbed_l152re_gcc_arm.build.mcu=cortex-m3
+mbed_l152re_gcc_arm.build.cpu=STM32L152RET6 
+
+mbed_l152re_gcc_arm.build.architecture=arm-none-eabi
+mbed_l152re_gcc_arm.build.command.as=arm-none-eabi-as
+mbed_l152re_gcc_arm.build.command.gcc=arm-none-eabi-gcc
+mbed_l152re_gcc_arm.build.command.g++=arm-none-eabi-g++
+mbed_l152re_gcc_arm.build.command.ar=arm-none-eabi-ar
+mbed_l152re_gcc_arm.build.command.objcopy=arm-none-eabi-objcopy
+mbed_l152re_gcc_arm.build.command.objdump=arm-none-eabi-objdump
+mbed_l152re_gcc_arm.build.command.size=arm-none-eabi-size
+
+mbed_l152re_gcc_arm.build.core=mbed
+mbed_l152re_gcc_arm.build.variant=mbed_l152re_gcc_arm
+
+mbed_l152re_gcc_arm.build.CC_FLAGS=  -mcpu=cortex-m3 -mthumb  -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fno-rtti -MMD -MP  -DNDEBUG -Os
+mbed_l152re_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
+mbed_l152re_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98 -fno-rtti
+mbed_l152re_gcc_arm.build.CC_SYMBOLS = -DTARGET_NUCLEO_L152RE -DTARGET_M3 -DTARGET_CORTEX_M -DTARGET_STM -DTARGET_STM32L1 -DTARGET_STM32L152RE -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M3 -DARM_MATH_CM3 -DMBED_BUILD_TIMESTAMP=1423019984.86 -D__MBED__=1 -DTARGET_FF_ARDUINO -DTARGET_FF_MORPHO   
+mbed_l152re_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m3 -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float -Wl,--wrap,main -Wl,-Map={build.project_name}.map,--cref
+mbed_l152re_gcc_arm.build.LD_SYS_LIBS =   -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+mbed_l152re_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_l152re_gcc_arm/cmsis/TARGET_STM/TARGET_STM32L1/TARGET_NUCLEO_L152RE/TOOLCHAIN_GCC_ARM/STM32L152XE.ld
+
+mbed_l152re_gcc_arm.build.use_archiver=false
+mbed_l152re_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_l152re_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_l152re_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
+mbed_l152re_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
+mbed_l152re_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hardware/mbed/variants/mbed_l152re_gcc_arm/cmsis/TARGET_STM/TARGET_STM32L1/TARGET_NUCLEO_L152RE/TOOLCHAIN_GCC_ARM" {build.LD_SYS_LIBS}
+mbed_l152re_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+mbed_l152re_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+mbed_l152re_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
+
+###################################################################################################################
+mbed_l053r8_gcc_arm.name=  ST Nucleo L053R8 mbed boards  by gcc_arm and upload by copy
+mbed_l053r8_gcc_arm.upload.protocol=copy
+mbed_l053r8_gcc_arm.upload.tool=mbed_cp
+mbed_l053r8_gcc_arm.build.mcu=cortex-m0plus
+mbed_l053r8_gcc_arm.build.cpu=STM32L053R8T6  
+
+mbed_l053r8_gcc_arm.build.architecture=arm-none-eabi
+mbed_l053r8_gcc_arm.build.command.as=arm-none-eabi-as
+mbed_l053r8_gcc_arm.build.command.gcc=arm-none-eabi-gcc
+mbed_l053r8_gcc_arm.build.command.g++=arm-none-eabi-g++
+mbed_l053r8_gcc_arm.build.command.ar=arm-none-eabi-ar
+mbed_l053r8_gcc_arm.build.command.objcopy=arm-none-eabi-objcopy
+mbed_l053r8_gcc_arm.build.command.objdump=arm-none-eabi-objdump
+mbed_l053r8_gcc_arm.build.command.size=arm-none-eabi-size
+
+mbed_l053r8_gcc_arm.build.core=mbed
+mbed_l053r8_gcc_arm.build.variant=mbed_l053r8_gcc_arm
+
+mbed_l053r8_gcc_arm.build.CC_FLAGS=  -mcpu=cortex-m0plus -mthumb  -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer -MMD -MP -DNDEBUG -Os
+mbed_l053r8_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
+mbed_l053r8_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98 -fno-rtti
+mbed_l053r8_gcc_arm.build.CC_SYMBOLS =  -DTARGET_NUCLEO_L053R8 -DTARGET_M0P -DTARGET_CORTEX_M -DTARGET_STM -DTARGET_STM32L0 -DTARGET_STM32L053R8 -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M0PLUS -DARM_MATH_CM0PLUS -DMBED_BUILD_TIMESTAMP=1423023193.21 -D__MBED__=1 -DTARGET_FF_ARDUINO -DTARGET_FF_MORPHO 
+mbed_l053r8_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m0plus -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float -Wl,--wrap,main -Wl,-Map={build.project_name}.map,--cref
+mbed_l053r8_gcc_arm.build.LD_SYS_LIBS = -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+mbed_l053r8_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_l053r8_gcc_arm/cmsis/TARGET_STM/TARGET_STM32L0/TARGET_NUCLEO_L053R8/TOOLCHAIN_GCC_ARM/STM32L053X8.ld
+
+mbed_l053r8_gcc_arm.build.use_archiver=false
+mbed_l053r8_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_l053r8_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_l053r8_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
+mbed_l053r8_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
+mbed_l053r8_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hardware/mbed/variants/mbed_l053r8_gcc_arm/cmsis/TARGET_STM/TARGET_STM32L0/TARGET_NUCLEO_L053R8/TOOLCHAIN_GCC_ARM" {build.LD_SYS_LIBS}
+mbed_l053r8_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+mbed_l053r8_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+mbed_l053r8_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
+
+###################################################################################################################
+mbed_f030r8_gcc_arm.name=ST Nucleo F030R8 mbed boards  by gcc_arm and upload by copy
+mbed_f030r8_gcc_arm.upload.protocol=copy
+mbed_f030r8_gcc_arm.upload.tool=mbed_cp
+mbed_f030r8_gcc_arm.build.mcu=cortex-m0
+mbed_f030r8_gcc_arm.build.cpu=STM32F030R8T6   
+
+mbed_f030r8_gcc_arm.build.architecture=arm-none-eabi
+mbed_f030r8_gcc_arm.build.command.as=arm-none-eabi-as
+mbed_f030r8_gcc_arm.build.command.gcc=arm-none-eabi-gcc
+mbed_f030r8_gcc_arm.build.command.g++=arm-none-eabi-g++
+mbed_f030r8_gcc_arm.build.command.ar=arm-none-eabi-ar
+mbed_f030r8_gcc_arm.build.command.objcopy=arm-none-eabi-objcopy
+mbed_f030r8_gcc_arm.build.command.objdump=arm-none-eabi-objdump
+mbed_f030r8_gcc_arm.build.command.size=arm-none-eabi-size
+
+mbed_f030r8_gcc_arm.build.core=mbed
+mbed_f030r8_gcc_arm.build.variant=mbed_f030r8_gcc_arm
+
+mbed_f030r8_gcc_arm.build.CC_FLAGS=  -mcpu=cortex-m0 -mthumb  -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -MMD -MP -DNDEBUG -Os
+mbed_f030r8_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
+mbed_f030r8_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98 -fno-rtti
+mbed_f030r8_gcc_arm.build.CC_SYMBOLS =  -DTARGET_NUCLEO_F030R8 -DTARGET_M0 -DTARGET_CORTEX_M -DTARGET_STM -DTARGET_STM32F0 -DTARGET_STM32F030R8 -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M0 -DARM_MATH_CM0 -DMBED_BUILD_TIMESTAMP=1423023986.89 -D__MBED__=1 -DTARGET_FF_ARDUINO -DTARGET_FF_MORPHO  
+mbed_f030r8_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m0 -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float -Wl,--wrap,main -Wl,-Map={build.project_name}.map,--cref
+mbed_f030r8_gcc_arm.build.LD_SYS_LIBS = -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+mbed_f030r8_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_f030r8_gcc_arm/cmsis/TARGET_STM/TARGET_STM32F0/TARGET_NUCLEO_F030R8/TOOLCHAIN_GCC_ARM/STM32F030X8.ld
+
+mbed_f030r8_gcc_arm.build.use_archiver=false
+mbed_f030r8_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_f030r8_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_f030r8_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
+mbed_f030r8_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
+mbed_f030r8_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hardware/mbed/variants/mbed_f030r8_gcc_arm/cmsis/TARGET_STM/TARGET_STM32F0/TARGET_NUCLEO_F030R8/TOOLCHAIN_GCC_ARM" {build.LD_SYS_LIBS}
+mbed_f030r8_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+mbed_f030r8_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+mbed_f030r8_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
+###################################################################################################################
+mbed_f072rb_gcc_arm.name=ST Nucleo F072RB mbed boards  by gcc_arm and upload by copy
+mbed_f072rb_gcc_arm.upload.protocol=copy
+mbed_f072rb_gcc_arm.upload.tool=mbed_cp
+mbed_f072rb_gcc_arm.build.mcu=cortex-m0
+mbed_f072rb_gcc_arm.build.cpu=STM32F072RBT6    
+
+mbed_f072rb_gcc_arm.build.architecture=arm-none-eabi
+mbed_f072rb_gcc_arm.build.command.as=arm-none-eabi-as
+mbed_f072rb_gcc_arm.build.command.gcc=arm-none-eabi-gcc
+mbed_f072rb_gcc_arm.build.command.g++=arm-none-eabi-g++
+mbed_f072rb_gcc_arm.build.command.ar=arm-none-eabi-ar
+mbed_f072rb_gcc_arm.build.command.objcopy=arm-none-eabi-objcopy
+mbed_f072rb_gcc_arm.build.command.objdump=arm-none-eabi-objdump
+mbed_f072rb_gcc_arm.build.command.size=arm-none-eabi-size
+
+mbed_f072rb_gcc_arm.build.core=mbed
+mbed_f072rb_gcc_arm.build.variant=mbed_f072rb_gcc_arm
+
+mbed_f072rb_gcc_arm.build.CC_FLAGS=  -mcpu=cortex-m0 -mthumb  -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -MMD -MP -DNDEBUG -Os
+mbed_f072rb_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
+mbed_f072rb_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98 -fno-rtti
+mbed_f072rb_gcc_arm.build.CC_SYMBOLS =  -DTARGET_NUCLEO_F072RB -DTARGET_M0 -DTARGET_CORTEX_M -DTARGET_STM -DTARGET_STM32F0 -DTARGET_STM32F072RB -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M0 -DARM_MATH_CM0 -DMBED_BUILD_TIMESTAMP=1423024294.03 -D__MBED__=1 -DTARGET_FF_ARDUINO -DTARGET_FF_MORPHO 
+mbed_f072rb_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m0 -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float -Wl,--wrap,main -Wl,-Map={build.project_name}.map,--cref
+mbed_f072rb_gcc_arm.build.LD_SYS_LIBS = -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+mbed_f072rb_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_f072rb_gcc_arm/cmsis/TARGET_STM/TARGET_STM32F0/TARGET_NUCLEO_F072RB/TOOLCHAIN_GCC_ARM/STM32F072XB.ld
+
+mbed_f072rb_gcc_arm.build.use_archiver=false
+mbed_f072rb_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_f072rb_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_f072rb_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
+mbed_f072rb_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
+mbed_f072rb_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hardware/mbed/variants/mbed_f072rb_gcc_arm/cmsis/TARGET_STM/TARGET_STM32F0/TARGET_NUCLEO_F072RB/TOOLCHAIN_GCC_ARM" {build.LD_SYS_LIBS}
+mbed_f072rb_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+mbed_f072rb_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+mbed_f072rb_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
+###################################################################################################################
+mbed_f091rc_gcc_arm.name=ST Nucleo F091RC mbed boards  by gcc_arm and upload by copy
+mbed_f091rc_gcc_arm.upload.protocol=copy
+mbed_f091rc_gcc_arm.upload.tool=mbed_cp
+mbed_f091rc_gcc_arm.build.mcu=cortex-m0
+mbed_f091rc_gcc_arm.build.cpu=STM32f091rcT6    
+
+mbed_f091rc_gcc_arm.build.architecture=arm-none-eabi
+mbed_f091rc_gcc_arm.build.command.as=arm-none-eabi-as
+mbed_f091rc_gcc_arm.build.command.gcc=arm-none-eabi-gcc
+mbed_f091rc_gcc_arm.build.command.g++=arm-none-eabi-g++
+mbed_f091rc_gcc_arm.build.command.ar=arm-none-eabi-ar
+mbed_f091rc_gcc_arm.build.command.objcopy=arm-none-eabi-objcopy
+mbed_f091rc_gcc_arm.build.command.objdump=arm-none-eabi-objdump
+mbed_f091rc_gcc_arm.build.command.size=arm-none-eabi-size
+
+mbed_f091rc_gcc_arm.build.core=mbed
+mbed_f091rc_gcc_arm.build.variant=mbed_f091rc_gcc_arm
+
+mbed_f091rc_gcc_arm.build.CC_FLAGS=  -mcpu=cortex-m0 -mthumb  -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -MMD -MP -DNDEBUG -Os
+mbed_f091rc_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
+mbed_f091rc_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98 -fno-rtti
+mbed_f091rc_gcc_arm.build.CC_SYMBOLS = -DTARGET_NUCLEO_F091RC -DTARGET_M0 -DTARGET_CORTEX_M -DTARGET_STM -DTARGET_STM32F0 -DTARGET_STM32F091RC -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M0 -DARM_MATH_CM0 -DMBED_BUILD_TIMESTAMP=1423024557.61 -D__MBED__=1 -DTARGET_FF_ARDUINO -DTARGET_FF_MORPHO  
+mbed_f091rc_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m0 -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float -Wl,--wrap,main -Wl,-Map={build.project_name}.map,--cref
+mbed_f091rc_gcc_arm.build.LD_SYS_LIBS = -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+mbed_f091rc_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_f091rc_gcc_arm/cmsis/TARGET_STM/TARGET_STM32F0/TARGET_NUCLEO_F091RC/TOOLCHAIN_GCC_ARM/STM32F091XC.ld
+
+mbed_f091rc_gcc_arm.build.use_archiver=false
+mbed_f091rc_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_f091rc_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_f091rc_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
+mbed_f091rc_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
+mbed_f091rc_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hardware/mbed/variants/mbed_f091rc_gcc_arm/cmsis/TARGET_STM/TARGET_STM32F0/TARGET_NUCLEO_F091RC/TOOLCHAIN_GCC_ARM" {build.LD_SYS_LIBS}
+mbed_f091rc_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+mbed_f091rc_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+mbed_f091rc_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 ###################################################################################################################
 mbed_kl46z_gcc_arm.name=Freescale FRDM-KL46Z mbed boards by gcc_arm and upload by copy
 mbed_kl46z_gcc_arm.upload.protocol=copy
@@ -520,7 +662,7 @@ mbed_k20d50m_gcc_arm.build.CC_SYMBOLS = -DTARGET_K20D50M -DTARGET_M4 -DTARGET_Fr
 mbed_k20d50m_gcc_arm.build.LD_FLAGS = -mcpu=cortex-m4 -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float
 mbed_k20d50m_gcc_arm.build.LD_SYS_LIBS =  -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
 
-mbed_k20d50m_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_k20d50m_gcc_arm/cmsis/TARGET_Freescale/TARGET_k20d50m/TOOLCHAIN_GCC_ARM/MK20D5.ld
+mbed_k20d50m_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_k20d50m_gcc_arm/cmsis/TARGET_Freescale/TARGET_K20XX/TARGET_K20D50M/TOOLCHAIN_GCC_ARM/MK20D5.ld
 mbed_k20d50m_gcc_arm.build.use_archiver=false
 mbed_k20d50m_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
 mbed_k20d50m_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
@@ -606,47 +748,6 @@ mbed_k64f_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-ea
 mbed_k64f_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 
 ###################################################################################################################
-mbed_ble_arch_nrf51822_gcc_arm.name=Seeed Arch Ble mbed nrf51822 make by gcc_arm and upload by copy 
-mbed_ble_arch_nrf51822_gcc_arm.upload.protocol=copy
-mbed_ble_arch_nrf51822_gcc_arm.upload.tool=mbed_cp_ble
-mbed_ble_arch_nrf51822_gcc_arm.build.mcu=cortex-m0
-mbed_ble_arch_nrf51822_gcc_arm.build.cpu=NRF51822
-
-mbed_ble_arch_nrf51822_gcc_arm.build.architecture=arm-none-eabi
-mbed_ble_arch_nrf51822_gcc_arm.build.command.as=arm-none-eabi-as
-mbed_ble_arch_nrf51822_gcc_arm.build.command.gcc=arm-none-eabi-gcc
-mbed_ble_arch_nrf51822_gcc_arm.build.command.g++=arm-none-eabi-g++
-mbed_ble_arch_nrf51822_gcc_arm.build.command.ar=arm-none-eabi-ar
-mbed_ble_arch_nrf51822_gcc_arm.build.command.objcopy=arm-none-eabi-objcopy
-mbed_ble_arch_nrf51822_gcc_arm.build.command.objdump=arm-none-eabi-objdump
-mbed_ble_arch_nrf51822_gcc_arm.build.command.size=arm-none-eabi-size
-
-mbed_ble_arch_nrf51822_gcc_arm.build.core=mbed
-mbed_ble_arch_nrf51822_gcc_arm.build.variant=mbed_ble_arch_nrf51822_gcc_arm
-
-mbed_ble_arch_nrf51822_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m0 -mthumb -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer -Wno-unused-function -Wno-unused-variable -fpermissive
-mbed_ble_arch_nrf51822_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
-mbed_ble_arch_nrf51822_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98  -fno-rtti
-mbed_ble_arch_nrf51822_gcc_arm.build.CC_SYMBOLS = -DTARGET_NRF51822 -DTARGET_M0 -DTARGET_NORDIC -DTARGET_NRF51822_MKIT -DTARGET_MCU_NRF51822 -DTARGET_MCU_NORDIC_16K -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M0 -DARM_MATH_CM0 -DMBED_BUILD_TIMESTAMP=1414913665.85 -D__MBED__=1 
-mbed_ble_arch_nrf51822_gcc_arm.build.LD_FLAGS = -mcpu=cortex-m0 -mthumb -Wl,--gc-sections -Wl,--wrap=main --specs=nano.specs -u _printf_float -u _scanf_float
-mbed_ble_arch_nrf51822_gcc_arm.build.LD_SYS_LIBS =  -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
-
-mbed_ble_arch_nrf51822_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_ble_arch_nrf51822_gcc_arm/cmsis/TARGET_NORDIC/TARGET_NRF51822/TOOLCHAIN_GCC_ARM/TARGET_MCU_NORDIC_16K/NRF51822.ld
-
-
-mbed_ble_arch_nrf51822_gcc_arm.build.use_archiver=false
-mbed_ble_arch_nrf51822_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
-mbed_ble_arch_nrf51822_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
-mbed_ble_arch_nrf51822_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
-mbed_ble_arch_nrf51822_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
-mbed_ble_arch_nrf51822_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hardware/mbed/variants/xbed1.0_nrf51822_gcc_arm/cmsis/TARGET_NORDIC/TARGET_NRF51822/TOOLCHAIN_GCC_ARM" {build.LD_SYS_LIBS}
-mbed_ble_arch_nrf51822_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
-
-mbed_ble_arch_nrf51822_gcc_arm.recipe.objcopy.bin.pattern="{runtime.ide.path}/tools/utils/srec_cat" "{runtime.ide.path}/hardware/mbed/variants/mbed_ble_arch_nrf51822_gcc_arm/hal/TARGET_NORDIC/TARGET_NRF51822/Lib/s110_nrf51822_7_0_0/s110_nrf51822_7.0.0_softdevice.hex" -intel "{build.path}/{build.project_name}.hex" -intel -o combined.hex -intel --line-length=44
-
-mbed_ble_arch_nrf51822_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
-
-###################################################################################################################
 
 mbed_kl05z_gcc_arm.name=Freescale FRDM-KL05Z mbed boards by gcc_arm and upload by copy
 mbed_kl05z_gcc_arm.upload.protocol=copy
@@ -667,12 +768,12 @@ mbed_kl05z_gcc_arm.build.core=mbed
 mbed_kl05z_gcc_arm.build.variant=mbed_kl05z_gcc_arm
 
 
-mbed_kl05z_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m0plus -mthumb  -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer  -Wno-unused-function -Wno-unused-variable
+mbed_kl05z_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m0plus -mthumb  -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer -MMD -MP  -DNDEBUG -Os
 mbed_kl05z_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
 mbed_kl05z_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98 -fno-rtti
-mbed_kl05z_gcc_arm.build.CC_SYMBOLS = -DTARGET_KL05Z -DTARGET_M0P -DTARGET_Freescale -DTARGET_KLXX -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M0PLUS -DARM_MATH_CM0PLUS -DMBED_BUILD_TIMESTAMP=1414314164.72 -D__MBED__=1 -DTARGET_FF_ARDUINO 
-mbed_kl05z_gcc_arm.build.LD_FLAGS =   -mcpu=cortex-m0plus -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float
-mbed_kl05z_gcc_arm.build.LD_SYS_LIBS =  -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+mbed_kl05z_gcc_arm.build.CC_SYMBOLS =-DTARGET_KL05Z -DTARGET_M0P -DTARGET_CORTEX_M -DTARGET_Freescale -DTARGET_KLXX -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M0PLUS -DARM_MATH_CM0PLUS -DMBED_BUILD_TIMESTAMP=1423017154.34 -D__MBED__=1 -DTARGET_FF_ARDUINO 
+mbed_kl05z_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m0plus -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float -Wl,--wrap,main  -Wl,-Map={build.project_name}.map,--cref
+mbed_kl05z_gcc_arm.build.LD_SYS_LIBS = -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
 
 mbed_kl05z_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_kl05z_gcc_arm/cmsis/TARGET_Freescale/TARGET_KLXX/TARGET_kl05z/TOOLCHAIN_GCC_ARM/Mkl05Z4.ld
 
@@ -686,7 +787,7 @@ mbed_kl05z_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-e
 mbed_kl05z_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
 mbed_kl05z_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 ###################################################################################################################
-mbed_lpc11u68_gcc_arm.name=mbed LPC11U68 LPCXpresso make by gcc_arm and upload by copy
+mbed_lpc11u68_gcc_arm.name=NXP mbed LPC11U68 LPCXpresso make by gcc_arm and upload by copy
 mbed_lpc11u68_gcc_arm.upload.protocol=copy
 mbed_lpc11u68_gcc_arm.upload.tool=mbed_cp
 mbed_lpc11u68_gcc_arm.build.mcu=cortex-m0
@@ -704,7 +805,7 @@ mbed_lpc11u68_gcc_arm.build.command.size=arm-none-eabi-size
 mbed_lpc11u68_gcc_arm.build.core=mbed
 mbed_lpc11u68_gcc_arm.build.variant=mbed_lpc11u68_gcc_arm
 
-mbed_lpc11u68_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m0 -mthumb  -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer  -Wno-unused-function -Wno-unused-variable -MMD -MP
+mbed_lpc11u68_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m0 -mthumb  -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer  -Wno-unused-function -Wno-unused-variable -MMD -MP  -DNDEBUG -Os
 mbed_lpc11u68_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
 mbed_lpc11u68_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98 -fno-rtti
 mbed_lpc11u68_gcc_arm.build.CC_SYMBOLS = -DTARGET_lpc11u68 -DTARGET_M0 -DTARGET_NXP -DTARGET_LPC11U6X -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M0 -DARM_MATH_CM0 -DMBED_BUILD_TIMESTAMP=1414315787.71 -D__MBED__=1 -DTARGET_FF_ARDUINO 
@@ -722,3 +823,191 @@ mbed_lpc11u68_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-
 mbed_lpc11u68_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
 mbed_lpc11u68_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
 mbed_lpc11u68_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
+###################################################################################################################
+xbed_lpc1768_gcc_arm.name=SMeshLink xbed  LPC1768 make by gcc_arm and upload by flashmagic 
+xbed_lpc1768_gcc_arm.upload.protocol=flashmagic
+xbed_lpc1768_gcc_arm.upload.tool=mbed_fm
+xbed_lpc1768_gcc_arm.build.mcu=cortex-m3
+xbed_lpc1768_gcc_arm.build.cpu=LPC1768
+
+xbed_lpc1768_gcc_arm.build.architecture=arm-none-eabi
+xbed_lpc1768_gcc_arm.build.command.as=arm-none-eabi-as
+xbed_lpc1768_gcc_arm.build.command.gcc=arm-none-eabi-gcc
+xbed_lpc1768_gcc_arm.build.command.g++=arm-none-eabi-g++
+xbed_lpc1768_gcc_arm.build.command.ar=arm-none-eabi-ar
+xbed_lpc1768_gcc_arm.build.command.objcopy=arm-none-eabi-objcopy
+xbed_lpc1768_gcc_arm.build.command.objdump=arm-none-eabi-objdump
+xbed_lpc1768_gcc_arm.build.command.size=arm-none-eabi-size
+
+xbed_lpc1768_gcc_arm.build.core=mbed
+xbed_lpc1768_gcc_arm.build.variant=xbed1.0_lpc1768_gcc_arm
+
+
+xbed_lpc1768_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m3 -mthumb -c -Os -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fno-strict-aliasing -Wno-unused-function -Wno-unused-variable -MMD -MP  -DNDEBUG -Os 
+xbed_lpc1768_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
+xbed_lpc1768_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98
+xbed_lpc1768_gcc_arm.build.CC_SYMBOLS = -DTARGET_LPC1768 -DTARGET_M3 -DTARGET_NXP -DTARGET_LPC176X -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M3 -DARM_MATH_CM3 -DUIP_CONF_IPV6=1 -DHAVE_STDINT_H -DRF230BB=1 -DAUTOSTART_ENABLE=1 -DPROJECT_CONF_H=\"project-conf.h\" -DCONTIKI=1
+xbed_lpc1768_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m3 -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float
+xbed_lpc1768_gcc_arm.build.LD_SYS_LIBS =  -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+
+xbed_lpc1768_gcc_arm.build.ldscript=hardware/mbed/variants/xbed1.0_lpc1768_gcc_arm/cmsis/TARGET_NXP/TARGET_LPC176X/TOOLCHAIN_GCC_ARM/LPC1768.ld
+
+xbed_lpc1768_gcc_arm.build.use_archiver=false
+xbed_lpc1768_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+xbed_lpc1768_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+xbed_lpc1768_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
+xbed_lpc1768_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
+xbed_lpc1768_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hardware/mbed/variants/xbed1.0_lpc1768_gcc_arm/cmsis/TARGET_NXP/TARGET_LPC176X/TOOLCHAIN_GCC_ARM" {build.LD_SYS_LIBS}
+xbed_lpc1768_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+xbed_lpc1768_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+xbed_lpc1768_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
+###################################################################################################################
+mbed_lpc1768_gcc_arm.name=NXP mbed LPC1768 make by gcc_arm and upload by copy 
+mbed_lpc1768_gcc_arm.upload.protocol=copy
+mbed_lpc1768_gcc_arm.upload.tool=mbed_cp
+mbed_lpc1768_gcc_arm.build.mcu=cortex-m3
+mbed_lpc1768_gcc_arm.build.cpu=LPC1768
+
+mbed_lpc1768_gcc_arm.build.architecture=arm-none-eabi
+mbed_lpc1768_gcc_arm.build.command.as=arm-none-eabi-as
+mbed_lpc1768_gcc_arm.build.command.gcc=arm-none-eabi-gcc
+mbed_lpc1768_gcc_arm.build.command.g++=arm-none-eabi-g++
+mbed_lpc1768_gcc_arm.build.command.ar=arm-none-eabi-ar
+mbed_lpc1768_gcc_arm.build.command.objcopy=arm-none-eabi-objcopy
+mbed_lpc1768_gcc_arm.build.command.objdump=arm-none-eabi-objdump
+mbed_lpc1768_gcc_arm.build.command.size=arm-none-eabi-size
+
+mbed_lpc1768_gcc_arm.build.core=mbed
+mbed_lpc1768_gcc_arm.build.variant=xbed1.0_lpc1768_gcc_arm
+
+mbed_lpc1768_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m3 -mthumb -c -Os -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -Wno-unused-function -Wno-unused-variable  -MMD -MP  -DNDEBUG -Os
+mbed_lpc1768_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
+mbed_lpc1768_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98
+mbed_lpc1768_gcc_arm.build.CC_SYMBOLS = -DTARGET_LPC1768 -DTARGET_M3 -DTARGET_NXP -DTARGET_LPC176X -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M3 -DARM_MATH_CM3  
+ 
+mbed_lpc1768_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m3 -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float
+mbed_lpc1768_gcc_arm.build.LD_SYS_LIBS =  -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+
+mbed_lpc1768_gcc_arm.build.ldscript=hardware/mbed/variants/xbed1.0_lpc1768_gcc_arm/cmsis/TARGET_NXP/TARGET_LPC176X/TOOLCHAIN_GCC_ARM/LPC1768.ld
+
+mbed_lpc1768_gcc_arm.build.use_archiver=false
+mbed_lpc1768_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_lpc1768_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_lpc1768_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
+mbed_lpc1768_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
+mbed_lpc1768_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hardware/mbed/variants/xbed1.0_lpc1768_gcc_arm/cmsis/TARGET_NXP/TARGET_LPC176X/TOOLCHAIN_GCC_ARM" {build.LD_SYS_LIBS}
+mbed_lpc1768_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+mbed_lpc1768_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+mbed_lpc1768_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
+
+###################################################################################################################
+mbed_lpc1549_gcc_arm.name=NXP mbed LPCXpresso1549 make by gcc_arm and upload by copy 
+mbed_lpc1549_gcc_arm.upload.protocol=copy
+mbed_lpc1549_gcc_arm.upload.tool=mbed_cp
+mbed_lpc1549_gcc_arm.build.mcu=cortex-m3
+mbed_lpc1549_gcc_arm.build.cpu=lpc1549
+
+mbed_lpc1549_gcc_arm.build.architecture=arm-none-eabi
+mbed_lpc1549_gcc_arm.build.command.as=arm-none-eabi-as
+mbed_lpc1549_gcc_arm.build.command.gcc=arm-none-eabi-gcc
+mbed_lpc1549_gcc_arm.build.command.g++=arm-none-eabi-g++
+mbed_lpc1549_gcc_arm.build.command.ar=arm-none-eabi-ar
+mbed_lpc1549_gcc_arm.build.command.objcopy=arm-none-eabi-objcopy
+mbed_lpc1549_gcc_arm.build.command.objdump=arm-none-eabi-objdump
+mbed_lpc1549_gcc_arm.build.command.size=arm-none-eabi-size
+
+mbed_lpc1549_gcc_arm.build.core=mbed
+mbed_lpc1549_gcc_arm.build.variant=mbed_lpc1549_gcc_arm
+
+mbed_lpc1549_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m3 -mthumb  -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer  -Wno-unused-function -Wno-unused-variable -MMD -MP  -DNDEBUG -Os
+mbed_lpc1549_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
+mbed_lpc1549_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98 -fno-rtti
+mbed_lpc1549_gcc_arm.build.CC_SYMBOLS = -DTARGET_LPC1549 -DTARGET_M3 -DTARGET_NXP -DTARGET_LPC15XX -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M3 -DARM_MATH_CM3 -DMBED_BUILD_TIMESTAMP=1414315787.71 -D__MBED__=1 -DTARGET_FF_ARDUINO 
+mbed_lpc1549_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m3 -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float
+mbed_lpc1549_gcc_arm.build.LD_SYS_LIBS =  -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+
+mbed_lpc1549_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_lpc1549_gcc_arm/cmsis/TARGET_NXP/TARGET_LPC15XX/TOOLCHAIN_GCC_ARM/lpc1549.ld
+
+mbed_lpc1549_gcc_arm.build.use_archiver=false
+mbed_lpc1549_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_lpc1549_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_lpc1549_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
+mbed_lpc1549_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
+mbed_lpc1549_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hardware/mbed/variants/mbed_lpc1549_gcc_arm/cmsis/TARGET_NXP/TARGET_LPC15XX/TOOLCHAIN_GCC_ARM" {build.LD_SYS_LIBS}
+mbed_lpc1549_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+mbed_lpc1549_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+mbed_lpc1549_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
+###################################################################################################################
+mbed_lpc824_gcc_arm.name=NXP mbed LPCXpresso824-MAX make by gcc_arm and upload by copy
+mbed_lpc824_gcc_arm.upload.protocol=copy
+mbed_lpc824_gcc_arm.upload.tool=mbed_cp
+mbed_lpc824_gcc_arm.build.mcu=cortex-m0plus
+mbed_lpc824_gcc_arm.build.cpu=LPC824
+
+mbed_lpc824_gcc_arm.build.architecture=arm-none-eabi
+mbed_lpc824_gcc_arm.build.command.as=arm-none-eabi-as
+mbed_lpc824_gcc_arm.build.command.gcc=arm-none-eabi-gcc
+mbed_lpc824_gcc_arm.build.command.g++=arm-none-eabi-g++
+mbed_lpc824_gcc_arm.build.command.ar=arm-none-eabi-ar
+mbed_lpc824_gcc_arm.build.command.objcopy=arm-none-eabi-objcopy
+mbed_lpc824_gcc_arm.build.command.objdump=arm-none-eabi-objdump
+mbed_lpc824_gcc_arm.build.command.size=arm-none-eabi-size
+
+mbed_lpc824_gcc_arm.build.core=mbed
+mbed_lpc824_gcc_arm.build.variant=mbed_lpc824_gcc_arm
+
+mbed_lpc824_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m0plus -mthumb  -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer  -Wno-unused-function -Wno-unused-variable -MMD -MP  -DNDEBUG -Os
+mbed_lpc824_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
+mbed_lpc824_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98 -fno-rtti
+mbed_lpc824_gcc_arm.build.CC_SYMBOLS = -DTARGET_LPC824 -DTARGET_M0P -DTARGET_NXP -DTARGET_LPC824 -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M0PLUS -DARM_MATH_CM0PLUS  -DMBED_BUILD_TIMESTAMP=1414315787.71 -D__MBED__=1 -DTARGET_FF_ARDUINO 
+mbed_lpc824_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m0plus -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float
+mbed_lpc824_gcc_arm.build.LD_SYS_LIBS =  -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+
+mbed_lpc824_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_lpc824_gcc_arm/cmsis/TARGET_NXP/TARGET_LPC82X/TARGET_LPC824/TOOLCHAIN_GCC_ARM/lpc824.ld
+
+mbed_lpc824_gcc_arm.build.use_archiver=false
+mbed_lpc824_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_lpc824_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_lpc824_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
+mbed_lpc824_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
+mbed_lpc824_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hardware/mbed/variants/mbed_lpc824_gcc_arm/cmsis/TARGET_NXP/TARGET_LPC82X/TARGET_LPC824/TOOLCHAIN_GCC_ARM/TARGET_lpc824" {build.LD_SYS_LIBS}
+mbed_lpc824_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+mbed_lpc824_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+mbed_lpc824_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
+###################################################################################################################
+mbed_lpc11u24_gcc_arm.name=NXP mbed LPC11U24 make by gcc_arm and upload by copy
+mbed_lpc11u24_gcc_arm.upload.protocol=copy
+mbed_lpc11u24_gcc_arm.upload.tool=mbed_cp
+mbed_lpc11u24_gcc_arm.build.mcu=cortex-m0
+mbed_lpc11u24_gcc_arm.build.cpu=LPC11U24
+
+mbed_lpc11u24_gcc_arm.build.architecture=arm-none-eabi
+mbed_lpc11u24_gcc_arm.build.command.as=arm-none-eabi-as
+mbed_lpc11u24_gcc_arm.build.command.gcc=arm-none-eabi-gcc
+mbed_lpc11u24_gcc_arm.build.command.g++=arm-none-eabi-g++
+mbed_lpc11u24_gcc_arm.build.command.ar=arm-none-eabi-ar
+mbed_lpc11u24_gcc_arm.build.command.objcopy=arm-none-eabi-objcopy
+mbed_lpc11u24_gcc_arm.build.command.objdump=arm-none-eabi-objdump
+mbed_lpc11u24_gcc_arm.build.command.size=arm-none-eabi-size
+
+mbed_lpc11u24_gcc_arm.build.core=mbed
+mbed_lpc11u24_gcc_arm.build.variant=mbed_lpc11u24_gcc_arm
+
+mbed_lpc11u24_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m0 -mthumb   -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer -MMD -MP  -DNDEBUG -Os
+mbed_lpc11u24_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
+mbed_lpc11u24_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98 -fno-rtti
+mbed_lpc11u24_gcc_arm.build.CC_SYMBOLS = -DTARGET_LPC11U24 -DTARGET_M0 -DTARGET_CORTEX_M -DTARGET_NXP -DTARGET_LPC11UXX -DTARGET_LPC11U24_401 -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M0 -DARM_MATH_CM0 -DMBED_BUILD_TIMESTAMP=1423025693.33 -D__MBED__=1  
+mbed_lpc11u24_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m0 -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float
+mbed_lpc11u24_gcc_arm.build.LD_SYS_LIBS =  -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+
+mbed_lpc11u24_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_lpc11u24_gcc_arm/cmsis/TARGET_NXP/TARGET_LPC11UXX/TOOLCHAIN_GCC_ARM/TARGET_LPC11U24_401/LPC11U24.ld
+
+mbed_lpc11u24_gcc_arm.build.use_archiver=false
+mbed_lpc11u24_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_lpc11u24_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_lpc11u24_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
+mbed_lpc11u24_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
+mbed_lpc11u24_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hardware/mbed/variants/mbed_lpc11u24_gcc_arm/cmsis/TARGET_NXP/TARGET_LPC11UXX/TOOLCHAIN_GCC_ARM/TARGET_LPC11U24_401" {build.LD_SYS_LIBS}
+mbed_lpc11u24_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+mbed_lpc11u24_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+mbed_lpc11u24_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
