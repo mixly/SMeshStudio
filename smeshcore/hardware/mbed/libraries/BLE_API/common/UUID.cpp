@@ -66,28 +66,23 @@ UUID::UUID(ShortUUIDBytes_t shortUUID) : type(UUID_TYPE_SHORT), baseUUID(), shor
     @endcode
 */
 /**************************************************************************/
-UUID::UUID(const LongUUIDBytes_t longUUID) : type(UUID_TYPE_SHORT), baseUUID(), shortUUID(0)
+UUID::UUID(const LongUUIDBytes_t longUUID) : type(UUID_TYPE_LONG), baseUUID(), shortUUID(0)
 {
     memcpy(baseUUID, longUUID, LENGTH_OF_LONG_UUID);
     shortUUID = (uint16_t)((longUUID[2] << 8) | (longUUID[3]));
-
-    /* Check if this is a short of a long UUID */
-    unsigned index;
-    for (index = 0; index < LENGTH_OF_LONG_UUID; index++) {
-        if ((index == 2) || (index == 3)) {
-            continue; /* we should not consider bytes 2 and 3 because that's
-                       * where the 16-bit relative UUID is placed. */
-        }
-
-        if (baseUUID[index] != 0) {
-            type = UUID_TYPE_LONG;
-
-            /* zero out the 16-bit part in the base; this will help equate long
-             * UUIDs when they differ only in this 16-bit relative part.*/
-            baseUUID[2] = 0;
-            baseUUID[3] = 0;
-
-            return;
-        }
-    }
 }
+
+bool UUID::operator==(const UUID &other) const
+{
+    if ((this->type == UUID_TYPE_SHORT) && (other.type == UUID_TYPE_SHORT) &&
+        (this->shortUUID == other.shortUUID)) {
+        return true;
+    }
+
+    if ((this->type == UUID_TYPE_LONG) && (other.type == UUID_TYPE_LONG) &&
+        (memcmp(this->baseUUID, other.baseUUID, LENGTH_OF_LONG_UUID) == 0)) {
+        return true;
+    }
+
+    return false;
+}

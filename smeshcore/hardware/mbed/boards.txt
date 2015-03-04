@@ -378,6 +378,43 @@ mbed_f302r8_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-
 mbed_f302r8_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
 mbed_f302r8_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 ###################################################################################################################
+mbed_f303re_gcc_arm.name=  ST Nucleo F303RE mbed boards  by gcc_arm and upload by copy
+mbed_f303re_gcc_arm.upload.protocol=copy
+mbed_f303re_gcc_arm.upload.tool=mbed_cp
+mbed_f303re_gcc_arm.build.mcu=cortex-m4
+mbed_f303re_gcc_arm.build.cpu=STM32F303RET6 
+
+mbed_f303re_gcc_arm.build.architecture=arm-none-eabi
+mbed_f303re_gcc_arm.build.command.as=arm-none-eabi-as
+mbed_f303re_gcc_arm.build.command.gcc=arm-none-eabi-gcc
+mbed_f303re_gcc_arm.build.command.g++=arm-none-eabi-g++
+mbed_f303re_gcc_arm.build.command.ar=arm-none-eabi-ar
+mbed_f303re_gcc_arm.build.command.objcopy=arm-none-eabi-objcopy
+mbed_f303re_gcc_arm.build.command.objdump=arm-none-eabi-objdump
+mbed_f303re_gcc_arm.build.command.size=arm-none-eabi-size
+
+mbed_f303re_gcc_arm.build.core=mbed
+mbed_f303re_gcc_arm.build.variant=mbed_f303re_gcc_arm
+
+mbed_f303re_gcc_arm.build.CC_FLAGS=  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections  -Wno-unused-function -Wno-unused-variable -MMD -MP  -DNDEBUG -Os
+mbed_f303re_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
+mbed_f303re_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98 -fno-rtti
+mbed_f303re_gcc_arm.build.CC_SYMBOLS = -DTARGET_NUCLEO_F303RE -DTARGET_M4 -DTARGET_CORTEX_M -DTARGET_STM -DTARGET_STM32F3 -DTARGET_STM32f303re -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M4 -DARM_MATH_CM4 -D__FPU_PRESENT=1 -DMBED_BUILD_TIMESTAMP=1423019726.34 -D__MBED__=1 -DTARGET_FF_ARDUINO -DTARGET_FF_MORPHO  
+mbed_f303re_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float -Wl,-Map={build.project_name}.map,--cref
+mbed_f303re_gcc_arm.build.LD_SYS_LIBS =   -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+mbed_f303re_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_f303re_gcc_arm/cmsis/TARGET_STM/TARGET_STM32F3/TARGET_NUCLEO_f303re/TOOLCHAIN_GCC_ARM/STM32F303XE.ld
+
+mbed_f303re_gcc_arm.build.use_archiver=false
+mbed_f303re_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_f303re_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_f303re_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
+mbed_f303re_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
+mbed_f303re_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hardware/mbed/variants/mbed_f303re_gcc_arm/cmsis/TARGET_STM/TARGET_STM32F3/TARGET_NUCLEO_f303re/TOOLCHAIN_GCC_ARM" {build.LD_SYS_LIBS}
+mbed_f303re_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+mbed_f303re_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+mbed_f303re_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
+
+###################################################################################################################
 mbed_l152re_gcc_arm.name=  ST Nucleo L152RE mbed boards  by gcc_arm and upload by copy
 mbed_l152re_gcc_arm.upload.protocol=copy
 mbed_l152re_gcc_arm.upload.tool=mbed_cp
@@ -487,6 +524,43 @@ mbed_f030r8_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-ea
 mbed_f030r8_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
 mbed_f030r8_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
 mbed_f030r8_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
+###################################################################################################################
+mbed_f070rb_gcc_arm.name=ST Nucleo F070RB mbed boards  by gcc_arm and upload by copy
+mbed_f070rb_gcc_arm.upload.protocol=copy
+mbed_f070rb_gcc_arm.upload.tool=mbed_cp
+mbed_f070rb_gcc_arm.build.mcu=cortex-m0
+mbed_f070rb_gcc_arm.build.cpu=STM32f070rbT6    
+
+mbed_f070rb_gcc_arm.build.architecture=arm-none-eabi
+mbed_f070rb_gcc_arm.build.command.as=arm-none-eabi-as
+mbed_f070rb_gcc_arm.build.command.gcc=arm-none-eabi-gcc
+mbed_f070rb_gcc_arm.build.command.g++=arm-none-eabi-g++
+mbed_f070rb_gcc_arm.build.command.ar=arm-none-eabi-ar
+mbed_f070rb_gcc_arm.build.command.objcopy=arm-none-eabi-objcopy
+mbed_f070rb_gcc_arm.build.command.objdump=arm-none-eabi-objdump
+mbed_f070rb_gcc_arm.build.command.size=arm-none-eabi-size
+
+mbed_f070rb_gcc_arm.build.core=mbed
+mbed_f070rb_gcc_arm.build.variant=mbed_f070rb_gcc_arm
+
+mbed_f070rb_gcc_arm.build.CC_FLAGS=  -mcpu=cortex-m0 -mthumb  -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -MMD -MP -DNDEBUG -Os
+mbed_f070rb_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
+mbed_f070rb_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98 -fno-rtti
+mbed_f070rb_gcc_arm.build.CC_SYMBOLS =-DTARGET_NUCLEO_F070RB -DTARGET_M0 -DTARGET_CORTEX_M -DTARGET_STM -DTARGET_STM32F0 -DTARGET_STM32F070RB -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M0 -DARM_MATH_CM0 -DMBED_BUILD_TIMESTAMP=1425435388.08 -D__MBED__=1 -DTARGET_FF_ARDUINO -DTARGET_FF_MORPHO 
+mbed_f070rb_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m0 -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float -Wl,--wrap,main -Wl,-Map={build.project_name}.map,--cref
+mbed_f070rb_gcc_arm.build.LD_SYS_LIBS = -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+mbed_f070rb_gcc_arm.build.ldscript=hardware/mbed/variants/mbed_f070rb_gcc_arm/cmsis/TARGET_STM/TARGET_STM32F0/TARGET_NUCLEO_F070RB/TOOLCHAIN_GCC_ARM/STM32F070XB.ld
+
+mbed_f070rb_gcc_arm.build.use_archiver=false
+mbed_f070rb_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_f070rb_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_f070rb_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
+mbed_f070rb_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
+mbed_f070rb_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hardware/mbed/variants/mbed_f070rb_gcc_arm/cmsis/TARGET_STM/TARGET_STM32F0/TARGET_NUCLEO_F070RB/TOOLCHAIN_GCC_ARM" {build.LD_SYS_LIBS}
+mbed_f070rb_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+mbed_f070rb_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+mbed_f070rb_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
+
 ###################################################################################################################
 mbed_f072rb_gcc_arm.name=ST Nucleo F072RB mbed boards  by gcc_arm and upload by copy
 mbed_f072rb_gcc_arm.upload.protocol=copy

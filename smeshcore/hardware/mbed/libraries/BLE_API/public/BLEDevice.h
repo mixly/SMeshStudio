@@ -71,9 +71,7 @@ public:
      *              Any central device can connect to this peripheral.
      *
      *              \par ADV_SCANNABLE_UNDIRECTED
-     *              Any central device can connect to this peripheral, and
-     *              the secondary Scan Response payload will be included or
-     *              available to central devices.
+     *              Include support for Scan Response payloads.
      *
      *              \par
      *              See Bluetooth Core Specification 4.0 (Vol. 3), Part C,
@@ -252,6 +250,27 @@ public:
     void onDataWritten(void (*callback)(const GattCharacteristicWriteCBParams *eventDataP));
     template <typename T> void onDataWritten(T * objPtr, void (T::*memberPtr)(const GattCharacteristicWriteCBParams *context));
 
+    /**
+     * Setup a callback for when a characteristic is being read by a client.
+     *
+     * @Note: this functionality may not be available on all underlying stacks.
+     * You could use GattCharacteristic::setReadAuthorizationCallback() as an
+     * alternative.
+     *
+     * @Note: it is possible to chain together multiple onDataRead callbacks
+     * (potentially from different modules of an application) to receive updates
+     * to characteristics. Services may add their own onDataRead callbacks
+     * behind the scenes to trap interesting events.
+     *
+     * @Note: it is also possible to setup a callback into a member function of
+     * some object.
+     *
+     * @return BLE_ERROR_NOT_IMPLEMENTED if this functionality isn't available;
+     *         else BLE_ERROR_NONE.
+     */
+    ble_error_t onDataRead(void (*callback)(const GattCharacteristicReadCBParams *eventDataP));
+    template <typename T> ble_error_t onDataRead(T * objPtr, void (T::*memberPtr)(const GattCharacteristicReadCBParams *context));
+
     void onUpdatesEnabled(GattServer::EventCallback_t callback);
     void onUpdatesDisabled(GattServer::EventCallback_t callback);
     void onConfirmationReceived(GattServer::EventCallback_t callback);
@@ -269,13 +288,13 @@ public:
      *     input:  Length in bytes to be read,
      *     output: Total length of attribute value upon successful return.
      */
-    ble_error_t readCharacteristicValue(uint16_t handle, uint8_t *const buffer, uint16_t *const lengthP);
+    ble_error_t readCharacteristicValue(GattAttribute::Handle_t handle, uint8_t *const buffer, uint16_t *const lengthP);
 
     /**
      * @param  localOnly
      *         Only update the characteristic locally regardless of notify/indicate flags in the CCCD.
      */
-    ble_error_t updateCharacteristicValue(uint16_t handle, const uint8_t *value, uint16_t size, bool localOnly = false);
+    ble_error_t updateCharacteristicValue(GattAttribute::Handle_t handle, const uint8_t *value, uint16_t size, bool localOnly = false);
 
     /**
      * Yield control to the BLE stack or to other tasks waiting for events. This
@@ -348,6 +367,16 @@ public:
      * @param[in] txPower Radio transmit power in dBm.
      */
     ble_error_t setTxPower(int8_t txPower);
+
+    /**
+     * Query the underlying stack for permitted arguments for setTxPower().
+     *
+     * @param[out] valueArrayPP
+     *                 Out parameter to receive the immutable array of Tx values.
+     * @param[out] countP
+     *                 Out parameter to receive the array's size.
+     */
+    void getPermittedTxPowerValues(const int8_t **valueArrayPP, size_t *countP);
 
 public:
     BLEDevice() : transport(createBLEDeviceInstance()), advParams(), advPayload(), scanResponse(), needToSetAdvPayload(true) {
@@ -553,6 +582,16 @@ BLEDevice::onDataWritten(T *objPtr, void (T::*memberPtr)(const GattCharacteristi
     transport->getGattServer().setOnDataWritten(objPtr, memberPtr);
 }
 
+inline ble_error_t
+BLEDevice::onDataRead(void (*callback)(const GattCharacteristicReadCBParams *eventDataP)) {
+    return transport->getGattServer().setOnDataRead(callback);
+}
+
+template <typename T> inline ble_error_t
+BLEDevice::onDataRead(T *objPtr, void (T::*memberPtr)(const GattCharacteristicReadCBParams *context)) {
+    return transport->getGattServer().setOnDataRead(objPtr, memberPtr);
+}
+
 inline void
 BLEDevice::onUpdatesEnabled(GattServer::EventCallback_t callback)
 {
@@ -583,13 +622,13 @@ BLEDevice::getGapState(void) const
     return transport->getGap().getState();
 }
 
-inline ble_error_t BLEDevice::readCharacteristicValue(uint16_t handle, uint8_t *const buffer, uint16_t *const lengthP)
+inline ble_error_t BLEDevice::readCharacteristicValue(GattAttribute::Handle_t handle, uint8_t *const buffer, uint16_t *const lengthP)
 {
     return transport->getGattServer().readValue(handle, buffer, lengthP);
 }
 
 inline ble_error_t
-BLEDevice::updateCharacteristicValue(uint16_t handle, const uint8_t *value, uint16_t size, bool localOnly)
+BLEDevice::updateCharacteristicValue(GattAttribute::Handle_t handle, const uint8_t *value, uint16_t size, bool localOnly)
 {
     return transport->getGattServer().updateValue(handle, const_cast<uint8_t *>(value), size, localOnly);
 }
@@ -651,6 +690,12 @@ inline ble_error_t
 BLEDevice::setTxPower(int8_t txPower)
 {
     return transport->setTxPower(txPower);
+}
+
+inline void
+BLEDevice::getPermittedTxPowerValues(const int8_t **valueArrayPP, size_t *countP)
+{
+    transport->getPermittedTxPowerValues(valueArrayPP, countP);
 }
 
 /*
