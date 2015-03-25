@@ -22,6 +22,7 @@
 #include "vmlog.h"
 #include "vmtcp.h"
 #include "vmsettings.h"
+#include "vmsock.h"
 
 class LGPRSConnectContext;
 
@@ -69,6 +70,7 @@ boolean LGPRSClass::gprsCheckSIM(void *userData)
 
 	VMINT simStatus = vm_get_sim_card_status(VM_SIM_SIM1);
 	vm_log_info("SIM card state=%d", simStatus);
+
 
 	// Let's enable GPRS
 	VMINT32 result = vm_setting_srv_command(VM_SETTING_CELLULAR_GPRS_SERVICE, 
@@ -178,12 +180,24 @@ int LGPRSClass::attachGPRS()
 
 VMINT LGPRSClass::getAPN() const
 {
+    vm_apn_info_ext apn_info;
 	if(m_customAPN)
 	{
 		return VM_APN_USER_DEFINE;
 	}
 	else
 	{
+        if(0 == vm_get_default_apn_info(&apn_info))
+        {
+            if(apn_info.apn_info_id == 1)
+            {
+                return VM_TCP_APN_CMWAP;
+            }
+            else
+            {
+                return VM_TCP_APN_CMNET;
+            }
+        }
 		return VM_TCP_APN_CMNET;
 	}
 }

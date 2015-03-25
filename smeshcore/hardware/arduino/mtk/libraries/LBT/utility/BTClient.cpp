@@ -12,10 +12,10 @@
    See the GNU Lesser General Public License for more details.
 */
 
-#include "arduino.h"
+#include "Arduino.h"
 #include "LBT.h"
-#include "Vmbtcm.h"
-#include "Vmbtspp.h"
+#include "vmbtcm.h"
+#include "vmbtspp.h"
 #include "vmlog.h"
 #include "BTClient.h"
 #include "LBTClient.h"

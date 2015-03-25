@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.cdt.gnu.debug"
+      label="%featureName"
+      version="8.6.0.201502131403"
+      provider-name="%providerName">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.eclipse.cdt.debug.mi.core"
+         download-size="550"
+         install-size="1175"
+         version="7.3.0.201502131403"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.cdt.debug.mi.ui"
+         download-size="151"
+         install-size="296"
+         version="6.2.0.201502131403"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.cdt.launch"
+         download-size="227"
+         install-size="493"
+         version="7.2.0.201502131403"
+         unpack="false"/>
+
+</feature>

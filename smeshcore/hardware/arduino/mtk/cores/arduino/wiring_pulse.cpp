@@ -21,7 +21,7 @@
 
 #include "Arduino.h"
 #include "wiring_private.h"
-#include "Vmlog.h"
+#include "vmlog.h"
 
 /* Measures the length (in microseconds) of a pulse on the pin; state is HIGH
  * or LOW, the type of pulse to measure.  Works on pulses from 2-3 microseconds

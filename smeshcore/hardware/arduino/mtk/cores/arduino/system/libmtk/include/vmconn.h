@@ -833,6 +833,33 @@ typedef enum
  *****************************************************************************/
 VMINT vm_srv_nw_info_get_service_availability(VMINT sim_card);
 
+/*
+ *  This enum contains a set of bit masks to test the status of data network.
+ */
+typedef enum
+{
+    VM_NW_INFO_SIM_DN_STATUS_NONE             = 0x00,   /* No coverage */
+    VM_NW_INFO_SIM_DN_STATUS_COVERAGE         = 0x01,   /* In coverage */
+    VM_NW_INFO_SIM_DN_STATUS_ATTACHED         = 0x02,   /* Attached */
+    VM_NW_INFO_SIM_DN_STATUS_PDP_ACTIVATED    = 0x04,   /* PDP activated */
+    VM_NW_INFO_SIM_DN_STATUS_UPLINK           = 0x08,   /* DN uplink */
+    VM_NW_INFO_SIM_DN_STATUS_DOWNLINK         = 0x10,   /* DN downlink */
+    VM_NW_INFO_SIM_DN_STATUS_END_OF_ENUM
+} vm_nw_info_sim_dn_status_enum;
+
+/*****************************************************************************
+ * FUNCTION
+ *  vm_srv_nw_info_get_sim_dn_status
+ * DESCRIPTION
+ *  Get current data network status.
+ * PARAMETERS
+ *  sim_card         : [IN] Which protocol layer of SIM
+ * RETURNS
+ *  A bit set of vm_nw_info_sim_dn_status_enum.
+ * SEE ALSO
+ *  vm_nw_info_sim_dn_status_enum
+ *****************************************************************************/
+VMINT vm_srv_nw_info_get_sim_dn_status(VMINT sim_card);
 
 /*****************************************************************************
  * FUNCTION

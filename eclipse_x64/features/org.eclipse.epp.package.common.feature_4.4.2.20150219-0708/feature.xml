@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.epp.package.common.feature"
+      label="EPP Common Package Feature"
+      version="4.4.2.20150219-0708"
+      provider-name="Eclipse Packaging Project">
+
+   <description url="http://eclipse.org/epp">
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <discovery label="Luna" url="http://download.eclipse.org/releases/luna/"/>
+      <discovery label="Eclipse Platform 4.4" url="http://download.eclipse.org/eclipse/updates/4.4"/>
+   </url>
+
+   <requires>
+      <import feature="org.eclipse.epp.mpc"/>
+   </requires>
+
+</feature>

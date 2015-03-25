@@ -1118,4 +1118,4 @@ uint32_t pstorage_raw_clear(pstorage_handle_t * p_dest, pstorage_size_t size)
     return retval;
 }
 
-#endif // PSTORAGE_RAW_MODE_ENABLE
+#endif // PSTORAGE_RAW_MODE_ENABLE

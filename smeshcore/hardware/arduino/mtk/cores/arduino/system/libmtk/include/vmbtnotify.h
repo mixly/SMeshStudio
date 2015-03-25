@@ -178,6 +178,20 @@ VMINT vm_bt_noti_get_bt_device_addr(VMINT cntx_chnl, vm_srv_bt_cm_bt_addr *bt_ad
 
 #define vm_srv_bt_noti_register_mre_callback vm_srv_bt_noti_register_callback  
 
+
+/*****************************************************************************
+ * FUNCTION
+ *  vm_bt_noti_deregister_callback
+ * DESCRIPTION
+ *  This function is to deregister callback,
+ * PARAMETERS
+ *  bt_addr         :           [IN] bt device address
+ *  cb_ptr          :           [IN] srv_bt_noti_callback cb_ptr
+ * RETURNS
+ *  VMINT : 0 is succesful else failure
+ *****************************************************************************/
+VMINT vm_bt_noti_deregister_callback(vm_srv_bt_cm_bt_addr *bt_addr, vm_srv_bt_noti_callback cb_ptr);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

@@ -2669,6 +2669,48 @@ VMINT vm_graphic_dynamic_switch_cacheable_region(void **vaddr, VMUINT len, VMUIN
  *****************************************************************************/
 VM_GDI_RESULT vm_graphic_2d_linear_transform(VMINT src_handle, VMINT sx,VMINT sy,VMINT sw,VMINT sh,VMINT dx,VMINT dy,VMINT dw,VMINT dh);
 
+/*****************************************************************************
+ * FUNCTION 
+ *  vm_graphic_2d_linear_transform_rotate
+ * DESCRIPTION
+ *  rotate the layer by linear transform.
+ * PARAMETERS
+ *  src_handle            : [IN]     layer to resize
+ *  theta                    : [IN]     rotate angle
+ *  sx                    : [IN]     x of left-top cornor of resize region
+ *  sy                    : [IN]     y of left-top cornor of resize region
+ *  sw                    : [IN]     width of resize region
+ *  sh                    : [IN]     height of resize region
+ *  dx                    : [IN]     x of left-top cornor of output region
+ *  dy                    : [IN]     y of left-top cornor of output region
+ *  dw                    : [IN]     width of output region
+ *  dh                    : [IN]     height of output region
+ * RETURNS
+ *  void
+ *****************************************************************************/
+VM_GDI_RESULT vm_graphic_2d_linear_transform_rotate(VMINT src_handle, VMFLOAT theta, VMINT sx,VMINT sy,VMINT sw,VMINT sh,VMINT dx,VMINT dy,VMINT dw,VMINT dh);
+
+/*****************************************************************************
+ * FUNCTION 
+ *  vm_graphic_2d_linear_transform_matrix
+ * DESCRIPTION
+ *  linear transform.
+ * PARAMETERS
+ *  src_handle            : [IN]     layer to resize
+ *  trfmatrix             : [IN]     transform matrix
+ *  sx                    : [IN]     x of left-top cornor of resize region
+ *  sy                    : [IN]     y of left-top cornor of resize region
+ *  sw                    : [IN]     width of resize region
+ *  sh                    : [IN]     height of resize region
+ *  dx                    : [IN]     x of left-top cornor of output region
+ *  dy                    : [IN]     y of left-top cornor of output region
+ *  dw                    : [IN]     width of output region
+ *  dh                    : [IN]     height of output region
+ * RETURNS
+ *  void
+ *****************************************************************************/
+VM_GDI_RESULT vm_graphic_2d_linear_transform_matrix(VMINT src_handle, VMFLOAT *trfmatrix, VMINT sx,VMINT sy,VMINT sw,VMINT sh,VMINT dx,VMINT dy,VMINT dw,VMINT dh);
+
 #ifdef __cplusplus
 }
 #endif

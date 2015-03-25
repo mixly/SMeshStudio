@@ -18,7 +18,7 @@
 #include "vmlog.h"
 #include "vmsim.h"
 #include "vmudp.h"
-#include "LUDP.h"
+#include "LUdp.h"
 
 LUDP::LUDP():
 	m_port(-1),

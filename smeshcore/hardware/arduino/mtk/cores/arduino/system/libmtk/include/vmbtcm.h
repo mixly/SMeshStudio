@@ -456,6 +456,80 @@ VMINT vm_bt_cm_send_passkey(vm_srv_bt_cm_bt_addr* dev_addr, VMUINT8* dev_passkey
  *****************************************************************************/
 void vm_custom_set_bt_pairing_method(vm_bt_pairing_Type config_type);
 
+/* BT CM connection type enum */
+typedef enum
+{
+    VM_BT_CM_NO_CONNECTION,          
+    VM_BT_CM_HFP_CONNECTION,         
+    VM_BT_CM_HSP_CONNECTION,          
+    VM_BT_CM_SPP_CONNECTION,         
+    VM_BT_CM_DUN_CONNECTION,         
+    VM_BT_CM_FTP_CONNECTION,         
+    VM_BT_CM_OPP_CONNECTION,         
+    VM_BT_CM_A2DP_CONNECTION,        
+    VM_BT_CM_A2DP_SINK_CONNECTION,
+    VM_BT_CM_AVRCP_CONNECTION,       
+    VM_BT_CM_AVRCP_CT_CONNECTION,    
+    VM_BT_CM_BPP_CONNECTION,         
+    VM_BT_CM_SIMAP_CONNECTION,       
+    VM_BT_CM_FAX_CONNECTION,         
+    VM_BT_CM_HID_CONNECTION,         
+    VM_BT_CM_BIP_CONNECTION,         
+    VM_BT_CM_BIPC_CONNECTION,        
+    VM_BT_CM_PBAP_CONNECTION,        
+    VM_BT_CM_PBAPC_CONNECTION,       
+    VM_BT_CM_FTPC_CONNECTION,        
+    VM_BT_CM_OPPC_CONNECTION,        
+    VM_BT_CM_SYNCML_CONNECTION,      
+    VM_BT_CM_MAPC_CONNECTION,        
+    VM_BT_CM_HF_CONNECTION,
+    VM_BT_CM_CONNECTION_TOTAL        
+} vm_bt_cm_connection_type;
+
+/*****************************************************************************
+ * FUNCTION
+ *  vm_btcm_is_profile_connected
+ * DESCRIPTION
+ *  This function is to check if a profile is connected
+ * PARAMETERS
+ *  conn_type:    [IN]    to check if conn_type is connected, conn_type is defind in srv_bt_cm_connection_type 
+ * RETURNS
+ *  no-zero  : the profile is connected
+ *  else : the profile is not connected
+ *****************************************************************************/
+VMINT vm_btcm_is_profile_connected(vm_bt_cm_connection_type conn_type);
+
+/*****************************************************************************
+ * FUNCTION
+ *  vm_btcm_is_dev_busy
+ * DESCRIPTION
+ *  This function is to check if a dev is connecting
+ * PARAMETERS
+ *  dev_addr		[IN]		remote device
+ * RETURNS
+ *  MMI_BOOL            TRUE : there is some profile connecting
+ *                      FALSE : the device is not connected or connected already.
+ *****************************************************************************/
+VMBOOL vm_btcm_is_dev_busy(const vm_srv_bt_cm_bt_addr* dev_addr);
+
+
+
+/****************************************************************************** 
+ * FUNCTION
+ *  vm_btcm_get_dev_info
+ * DESCRIPTION
+ *  this function will return the device information from paird device list and searched device list according to address,
+ *  if can't find the device, it will return NULL
+ * PARAMETERS
+ *  dev_addr:    [IN]    BT device address
+ *  
+ * RETURNS
+ *  srv_bt_cm_dev_struct* : device information structure pointer
+ ******************************************************************************/
+const vm_srv_bt_cm_dev_struct* vm_btcm_get_dev_info(const vm_srv_bt_cm_bt_addr* dev_addr);
+
+
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

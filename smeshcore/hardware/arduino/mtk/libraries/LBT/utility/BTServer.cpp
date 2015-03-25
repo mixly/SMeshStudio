@@ -13,9 +13,9 @@
 */
 
 #include "LBT.h"
-#include "Vmbtcm.h"
-#include "Vmtimer.h"
-#include "Vmbtspp.h"
+#include "vmbtcm.h"
+#include "vmtimer.h"
+#include "vmbtspp.h"
 #include "vmlog.h"
 #include "BTServer.h"
 #include "LBTServer.h"
@@ -117,12 +117,13 @@ static void bt_server_btcm_cb(VMUINT evt, void * param, void * user_data)
                         g_serverContext.ptr->post_signal();
                     }
                 }
+                /*
                 else if (ret == 0)
                 {
                     *(g_serverContext.waiting_result_p) = true;
                     g_serverContext.waiting_result_p = NULL;
                     g_serverContext.ptr->post_signal();
-                }
+                }*/
 
             }
             else if (g_serverContext.server_status == BT_SERVER_ENDING)
@@ -190,6 +191,8 @@ static void bt_server_btcm_cb(VMUINT evt, void * param, void * user_data)
         case VM_SRV_BT_CM_EVENT_SET_VISIBILITY:
         {
             APP_LOG("[BTC] VM_SRV_BT_CM_EVENT_SET_VISIBILITY");
+            *(g_serverContext.waiting_result_p) = true;
+            g_serverContext.waiting_result_p = NULL;
             g_serverContext.ptr->post_signal();
             break;
         }
@@ -445,6 +448,9 @@ static VMINT bt_server_init_spp(uint8_t* name)
 
     if (VM_SRV_BT_CM_VISIBILITY_ON == vm_btcm_srv_get_visibility())
     {
+        *(g_serverContext.waiting_result_p) = true;
+        g_serverContext.waiting_result_p = NULL;
+        g_serverContext.ptr->post_signal();
         ret = 0;
     }
     else
@@ -555,6 +561,7 @@ boolean btServerBegin(void *userData)
     }
 
     VMINT ret = vm_btcm_get_power_status();
+    g_serverContext.waiting_result_p = &(pContext->result);
 
     if (VM_SRV_BT_CM_POWER_OFF == ret)
     {

@@ -13,7 +13,7 @@
 */
 
 
-#include "arduino.h"
+#include "Arduino.h"
 #include "GPS.h"
 #include "LGPS.h"
 

@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Build-Jdk: 1.7.0_51
+Built-By: genie.cdt
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven 3.0.5
+
+Name: epl-v10.html
+SHA1-Digest: jYDaDJLBJpthCwPMgGFVYASJjIU=
+
+Name: META-INF/maven/org.eclipse.cdt.feature/org.eclipse.cdt.gnu.dsf/p
+ om.xml
+SHA1-Digest: a1XU//c8CcWA8lroWOrXGRuQ7j8=
+
+Name: META-INF/maven/org.eclipse.cdt.feature/org.eclipse.cdt.gnu.dsf/p
+ om.properties
+SHA1-Digest: +q1PTxiUcDo+GSQLXCL2Fgs5EzI=
+
+Name: license.html
+SHA1-Digest: Z5WKoRSIDCgQNswUpOU/oSPE2a0=
+
+Name: feature.properties
+SHA1-Digest: jYFEGzJF5Ws7JenOSSoDlsSd7S8=
+
+Name: feature.xml
+SHA1-Digest: gF9kvak31mopx0Tenei78F+tYco=
+

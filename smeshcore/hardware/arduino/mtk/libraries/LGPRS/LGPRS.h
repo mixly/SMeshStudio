@@ -34,9 +34,9 @@ public:
     //  Sets up the Access Point Name (APN) information used to connect to GPRS network. Use the data provided by your telecom operator to set it up
     // 
     // PARAMETERS
-    //  APNName: char array, Access Point Name (APN) provided by the telecom operator
-    //  userName: char array, user name, provided by the telecom operator. Pass NULL if the telecom operator does not provide the username information.
-    //  password: char array, password provided by the telecom operator. Pass NULL if the telecom operator does not provide the password information.
+    //  apn: char string, Access Point Name (APN) provided by the telecom operator
+    //  username: char string, username provided by the telecom operator. Pass NULL if the telecom operator does not provide the username information.
+    //  password: char string, password provided by the telecom operator. Pass NULL if the telecom operator does not provide the password information.
     //
     // RETURN
     //  1: APN setup succeeded

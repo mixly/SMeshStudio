@@ -12,7 +12,7 @@
    See the GNU Lesser General Public License for more details.
 */
 
-#include "arduino.h"
+#include "Arduino.h"
 #include "vmgps.h"
 #include "vmlog.h"
 #include "GPS.h"

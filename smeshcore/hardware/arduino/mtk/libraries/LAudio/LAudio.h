@@ -18,7 +18,7 @@
 #include "chip.h"
 #include "vmsys.h"
 #include "LTask.h"
-#include "arduino.h"
+#include "Arduino.h"
 
 // playing status
 typedef enum 

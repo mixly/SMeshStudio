@@ -178,7 +178,11 @@ typedef enum
    VM_DCL_STATUS_ALREADY_OPENED = -15, /*device is already opened.*/
    VM_DCL_STATUS_INVALID_OPERATION = -17, /*operation is invalid.*/
    VM_DCL_STATUS_DEVICE_NOT_EXIST = -18,/*device is not exist.*/
-   VM_DCL_STATUS_DEVICE_IS_BUSY = -20,/*device is busy.*/
+   VM_DCL_STATUS_DEVICE_NOT_SUPPORT_DMA = -19, /* device not support DMA */
+   VM_DCL_STATUS_DEVICE_IS_BUSY = -20,   /*device is busy.*/
+   VM_DCL_STATUS_ACKERR = -21,           /* I2C ACK error */
+   VM_DCL_STATUS_HS_NACKERR = -22,       /* I2C HighSpeed NACK error */
+   
 } VM_DCL_STATUS_T;
 
 /*****************************************************************************

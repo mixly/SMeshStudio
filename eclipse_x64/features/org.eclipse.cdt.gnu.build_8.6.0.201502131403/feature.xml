@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.cdt.gnu.build"
+      label="%featureName"
+      version="8.6.0.201502131403"
+      provider-name="%providerName">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.eclipse.cdt.managedbuilder.gnu.ui"
+         download-size="49"
+         install-size="240"
+         version="8.3.0.201502131403"
+         unpack="false"/>
+
+</feature>

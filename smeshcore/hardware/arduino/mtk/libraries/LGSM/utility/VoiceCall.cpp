@@ -46,6 +46,14 @@ static void __call_listener_func(vm_call_listener_data* data)
 	strcpy(g_number, (char*)ind->num_uri);
 	g_call_status = TALKING;
     }
+    else if(data->type_op == VM_UCM_CONNECT_IND)
+    {
+       vm_ucm_connect_ind_struct* ind = (vm_ucm_connect_ind_struct*)data->data;
+	g_uid_info.call_id = ind->uid_info.call_id;
+	g_uid_info.group_id = ind->uid_info.group_id;
+	g_uid_info.call_type = ind->uid_info.call_type;
+	g_call_status = TALKING;
+    }
     else if(data->type_op == VM_UCM_CALL_END)
     {
         g_call_status = IDLE_CALL;

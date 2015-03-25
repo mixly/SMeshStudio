@@ -81,4 +81,4 @@ tools.bossac.path={runtime.ide.path}/tools/mtk
 
 tools.bossac.upload.params.verbose=-v -v -v -v
 tools.bossac.upload.params.quiet=
-tools.bossac.upload.pattern="{path}/{cmd}" {upload.verbose} -t arduino -clear -port {serial.port} -app "{build.path}/{build.project_name}.vxp" 
+tools.bossac.upload.pattern="{path}/{cmd}" -v -v -v -v {upload.verbose} -t arduino -clear -port {serial.port} -app "{build.path}/{build.project_name}.vxp" 

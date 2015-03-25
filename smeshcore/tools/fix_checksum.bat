@@ -1,0 +1,2 @@
+E:/SMeshStudio/smeshcore/tools/avr/utils/bin/rm.exe -f E:/SMeshStudio/workspace/mBedTest/Release/mBedTest.bin
+E:/SMeshStudio/smeshcore/tools/fix_checksum.exe E:/SMeshStudio/workspace/mBedTest/Release/mBedTest.bin

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.jgit"
+      label="%featureName"
+      version="3.7.0.201502260915-r"
+      provider-name="%providerName">
+
+   <description url="http://www.eclipse.org/jgit/">
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <update label="%updateSiteName" url="http://download.eclipse.org/egit/updates"/>
+      <discovery label="%updateSiteName" url="http://download.eclipse.org/egit/updates"/>
+   </url>
+
+   <includes
+         id="org.eclipse.jgit.java7"
+         version="3.7.0.201502260915-r"
+         name="Java implementation of Git - optional Java 7 libraries"
+         optional="true"/>
+
+   <plugin
+         id="org.eclipse.jgit"
+         download-size="1935"
+         install-size="3924"
+         version="3.7.0.201502260915-r"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jgit.archive"
+         download-size="21"
+         install-size="38"
+         version="3.7.0.201502260915-r"
+         unpack="false"/>
+
+   <plugin
+         id="com.jcraft.jsch"
+         download-size="273"
+         install-size="500"
+         version="0.1.51.v201410302000"
+         unpack="false"/>
+
+   <plugin
+         id="javaewah"
+         download-size="137"
+         install-size="275"
+         version="0.7.9.v201401101600"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.commons.compress"
+         download-size="323"
+         install-size="618"
+         version="1.6.0.v201310281400"
+         unpack="false"/>
+
+   <plugin
+         id="org.slf4j.api"
+         download-size="34"
+         install-size="61"
+         version="1.7.2.v20121108-1250"
+         unpack="false"/>
+
+   <plugin
+         id="org.slf4j.impl.log4j12"
+         download-size="16"
+         install-size="26"
+         version="1.7.2.v20131105-2200"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.log4j"
+         download-size="404"
+         install-size="774"
+         version="1.2.15.v201012070815"
+         unpack="false"/>
+
+</feature>

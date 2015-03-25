@@ -67,4 +67,4 @@ void pstorage_sys_event_handler (uint32_t sys_evt);
 #endif // PSTORAGE_PL_H__
 
 /** @} */
-/** @endcond */
+/** @endcond */

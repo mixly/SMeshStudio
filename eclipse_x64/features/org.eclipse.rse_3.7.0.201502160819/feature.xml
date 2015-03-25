@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+     Copyright (c) 2005, 2014 IBM Corporation and others.
+     All rights reserved. This program and the accompanying materials
+     are made available under the terms of the Eclipse Public License v1.0
+     which accompanies this distribution, and is available at
+     http://www.eclipse.org/legal/epl-v10.html
+    
+     Contributors:
+         IBM Corporation - initial API and implementation
+ -->
+<feature
+      id="org.eclipse.rse"
+      label="%featureName"
+      version="3.7.0.201502160819"
+      provider-name="%providerName"
+      plugin="org.eclipse.rse"
+      image="eclipse_update_120.jpg">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <update label="%tmUpdateSiteName" url="http://download.eclipse.org/tm/updates/3.7"/>
+      <discovery label="%tmUpdateSiteName" url="http://download.eclipse.org/tm/updates/3.7"/>
+   </url>
+
+   <includes
+         id="org.eclipse.rse.core"
+         version="3.7.0.201502160819"
+         search-location="both"/>
+
+   <includes
+         id="org.eclipse.rse.dstore"
+         version="3.7.0.201502160819"
+         search-location="both"/>
+
+   <includes
+         id="org.eclipse.rse.ftp"
+         version="3.7.0.201502160819"
+         search-location="both"/>
+
+   <includes
+         id="org.eclipse.rse.local"
+         version="3.7.0.201502160819"
+         search-location="both"/>
+
+   <includes
+         id="org.eclipse.rse.ssh"
+         version="3.7.0.201502160819"
+         search-location="both"/>
+
+   <includes
+         id="org.eclipse.rse.telnet"
+         version="3.7.0.201502160819"
+         search-location="both"/>
+
+<!-- Do not include the Terminals feature here, require it instead. -->
+   <requires>
+      <import feature="org.eclipse.rse.terminals" version="3.7.0" match="greaterOrEqual"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.rse"
+         download-size="12"
+         install-size="16"
+         version="3.5.0.201403100950"
+         unpack="false"/>
+
+</feature>

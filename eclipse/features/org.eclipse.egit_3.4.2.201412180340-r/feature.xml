@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.egit"
+      label="%featureName"
+      version="3.4.2.201412180340-r"
+      provider-name="%providerName"
+      plugin="org.eclipse.egit">
+
+   <description url="http://www.eclipse.org/egit/">
+     %description
+   </description>
+
+   <copyright>
+     %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+     %license
+   </license>
+
+   <url>
+      <update label="%updateSiteName" url="http://download.eclipse.org/egit/updates"/>
+      <discovery label="%updateSiteName" url="http://download.eclipse.org/egit/updates"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime" version="3.7" match="compatible"/>
+      <import plugin="org.eclipse.core.resources" version="3.4.0" match="compatible"/>
+      <import plugin="org.eclipse.core.filesystem" version="1.1.0" match="compatible"/>
+      <import plugin="org.eclipse.ui" version="3.4.0" match="compatible"/>
+      <import plugin="org.eclipse.team.ui" version="3.4.0" match="compatible"/>
+      <import plugin="org.eclipse.jface.text" version="3.4.0" match="compatible"/>
+      <import plugin="org.eclipse.ui.ide" version="3.4.0" match="compatible"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor" version="3.4.0" match="compatible"/>
+      <import plugin="org.eclipse.compare" version="3.4.0" match="compatible"/>
+      <import plugin="org.eclipse.core.net" version="1.1.0" match="compatible"/>
+      <import plugin="org.eclipse.team.core" version="3.4.0" match="compatible"/>
+      <import plugin="org.eclipse.jsch.ui" version="1.1.100" match="compatible"/>
+      <import plugin="org.eclipse.jsch.core" version="1.1.100" match="compatible"/>
+      <import plugin="com.jcraft.jsch" version="0.1.37" match="compatible"/>
+      <import feature="org.eclipse.jgit" version="3.4.2" match="equivalent"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.egit.core"
+         download-size="374"
+         install-size="820"
+         version="3.4.2.201412180340-r"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.egit.ui"
+         download-size="2510"
+         install-size="5529"
+         version="3.4.2.201412180340-r"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.egit"
+         download-size="10"
+         install-size="14"
+         version="3.4.2.201412180340-r"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.egit.doc"
+         download-size="4337"
+         install-size="4644"
+         version="3.4.2.201412180340-r"
+         unpack="false"/>
+</feature>

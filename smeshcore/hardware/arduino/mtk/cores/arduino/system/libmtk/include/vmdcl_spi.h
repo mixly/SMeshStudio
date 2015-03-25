@@ -3,6 +3,15 @@
 #define __VM_DCL_SPI_H__
 
 
+/********************USER SHOULD KEEP THIS RULE*************************************************
+* 1) Please use port : vm_spi_port1 ( default start from vm_spi_port1 ,and if NEW SPI HW addes,
+*     vm_spi_port2 will be added )
+* 2) AP SPI works at DMA mode ,so Please SET USER read/write/readwrite BUFFER as NON-Cachable
+*     (ex: VM_READ_BUFFER* spi_read_data;
+*          VM_WRITE_BUFFER* spi_write_data;	
+*          spi_write_data = (VM_WRITE_BUFFER*)vm_malloc_nc(sizeof(VM_WRITE_BUFFER));
+*	          spi_read_data = (VM_READ_BUFFER*)vm_malloc_nc(sizeof(VM_READ_BUFFER));)
+***************************************************************************************************/
 /*****************************************************************************
  * DESCRIPTION
  *  VM_SPI_MAX_PORT_NUM  indecates that this is the max port number which
@@ -18,15 +27,15 @@
  * EXAMPLE		                            
  * <code>
  *	VM_DCL_HANDLE spi_handle;
- * spi_handle = vm_dcl_open(vm_spi_port0,0);
+ * spi_handle = vm_dcl_open(vm_spi_port1,0);
  * if(VM_DCL_HANDLE_INVALID==spi_handle) return;
  * //Do something with the handle.
  * </code>
  *****************************************************************************/
 typedef enum
 {
-    vm_spi_port0=VM_DCL_SPI_GROUP_START,
-    vm_spi_port1       
+ 	vm_spi_port0 = VM_DCL_SPI_GROUP_START,  /* only for start spi 1,USER NOT USED!!!*/ 
+    vm_spi_port1                         /*user use from spi 1*/        
  
 } VM_DCL_SPI_DEV_T;
 
@@ -37,7 +46,7 @@ typedef enum
  * <code>
  *	VM_DCL_HANDLE spi_handle;
  *  vm_spi_config_para_t conf_data;
- * spi_handle = vm_dcl_open(vm_spi_port0,0);
+ * spi_handle = vm_dcl_open(vm_spi_port1,0);
  * if(VM_DCL_HANDLE_INVALID==spi_handle) return;
  *	conf_data.clk_high_time = 5;
  *	conf_data.clk_low_time = 5;
@@ -105,7 +114,7 @@ typedef enum
  * <code>
  *	VM_DCL_HANDLE spi_handle;
  *  vm_spi_mode_t spi_data;
- * spi_handle = vm_dcl_open(vm_spi_port0,0);
+ * spi_handle = vm_dcl_open(vm_spi_port1,0);
  * if(VM_DCL_HANDLE_INVALID==spi_handle) return;
  * spi_data.mode=VM_SPI_MODE_GET_TICK;
  * spi_data.bEnable=KAL_TRUE;
@@ -129,7 +138,7 @@ typedef enum
  * <code>
  *	VM_DCL_HANDLE spi_handle;
  *  vm_spi_config_para_t conf_data;
- * spi_handle = vm_dcl_open(vm_spi_port0,0);
+ * spi_handle = vm_dcl_open(vm_spi_port1,0);
  * if(VM_DCL_HANDLE_INVALID==spi_handle) return;
  *	conf_data.clk_high_time = 5;
  *	conf_data.clk_low_time = 5;
@@ -161,7 +170,7 @@ typedef enum
  * <code>
  *	VM_DCL_HANDLE spi_handle;
  *  vm_spi_config_para_t conf_data;
- * spi_handle = vm_dcl_open(vm_spi_port0,0);
+ * spi_handle = vm_dcl_open(vm_spi_port1,0);
  * if(VM_DCL_HANDLE_INVALID==spi_handle) return;
  *	conf_data.clk_high_time = 5;
  *	conf_data.clk_low_time = 5;
@@ -194,7 +203,7 @@ typedef enum
  * <code>
  *	VM_DCL_HANDLE spi_handle;
  *  vm_spi_config_para_t conf_data;
- * spi_handle = vm_dcl_open(vm_spi_port0,0);
+ * spi_handle = vm_dcl_open(vm_spi_port1,0);
  * if(VM_DCL_HANDLE_INVALID==spi_handle) return;
  *	conf_data.clk_high_time = 5;
  *	conf_data.clk_low_time = 5;
@@ -227,7 +236,7 @@ typedef enum
  * <code>
  *	VM_DCL_HANDLE spi_handle;
  *  vm_spi_config_para_t conf_data;
- * spi_handle = vm_dcl_open(vm_spi_port0,0);
+ * spi_handle = vm_dcl_open(vm_spi_port1,0);
  * if(VM_DCL_HANDLE_INVALID==spi_handle) return;
  *	conf_data.clk_high_time = 5;
  *	conf_data.clk_low_time = 5;
@@ -262,7 +271,7 @@ typedef enum
  * <code>
  *	VM_DCL_HANDLE spi_handle;
  *  vm_spi_config_para_t conf_data;
- * spi_handle = vm_dcl_open(vm_spi_port0,0);
+ * spi_handle = vm_dcl_open(vm_spi_port1,0);
  * if(VM_DCL_HANDLE_INVALID==spi_handle) return;
  *	conf_data.clk_high_time = 5;
  *	conf_data.clk_low_time = 5;
@@ -356,7 +365,7 @@ typedef struct
  * <code>
  *	VM_DCL_HANDLE spi_handle;
  *  vm_spi_capabilty_t spi_data;
- * spi_handle = vm_dcl_open(vm_spi_port0,0);
+ * spi_handle = vm_dcl_open(vm_spi_port1,0);
  * if(VM_DCL_HANDLE_INVALID==spi_handle) return;
  *	vm_dcl_control(spi_handle,VM_SPI_IOCTL_QUERY_CAPABILITY,(void *)&spi_data);
  * //Do something with the handle.
@@ -415,7 +424,7 @@ typedef struct
  * <code>
  *	VM_DCL_HANDLE spi_handle;
  *  vm_spi_query_mode_t spi_data;
- * spi_handle = vm_dcl_open(vm_spi_port0,0);
+ * spi_handle = vm_dcl_open(vm_spi_port1,0);
  * if(VM_DCL_HANDLE_INVALID==spi_handle) return;
  * spi_data.mode=VM_SPI_MODE_PAUSE;
  *	vm_dcl_control(spi_handle,VM_SPI_IOCTL_QUERY_MODE_SUPPORT,(void *)&spi_data);
@@ -439,7 +448,7 @@ typedef struct
  * <code>
  *	VM_DCL_HANDLE spi_handle;
  *  vm_spi_query_clock_t spi_data;
- * spi_handle = vm_dcl_open(vm_spi_port0,0);
+ * spi_handle = vm_dcl_open(vm_spi_port1,0);
  * if(VM_DCL_HANDLE_INVALID==spi_handle) return;
  *	vm_dcl_control(spi_handle,VM_SPI_IOCTL_QUERY_CLOCK,(void *)&spi_data);
  * //Do something with the handle.
@@ -461,7 +470,7 @@ typedef struct
  * <code>
  *	VM_DCL_HANDLE spi_handle;
  *  vm_spi_mode_t spi_data;
- * spi_handle = vm_dcl_open(vm_spi_port0,0);
+ * spi_handle = vm_dcl_open(vm_spi_port1,0);
  * if(VM_DCL_HANDLE_INVALID==spi_handle) return;
  	spi_data.mode = SPI_MODE_DEASSERT;
 	spi_data.bEnable = KAL_TRUE;
@@ -498,7 +507,7 @@ typedef struct
  *	VMUINT32 wrten_len;
  *	VMUINT8 read_buff[3] = {0};
  *	VMUINT32 read_len;
- * spi_handle = vm_dcl_open(vm_spi_port0,0);
+ * spi_handle = vm_dcl_open(vm_spi_port1,0);
  * if(VM_DCL_HANDLE_INVALID==spi_handle) return;
  *	conf_data.clk_high_time = 5;
  *	conf_data.clk_low_time = 5;

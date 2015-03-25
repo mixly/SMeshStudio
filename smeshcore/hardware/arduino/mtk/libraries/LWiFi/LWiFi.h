@@ -191,6 +191,24 @@ public:
   //     LWiFi.end();     // turn off Wi-Fi module
   // </code>
   int connectWPA(const char* ssid, const char *passphrase);
+ 
+  // DESCRIPTION
+  //  Start Wifi connection with the configuration set from Smart phone
+  //
+  // PARAMETERS
+  //  void
+  // RETURNS
+  // > 0: Succeed
+  // <= 0: Fail
+  //
+  // EXAMPLE
+  // <code>
+  //     LWiFi.begin();   // turn on Wi-Fi module
+  //     LWiFi.connectSmart();
+  //     LWiFi.end();     // turn off Wi-Fi module
+  // </code>
+
+  int connectSmart(void);
 
   // DESCRIPTION
   //  Disconnect from the WiFi AP

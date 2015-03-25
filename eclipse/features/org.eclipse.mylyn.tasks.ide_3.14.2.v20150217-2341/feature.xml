@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2009 Tasktop Technologies and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+   
+    Contributors:
+         Tasktop Technologies - initial API and implementation
+ -->
+<feature
+      id="org.eclipse.mylyn.tasks.ide"
+      label="%featureName"
+      version="3.14.2.v20150217-2341"
+      provider-name="%providerName"
+      plugin="org.eclipse.mylyn.tasks.core">
+
+   <description url="http://eclipse.org/mylyn">
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <requires>
+      <import feature="org.eclipse.mylyn_feature" version="3.14.2" match="equivalent"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.mylyn.tasks.bugs"
+         download-size="81"
+         install-size="172"
+         version="3.14.2.v20150217-2341"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.help.ui"
+         download-size="1232"
+         install-size="1449"
+         version="3.14.2.v20150217-2341"
+         unpack="false"/>
+
+</feature>

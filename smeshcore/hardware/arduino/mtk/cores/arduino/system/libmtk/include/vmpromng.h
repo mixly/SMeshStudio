@@ -241,6 +241,12 @@ void vm_main(void);
 #define VM_MSG_LOW_BATTERY			16
 
 /**
+ * when the network info status changed
+ */
+#define VM_MSG_NW_INFO_STATUS_CHANGED			17
+
+#define VM_MSG_USB_CHARGER_IN                          18 /* when usb charger plug in, will send this event to app */#define VM_MSG_USB_CHARGER_OUT                          19 /* when usb charger plug out, will send this event to app */
+/**
  * atci message 
  */
 #define VM_MSG_ATCI_IND			60001
@@ -604,10 +610,10 @@ typedef enum
  *  parent_app_handle : [IN]  Parent APP handle, usually should be current APP.
  *  is_parent_exit :    [IN]  Is need exit Parent APP before enter new one.
  * RETURNS
- *  void
+ *  VM_TRUE means successed, VM_FALSE means failed 
  *  
 *****************************************************************************/
-void vm_start_app(const VMWCHAR* filepath, VMINT parent_app_handle, VMINT is_parent_exit);
+VMBOOL vm_start_app(const VMWCHAR* filepath, VMINT parent_app_handle, VMINT is_parent_exit);
 
 /*****************************************************************************
 * FUNCTION

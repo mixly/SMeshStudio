@@ -60,4 +60,4 @@ private:
     ShortUUIDBytes_t shortUUID; // 16 bit uuid (byte 2-3 using with base)
 };
 
-#endif // ifndef __UUID_H__
+#endif // ifndef __UUID_H__

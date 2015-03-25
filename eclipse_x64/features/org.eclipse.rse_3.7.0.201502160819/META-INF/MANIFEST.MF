@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Build-Jdk: 1.7.0_51
+Built-By: genie.tm
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+
+Name: epl-v10.html
+SHA1-Digest: jYDaDJLBJpthCwPMgGFVYASJjIU=
+
+Name: META-INF/maven/org.eclipse.tm.features/org.eclipse.rse/pom.xml
+SHA1-Digest: fvn1LwA2db3sX6rEVk3/0/H6WGk=
+
+Name: eclipse_update_120.jpg
+SHA1-Digest: xstAqMgs/a5AsQXQZSdDQ79veOA=
+
+Name: META-INF/maven/org.eclipse.tm.features/org.eclipse.rse/pom.prope
+ rties
+SHA1-Digest: WQb2HHI7LcKJyPIGp4X/qvuIQ5M=
+
+Name: license.html
+SHA1-Digest: Z5WKoRSIDCgQNswUpOU/oSPE2a0=
+
+Name: feature.properties
+SHA1-Digest: Vh6arDU4ZriZ2OnBSrhTxtxPSMk=
+
+Name: feature.xml
+SHA1-Digest: 0iakZoV7FCVg0NgfvtCHs0ZRGTo=
+

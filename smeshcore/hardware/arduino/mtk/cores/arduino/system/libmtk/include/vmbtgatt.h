@@ -274,6 +274,21 @@ VMINT vm_gatts_listen(void *reg_ctx, VMBOOL start);
 
 /*****************************************************************************
  * FUNCTION
+ *  vm_gatts_set_adv_data
+ * DESCRIPTION
+ *  
+ * PARAMETERS
+ *  
+ * RETURNS
+ *  failure if less than 0, else successful
+ *****************************************************************************/
+VMINT vm_gatts_set_adv_data(void *reg_ctx, VMBOOL set_scan_rsp, VMBOOL include_name, VMBOOL include_txpower, 
+                                VMUINT16 min_interval, VMUINT16 max_interval, VMUINT16 appearance,
+                                VMUINT16 manufacturer_len, VMCHAR *manufacturer_data,
+                                VMUINT16 service_data_len, VMCHAR *service_data,
+                                VMUINT16 service_uuid_len, VMCHAR *service_uuid);
+/*****************************************************************************
+ * FUNCTION
  *  vm_gatts_add_service
  * DESCRIPTION
  *  Create a new service

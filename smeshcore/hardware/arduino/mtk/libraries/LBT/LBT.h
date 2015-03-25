@@ -20,7 +20,7 @@
 
 #include <Arduino.h>
 #include "LTask.h"
-#include "Vmbtcm.h"
+#include "vmbtcm.h"
 #include <stdint.h>
 
 #define LBT_DEVICE_NAME_LENGTH  56

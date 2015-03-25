@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.jgit"
+      label="%featureName"
+      version="3.4.2.201412180340-r"
+      provider-name="%providerName">
+
+   <description url="http://www.eclipse.org/jgit/">
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <update label="%updateSiteName" url="http://download.eclipse.org/egit/updates"/>
+      <discovery label="%updateSiteName" url="http://download.eclipse.org/egit/updates"/>
+   </url>
+
+   <plugin
+         id="org.eclipse.jgit"
+         download-size="1861"
+         install-size="3780"
+         version="3.4.2.201412180340-r"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jgit.archive"
+         download-size="21"
+         install-size="38"
+         version="3.4.2.201412180340-r"
+         unpack="false"/>
+
+   <plugin
+         id="com.jcraft.jsch"
+         download-size="259"
+         install-size="476"
+         version="0.1.50.v201403120620"
+         unpack="false"/>
+
+   <plugin
+         id="javaewah"
+         download-size="137"
+         install-size="275"
+         version="0.7.9.v201401101600"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.commons.compress"
+         download-size="323"
+         install-size="618"
+         version="1.6.0.v201310281400"
+         unpack="false"/>
+
+</feature>

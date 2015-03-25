@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010 by Cristian Maglie <c.maglie@bug.st>
+ * Copyright (c) 2010 by Cristian Maglie <c.maglie@arduino.cc>
  *
  * This file is free software; you can redistribute it and/or modify
  * it under the terms of either the GNU General Public License version 2
@@ -11,6 +11,14 @@
 #define	W5100_H_INCLUDED
 
 #include <SPI.h>
+
+#define SPI_CS 10
+
+#if defined(ARDUINO_ARCH_AVR)
+#define SPI_ETHERNET_SETTINGS SPISettings(4000000, MSBFIRST, SPI_MODE0)
+#else
+#define SPI_ETHERNET_SETTINGS SPI_CS,SPISettings(4000000, MSBFIRST, SPI_MODE0)
+#endif
 
 #define MAX_SOCK_NUM 4
 

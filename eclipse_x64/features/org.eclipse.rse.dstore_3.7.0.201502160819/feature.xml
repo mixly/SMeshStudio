@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2006, 2012 IBM Corporation and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+    
+    Initial Contributors:
+    The following IBM employees contributed to the Remote System Explorer
+    component that contains this file: David McKnight, Kushal Munir,
+    Michael Berger, David Dykstal, Phil Coulthard, Don Yantzi, Eric Simpson,
+    Emily Bruner, Mazen Faraj, Adrian Storisteanu, Li Ding, and Kent Hawley.
+    
+    Contributors:
+    IBM Corporation - initial API and implementation
+    Martin Oberhuber (Wind River) - [189269] add version range specifiers
+ -->
+<feature
+      id="org.eclipse.rse.dstore"
+      label="%featureName"
+      version="3.7.0.201502160819"
+      provider-name="%providerName"
+      plugin="org.eclipse.rse.services.dstore">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <update label="%tmUpdateSiteName" url="http://download.eclipse.org/tm/updates/3.7"/>
+      <discovery label="%tmUpdateSiteName" url="http://download.eclipse.org/tm/updates/3.7"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.ui.views"/>
+      <import plugin="org.eclipse.rse.core" version="3.0.0" match="compatible"/>
+      <import plugin="org.eclipse.rse.services" version="3.0.0" match="compatible"/>
+      <import plugin="org.eclipse.rse.subsystems.files.core" version="3.0.0" match="compatible"/>
+      <import plugin="org.eclipse.rse.subsystems.processes.core" version="3.0.0" match="compatible"/>
+      <import plugin="org.eclipse.rse.subsystems.shells.core" version="3.0.0" match="compatible"/>
+      <import plugin="org.eclipse.rse.ui" version="3.0.0" match="compatible"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.dstore.core"
+         download-size="379"
+         install-size="595"
+         version="3.4.0.201411132153"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.dstore.extra"
+         download-size="28"
+         install-size="41"
+         version="2.1.400.201403100950"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rse.connectorservice.dstore"
+         download-size="66"
+         install-size="131"
+         version="3.1.301.201403100950"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rse.services.dstore"
+         download-size="336"
+         install-size="572"
+         version="3.3.0.201406041609"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rse.subsystems.files.dstore"
+         download-size="36"
+         install-size="73"
+         version="2.1.300.201403100950"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rse.subsystems.processes.dstore"
+         download-size="18"
+         install-size="27"
+         version="2.1.400.201403100950"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rse.subsystems.shells.dstore"
+         download-size="20"
+         install-size="32"
+         version="2.1.400.201403100950"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.rse.dstore.security"
+         download-size="64"
+         install-size="124"
+         version="3.0.400.201403100950"
+         unpack="false"/>
+
+</feature>

@@ -64,6 +64,9 @@ typedef void (*vm_kal_timer_func_ptr)(void *param_ptr);
 /*callback function VM_TIMERPROC_T */
 typedef void (*VM_TIMERPROC_T)(VMINT tid);
 
+/*callback function for high priority timer */
+typedef void (*vm_timer_func_ptr)(void *);
+
 /*****************************************************************************
  * FUNCTION
  *  vm_create_timer
@@ -219,6 +222,47 @@ void vm_set_kal_timer(vm_kal_timerid timer_ptr, vm_kal_timer_func_ptr handler_fu
 *  pointer of timder id, NULL means failed to create
 *****************************************************************************/
 void vm_cancel_kal_timer(vm_kal_timerid timer_ptr);
+
+/*****************************************************************************
+ * FUNCTION
+ *  vm_timer_start_high_priority_timer
+ * DESCRIPTION
+ *  start a timer
+ * PARAMETERS
+ *  callback : [IN] the callback function when the timer is over time
+ *  userdata : [IN] user data
+ *  millisec : [IN] delay time
+ *  alignment : [IN] align or non-align
+ * RETURN VALUES
+ *	FALSE is failed, TRUE is success
+ *****************************************************************************/
+VMBOOL vm_timer_start_high_priority_timer(vm_timer_func_ptr callback,void *userdata,VMUINT32 millisec,VMUINT16 alignment);
+
+/*****************************************************************************
+ * FUNCTION
+ *  vm_timer_block_precise_timer_callback
+ * DESCRIPTION
+ *  when gpio after sleep in, the callback will be called, return >=0, precise timer stop when LCD backlight off, else not stop
+ *  it is for  vm_create_timer type timer.
+ * PARAMETERS
+ *  userdata : [IN] user data
+ * RETURN VALUES
+ *	>= 0 precise timer stop, < 0 precise timer not stop when LCD backlight off
+ *****************************************************************************/
+typedef VMINT (*vm_timer_block_precise_timer_callback)(void *user_data);
+
+/*****************************************************************************
+ * FUNCTION
+ *  vm_timer_register_block_precise_timer
+ * DESCRIPTION
+ *  register block precise timer
+ * PARAMETERS
+ *  callback : [IN] the callback function when gpio after sleep in
+ *  userdata : [IN] user data
+ * RETURN VALUES
+ *	<0 is failed, >= 0 is success
+ *****************************************************************************/
+VMINT vm_timer_register_block_precise_timer(vm_timer_block_precise_timer_callback callback, void* user_data);
 
 #ifdef __cplusplus
 }

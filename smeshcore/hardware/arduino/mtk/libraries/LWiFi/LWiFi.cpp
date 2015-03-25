@@ -383,6 +383,13 @@ int LWiFiClass::connect(const char* ssid, const LWiFiLoginInfo &loginInfo)
   return wifiConnectImpl(context);
 }
 
+int LWiFiClass::connectSmart(void)
+{
+    LWiFiConnectContext context;
+    context.isWaitApInfo = true;
+    return wifiConnectImpl(context);
+}
+
 int LWiFiClass::connectWEP(const char* ssid, const char* key)
 {
   // connect with WEP
