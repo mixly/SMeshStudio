@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config date="1430219878174" transient="false">
+<config date="1430269350311" transient="false">
 	<site updateable="true" url="platform:/base/" enabled="true" policy="USER-EXCLUDE">
 		<feature id="org.eclipse.ecf.filetransfer.httpclient4.ssl.feature" version="1.0.0.v20141221-2352" url="features/org.eclipse.ecf.filetransfer.httpclient4.ssl.feature_1.0.0.v20141221-2352/">
 		</feature>
@@ -21,8 +21,6 @@
 		</feature>
 		<feature id="org.eclipse.rse" version="3.7.0.201502160819" url="features/org.eclipse.rse_3.7.0.201502160819/">
 		</feature>
-		<feature id="it.baeyens.arduino.feature" version="2.4.0.201504281916" url="features/it.baeyens.arduino.feature_2.4.0.201504281916/">
-		</feature>
 		<feature id="org.eclipse.mylyn.context_feature" version="3.14.2.v20150218-0125" url="features/org.eclipse.mylyn.context_feature_3.14.2.v20150218-0125/" plugin-identifier="org.eclipse.mylyn.context.core">
 		</feature>
 		<feature id="org.eclipse.cdt.gdb" version="8.6.0.201502131403" url="features/org.eclipse.cdt.gdb_8.6.0.201502131403/">
@@ -40,6 +38,8 @@
 		<feature id="org.eclipse.cdt.gnu.dsf" version="8.6.0.201502131403" url="features/org.eclipse.cdt.gnu.dsf_8.6.0.201502131403/">
 		</feature>
 		<feature id="org.eclipse.cdt.native" version="8.6.0.201502131403" url="features/org.eclipse.cdt.native_8.6.0.201502131403/">
+		</feature>
+		<feature id="it.baeyens.arduino.feature" version="2.4.0.201504290901" url="features/it.baeyens.arduino.feature_2.4.0.201504290901/">
 		</feature>
 		<feature id="org.eclipse.rse.telnet" version="3.7.0.201502160819" url="features/org.eclipse.rse.telnet_3.7.0.201502160819/" plugin-identifier="org.eclipse.rse.services.telnet">
 		</feature>
