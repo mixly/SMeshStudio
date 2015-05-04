@@ -21,4 +21,4 @@ uint32_t ble_advdata_parser_field_find(uint8_t    type,
         index += field_length + 1;
     }
     return NRF_ERROR_NOT_FOUND;
-}
+}

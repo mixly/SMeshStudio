@@ -69,4 +69,4 @@
 #define UNUSED_VARIABLE(X)  ((void)(X))
 #define UNUSED_PARAMETER(X) UNUSED_VARIABLE(X)
 
-#endif // NORDIC_COMMON_H__
+#endif // NORDIC_COMMON_H__

@@ -114,4 +114,4 @@ void nrf_nvmc_write_words(uint32_t address, const uint32_t * src, uint32_t num_w
   {
   }
 }
-
+

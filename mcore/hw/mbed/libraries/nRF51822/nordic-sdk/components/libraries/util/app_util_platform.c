@@ -27,4 +27,4 @@ void critical_region_exit(void)
     {
         __enable_irq();
     }
-}
+}

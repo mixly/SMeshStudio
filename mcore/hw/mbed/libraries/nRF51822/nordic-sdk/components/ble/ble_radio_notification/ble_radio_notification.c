@@ -56,4 +56,4 @@ uint32_t ble_radio_notification_init(nrf_app_irq_priority_t               irq_pr
 
     // Configure the event
     return sd_radio_notification_cfg_set(NRF_RADIO_NOTIFICATION_TYPE_INT_ON_BOTH, distance);
-}
+}

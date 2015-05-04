@@ -71,4 +71,4 @@ void nrf_ecb_set_key(const uint8_t * key)
   memcpy(ecb_key,key,16);
 }
 
-
+

@@ -37,4 +37,4 @@ typedef enum {
 
 #define BLE_NB_MAX_SENSOR_LOCATIONS 14
 
-#endif // BLE_SENSOR_LOCATION_H__
+#endif // BLE_SENSOR_LOCATION_H__

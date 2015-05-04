@@ -35,4 +35,4 @@ void bootloader_util_app_start(uint32_t start_addr);
 
 #endif // BOOTLOADER_UTIL_H__
 
-/**@} */
+/**@} */

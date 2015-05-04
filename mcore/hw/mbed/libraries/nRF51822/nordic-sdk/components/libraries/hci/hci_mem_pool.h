@@ -129,4 +129,4 @@ uint32_t hci_mem_pool_rx_consume(uint8_t * p_buffer);
  
 #endif // HCI_MEM_POOL_H__
  
-/** @} */
+/** @} */

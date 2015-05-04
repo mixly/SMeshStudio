@@ -38,4 +38,4 @@ void ble_srv_ascii_to_utf8(ble_srv_utf8_str_t * p_utf8, char * p_ascii)
 {
     p_utf8->length = (uint16_t)strlen(p_ascii);
     p_utf8->p_str  = (uint8_t *)p_ascii;
-}
+}

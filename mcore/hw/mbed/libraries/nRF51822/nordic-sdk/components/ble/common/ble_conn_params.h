@@ -116,4 +116,4 @@ void ble_conn_params_on_ble_evt(ble_evt_t * p_ble_evt);
 
 #endif // BLE_CONN_PARAMS_H__
 
-/** @} */
+/** @} */

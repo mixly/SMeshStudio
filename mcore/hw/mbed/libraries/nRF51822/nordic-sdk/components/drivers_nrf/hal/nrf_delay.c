@@ -23,4 +23,4 @@ void nrf_delay_ms(uint32_t volatile number_of_ms)
         number_of_ms--;
         nrf_delay_us(999);
     }
-}
+}

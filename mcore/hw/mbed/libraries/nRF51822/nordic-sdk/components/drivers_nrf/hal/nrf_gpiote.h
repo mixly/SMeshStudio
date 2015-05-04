@@ -150,4 +150,4 @@ static __INLINE void nrf_gpiote_unconfig(uint32_t channel_number)
 
 /** @} */
 
-#endif
+#endif

@@ -358,4 +358,4 @@ uint32_t ble_conn_params_change_conn_params(ble_gap_conn_params_t *new_params)
         }
     }
     return err_code;
-}
+}

@@ -30,7 +30,6 @@
 #include "ble.h"
 #include "nrf_sdm.h"
 #include "app_error.h"
-#include "app_scheduler.h"
 #include "app_util.h"
 
 #ifdef __cplusplus
@@ -72,4 +71,4 @@ uint32_t softdevice_ble_evt_handler_set(ble_evt_handler_t ble_evt_handler);
 
 #endif // BLE_STACK_HANDLER_TYPES_H__
 
-/** @} */
+/** @} */

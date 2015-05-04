@@ -32,11 +32,14 @@
 /**@brief The interrupt priorities available to the application while the SoftDevice is active. */
 typedef enum
 {
-    APP_IRQ_PRIORITY_HIGH = 1,
 #ifndef SOFTDEVICE_PRESENT
-    APP_IRQ_PRIORITY_MID  = 2,
+    APP_IRQ_PRIORITY_HIGHEST = 0,
 #endif
-    APP_IRQ_PRIORITY_LOW  = 3
+    APP_IRQ_PRIORITY_HIGH    = 1,
+#ifndef SOFTDEVICE_PRESENT
+    APP_IRQ_PRIORITY_MID     = 2,
+#endif
+    APP_IRQ_PRIORITY_LOW     = 3
 } app_irq_priority_t;
 
 #define NRF_APP_PRIORITY_THREAD    4                    /**< "Interrupt level" when running in Thread Mode. */
@@ -123,4 +126,4 @@ static __INLINE uint8_t current_int_priority_get(void)
 
 #endif // APP_UTIL_PLATFORM_H__
 
-/** @} */
+/** @} */

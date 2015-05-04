@@ -284,4 +284,4 @@ uint32_t ble_flash_page_addr(uint8_t page_num, uint32_t ** pp_page_addr)
 void ble_flash_on_radio_active_evt(bool radio_active)
 {
     m_radio_active = radio_active;
-}
+}

@@ -131,4 +131,4 @@ uint32_t dfu_init_postvalidate(uint8_t * p_image, uint32_t image_len);
 
 #endif // DFU_INIT_H__
 
-/**@} */
+/**@} */

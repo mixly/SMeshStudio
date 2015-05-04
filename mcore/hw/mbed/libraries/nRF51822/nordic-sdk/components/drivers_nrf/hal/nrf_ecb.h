@@ -63,4 +63,4 @@ void nrf_ecb_set_key(const uint8_t * key);
 
 #endif  // NRF_ECB_H__
 
-/** @} */
+/** @} */

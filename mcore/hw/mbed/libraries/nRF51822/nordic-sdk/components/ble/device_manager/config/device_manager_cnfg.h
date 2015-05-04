@@ -95,4 +95,4 @@
 /* @} */
 /** @endcond */
 #endif // DEVICE_MANAGER_CNFG_H__
-
+

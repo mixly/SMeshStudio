@@ -434,4 +434,4 @@
 /*lint --flb "Leave library region" */
 
 #endif /* NRF51_DEPRECATED_H */
-
+

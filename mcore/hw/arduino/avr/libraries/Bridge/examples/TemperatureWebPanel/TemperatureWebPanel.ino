@@ -8,6 +8,8 @@
  * TMP36 temperature sensor on analog pin A1
  * SD card attached to SD card slot of the Arduino Yún
 
+ This sketch must be uploaded via wifi. REST API must be set to "open".
+
  Prepare your SD card with an empty folder in the SD root
  named "arduino" and a subfolder of that named "www".
  This will ensure that the Yún will create a link
@@ -100,11 +102,11 @@ void loop() {
       // convert the millivolts to temperature celsius:
       float temperature = (voltage - 500) / 10;
       // print the temperature:
-      client.print("Current time on the Yún: ");
+      client.print("Current time on the Y&uacute;n: ");
       client.println(timeString);
       client.print("<br>Current temperature: ");
       client.print(temperature);
-      client.print(" degrees C");
+      client.print(" &deg;C");
       client.print("<br>This sketch has been running since ");
       client.print(startString);
       client.print("<br>Hits so far: ");

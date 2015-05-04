@@ -75,4 +75,4 @@ void dfu_app_set_dm_handle(dm_handle_t const * p_dm_handle);
 
 #endif // DFU_APP_HANDLER_H__
 
-/** @} */
+/** @} */

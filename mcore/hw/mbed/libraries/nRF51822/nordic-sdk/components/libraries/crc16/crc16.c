@@ -28,4 +28,4 @@ uint16_t crc16_compute(const uint8_t * p_data, uint32_t size, const uint16_t * p
     }
 
     return crc;
-}
+}

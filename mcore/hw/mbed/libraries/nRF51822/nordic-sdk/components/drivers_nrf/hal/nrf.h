@@ -46,4 +46,4 @@
 #endif /* _WIN32 */
 
 #endif /* NRF_H */
-
+

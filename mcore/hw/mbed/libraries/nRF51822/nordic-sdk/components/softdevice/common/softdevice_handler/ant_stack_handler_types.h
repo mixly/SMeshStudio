@@ -66,4 +66,4 @@ uint32_t softdevice_ant_evt_handler_set(ant_evt_handler_t ant_evt_handler);
 
 #endif // ANT_STACK_HANDLER_TYPES_H__
 
-/** @} */
+/** @} */

@@ -35,4 +35,4 @@
 #define PINOUT(p)                PINX_GLUE(PIN,p,OUT)  /*!< gpio out pin number 'p' */
 
 /*lint --flb "Leave library region" */
-#endif
+#endif

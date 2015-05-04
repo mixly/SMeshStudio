@@ -419,4 +419,4 @@ static __INLINE void nrf_gpio_port_clear(nrf_gpio_port_select_t port, uint8_t cl
 
 /** @} */
 
-#endif
+#endif

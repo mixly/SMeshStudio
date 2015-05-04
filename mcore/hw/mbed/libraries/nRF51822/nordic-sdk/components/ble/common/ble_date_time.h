@@ -73,4 +73,4 @@ static __INLINE uint8_t ble_date_time_decode(ble_date_time_t * p_date_time,
 
 #endif // BLE_DATE_TIME_H__
 
-/** @} */
+/** @} */

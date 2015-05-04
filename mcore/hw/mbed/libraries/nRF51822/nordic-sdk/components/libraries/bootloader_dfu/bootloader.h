@@ -94,4 +94,4 @@ uint32_t bootloader_dfu_sd_update_finalize(void);
 
 #endif // BOOTLOADER_H__
 
-/**@} */
+/**@} */

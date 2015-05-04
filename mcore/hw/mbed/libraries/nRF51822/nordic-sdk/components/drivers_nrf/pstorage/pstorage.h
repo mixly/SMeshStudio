@@ -381,4 +381,4 @@ uint32_t pstorage_raw_clear(pstorage_handle_t * p_dest, pstorage_size_t size);
 #endif /* #ifdef __cplusplus */
 
 #endif // PSTORAGE_H__
-
+

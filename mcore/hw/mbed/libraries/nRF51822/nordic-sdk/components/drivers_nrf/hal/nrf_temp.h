@@ -58,4 +58,4 @@ static __INLINE int32_t nrf_temp_read(void)
 
 /** @} */
 
-#endif
+#endif

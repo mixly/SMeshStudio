@@ -50,4 +50,4 @@ uint32_t ble_radio_notification_init(nrf_app_irq_priority_t               irq_pr
 
 #endif // BLE_RADIO_NOTIFICATION_H__
 
-/** @} */
+/** @} */

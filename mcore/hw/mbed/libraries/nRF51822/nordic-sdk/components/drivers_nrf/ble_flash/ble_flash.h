@@ -139,4 +139,4 @@ void ble_flash_on_radio_active_evt(bool radio_active);
 
 #endif // BLE_FLASH_H__
 
-/** @} */
+/** @} */

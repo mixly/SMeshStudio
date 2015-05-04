@@ -227,4 +227,4 @@ void ble_srv_ascii_to_utf8(ble_srv_utf8_str_t * p_utf8, char * p_ascii);
 
 #endif // BLE_SRV_COMMON_H__
 
-/** @} */
+/** @} */

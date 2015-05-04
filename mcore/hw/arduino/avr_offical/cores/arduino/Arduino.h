@@ -44,6 +44,9 @@ void yield(void);
 #define OUTPUT 0x1
 #define INPUT_PULLUP 0x2
 
+#define true 0x1
+#define false 0x0
+
 #define PI 3.1415926535897932384626433832795
 #define HALF_PI 1.5707963267948966192313216916398
 #define TWO_PI 6.283185307179586476925286766559
@@ -66,9 +69,12 @@ void yield(void);
 #define EXTERNAL 1
 #define INTERNAL 2
 #else  
-#if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1284__) || defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega644__) || defined(__AVR_ATmega644A__) || defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644PA__)
+#if defined(__AVR_ATmega1280__) ||defined(__AVR_ATmega1281__) || defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1284P__)
 #define INTERNAL1V1 2
 #define INTERNAL2V56 3
+#elif defined(__AVR_ATmega128RFA1__) || defined(__AVR_ATmega256RFR2__)
+#define INTERNAL1V5 2
+#define INTERNAL1V6 3
 #else
 #define INTERNAL 3
 #endif

@@ -56,4 +56,4 @@ typedef struct
 
 #endif // BOOTLOADER_TYPES_H__ 
 
-/**@} */
+/**@} */

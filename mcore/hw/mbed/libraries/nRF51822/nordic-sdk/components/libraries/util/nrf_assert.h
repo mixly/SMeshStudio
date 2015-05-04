@@ -63,4 +63,4 @@ __WEAK void assert_nrf_callback(uint16_t line_num, const uint8_t *file_name);
 }
 #endif
 
-#endif /* NRF_ASSERT_H_ */
+#endif /* NRF_ASSERT_H_ */

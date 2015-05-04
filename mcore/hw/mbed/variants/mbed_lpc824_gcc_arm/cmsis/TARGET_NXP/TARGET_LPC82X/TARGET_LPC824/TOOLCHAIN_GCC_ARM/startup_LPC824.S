@@ -98,16 +98,28 @@ __isr_vector:
 /* LPC824 interrupts */
     .long    SPI0_IRQHandler                         // SPI0 controller
     .long    SPI1_IRQHandler                         // SPI1 controller
+    .long    0                                       // Reserved
     .long    UART0_IRQHandler                        // UART0
     .long    UART1_IRQHandler                        // UART1
     .long    UART2_IRQHandler                        // UART2
-    .long    I2C_IRQHandler                         // I2C controller
+    .long    0                                       // Reserved
+    .long    I2C1_IRQHandler                         // I2C ch1 controller
+    .long    I2C0_IRQHandler                         // I2C ch0 controller
     .long    SCT_IRQHandler                          // Smart Counter Timer
     .long    MRT_IRQHandler                          // Multi-Rate Timer
     .long    CMP_IRQHandler                          // Comparator
     .long    WDT_IRQHandler                          // PIO1 (0:11)
     .long    BOD_IRQHandler                          // Brown Out Detect
+    .long    Flash_IRQHandler                        // Flash interrupt
     .long    WKT_IRQHandler                          // Wakeup timer
+    .long    ADC_SEQA_IRQHandler                     // ADC sequence A completion
+    .long    ADC_SEQB_IRQHandler                     // ADC sequence B completion
+    .long    ADC_THCMP_IRQHandler                    // ADC threshold compare
+    .long    ADC_OVR_IRQHandler                      // ADC overrun
+    .long    DMA_IRQHandler                          // DMA interrupt
+    .long    I2C2_IRQHandler                         // I2C2 controller
+    .long    I2C3_IRQHandler                         // I2C3 controller
+    .long    0                                       // Reserved
     .long    PININT0_IRQHandler                      // PIO INT0
     .long    PININT1_IRQHandler                      // PIO INT1
     .long    PININT2_IRQHandler                      // PIO INT2
@@ -181,18 +193,28 @@ Reset_Handler:
     .weak     \handler_name
     .set      \handler_name, Default_Handler
     .endm
+
     def_irq_default_handler    SPI0_IRQHandler
     def_irq_default_handler    SPI1_IRQHandler
     def_irq_default_handler    UART0_IRQHandler
     def_irq_default_handler    UART1_IRQHandler
     def_irq_default_handler    UART2_IRQHandler
-    def_irq_default_handler    I2C_IRQHandler
+    def_irq_default_handler    I2C0_IRQHandler
+    def_irq_default_handler    I2C1_IRQHandler
+    def_irq_default_handler    I2C2_IRQHandler
+    def_irq_default_handler    I2C3_IRQHandler
     def_irq_default_handler    SCT_IRQHandler
     def_irq_default_handler    MRT_IRQHandler
     def_irq_default_handler    CMP_IRQHandler
     def_irq_default_handler    WDT_IRQHandler
     def_irq_default_handler    BOD_IRQHandler
+    def_irq_default_handler    Flash_IRQHandler
     def_irq_default_handler    WKT_IRQHandler
+    def_irq_default_handler    ADC_SEQA_IRQHandler
+    def_irq_default_handler    ADC_SEQB_IRQHandler
+    def_irq_default_handler    ADC_THCMP_IRQHandler
+    def_irq_default_handler    ADC_OVR_IRQHandler
+    def_irq_default_handler    DMA_IRQHandler
     def_irq_default_handler    PININT0_IRQHandler
     def_irq_default_handler    PININT1_IRQHandler
     def_irq_default_handler    PININT2_IRQHandler
@@ -200,7 +222,7 @@ Reset_Handler:
     def_irq_default_handler    PININT4_IRQHandler
     def_irq_default_handler    PININT5_IRQHandler
     def_irq_default_handler    PININT6_IRQHandler
-    def_irq_default_handler    PININT7_IRQHandler    
+    def_irq_default_handler    PININT7_IRQHandler
 
     .end
 

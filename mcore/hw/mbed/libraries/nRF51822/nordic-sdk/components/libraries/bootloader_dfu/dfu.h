@@ -131,4 +131,4 @@ uint32_t dfu_init_pkt_complete(void);
 
 #endif // DFU_H__
 
-/** @} */
+/** @} */

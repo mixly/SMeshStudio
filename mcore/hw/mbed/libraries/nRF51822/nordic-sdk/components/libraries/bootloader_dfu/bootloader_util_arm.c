@@ -127,4 +127,4 @@ static void bootloader_util_reset(uint32_t start_addr)
 void bootloader_util_app_start(uint32_t start_addr)
 {
     bootloader_util_reset(start_addr);
-}
+}

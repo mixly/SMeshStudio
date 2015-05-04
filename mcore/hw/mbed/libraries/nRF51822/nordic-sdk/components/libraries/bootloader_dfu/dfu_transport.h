@@ -37,4 +37,4 @@ uint32_t dfu_transport_close(void);
 
 #endif // DFU_TRANSPORT_H__
 
-/**@} */
+/**@} */

@@ -19,4 +19,4 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * file_name)
  
     while (1) ;
 }
-#endif /* DEBUG_NRF */
+#endif /* DEBUG_NRF */

@@ -39,4 +39,4 @@ uint32_t dfu_ble_get_peer_data(dfu_ble_peer_data_t * p_peer_data);
 
 #endif // DFU_BLE_SVC_INTERNAL_H__
 
-/** @} */
+/** @} */

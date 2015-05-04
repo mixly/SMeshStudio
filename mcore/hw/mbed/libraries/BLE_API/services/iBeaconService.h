@@ -71,4 +71,4 @@ private:
     Payload   data;
 };
 
-#endif //__BLE_IBEACON_SERVICE_H__
+#endif //__BLE_IBEACON_SERVICE_H__

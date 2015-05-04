@@ -94,9 +94,9 @@
  *          marks the end of procedure initiated using API. API result, in this case, will only be
  *          an indicative of whether the procedure has been requested successfully.
  */
-typedef uint32_t api_result_t;
+typedef uint32_t ret_code_t;
 /** @} */
 /** @} */
 
 #endif // SDK_ERRORS_H__
-
+

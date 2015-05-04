@@ -232,4 +232,4 @@ uint32_t hci_mem_pool_rx_extract(uint8_t ** pp_buffer, uint32_t * p_length)
     }
     
     return err_code;
-}
+}
