@@ -53,7 +53,6 @@ void setup(void)
   //   the fully-qualified domain name is "esp8266.local"
   // - second argument is the IP address to advertise
   //   we send our IP address on the WiFi network
-  //   Note: for AP mode we would use WiFi.softAPIP()!
   if (!mdns.begin("esp8266", WiFi.localIP())) {
     Serial.println("Error setting up MDNS responder!");
     while(1) { 
@@ -69,9 +68,6 @@ void setup(void)
 
 void loop(void)
 {
-  // Check for any mDNS queries and send responses
-  mdns.update();
-  
   // Check if a client has connected
   WiFiClient client = server.available();
   if (!client) {

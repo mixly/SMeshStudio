@@ -40,10 +40,7 @@ extern "C"
 #include "include/ClientContext.h"
 #include "c_types.h"
 
-#define MIN_LOCAL_PORT 1024
-#define MAX_LOCAL_PORT 1124
-
-static int g_localPort = MIN_LOCAL_PORT;
+uint16_t WiFiClient::_localPort = 0;
 
 ICACHE_FLASH_ATTR WiFiClient::WiFiClient() 
 : _client(0)
@@ -98,18 +95,10 @@ int ICACHE_FLASH_ATTR  WiFiClient::connect(IPAddress ip, uint16_t port)
     if (!pcb)
         return 0;
 
-    while(true)
-    {
-        err_t err = tcp_bind(pcb, INADDR_ANY, g_localPort);
-        if (++g_localPort == MAX_LOCAL_PORT)
-            g_localPort = MIN_LOCAL_PORT;
-        if (err == ERR_OK)
-            break;
-        if (err == ERR_USE)
-            continue;
-        tcp_abort(pcb);
-        return 0;
+    if (_localPort > 0) {
+        pcb->local_port = _localPort++;
     }
+
     ip_addr_t addr;
     addr.addr = ip;
     tcp_arg(pcb, this);
@@ -136,8 +125,21 @@ int8_t ICACHE_FLASH_ATTR WiFiClient::_connected(void* pcb, int8_t err)
 
 void ICACHE_FLASH_ATTR WiFiClient::_err(int8_t err)
 {
-    DEBUGV(":err\r\n");
+    DEBUGV(":err %d\r\n", err);
     esp_schedule();
+}
+
+
+void ICACHE_FLASH_ATTR WiFiClient::setNoDelay(bool nodelay) {
+    if (!_client)
+        return;
+    _client->setNoDelay(nodelay);
+}
+
+bool ICACHE_FLASH_ATTR WiFiClient::getNoDelay() {
+    if (!_client)
+        return false;
+    return _client->getNoDelay();
 }
 
 size_t ICACHE_FLASH_ATTR WiFiClient::write(uint8_t b) 
@@ -174,7 +176,6 @@ int ICACHE_FLASH_ATTR WiFiClient::available()
 
 int ICACHE_FLASH_ATTR WiFiClient::read() 
 {
-    uint8_t b;
     if (!available())
         return -1;
 
@@ -215,7 +216,7 @@ uint8_t ICACHE_FLASH_ATTR WiFiClient::connected()
     if (!_client)
         return 0;
 
-    return _client->state() == ESTABLISHED;
+    return _client->state() == ESTABLISHED || available();
 }
 
 uint8_t ICACHE_FLASH_ATTR WiFiClient::status() 

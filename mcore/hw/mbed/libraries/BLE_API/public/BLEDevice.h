@@ -20,6 +20,7 @@
 #include "blecommon.h"
 #include "Gap.h"
 #include "GattServer.h"
+#include "GapScanningParams.h"
 #include "BLEDeviceInstanceBase.h"
 
 /**
@@ -32,8 +33,16 @@ public:
     /**
      * Initialize the BLE controller. This should be called before using
      * anything else in the BLE_API.
+     *
+     * init() hands control to the underlying BLE module to accomplish
+     * initialization. This initialization may tacitly depend on other hardware
+     * setup (such as clocks or power-modes) which happens early on during
+     * system startup. It may not be safe to call init() from global static
+     * context where ordering is compiler specific and can't be guaranteed--it
+     * is safe to call BLEDevice::init() from within main().
      */
     ble_error_t init();
+
     ble_error_t reset(void);
 
     /**
@@ -47,13 +56,13 @@ public:
      * Set the BTLE MAC address and type.
      * @return BLE_ERROR_NONE on success.
      */
-    ble_error_t setAddress(Gap::addr_type_t type, const Gap::address_t address);
+    ble_error_t setAddress(Gap::AddressType_t type, const Gap::Address_t address);
 
     /**
      * Fetch the BTLE MAC address and type.
      * @return BLE_ERROR_NONE on success.
      */
-    ble_error_t getAddress(Gap::addr_type_t *typeP, Gap::address_t address);
+    ble_error_t getAddress(Gap::AddressType_t *typeP, Gap::Address_t address);
 
     /**
      * @param[in] advType
@@ -135,6 +144,12 @@ public:
     void        setAdvertisingParams(const GapAdvertisingParams &advParams);
 
     /**
+     * @return  Read back advertising parameters. Useful for storing and
+     *          restoring parameters rapidly.
+     */
+    const GapAdvertisingParams &getAdvertisingParams(void) const;
+
+    /**
      * This API is typically used as an internal helper to udpate the transport
      * backend with advertising data before starting to advertise. It may also
      * be explicity used to dynamically reset the accumulated advertising
@@ -143,6 +158,17 @@ public:
      * API.
      */
     ble_error_t setAdvertisingPayload(void);
+
+    /**
+     * Set advertising data using object.
+     */
+    ble_error_t setAdvertisingData(const GapAdvertisingData &advData);
+
+    /**
+     * @return  Read back advertising data. Useful for storing and
+     *          restoring payload.
+     */
+    const GapAdvertisingData &getAdvertisingData(void) const;
 
     /**
      * Reset any advertising payload prepared from prior calls to
@@ -230,6 +256,64 @@ public:
      * Procedure).
      */
     ble_error_t stopAdvertising(void);
+
+    /**
+     * Setup parameters for GAP scanning--i.e. observer mode.
+     * @param  interval Scan interval (in milliseconds) [valid values lie between 2.5ms and 10.24s].
+     * @param  window   Scan Window (in milliseconds) [valid values lie between 2.5ms and 10.24s].
+     * @param  timeout  Scan timeout (in seconds) between 0x0001 and 0xFFFF, 0x0000 disables timeout.
+     * @param  activeScanning Set to True if active-scanning is required. This is used to fetch the
+     *                        scan response from a peer if possible.
+     *
+     * The scanning window divided by the interval determines the duty cycle for
+     * scanning. For example, if the interval is 100ms and the window is 10ms,
+     * then the controller will scan for 10 percent of the time. It is possible
+     * to have the interval and window set to the same value. In this case,
+     * scanning is continuous, with a change of scanning frequency once every
+     * interval.
+     *
+     * Once the scanning parameters have been configured, scanning can be
+     * enabled by using startScan().
+     *
+     * @Note: The scan interval and window are recommendations to the BLE stack.
+     */
+    ble_error_t setScanParams(uint16_t interval       = GapScanningParams::SCAN_INTERVAL_MAX,
+                              uint16_t window         = GapScanningParams::SCAN_WINDOW_MAX,
+                              uint16_t timeout        = 0,
+                              bool     activeScanning = false);
+    ble_error_t setScanInterval(uint16_t interval);
+    ble_error_t setScanWindow  (uint16_t window);
+    ble_error_t setScanTimeout (uint16_t timeout);
+    void        setActiveScan  (bool     activeScanning);
+
+    /**
+     * Start scanning (Observer Procedure) based on the scan-params currently
+     * in effect.
+     *
+     * @param  callback The application callback to be invoked upon receiving
+     *     every advertisement report. Can be passed in as NULL, in which case
+     *     scanning may not be enabled at all.
+     */
+    ble_error_t startScan(void (*callback)(const Gap::AdvertisementCallbackParams_t *params));
+
+    /**
+     * Start scanning (Observer Procedure) based on the scan-params currently
+     * in effect.
+     *
+     * @param[in] object
+     * @param[in] callbackMember
+     *                The above pair of parameters define the callback object
+     *                and member function to receive the advertisement params.
+     */
+    template<typename T>
+    ble_error_t startScan(T *object, void (T::*memberCallback)(const Gap::AdvertisementCallbackParams_t *params));
+
+    /**
+     * Stop scanning. The current scanning parameters remain in effect.
+     *
+     * @retval BLE_ERROR_NONE if successfully stopped scanning procedure.
+     */
+    ble_error_t stopScan(void);
 
     /**
      * This call initiates the disconnection procedure, and its completion will
@@ -445,8 +529,90 @@ public:
      */
     void getPermittedTxPowerValues(const int8_t **valueArrayPP, size_t *countP);
 
+    /**
+     * Enable the BLE stack's Security Manager. The Security Manager implements
+     * the actual cryptographic algorithms and protocol exchanges that allow two
+     * devices to securely exchange data and privately detect each other.
+     * Calling this API is a prerequisite for encryption and pairing (bonding).
+     *
+     * @param[in]  enableBonding Allow for bonding.
+     * @param[in]  requireMITM   Require protection for man-in-the-middle attacks.
+     * @param[in]  iocaps        To specify IO capabilities of this peripheral,
+     *                           such as availability of a display or keyboard to
+     *                           support out-of-band exchanges of security data.
+     * @param[in]  passkey       To specify a static passkey.
+     *
+     * @return BLE_ERROR_NONE on success.
+     */
+    ble_error_t initializeSecurity(bool                          enableBonding = true,
+                                   bool                          requireMITM   = true,
+                                   Gap::SecurityIOCapabilities_t iocaps        = Gap::IO_CAPS_NONE,
+                                   const Gap::Passkey_t          passkey       = NULL);
+
+    /**
+     * Setup a callback for when the security setup procedure (key generation
+     * and exchange) for a link has started. This will be skipped for bonded
+     * devices. The callback is passed in parameters received from the peer's
+     * security request: bool allowBonding, bool requireMITM, and
+     * SecurityIOCapabilities_t.
+     */
+    void onSecuritySetupInitiated(Gap::SecuritySetupInitiatedCallback_t callback);
+
+    /**
+     * Setup a callback for when the security setup procedure (key generation
+     * and exchange) for a link has completed. This will be skipped for bonded
+     * devices. The callback is passed in the success/failure status of the
+     * security setup procedure.
+     */
+    void onSecuritySetupCompleted(Gap::SecuritySetupCompletedCallback_t callback);
+
+    /**
+     * Setup a callback for when a link with the peer is secured. For bonded
+     * devices, subsequent reconnections with bonded peer will result only in
+     * this callback when the link is secured and setup procedures will not
+     * occur unless the bonding information is either lost or deleted on either
+     * or both sides. The callback is passed in a Gap::SecurityMode_t according
+     * to the level of security in effect for the secured link.
+     */
+    void onLinkSecured(Gap::LinkSecuredCallback_t callback);
+
+    /**
+     * Setup a callback for successful bonding; i.e. that link-specific security
+     * context is stored persistently for a peer device.
+     */
+    void onSecurityContextStored(Gap::HandleSpecificEvent_t callback);
+
+    /**
+     * Setup a callback for when the passkey needs to be displayed on a
+     * peripheral with DISPLAY capability. This happens when security is
+     * configured to prevent Man-In-The-Middle attacks, and a PIN (or passkey)
+     * needs to be exchanged between the peers to authenticate the connection
+     * attempt.
+     */
+    void onPasskeyDisplay(Gap::PasskeyDisplayCallback_t callback);
+
+    /**
+     * Get the security status of a connection.
+     *
+     * @param[in]  connectionHandle   Handle to identify the connection.
+     * @param[out] securityStatusP    security status.
+     *
+     * @return BLE_SUCCESS Or appropriate error code indicating reason for failure.
+     */
+    ble_error_t getLinkSecurity(Gap::Handle_t connectionHandle, Gap::LinkSecurityStatus_t *securityStatusP);
+
+    /**
+     * Delete all peer device context and all related bonding information from
+     * the database within the security manager.
+     *
+     * @retval BLE_ERROR_NONE             On success, else an error code indicating reason for failure.
+     * @retval BLE_ERROR_INVALID_STATE    If the API is called without module initialization and/or
+     *                                    application registration.
+     */
+    ble_error_t purgeAllBondingState(void);
+
 public:
-    BLEDevice() : transport(createBLEDeviceInstance()), advParams(), advPayload(), scanResponse(), needToSetAdvPayload(true) {
+    BLEDevice() : transport(createBLEDeviceInstance()), advParams(), advPayload(), scanResponse(), needToSetAdvPayload(true), scanningParams() {
         advPayload.clear();
         scanResponse.clear();
     }
@@ -462,6 +628,8 @@ private:
      * eventually result in a call to the target's setAdvertisingData() before
      * the server begins advertising. This flag marks the status of the pending update.*/
     bool                 needToSetAdvPayload;
+
+    GapScanningParams    scanningParams;
 };
 
 /* BLEDevice methods. Most of these simply forward the calls to the underlying
@@ -481,13 +649,13 @@ BLEDevice::shutdown(void)
 }
 
 inline ble_error_t
-BLEDevice::setAddress(Gap::addr_type_t type, const Gap::address_t address)
+BLEDevice::setAddress(Gap::AddressType_t type, const Gap::Address_t address)
 {
     return transport->getGap().setAddress(type, address);
 }
 
 inline ble_error_t
-BLEDevice::getAddress(Gap::addr_type_t *typeP, Gap::address_t address)
+BLEDevice::getAddress(Gap::AddressType_t *typeP, Gap::Address_t address)
 {
     return transport->getGap().getAddress(typeP, address);
 }
@@ -534,6 +702,12 @@ inline void
 BLEDevice::setAdvertisingParams(const GapAdvertisingParams &newAdvParams)
 {
     advParams = newAdvParams;
+}
+
+inline const GapAdvertisingParams &
+BLEDevice::getAdvertisingParams(void) const
+{
+    return advParams;
 }
 
 inline void
@@ -596,6 +770,19 @@ BLEDevice::setAdvertisingPayload(void) {
 }
 
 inline ble_error_t
+BLEDevice::setAdvertisingData(const GapAdvertisingData& newPayload)
+{
+    advPayload = newPayload;
+
+    return setAdvertisingPayload();
+}
+
+inline const GapAdvertisingData &
+BLEDevice::getAdvertisingData(void) const {
+    return advPayload;
+}
+
+inline ble_error_t
 BLEDevice::startAdvertising(void)
 {
     ble_error_t rc;
@@ -615,6 +802,55 @@ inline ble_error_t
 BLEDevice::stopAdvertising(void)
 {
     return transport->getGap().stopAdvertising();
+}
+
+inline ble_error_t
+BLEDevice::setScanParams(uint16_t interval, uint16_t window, uint16_t timeout, bool activeScanning) {
+    ble_error_t rc;
+    if (((rc = scanningParams.setInterval(interval)) == BLE_ERROR_NONE) &&
+        ((rc = scanningParams.setWindow(window))     == BLE_ERROR_NONE) &&
+        ((rc = scanningParams.setTimeout(timeout))   == BLE_ERROR_NONE)) {
+        scanningParams.setActiveScanning(activeScanning);
+        return BLE_ERROR_NONE;
+    }
+
+    return rc;
+}
+
+inline ble_error_t
+BLEDevice::setScanInterval(uint16_t interval) {
+    return scanningParams.setInterval(interval);
+}
+
+inline ble_error_t
+BLEDevice::setScanWindow(uint16_t window) {
+    return scanningParams.setWindow(window);
+}
+
+inline ble_error_t
+BLEDevice::setScanTimeout(uint16_t timeout) {
+    return scanningParams.setTimeout(timeout);
+}
+
+inline void
+BLEDevice::setActiveScan(bool activeScanning) {
+    return scanningParams.setActiveScanning(activeScanning);
+}
+
+inline ble_error_t
+BLEDevice::startScan(void (*callback)(const Gap::AdvertisementCallbackParams_t *params)) {
+    return transport->getGap().startScan(scanningParams, callback);
+}
+
+template<typename T>
+inline ble_error_t
+BLEDevice::startScan(T *object, void (T::*memberCallback)(const Gap::AdvertisementCallbackParams_t *params)) {
+    return transport->getGap().startScan(scanningParams, object, memberCallback);
+}
+
+inline ble_error_t
+BLEDevice::stopScan(void) {
+    return transport->getGap().stopScan();
 }
 
 inline ble_error_t
@@ -798,6 +1034,57 @@ inline void
 BLEDevice::getPermittedTxPowerValues(const int8_t **valueArrayPP, size_t *countP)
 {
     transport->getPermittedTxPowerValues(valueArrayPP, countP);
+}
+
+inline ble_error_t
+BLEDevice::initializeSecurity(bool                          enableBonding,
+                              bool                          requireMITM,
+                              Gap::SecurityIOCapabilities_t iocaps,
+                              const Gap::Passkey_t          passkey)
+{
+    return transport->initializeSecurity(enableBonding, requireMITM, iocaps, passkey);
+}
+
+inline void
+BLEDevice::onSecuritySetupInitiated(Gap::SecuritySetupInitiatedCallback_t callback)
+{
+    transport->getGap().setOnSecuritySetupInitiated(callback);
+}
+
+inline void
+BLEDevice::onSecuritySetupCompleted(Gap::SecuritySetupCompletedCallback_t callback)
+{
+    transport->getGap().setOnSecuritySetupCompleted(callback);
+}
+
+inline void
+BLEDevice::onLinkSecured(Gap::LinkSecuredCallback_t callback)
+{
+    transport->getGap().setOnLinkSecured(callback);
+}
+
+inline void
+BLEDevice::onSecurityContextStored(Gap::HandleSpecificEvent_t callback)
+{
+    transport->getGap().setOnSecurityContextStored(callback);
+}
+
+inline void
+BLEDevice::onPasskeyDisplay(Gap::PasskeyDisplayCallback_t callback)
+{
+    return transport->getGap().setOnPasskeyDisplay(callback);
+}
+
+inline ble_error_t
+BLEDevice::getLinkSecurity(Gap::Handle_t connectionHandle, Gap::LinkSecurityStatus_t *securityStatusP)
+{
+    return transport->getGap().getLinkSecurity(connectionHandle, securityStatusP);
+}
+
+inline ble_error_t
+BLEDevice::purgeAllBondingState(void)
+{
+    return transport->getGap().purgeAllBondingState();
 }
 
 #endif // ifndef __BLE_DEVICE__

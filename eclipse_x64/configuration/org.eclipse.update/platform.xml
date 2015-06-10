@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config date="1430269751792" transient="false">
+<config date="1433157632136" transient="false">
 	<site updateable="true" url="platform:/base/" enabled="true" policy="USER-EXCLUDE">
 		<feature id="org.eclipse.jgit" version="3.7.0.201502260915-r" url="features/org.eclipse.jgit_3.7.0.201502260915-r/">
 		</feature>
@@ -42,8 +42,6 @@
 		<feature id="org.eclipse.cdt.native" version="8.6.0.201502131403" url="features/org.eclipse.cdt.native_8.6.0.201502131403/">
 		</feature>
 		<feature id="org.eclipse.rse.telnet" version="3.7.0.201502160819" url="features/org.eclipse.rse.telnet_3.7.0.201502160819/" plugin-identifier="org.eclipse.rse.services.telnet">
-		</feature>
-		<feature id="it.baeyens.arduino.feature" version="2.4.0.201504290907" url="features/it.baeyens.arduino.feature_2.4.0.201504290907/">
 		</feature>
 		<feature id="org.eclipse.mylyn.commons.notifications" version="1.6.2.v20150217-2244" url="features/org.eclipse.mylyn.commons.notifications_1.6.2.v20150217-2244/" plugin-identifier="org.eclipse.mylyn.commons.core">
 		</feature>
@@ -94,6 +92,8 @@
 		<feature id="org.eclipse.epp.package.common.feature" version="4.4.2.20150219-0708" url="features/org.eclipse.epp.package.common.feature_4.4.2.20150219-0708/">
 		</feature>
 		<feature id="org.eclipse.mylyn.commons.repositories" version="1.6.2.v20150217-2244" url="features/org.eclipse.mylyn.commons.repositories_1.6.2.v20150217-2244/" plugin-identifier="org.eclipse.mylyn.commons.core">
+		</feature>
+		<feature id="it.baeyens.arduino.feature" version="2.4.0.201506011918" url="features/it.baeyens.arduino.feature_2.4.0.201506011918/">
 		</feature>
 		<feature id="org.eclipse.cdt" version="8.6.0.201502131403" url="features/org.eclipse.cdt_8.6.0.201502131403/">
 		</feature>

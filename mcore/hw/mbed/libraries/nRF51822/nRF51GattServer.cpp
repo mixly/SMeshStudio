@@ -22,6 +22,11 @@
 
 #include "nRF51Gap.h"
 
+nRF51GattServer &nRF51GattServer::getInstance(void) {
+    static nRF51GattServer m_instance;
+    return m_instance;
+}
+
 /**************************************************************************/
 /*!
     @brief  Adds a new service to the GATT table on the peripheral
@@ -86,6 +91,7 @@ ble_error_t nRF51GattServer::addService(GattService &service)
                  custom_add_in_characteristic(BLE_GATT_HANDLE_INVALID,
                                               &nordicUUID,
                                               p_char->getProperties(),
+                                              p_char->getRequiredSecurity(),
                                               p_char->getValueAttribute().getValuePtr(),
                                               p_char->getValueAttribute().getInitialLength(),
                                               p_char->getValueAttribute().getMaxLength(),
@@ -260,7 +266,7 @@ ble_error_t nRF51GattServer::updateValue(Gap::Handle_t connectionHandle, GattAtt
 /**************************************************************************/
 void nRF51GattServer::hwCallback(ble_evt_t *p_ble_evt)
 {
-    uint16_t                       handle_value;
+    GattAttribute::Handle_t        handle_value;
     GattServerEvents::gattEvent_t  eventType;
     const ble_gatts_evt_t         *gattsEventP = &p_ble_evt->evt.gatts_evt;
 
@@ -270,12 +276,10 @@ void nRF51GattServer::hwCallback(ble_evt_t *p_ble_evt)
 
             /* 1.) Handle CCCD changes */
             handle_value = gattsEventP->params.write.handle;
-            for (uint8_t i = 0; i<characteristicCount; i++) {
+            for (uint8_t i = 0; i < characteristicCount; i++) {
                 if ((p_characteristics[i]->getProperties() & (GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_INDICATE | GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY)) &&
                     (nrfCharacteristicHandles[i].cccd_handle == handle_value)) {
-                    uint16_t cccd_value =
-                        (gattsEventP->params.write.data[1] << 8) |
-                        gattsEventP->params.write.data[0]; /* Little Endian but M0 may be mis-aligned */
+                    uint16_t cccd_value = (gattsEventP->params.write.data[1] << 8) | gattsEventP->params.write.data[0]; /* Little Endian but M0 may be mis-aligned */
 
                     if (((p_characteristics[i]->getProperties() & GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_INDICATE) && (cccd_value & BLE_GATT_HVX_INDICATION)) ||
                         ((p_characteristics[i]->getProperties() & GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY) && (cccd_value & BLE_GATT_HVX_NOTIFICATION))) {
@@ -284,7 +288,7 @@ void nRF51GattServer::hwCallback(ble_evt_t *p_ble_evt)
                         eventType = GattServerEvents::GATT_EVENT_UPDATES_DISABLED;
                     }
 
-                    handleEvent(eventType, i);
+                    handleEvent(eventType, handle_value);
                     return;
                 }
             }
@@ -409,7 +413,7 @@ void nRF51GattServer::hwCallback(ble_evt_t *p_ble_evt)
                 }
 
                 default:
-                    handleEvent(eventType, i);
+                    handleEvent(eventType, handle_value);
                     break;
             }
         }

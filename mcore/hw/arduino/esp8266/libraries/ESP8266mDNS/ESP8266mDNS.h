@@ -46,6 +46,9 @@ License (MIT license):
 #include "ESP8266WiFi.h"
 #include "WiFiUdp.h"
 
+
+class UdpContext;
+
 class MDNSResponder {
 public:
   MDNSResponder();
@@ -63,7 +66,9 @@ private:
   uint8_t* _response;
   int _responseLen;
   // Socket for MDNS communication
-  WiFiUDP _mdnsConn;
+  UdpContext* _conn;
+  // local IP Address
+  IPAddress _localAddr;
 };
 
 #endif //ESP8266MDNS_H

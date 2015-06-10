@@ -17,6 +17,7 @@
 #ifndef __GATT_CHARACTERISTIC_H__
 #define __GATT_CHARACTERISTIC_H__
 
+#include "Gap.h"
 #include "GattAttribute.h"
 #include "GattCharacteristicCallbackParams.h"
 #include "FunctionPointerWithContext.h"
@@ -103,7 +104,7 @@ public:
         \note   See https://developer.bluetooth.org/gatt/units/Pages/default.aspx
     */
     /**************************************************************************/
-    typedef enum ble_gatt_unit_e {
+    enum {
         BLE_GATT_UNIT_NONE                                                   = 0x2700,      /**< No specified unit type */
         BLE_GATT_UNIT_LENGTH_METRE                                           = 0x2701,      /**< Length, Metre */
         BLE_GATT_UNIT_MASS_KILOGRAM                                          = 0x2702,      /**< Mass, Kilogram */
@@ -213,7 +214,7 @@ public:
         BLE_GATT_UNIT_TIME_MONTH                                             = 0x27B4,      /**< Time, Month */
         BLE_GATT_UNIT_CONCENTRATION_COUNT_PER_CUBIC_METRE                    = 0x27B5,      /**<  */
         BLE_GATT_UNIT_IRRADIANCE_WATT_PER_SQUARE_METRE                       = 0x27B6       /**<  */
-    } ble_gatt_unit_t;
+    };
 
     /**************************************************************************/
     /*!
@@ -223,7 +224,7 @@ public:
         \note   See http://developer.bluetooth.org/gatt/descriptors/Pages/DescriptorViewer.aspx?u=org.bluetooth.descriptor.gatt.characteristic_presentation_format.xml
     */
     /**************************************************************************/
-    typedef enum ble_gatt_format_e {
+    enum {
         BLE_GATT_FORMAT_RFU     = 0x00, /**< Reserved For Future Use. */
         BLE_GATT_FORMAT_BOOLEAN = 0x01, /**< Boolean. */
         BLE_GATT_FORMAT_2BIT    = 0x02, /**< Unsigned 2-bit integer. */
@@ -252,7 +253,7 @@ public:
         BLE_GATT_FORMAT_UTF8S   = 0x19, /**< UTF-8 string. */
         BLE_GATT_FORMAT_UTF16S  = 0x1A, /**< UTF-16 string. */
         BLE_GATT_FORMAT_STRUCT  = 0x1B  /**< Opaque Structure. */
-    } ble_gatt_format_t;
+    };
 
     /**************************************************************************/
     /*!
@@ -322,14 +323,15 @@ public:
      *        instantiating the service with the underlying BLE stack.
      */
     GattCharacteristic(const UUID    &uuid,
-                       uint8_t       *valuePtr            = NULL,
-                       uint16_t       initialLen          = 0,
-                       uint16_t       maxLen              = 0,
-                       uint8_t        props               = BLE_GATT_CHAR_PROPERTIES_NONE,
-                       GattAttribute *descriptors[]       = NULL,
-                       unsigned       numDescriptors      = 0) :
+                       uint8_t       *valuePtr       = NULL,
+                       uint16_t       initialLen     = 0,
+                       uint16_t       maxLen         = 0,
+                       uint8_t        props          = BLE_GATT_CHAR_PROPERTIES_NONE,
+                       GattAttribute *descriptors[]  = NULL,
+                       unsigned       numDescriptors = 0) :
         _valueAttribute(uuid, valuePtr, initialLen, maxLen),
         _properties(props),
+        _requiredSecurity(Gap::SECURITY_MODE_ENCRYPTION_OPEN_LINK),
         _descriptors(descriptors),
         _descriptorCount(numDescriptors),
         enabledReadAuthorization(false),
@@ -339,10 +341,20 @@ public:
         /* empty */
     }
 
+public:
+    /**
+     * Setup the minimum security (mode and level) requirements for access to the characteristic's value attribute.
+     *
+     * @param securityMode Can be one of encryption or signing, with or without protection for MITM (man in the middle attacks).
+     */
+    void requireSecurity(Gap::SecurityMode_t securityMode) {
+        _requiredSecurity = securityMode;
+    }
+
+public:
     /**
      * Authorization.
      */
-public:
     void setWriteAuthorizationCallback(void (*callback)(GattCharacteristicWriteAuthCBParams *)) {
         writeAuthorizationCallback.attach(callback);
         enabledWriteAuthorization = true;
@@ -410,6 +422,7 @@ public:
     const GattAttribute&    getValueAttribute()           const {return _valueAttribute;                }
     GattAttribute::Handle_t getValueHandle(void)          const {return getValueAttribute().getHandle();}
     uint8_t                 getProperties(void)           const {return _properties;                    }
+    Gap::SecurityMode_t     getRequiredSecurity()         const {return _requiredSecurity;              }
     uint8_t                 getDescriptorCount(void)      const {return _descriptorCount;               }
     bool                    isReadAuthorizationEnabled()  const {return enabledReadAuthorization;       }
     bool                    isWriteAuthorizationEnabled() const {return enabledWriteAuthorization;      }
@@ -423,13 +436,14 @@ public:
     }
 
 private:
-    GattAttribute   _valueAttribute;
-    uint8_t         _properties;
-    GattAttribute **_descriptors;
-    uint8_t         _descriptorCount;
+    GattAttribute         _valueAttribute;
+    uint8_t               _properties;
+    Gap::SecurityMode_t   _requiredSecurity;
+    GattAttribute       **_descriptors;
+    uint8_t               _descriptorCount;
 
-    bool            enabledReadAuthorization;
-    bool            enabledWriteAuthorization;
+    bool enabledReadAuthorization;
+    bool enabledWriteAuthorization;
     FunctionPointerWithContext<GattCharacteristicReadAuthCBParams *>  readAuthorizationCallback;
     FunctionPointerWithContext<GattCharacteristicWriteAuthCBParams *> writeAuthorizationCallback;
 

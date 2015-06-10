@@ -20,22 +20,18 @@
 #include "BLEDevice.h"
 #include "mbed.h"
 
-#define UUID_URI_BEACON(FIRST, SECOND) {                         \
-        0xee, 0x0c, FIRST, SECOND, 0x87, 0x86, 0x40, 0xba,       \
-        0xab, 0x96, 0x99, 0xb9, 0x1a, 0xc9, 0x81, 0xd8,          \
-}
+extern const uint8_t UUID_URI_BEACON_SERVICE[UUID::LENGTH_OF_LONG_UUID];
+extern const uint8_t UUID_LOCK_STATE_CHAR[UUID::LENGTH_OF_LONG_UUID];
+extern const uint8_t UUID_LOCK_CHAR[UUID::LENGTH_OF_LONG_UUID];
+extern const uint8_t UUID_UNLOCK_CHAR[UUID::LENGTH_OF_LONG_UUID];
+extern const uint8_t UUID_URI_DATA_CHAR[UUID::LENGTH_OF_LONG_UUID];
+extern const uint8_t UUID_FLAGS_CHAR[UUID::LENGTH_OF_LONG_UUID];
+extern const uint8_t UUID_ADV_POWER_LEVELS_CHAR[UUID::LENGTH_OF_LONG_UUID];
+extern const uint8_t UUID_TX_POWER_MODE_CHAR[UUID::LENGTH_OF_LONG_UUID];
+extern const uint8_t UUID_BEACON_PERIOD_CHAR[UUID::LENGTH_OF_LONG_UUID];
+extern const uint8_t UUID_RESET_CHAR[UUID::LENGTH_OF_LONG_UUID];
 
-static const uint8_t UUID_URI_BEACON_SERVICE[]    = UUID_URI_BEACON(0x20, 0x80);
-static const uint8_t UUID_LOCK_STATE_CHAR[]       = UUID_URI_BEACON(0x20, 0x81);
-static const uint8_t UUID_LOCK_CHAR[]             = UUID_URI_BEACON(0x20, 0x82);
-static const uint8_t UUID_UNLOCK_CHAR[]           = UUID_URI_BEACON(0x20, 0x83);
-static const uint8_t UUID_URI_DATA_CHAR[]         = UUID_URI_BEACON(0x20, 0x84);
-static const uint8_t UUID_FLAGS_CHAR[]            = UUID_URI_BEACON(0x20, 0x85);
-static const uint8_t UUID_ADV_POWER_LEVELS_CHAR[] = UUID_URI_BEACON(0x20, 0x86);
-static const uint8_t UUID_TX_POWER_MODE_CHAR[]    = UUID_URI_BEACON(0x20, 0x87);
-static const uint8_t UUID_BEACON_PERIOD_CHAR[]    = UUID_URI_BEACON(0x20, 0x88);
-static const uint8_t UUID_RESET_CHAR[]            = UUID_URI_BEACON(0x20, 0x89);
-static const uint8_t BEACON_UUID[] = {0xD8, 0xFE};
+extern const uint8_t BEACON_UUID[sizeof(UUID::ShortUUIDBytes_t)];
 
 /**
 * @class URIBeaconConfigService
@@ -52,7 +48,7 @@ class URIBeaconConfigService {
     static const uint8_t TX_POWER_MODE_LOW    = 1; /*!< Low TX power mode */
     static const uint8_t TX_POWER_MODE_MEDIUM = 2; /*!< Medium TX power mode */
     static const uint8_t TX_POWER_MODE_HIGH   = 3; /*!< High TX power mode */
-    static const unsigned int NUM_POWER_MODES = 4; /*!< Number of Power Modes defined */
+    static const unsigned NUM_POWER_MODES     = 4; /*!< Number of Power Modes defined */
 
     static const int ADVERTISING_INTERVAL_MSEC = 1000;  // Advertising interval for config service.
     static const int SERVICE_DATA_MAX = 31;             // Maximum size of service data in ADV packets
@@ -175,10 +171,9 @@ class URIBeaconConfigService {
         ble.accumulateAdvertisingPayload(GapAdvertisingData::COMPLETE_LIST_128BIT_SERVICE_IDS, reversedServiceUUID, sizeof(reversedServiceUUID));
         ble.accumulateAdvertisingPayload(GapAdvertisingData::GENERIC_TAG);
         ble.accumulateScanResponse(GapAdvertisingData::COMPLETE_LOCAL_NAME, reinterpret_cast<const uint8_t *>(&DEVICE_NAME), sizeof(DEVICE_NAME));
-        ble.accumulateScanResponse(
-            GapAdvertisingData::TX_POWER_LEVEL,
-            reinterpret_cast<uint8_t *>(&defaultAdvPowerLevels[URIBeaconConfigService::TX_POWER_MODE_LOW]),
-            sizeof(uint8_t));
+        ble.accumulateScanResponse(GapAdvertisingData::TX_POWER_LEVEL,
+                                   reinterpret_cast<uint8_t *>(&defaultAdvPowerLevels[URIBeaconConfigService::TX_POWER_MODE_LOW]),
+                                   sizeof(uint8_t));
 
         ble.setTxPower(params.advPowerLevels[params.txPowerMode]);
         ble.setDeviceName(reinterpret_cast<const uint8_t *>(&DEVICE_NAME));
@@ -260,6 +255,21 @@ class URIBeaconConfigService {
             params.txPowerMode = *(writeParams->data);
         } else if (handle == beaconPeriodChar.getValueHandle()) {
             params.beaconPeriod = *((uint16_t *)(writeParams->data));
+
+            /* Re-map beaconPeriod to within permissible bounds if necessary. */
+            if (params.beaconPeriod != 0) {
+                bool paramsUpdated = false;
+                if (params.beaconPeriod < ble.getMinAdvertisingInterval()) {
+                    params.beaconPeriod = ble.getMinAdvertisingInterval();
+                    paramsUpdated = true;
+                } else if (params.beaconPeriod > ble.getMaxAdvertisingInterval()) {
+                    params.beaconPeriod = ble.getMaxAdvertisingInterval();
+                    paramsUpdated = true;
+                }
+                if (paramsUpdated) {
+                    ble.updateCharacteristicValue(beaconPeriodChar.getValueHandle(), reinterpret_cast<uint8_t *>(&params.beaconPeriod), sizeof(uint16_t));
+                }
+            }
         } else if (handle == resetChar.getValueHandle()) {
             resetToDefaults();
         }
@@ -362,11 +372,11 @@ class URIBeaconConfigService {
 
     BLEDevice     &ble;
     Params_t      &params;
-    // Default value that is restored on reset
-    size_t        defaultUriDataLength;
-    UriData_t     defaultUriData;
-    // Default value that is restored on reset
-    PowerLevels_t &defaultAdvPowerLevels;
+
+    size_t        defaultUriDataLength;   // Default value that is restored on reset
+    UriData_t     defaultUriData;         // Default value that is restored on reset
+    PowerLevels_t &defaultAdvPowerLevels; // Default value that is restored on reset
+
     uint8_t       lockedState;
     bool          initSucceeded;
     uint8_t       resetFlag;
