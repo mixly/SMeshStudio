@@ -1,3 +1,10 @@
+/* Copyright (c) 2015 Ivan Grokhotkov. All rights reserved. 
+ * This file is part of eboot bootloader.
+ *
+ * Redistribution and use is permitted according to the conditions of the
+ * 3-clause BSD license to be found in the LICENSE file.
+ */
+ 
 #ifndef EBOOT_COMMAND_H
 #define EBOOT_COMMAND_H
 
@@ -23,7 +30,8 @@ struct eboot_command {
 };
 
 
-void eboot_command_read(struct eboot_command* cmd);
-
+int eboot_command_read(struct eboot_command* cmd);
+void eboot_command_write(struct eboot_command* cmd);
+void eboot_command_clear();
 
 #endif //EBOOT_COMMAND_H

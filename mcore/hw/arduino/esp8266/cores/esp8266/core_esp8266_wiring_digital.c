@@ -44,14 +44,12 @@ extern void __pinMode(uint8_t pin, uint8_t mode) {
       GPC(pin) = (GPC(pin) & (0xF << GPCI)); //SOURCE(GPIO) | DRIVER(NORMAL) | INT_TYPE(UNCHANGED) | WAKEUP_ENABLE(DISABLED)
       if(mode == OUTPUT_OPEN_DRAIN) GPC(pin) |= (1 << GPCD);
       GPES = (1 << pin); //Enable
-    } else if(mode == INPUT || mode == INPUT_PULLUP || mode == INPUT_PULLDOWN){
+    } else if(mode == INPUT || mode == INPUT_PULLUP){
       GPF(pin) = GPFFS(GPFFS_GPIO(pin));//Set mode to GPIO
       GPEC = (1 << pin); //Disable
       GPC(pin) = (GPC(pin) & (0xF << GPCI)) | (1 << GPCD); //SOURCE(GPIO) | DRIVER(OPEN_DRAIN) | INT_TYPE(UNCHANGED) | WAKEUP_ENABLE(DISABLED)
       if(mode == INPUT_PULLUP) {
           GPF(pin) |= (1 << GPFPU);  // Enable  Pullup
-      } else if(mode == INPUT_PULLDOWN) {
-          GPF(pin) |= (1 << GPFPD);  // Enable  Pulldown
       }
     } else if(mode == WAKEUP_PULLUP || mode == WAKEUP_PULLDOWN){
       GPF(pin) = GPFFS(GPFFS_GPIO(pin));//Set mode to GPIO
@@ -67,8 +65,8 @@ extern void __pinMode(uint8_t pin, uint8_t mode) {
   } else if(pin == 16){
     GPF16 = GP16FFS(GPFFS_GPIO(pin));//Set mode to GPIO
     GPC16 = 0;
-    if(mode == INPUT || mode == INPUT_PULLDOWN){
-      if(mode == INPUT_PULLDOWN){
+    if(mode == INPUT || mode == INPUT_PULLDOWN_16){
+      if(mode == INPUT_PULLDOWN_16){
         GPF16 |= (1 << GP16FPD);//Enable Pulldown
       }
       GP16E &= ~1;
@@ -79,7 +77,6 @@ extern void __pinMode(uint8_t pin, uint8_t mode) {
 }
 
 extern void ICACHE_RAM_ATTR __digitalWrite(uint8_t pin, uint8_t val) {
-  val &= 0x01;
   if(pin < 16){
     if(val) GPOS = (1 << pin);
     else GPOC = (1 << pin);
@@ -123,7 +120,11 @@ void interrupt_handler(void *arg) {
     while(!(changedbits & (1 << i))) i++;
     changedbits &= ~(1 << i);
     interrupt_handler_t *handler = &interrupt_handlers[i];
-    if(((handler->mode & 1) == digitalRead(i)) && handler->fn) handler->fn();
+    if (handler->fn && 
+        (handler->mode == CHANGE || 
+         (handler->mode & 1) == digitalRead(i))) {
+      handler->fn();
+    }
   }
   ETS_GPIO_INTR_ENABLE();
 }

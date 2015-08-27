@@ -38,8 +38,6 @@ extern "C" {
 #include "esp8266_peri.h"
 #include "twi.h"
 
-void yield(void);
-
 #define HIGH 0x1
 #define LOW  0x0
 
@@ -48,7 +46,7 @@ void yield(void);
 //GPIO FUNCTIONS
 #define INPUT             0x00
 #define INPUT_PULLUP      0x02
-#define INPUT_PULLDOWN    0x04
+#define INPUT_PULLDOWN_16 0x04 // PULLDOWN only possible for pin16
 #define OUTPUT            0x01
 #define OUTPUT_OPEN_DRAIN 0x03
 #define WAKEUP_PULLUP     0x05
@@ -139,17 +137,17 @@ void timer0_detachInterrupt(void);
 void ets_intr_lock();
 void ets_intr_unlock();
 
-// level (0-15), 
-// level 15 will disable ALL interrupts, 
+// level (0-15),
+// level 15 will disable ALL interrupts,
 // level 0 will disable most software interrupts
 //
-#define xt_disable_interrupts(state, level) __asm__ __volatile__("rsil %0," __STRINGIFY(level) "; esync; isync; dsync" : "=a" (state))
-#define xt_enable_interrupts(state)  __asm__ __volatile__("wsr %0,ps; esync" :: "a" (state) : "memory")
+#define xt_disable_interrupts(state, level) __asm__ __volatile__("rsil %0," __STRINGIFY(level) : "=a" (state))
+#define xt_enable_interrupts(state)  __asm__ __volatile__("wsr %0,ps; isync" :: "a" (state) : "memory")
 
 extern uint32_t interruptsState;
 
 #define interrupts() xt_enable_interrupts(interruptsState)
-#define noInterrupts() __asm__ __volatile__("rsil %0,15; esync; isync; dsync" : "=a" (interruptsState))
+#define noInterrupts() __asm__ __volatile__("rsil %0,15" : "=a" (interruptsState))
 
 #define clockCyclesPerMicrosecond() ( F_CPU / 1000000L )
 #define clockCyclesToMicroseconds(a) ( (a) / clockCyclesPerMicrosecond() )
@@ -188,12 +186,14 @@ int analogRead(uint8_t);
 void analogReference(uint8_t mode);
 void analogWrite(uint8_t, int);
 void analogWriteFreq(uint32_t freq);
+void analogWriteRange(uint32_t range);
 
 unsigned long millis(void);
 unsigned long micros(void);
 void delay(unsigned long);
 void delayMicroseconds(unsigned int us);
 unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout);
+unsigned long pulseInLong(uint8_t pin, uint8_t state, unsigned long timeout);
 
 void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val);
 uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder);
@@ -204,10 +204,14 @@ void detachInterrupt(uint8_t);
 void setup(void);
 void loop(void);
 
+void yield(void);
+void optimistic_yield(uint32_t interval_us);
+
 // Get the bit location within the hardware port of the given virtual pin.
 // This comes from the pins_*.c file for the active board configuration.
 #define digitalPinToPort(pin)       (0)
 #define digitalPinToBitMask(pin)    (1UL << (pin))
+#define digitalPinToTimer(pin)      (0)
 #define portOutputRegister(port)    ((volatile uint32_t*) GPO)
 #define portInputRegister(port)     ((volatile uint32_t*) GPI)
 #define portModeRegister(port)      ((volatile uint32_t*) GPE)
@@ -215,6 +219,7 @@ void loop(void);
 #define NOT_A_PIN -1
 #define NOT_A_PORT -1
 #define NOT_AN_INTERRUPT -1
+#define NOT_ON_TIMER 0
 
 #ifdef __cplusplus
 } // extern "C"
@@ -229,10 +234,13 @@ void loop(void);
 
 #include "HardwareSerial.h"
 #include "Esp.h"
+#include "Updater.h"
 #include "debug.h"
 
 #define min(a,b) ((a)<(b)?(a):(b))
 #define max(a,b) ((a)>(b)?(a):(b))
+#define _min(a,b) ((a)<(b)?(a):(b))
+#define _max(a,b) ((a)>(b)?(a):(b))
 
 uint16_t makeWord(uint16_t w);
 uint16_t makeWord(byte h, byte l);
@@ -240,6 +248,7 @@ uint16_t makeWord(byte h, byte l);
 #define word(...) makeWord(__VA_ARGS__)
 
 unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout = 1000000L);
+unsigned long pulseInLong(uint8_t pin, uint8_t state, unsigned long timeout = 1000000L);
 
 void tone(uint8_t _pin, unsigned int frequency, unsigned long duration = 0);
 void noTone(uint8_t _pin);
@@ -247,7 +256,7 @@ void noTone(uint8_t _pin);
 // WMath prototypes
 long random(long);
 long random(long, long);
-void randomSeed(unsigned int);
+void randomSeed(unsigned long);
 long map(long, long, long, long, long);
 
 

@@ -1,10 +1,10 @@
-/* 
+/*
  main.cpp - platform initialization and context switching
  emulation
 
  Copyright (c) 2014 Ivan Grokhotkov. All rights reserved.
  This file is part of the esp8266 core for Arduino environment.
- 
+
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
  License as published by the Free Software Foundation; either
@@ -34,6 +34,8 @@ extern "C" {
 #define LOOP_TASK_PRIORITY 0
 #define LOOP_QUEUE_SIZE    1
 
+#define OPTIMISTIC_YIELD_TIME_US 16000
+
 struct rst_info resetInfo;
 
 int atexit(void (*func)()) {
@@ -59,18 +61,16 @@ void preloop_update_frequency() {
 extern void (*__init_array_start)(void);
 extern void (*__init_array_end)(void);
 
-static cont_t g_cont;
+cont_t g_cont __attribute__ ((aligned (16)));
 static os_event_t g_loop_queue[LOOP_QUEUE_SIZE];
 
 static uint32_t g_micros_at_task_start;
 
-extern "C" uint32_t esp_micros_at_task_start() {
-    return g_micros_at_task_start;
-}
 
 extern "C" void abort() {
-    while(1) {
-    }
+    do {
+        *((int*)0) = 0;
+    } while(true);
 }
 
 extern "C" void esp_yield() {
@@ -82,10 +82,24 @@ extern "C" void esp_schedule() {
 }
 
 extern "C" void __yield() {
-    esp_schedule();
-    esp_yield();
+    if (cont_can_yield(&g_cont)) {
+        esp_schedule();
+        esp_yield();
+    }
+    else {
+        abort();
+    }
 }
+
 extern "C" void yield(void) __attribute__ ((weak, alias("__yield")));
+
+extern "C" void optimistic_yield(uint32_t interval_us) {
+    if (cont_can_yield(&g_cont) &&
+        (system_get_time() - g_micros_at_task_start) > interval_us)
+    {
+        yield();
+    }
+}
 
 static void loop_wrapper() {
     static bool setup_done = false;
@@ -102,7 +116,7 @@ static void loop_task(os_event_t *events) {
     g_micros_at_task_start = system_get_time();
     cont_run(&g_cont, &loop_wrapper);
     if(cont_check(&g_cont) != 0) {
-        ets_printf("\r\nheap collided with sketch stack\r\n");
+        ets_printf("\r\nsketch stack overflow detected\r\n");
         abort();
     }
 }
@@ -114,26 +128,15 @@ static void do_global_ctors(void) {
 }
 
 void init_done() {
+    system_set_os_print(1);
     do_global_ctors();
     esp_schedule();
 }
 
-extern "C" {
-void user_rf_pre_init() {
-    
-}
-}
 
-extern "C" {
-void user_init(void) {
-    uart_div_modify(0, UART_CLK_FREQ / (74480));
-
-    system_rtc_mem_read(0, &resetInfo, sizeof(struct rst_info));
-    if(resetInfo.reason == WDT_RST_FLAG || resetInfo.reason == EXCEPTION_RST_FLAG) {
-        os_printf("Last Reset:\n - flag=%d\n - Fatal exception (%d):\n - epc1=0x%08x,epc2=0x%08x,epc3=0x%08x,excvaddr=0x%08x,depc=0x%08x\n", resetInfo.reason, resetInfo.exccause, resetInfo.epc1, resetInfo.epc2, resetInfo.epc3, resetInfo.excvaddr, resetInfo.depc);
-    }
-    struct rst_info info = { 0 };
-    system_rtc_mem_write(0, &info, sizeof(struct rst_info));
+extern "C" void user_init(void) {
+    struct rst_info *rtc_info_ptr = system_get_rst_info();
+    memcpy((void *) &resetInfo, (void *) rtc_info_ptr, sizeof(resetInfo));
 
     uart_div_modify(0, UART_CLK_FREQ / (115200));
 
@@ -144,10 +147,8 @@ void user_init(void) {
     cont_init(&g_cont);
 
     system_os_task(loop_task,
-    LOOP_TASK_PRIORITY, g_loop_queue,
-    LOOP_QUEUE_SIZE);
+        LOOP_TASK_PRIORITY, g_loop_queue,
+        LOOP_QUEUE_SIZE);
 
     system_init_done_cb(&init_done);
 }
-}
-

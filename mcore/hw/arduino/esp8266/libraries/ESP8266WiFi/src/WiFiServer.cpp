@@ -1,10 +1,10 @@
-/* 
+/*
   WiFiServer.cpp - TCP/IP server for esp8266, mostly compatible
                    with Arduino WiFi shield library
 
   Copyright (c) 2014 Ivan Grokhotkov. All rights reserved.
   This file is part of the esp8266 core for Arduino environment.
- 
+
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
   License as published by the Free Software Foundation; either
@@ -84,8 +84,6 @@ bool WiFiServer::getNoDelay(){
   return tcp_nagle_disabled(_pcb);
 }
 
-extern "C" uint32_t esp_micros_at_task_start();
-
 bool WiFiServer::hasClient(){
   if (_unclaimed) return true;
   return false;
@@ -93,8 +91,6 @@ bool WiFiServer::hasClient(){
 
 WiFiClient WiFiServer::available(byte* status)
 {
-    static uint32_t lastPollTime = 0;
-
     if (_unclaimed)
     {
         WiFiClient result(_unclaimed);
@@ -103,9 +99,7 @@ WiFiClient WiFiServer::available(byte* status)
         return result;
     }
 
-    if (lastPollTime > esp_micros_at_task_start())
-        yield();
-    lastPollTime = micros();
+    optimistic_yield(1000);
 
     return WiFiClient();
 }
@@ -167,4 +161,3 @@ void WiFiServer::_s_discard(void* server, ClientContext* ctx)
 {
     reinterpret_cast<WiFiServer*>(server)->_discard(ctx);
 }
-

@@ -1,4 +1,5 @@
-XTENSA_TOOCHAIN ?=
+XTENSA_TOOLCHAIN ?= ../../tools/xtensa-lx106-elf/bin/
+ESPTOOL ?= ../../tools/esptool
 
 BIN_DIR := ./
 TARGET_DIR := ./
@@ -6,19 +7,20 @@ TARGET_DIR := ./
 TARGET_OBJ_FILES := \
 	eboot.o \
 	eboot_command.o \
+	
 
 TARGET_OBJ_PATHS := $(addprefix $(TARGET_DIR)/,$(TARGET_OBJ_FILES))
 
-CC := $(XTENSA_TOOCHAIN)xtensa-lx106-elf-gcc
-CXX := $(XTENSA_TOOCHAIN)xtensa-lx106-elf-g++
-AR := $(XTENSA_TOOCHAIN)xtensa-lx106-elf-ar
-LD := $(XTENSA_TOOCHAIN)xtensa-lx106-elf-gcc
-OBJDUMP := $(XTENSA_TOOCHAIN)xtensa-lx106-elf-objdump
+CC := $(XTENSA_TOOLCHAIN)xtensa-lx106-elf-gcc
+CXX := $(XTENSA_TOOLCHAIN)xtensa-lx106-elf-g++
+AR := $(XTENSA_TOOLCHAIN)xtensa-lx106-elf-ar
+LD := $(XTENSA_TOOLCHAIN)xtensa-lx106-elf-gcc
+OBJDUMP := $(XTENSA_TOOLCHAIN)xtensa-lx106-elf-objdump
 
 
 CFLAGS += -std=gnu99
 
-CFLAGS += -Os -g -Wpointer-arith -Wno-implicit-function-declaration -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mno-text-section-literals
+CFLAGS += -O0 -g -Wpointer-arith -Wno-implicit-function-declaration -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mno-text-section-literals
 
 LDFLAGS	+= -nostdlib -Wl,--no-check-sections -umain
 

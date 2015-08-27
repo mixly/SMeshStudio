@@ -17,11 +17,11 @@ mbed_tiny_ble_nrf51822_gcc_arm.build.command.size=arm-none-eabi-size
 mbed_tiny_ble_nrf51822_gcc_arm.build.core=mbed
 mbed_tiny_ble_nrf51822_gcc_arm.build.variant=mbed_tiny_ble_nrf51822_gcc_arm
 
-mbed_tiny_ble_nrf51822_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m0 -mthumb -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer -Wno-unused-function -Wno-unused-variable -fpermissive
+mbed_tiny_ble_nrf51822_gcc_arm.build.CC_FLAGS=-mcpu=cortex-m0 -mthumb -c -g -fno-common -fmessage-length=0 -Wall -Wextra -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer -MMD -MP -Os -Wno-unused-function -Wno-unused-variable -Wno-unused-parameter
 mbed_tiny_ble_nrf51822_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
-mbed_tiny_ble_nrf51822_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98  -fno-rtti
-mbed_tiny_ble_nrf51822_gcc_arm.build.CC_SYMBOLS =  -DTARGET_TINY_BLE -DTARGET_M0 -DTARGET_CORTEX_M -DTARGET_NORDIC -DTARGET_MCU_NRF51822 -DTARGET_MCU_NORDIC_16K -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M0 -DARM_MATH_CM0 -DMBED_BUILD_TIMESTAMP=1430223936.88 -D__MBED__=1 -DTARGET_NRF51822 -DNRF51 -DTARGET_FF_ARDUINO
-mbed_tiny_ble_nrf51822_gcc_arm.build.LD_FLAGS = -mcpu=cortex-m0 -mthumb -Wl,--gc-sections -Wl,--wrap=main --specs=nano.specs -u _printf_float -u _scanf_float
+mbed_tiny_ble_nrf51822_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98  -fno-rtti  -fpermissive
+mbed_tiny_ble_nrf51822_gcc_arm.build.CC_SYMBOLS =  -DTARGET_TINY_BLE -D__CORTEX_M0 -DTARGET_MCU_NRF51_16K -DTOOLCHAIN_GCC -DTARGET_MCU_NRF51822 -DTARGET_NRF51822_MKIT -DNRF51 -DTARGET_CORTEX_M -DTARGET_NRF51822 -DARM_MATH_CM0 -DMBED_BUILD_TIMESTAMP=1440657117.48 -D__MBED__=1 -DTOOLCHAIN_GCC_ARM -DTARGET_NORDIC -DTARGET_MCU_NRF51 -DTARGET_MCU_NORDIC_16K -DTARGET_M0 -DTARGET_MCU_NRF51_16K_S130
+mbed_tiny_ble_nrf51822_gcc_arm.build.LD_FLAGS = -mcpu=cortex-m0 -mthumb -Wl,--gc-sections --specs=nano.specs -Wl,--wrap,main -Wl,-Map=$(PROJECT).map,--cref
 mbed_tiny_ble_nrf51822_gcc_arm.build.LD_SYS_LIBS =  -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
 
 mbed_tiny_ble_nrf51822_gcc_arm.build.ldscript=hw/mbed/variants/mbed_tiny_ble_nrf51822_gcc_arm/cmsis/TARGET_NORDIC/TARGET_NRF51822/TOOLCHAIN_GCC_ARM/TARGET_MCU_NORDIC_16K/NRF51822.ld
@@ -58,16 +58,16 @@ mbed_arch_ble_nrf51822_gcc_arm.build.command.size=arm-none-eabi-size
 mbed_arch_ble_nrf51822_gcc_arm.build.core=mbed
 mbed_arch_ble_nrf51822_gcc_arm.build.variant=mbed_arch_ble_nrf51822_gcc_arm
 
-mbed_arch_ble_nrf51822_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m0 -mthumb -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer -Wno-unused-function -Wno-unused-variable -fpermissive
-mbed_arch_ble_nrf51822_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
-mbed_arch_ble_nrf51822_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98  -fno-rtti
-mbed_arch_ble_nrf51822_gcc_arm.build.CC_SYMBOLS =-DTARGET_ARCH_BLE -DTARGET_M0 -DTARGET_CORTEX_M -DTARGET_NORDIC -DTARGET_MCU_NRF51822 -DTARGET_MCU_NORDIC_16K -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M0 -DARM_MATH_CM0 -DMBED_BUILD_TIMESTAMP=1430223936.88 -D__MBED__=1 -DTARGET_NRF51822 -DNRF51 -DTARGET_FF_ARDUINO 
-mbed_arch_ble_nrf51822_gcc_arm.build.LD_FLAGS = -mcpu=cortex-m0 -mthumb -Wl,--gc-sections -Wl,--wrap=main --specs=nano.specs -u _printf_float -u _scanf_float
-mbed_arch_ble_nrf51822_gcc_arm.build.LD_SYS_LIBS =  -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+mbed_arch_ble_nrf51822_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m0 -mthumb -c -g -fno-common -fmessage-length=0 -Wall -Wextra -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer -MMD -MP -Os -Wno-unused-function -Wno-unused-variable -Wno-unused-parameter
+mbed_arch_ble_nrf51822_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99 
+mbed_arch_ble_nrf51822_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98  -fno-rtti -fpermissive
+mbed_arch_ble_nrf51822_gcc_arm.build.CC_SYMBOLS =-DTARGET_ARCH_BLE -D__CORTEX_M0 -DTARGET_MCU_NRF51_16K -DTOOLCHAIN_GCC -DTARGET_MCU_NRF51822 -DTARGET_NRF51822_MKIT -DNRF51 -DTARGET_CORTEX_M -DTARGET_NRF51822 -DARM_MATH_CM0 -DMBED_BUILD_TIMESTAMP=1440657117.48 -D__MBED__=1 -DTOOLCHAIN_GCC_ARM -DTARGET_NORDIC -DTARGET_MCU_NRF51 -DTARGET_MCU_NORDIC_16K -DTARGET_M0 -DTARGET_MCU_NRF51_16K_S130 
+mbed_arch_ble_nrf51822_gcc_arm.build.LD_FLAGS = -mcpu=cortex-m0 -mthumb -Wl,--gc-sections --specs=nano.specs -Wl,--wrap,main -Wl,-Map=$(PROJECT).map,--cref
+mbed_arch_ble_nrf51822_gcc_arm.build.LD_SYS_LIBS =-lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
 
 mbed_arch_ble_nrf51822_gcc_arm.build.ldscript=hw/mbed/variants/mbed_arch_ble_nrf51822_gcc_arm/cmsis/TARGET_NORDIC/TARGET_NRF51822/TOOLCHAIN_GCC_ARM/TARGET_MCU_NORDIC_16K/NRF51822.ld
 mbed_arch_ble_nrf51822_gcc_arm.build.use_archiver=false
-mbed_arch_ble_nrf51822_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_arch_ble_nrf51822_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -c -x assembler-with-cpp -o "{object_file}"
 mbed_arch_ble_nrf51822_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
 mbed_arch_ble_nrf51822_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
 mbed_arch_ble_nrf51822_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 

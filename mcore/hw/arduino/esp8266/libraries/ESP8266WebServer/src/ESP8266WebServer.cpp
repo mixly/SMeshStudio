@@ -115,7 +115,7 @@ void ESP8266WebServer::handleClient()
   _handleRequest();
 }
 
-void ESP8266WebServer::sendHeader(String name, String value, bool first) {
+void ESP8266WebServer::sendHeader(const String& name, const String& value, bool first) {
   String headerLine = name;
   headerLine += ": ";
   headerLine += value;
@@ -129,7 +129,7 @@ void ESP8266WebServer::sendHeader(String name, String value, bool first) {
   }
 }
 
-void ESP8266WebServer::send(int code, const char* content_type, String content) {
+void ESP8266WebServer::send(int code, const char* content_type, const String& content) {
   String response = "HTTP/1.1 ";
   response += String(code);
   response += " ";
@@ -140,11 +140,10 @@ void ESP8266WebServer::send(int code, const char* content_type, String content) 
     content_type = "text/html";
   
   sendHeader("Content-Type", content_type, true);
-  if (_contentLength != CONTENT_LENGTH_UNKNOWN) {
-    size_t length = (_contentLength == CONTENT_LENGTH_NOT_SET) ? 
-                    content.length() : _contentLength;
-    String lengthStr(length);
-    sendHeader("Content-Length", lengthStr.c_str());
+  if (_contentLength != CONTENT_LENGTH_UNKNOWN && _contentLength != CONTENT_LENGTH_NOT_SET) {
+    sendHeader("Content-Length", String(_contentLength).c_str());
+  } else if(content.length() > 0){
+    sendHeader("Content-Length", String(content.length()).c_str());
   }
   sendHeader("Connection", "close");
   sendHeader("Access-Control-Allow-Origin", "*");
@@ -156,15 +155,15 @@ void ESP8266WebServer::send(int code, const char* content_type, String content) 
   sendContent(response);
 }
 
-void ESP8266WebServer::send(int code, char* content_type, String content) {
+void ESP8266WebServer::send(int code, char* content_type, const String& content) {
   send(code, (const char*)content_type, content);
 }
 
-void ESP8266WebServer::send(int code, String content_type, String content) {
+void ESP8266WebServer::send(int code, const String& content_type, const String& content) {
   send(code, (const char*)content_type.c_str(), content);
 }
 
-void ESP8266WebServer::sendContent(String content) {
+void ESP8266WebServer::sendContent(const String& content) {
   size_t size_to_send = content.length();
   size_t size_sent = 0;
   while(size_to_send) {

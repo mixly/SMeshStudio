@@ -108,8 +108,26 @@ bool ESP8266WebServer::_parseRequest(WiFiClient& client) {
   
     if (!isForm){
       if (searchStr != "") searchStr += '&';
-      searchStr += client.readStringUntil('\r');
-      client.readStringUntil('\n');
+      //some clients send headers first and data after (like we do)
+      //give them a chance
+      int tries = 100;//100ms max wait
+      while(!client.available() && tries--)delay(1);
+      size_t plainLen = client.available();
+      char *plainBuf = (char*)malloc(plainLen+1);
+      client.readBytes(plainBuf, plainLen);
+      plainBuf[plainLen] = '\0';
+#ifdef DEBUG
+      DEBUG_OUTPUT.print("Plain: ");
+      DEBUG_OUTPUT.println(plainBuf);
+#endif
+      if(plainBuf[0] == '{' || plainBuf[0] == '[' || strstr(plainBuf, "=") == NULL){
+        //plain post json or other data
+        searchStr += "plain=";
+        searchStr += plainBuf;
+      } else {
+        searchStr += plainBuf;
+      }
+      free(plainBuf);
     }
     _parseArguments(searchStr);
     if (isForm){
