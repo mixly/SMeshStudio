@@ -30,7 +30,7 @@
  *
  */
 
-#ifndef CONTIKI_TARGET_CC2538DK
+
 #include "lib/random.h"
 #include "sys/clock.h"
 
@@ -52,4 +52,3 @@ random_rand(void)
   return (unsigned short)rand();
 }
 /*---------------------------------------------------------------------------*/
-#endif

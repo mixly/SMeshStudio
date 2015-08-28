@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Hasso-Plattner-Institut.
+ * Copyright (c) 2005, Swedish Institute of Computer Science
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,57 +29,34 @@
  * This file is part of the Contiki operating system.
  *
  */
+#ifndef __IP64_DHCPC_H__
+#define __IP64_DHCPC_H__
 
-/**
- * \file
- *         CCM* header file.
- * \author
- *         Konrad Krentz <konrad.krentz@gmail.com>
- */
-
-/**
- * \addtogroup llsec802154
- * @{
- */
-
-#ifndef CCM_STAR_H_
-#define CCM_STAR_H_
-
-#include "contiki.h"
-#include "net/mac/frame802154.h"
-
-/* see RFC 3610 */
-#define CCM_STAR_AUTH_FLAGS(Adata, M) ((Adata ? (1 << 6) : 0) | (((M - 2) >> 1) << 3) | 1)
-#define CCM_STAR_ENCRYPTION_FLAGS     1
-
-#ifdef CCM_STAR_CONF
-#define CCM_STAR CCM_STAR_CONF
-#else /* CCM_STAR_CONF */
-#define CCM_STAR ccm_star_driver
-#endif /* CCM_STAR_CONF */
-
-/**
- * Structure of CCM* drivers.
- */
-struct ccm_star_driver {
+struct ip64_dhcpc_state {
+  struct pt pt;
+  char state;
+  struct uip_udp_conn *conn;
+  struct etimer etimer;
+  uint32_t ticks;
+  const void *mac_addr;
+  int mac_len;
   
-   /**
-    * \brief         Generates a MIC over the frame in the packetbuf.
-    * \param result  The generated MIC will be put here
-    * \param mic_len  <= 16; set to LLSEC802154_MIC_LENGTH to be compliant
-    */
-  void (* mic)(const uint8_t *extended_source_address,
-      uint8_t *result,
-      uint8_t mic_len);
-  
-  /**
-   * \brief XORs the frame in the packetbuf with the key stream.
-   */
-  void (* ctr)(const uint8_t *extended_source_address);
+  uint8_t serverid[4];
+
+  uint16_t lease_time[2];
+  uip_ipaddr_t ipaddr;
+  uip_ipaddr_t netmask;
+  uip_ipaddr_t dnsaddr;
+  uip_ipaddr_t default_router;
 };
 
-extern const struct ccm_star_driver CCM_STAR;
+void ip64_dhcpc_init(const void *mac_addr, int mac_len);
+void ip64_dhcpc_request(void);
 
-#endif /* CCM_STAR_H_ */
+void ip64_dhcpc_appcall(process_event_t ev, void *data);
 
-/** @} */
+/* Mandatory callbacks provided by the user. */
+void ip64_dhcpc_configured(const struct ip64_dhcpc_state *s);
+void ip64_dhcpc_unconfigured(const struct ip64_dhcpc_state *s);
+
+#endif /* __IP64_DHCPC_H__ */

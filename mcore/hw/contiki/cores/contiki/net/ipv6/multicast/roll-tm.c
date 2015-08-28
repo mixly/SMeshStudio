@@ -30,19 +30,14 @@
  */
 
 /**
+ * \addtogroup roll-tm
+ * @{
+ */
+/**
  * \file
- *         This file implements IPv6 MCAST forwarding according to the
- *         algorithm described in the "MCAST Forwarding Using Trickle"
- *         internet draft.
- *
- *         The current version of the draft can always be found in
- *         http://tools.ietf.org/html/draft-ietf-roll-trickle-mcast
- *
- *         This implementation is based on the draft version stored in
- *         ROLL_TM_VER
- *
+ *    Implementation of the ROLL TM multicast engine
  * \author
- *         George Oikonomou - <oikonomou@users.sourceforge.net>
+ *    George Oikonomou - <oikonomou@users.sourceforge.net>
  */
 
 #include "contiki.h"
@@ -1112,26 +1107,26 @@ icmp_input()
     PRINT6ADDR(&UIP_IP_BUF->destipaddr);
     PRINTF("\n");
     ROLL_TM_STATS_ADD(icmp_bad);
-    return;
+    goto discard;
   }
 
   if(!uip_is_addr_linklocal_allnodes_mcast(&UIP_IP_BUF->destipaddr)
      && !uip_is_addr_linklocal_allrouters_mcast(&UIP_IP_BUF->destipaddr)) {
     PRINTF("ROLL TM: ICMPv6 In, bad destination\n");
     ROLL_TM_STATS_ADD(icmp_bad);
-    return;
+    goto discard;
   }
 
   if(UIP_ICMP_BUF->icode != ROLL_TM_ICMP_CODE) {
     PRINTF("ROLL TM: ICMPv6 In, bad ICMP code\n");
     ROLL_TM_STATS_ADD(icmp_bad);
-    return;
+    goto discard;
   }
 
   if(UIP_IP_BUF->ttl != ROLL_TM_IP_HOP_LIMIT) {
     PRINTF("ROLL TM: ICMPv6 In, bad TTL\n");
     ROLL_TM_STATS_ADD(icmp_bad);
-    return;
+    goto discard;
   }
 #endif
 
@@ -1316,6 +1311,9 @@ drop:
     t[1].c++;
   }
 
+discard:
+
+  uip_len = 0;
   return;
 }
 /*---------------------------------------------------------------------------*/
@@ -1440,6 +1438,9 @@ init()
   return;
 }
 /*---------------------------------------------------------------------------*/
+/**
+ * \brief The ROLL TM engine driver
+ */
 const struct uip_mcast6_driver roll_tm_driver = {
   "ROLL TM",
   init,
@@ -1447,3 +1448,4 @@ const struct uip_mcast6_driver roll_tm_driver = {
   in,
 };
 /*---------------------------------------------------------------------------*/
+/** @} */

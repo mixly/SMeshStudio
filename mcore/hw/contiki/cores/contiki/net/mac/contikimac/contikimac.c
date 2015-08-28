@@ -136,11 +136,15 @@ static int we_are_receiving_burst = 0;
 
 /* CCA_SLEEP_TIME is the time between two successive CCA checks. */
 /* Add 1 when rtimer ticks are coarse */
+#ifdef CONTIKIMAC_CONF_CCA_SLEEP_TIME
+#define CCA_SLEEP_TIME CONTIKIMAC_CONF_CCA_SLEEP_TIME
+#else
 #if RTIMER_ARCH_SECOND > 8000
 #define CCA_SLEEP_TIME                     RTIMER_ARCH_SECOND / 2000
 #else
 #define CCA_SLEEP_TIME                     (RTIMER_ARCH_SECOND / 2000) + 1
-#endif
+#endif /* RTIMER_ARCH_SECOND > 8000 */
+#endif /* CONTIKIMAC_CONF_CCA_SLEEP_TIME */
 
 /* CHECK_TIME is the total time it takes to perform CCA_COUNT_MAX
    CCAs. */
@@ -153,7 +157,11 @@ static int we_are_receiving_burst = 0;
 /* LISTEN_TIME_AFTER_PACKET_DETECTED is the time that we keep checking
    for activity after a potential packet has been detected by a CCA
    check. */
+#ifdef CONTIKIMAC_CONF_LISTEN_TIME_AFTER_PACKET_DETECTED
+#define LISTEN_TIME_AFTER_PACKET_DETECTED  CONTIKIMAC_CONF_LISTEN_TIME_AFTER_PACKET_DETECTED
+#else
 #define LISTEN_TIME_AFTER_PACKET_DETECTED  RTIMER_ARCH_SECOND / 80
+#endif
 
 /* MAX_SILENCE_PERIODS is the maximum amount of periods (a period is
    CCA_CHECK_TIME + CCA_SLEEP_TIME) that we allow to be silent before
@@ -195,6 +203,12 @@ static int we_are_receiving_burst = 0;
    to a neighbor for which we have a phase lock. */
 #define MAX_PHASE_STROBE_TIME              RTIMER_ARCH_SECOND / 60
 
+#ifdef CONTIKIMAC_CONF_SEND_SW_ACK
+#define CONTIKIMAC_SEND_SW_ACK CONTIKIMAC_CONF_SEND_SW_ACK
+#else
+#define CONTIKIMAC_SEND_SW_ACK 0
+#endif
+
 #define ACK_LEN 3
 
 #include <stdio.h>
@@ -228,10 +242,6 @@ static struct compower_activity current_packet;
 #endif /* WITH_PHASE_OPTIMIZATION */
 
 #define DEFAULT_STREAM_TIME (4 * CYCLE_TIME)
-
-#ifndef MIN
-#define MIN(a, b) ((a) < (b)? (a) : (b))
-#endif /* MIN */
 
 #if CONTIKIMAC_CONF_BROADCAST_RATE_LIMIT
 static struct timer broadcast_rate_timer;
@@ -341,7 +351,6 @@ powercycle(struct rtimer *t, void *ptr)
 
   while(1) {
     static uint8_t packet_seen;
-    static rtimer_clock_t t0;
     static uint8_t count;
 
 #if SYNC_CYCLE_STARTS
@@ -365,7 +374,6 @@ powercycle(struct rtimer *t, void *ptr)
     packet_seen = 0;
 
     for(count = 0; count < CCA_COUNT_MAX; ++count) {
-      t0 = RTIMER_NOW();
       if(we_are_sending == 0 && we_are_receiving_burst == 0) {
         powercycle_turn_radio_on();
         /* Check if a packet is seen in the air. If so, we keep the
@@ -494,12 +502,13 @@ send_packet(mac_callback_t mac_callback, void *mac_callback_ptr,
             int is_receiver_awake)
 {
   rtimer_clock_t t0;
+#if WITH_PHASE_OPTIMIZATION
   rtimer_clock_t encounter_time = 0;
+#endif
   int strobes;
   uint8_t got_strobe_ack = 0;
   int len;
   uint8_t is_broadcast = 0;
-  uint8_t is_reliable = 0;
   uint8_t is_known_receiver = 0;
   uint8_t collisions;
   int transmit_len;
@@ -546,11 +555,6 @@ send_packet(mac_callback_t mac_callback, void *mac_callback_ptr,
                packetbuf_addr(PACKETBUF_ADDR_RECEIVER)->u8[1]);
 #endif /* NETSTACK_CONF_WITH_IPV6 */
   }
-  is_reliable = packetbuf_attr(PACKETBUF_ATTR_RELIABLE)
-#if NETSTACK_CONF_WITH_RIME
-          || packetbuf_attr(PACKETBUF_ATTR_ERELIABLE)
-#endif /* NETSTACK_CONF_WITH_RIME */
-      ;
 
   if(!packetbuf_attr(PACKETBUF_ATTR_IS_CREATED_AND_SECURED)) {
     packetbuf_set_attr(PACKETBUF_ATTR_MAC_ACK, 1);
@@ -652,7 +656,7 @@ send_packet(mac_callback_t mac_callback, void *mac_callback_ptr,
      on();
   }
 #endif
-  on();
+
   watchdog_periodic();
   t0 = RTIMER_NOW();
   seqno = packetbuf_attr(PACKETBUF_ATTR_MAC_SEQNO);
@@ -672,11 +676,14 @@ send_packet(mac_callback_t mac_callback, void *mac_callback_ptr,
 
     {
       rtimer_clock_t wt;
-      rtimer_clock_t txtime;
-      int ret;
-
-      txtime = RTIMER_NOW();
-      ret = NETSTACK_RADIO.transmit(transmit_len);
+#if WITH_PHASE_OPTIMIZATION
+      rtimer_clock_t txtime = RTIMER_NOW();
+#endif
+#if RDC_CONF_HARDWARE_ACK
+      int ret = NETSTACK_RADIO.transmit(transmit_len);
+#else
+      NETSTACK_RADIO.transmit(transmit_len);
+#endif
 
 #if RDC_CONF_HARDWARE_ACK
      /* For radios that block in the transmit routine and detect the
@@ -684,7 +691,9 @@ send_packet(mac_callback_t mac_callback, void *mac_callback_ptr,
       if(ret == RADIO_TX_OK) {
         if(!is_broadcast) {
           got_strobe_ack = 1;
+#if WITH_PHASE_OPTIMIZATION
           encounter_time = txtime;
+#endif
           break;
         }
       } else if (ret == RADIO_TX_NOACK) {
@@ -692,8 +701,8 @@ send_packet(mac_callback_t mac_callback, void *mac_callback_ptr,
           PRINTF("contikimac: collisions while sending\n");
           collisions++;
       }
-//      wt = RTIMER_NOW();
-//      while(RTIMER_CLOCK_LT(RTIMER_NOW(), wt + INTER_PACKET_INTERVAL)) { }
+      wt = RTIMER_NOW();
+      while(RTIMER_CLOCK_LT(RTIMER_NOW(), wt + INTER_PACKET_INTERVAL)) { }
 #else /* RDC_CONF_HARDWARE_ACK */
      /* Wait for the ACK packet */
       wt = RTIMER_NOW();
@@ -709,7 +718,9 @@ send_packet(mac_callback_t mac_callback, void *mac_callback_ptr,
         len = NETSTACK_RADIO.read(ackbuf, ACK_LEN);
         if(len == ACK_LEN && seqno == ackbuf[ACK_LEN - 1]) {
           got_strobe_ack = 1;
+#if WITH_PHASE_OPTIMIZATION
           encounter_time = txtime;
+#endif
           break;
         } else {
           PRINTF("contikimac: collisions while sending\n");
@@ -868,8 +879,24 @@ static void
 input_packet(void)
 {
   static struct ctimer ct;
+  int duplicate = 0;
+
+#if CONTIKIMAC_SEND_SW_ACK
+  int original_datalen;
+  uint8_t *original_dataptr;
+
+  original_datalen = packetbuf_datalen();
+  original_dataptr = packetbuf_dataptr();
+#endif
+
   if(!we_are_receiving_burst) {
     off();
+  }
+
+  if(packetbuf_datalen() == ACK_LEN) {
+    /* Ignore ack packets */
+    PRINTF("ContikiMAC: ignored ack\n");
+    return;
   }
 
   /*  printf("cycle_start 0x%02x 0x%02x\n", cycle_start, cycle_start % CYCLE_TIME);*/
@@ -899,12 +926,13 @@ input_packet(void)
 
 #if RDC_WITH_DUPLICATE_DETECTION
       /* Check for duplicate packet. */
-      if(mac_sequence_is_duplicate()) {
+      duplicate = mac_sequence_is_duplicate();
+      if(duplicate) {
         /* Drop the packet. */
-        /*        printf("Drop duplicate ContikiMAC layer packet\n");*/
-        return;
+        PRINTF("contikimac: Drop duplicate\n");
+      } else {
+        mac_sequence_register_seqno();
       }
-      mac_sequence_register_seqno();
 #endif /* RDC_WITH_DUPLICATE_DETECTION */
 
 #if CONTIKIMAC_CONF_COMPOWER
@@ -922,7 +950,30 @@ input_packet(void)
 #endif /* CONTIKIMAC_CONF_COMPOWER */
 
       PRINTDEBUG("contikimac: data (%u)\n", packetbuf_datalen());
-      NETSTACK_MAC.input();
+
+#if CONTIKIMAC_SEND_SW_ACK
+      {
+        frame802154_t info154;
+        frame802154_parse(original_dataptr, original_datalen, &info154);
+        if(info154.fcf.frame_type == FRAME802154_DATAFRAME &&
+            info154.fcf.ack_required != 0 &&
+            linkaddr_cmp((linkaddr_t *)&info154.dest_addr,
+                &linkaddr_node_addr)) {
+          uint8_t ackdata[ACK_LEN] = {0, 0, 0};
+
+          we_are_sending = 1;
+          ackdata[0] = FRAME802154_ACKFRAME;
+          ackdata[1] = 0;
+          ackdata[2] = info154.seq;
+          NETSTACK_RADIO.send(ackdata, ACK_LEN);
+          we_are_sending = 0;
+        }
+      }
+#endif /* CONTIKIMAC_SEND_SW_ACK */
+
+      if(!duplicate) {
+        NETSTACK_MAC.input();
+      }
       return;
     } else {
       PRINTDEBUG("contikimac: data not for us\n");
