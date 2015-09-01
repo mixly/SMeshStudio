@@ -24,7 +24,7 @@ mbed_tiny_ble_nrf51822_gcc_arm.build.CC_SYMBOLS =  -DTARGET_TINY_BLE -D__CORTEX_
 mbed_tiny_ble_nrf51822_gcc_arm.build.LD_FLAGS = -mcpu=cortex-m0 -mthumb -Wl,--gc-sections --specs=nano.specs -Wl,--wrap,main -Wl,-Map=$(PROJECT).map,--cref
 mbed_tiny_ble_nrf51822_gcc_arm.build.LD_SYS_LIBS =  -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
 
-mbed_tiny_ble_nrf51822_gcc_arm.build.ldscript=hw/mbed/variants/mbed_tiny_ble_nrf51822_gcc_arm/cmsis/TARGET_NORDIC/TARGET_NRF51822/TOOLCHAIN_GCC_ARM/TARGET_MCU_NORDIC_16K/NRF51822.ld
+mbed_tiny_ble_nrf51822_gcc_arm.build.ldscript=hw/mbed/variants/mbed_tiny_ble_nrf51822_gcc_arm/cmsis/TARGET_NORDIC/TARGET_NRF51822/TOOLCHAIN_GCC_ARM/TARGET_MCU_NRF51_16K_S130/NRF51822.ld
 mbed_tiny_ble_nrf51822_gcc_arm.build.use_archiver=false
 mbed_tiny_ble_nrf51822_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
 mbed_tiny_ble_nrf51822_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
@@ -65,7 +65,7 @@ mbed_arch_ble_nrf51822_gcc_arm.build.CC_SYMBOLS =-DTARGET_ARCH_BLE -D__CORTEX_M0
 mbed_arch_ble_nrf51822_gcc_arm.build.LD_FLAGS = -mcpu=cortex-m0 -mthumb -Wl,--gc-sections --specs=nano.specs -Wl,--wrap,main -Wl,-Map=$(PROJECT).map,--cref
 mbed_arch_ble_nrf51822_gcc_arm.build.LD_SYS_LIBS =-lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
 
-mbed_arch_ble_nrf51822_gcc_arm.build.ldscript=hw/mbed/variants/mbed_arch_ble_nrf51822_gcc_arm/cmsis/TARGET_NORDIC/TARGET_NRF51822/TOOLCHAIN_GCC_ARM/TARGET_MCU_NORDIC_16K/NRF51822.ld
+mbed_arch_ble_nrf51822_gcc_arm.build.ldscript=hw/mbed/variants/mbed_arch_ble_nrf51822_gcc_arm/cmsis/TARGET_NORDIC/TARGET_NRF51822/TOOLCHAIN_GCC_ARM/TARGET_MCU_NRF51_16K_S130/NRF51822.ld
 mbed_arch_ble_nrf51822_gcc_arm.build.use_archiver=false
 mbed_arch_ble_nrf51822_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -c -x assembler-with-cpp -o "{object_file}"
 mbed_arch_ble_nrf51822_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
