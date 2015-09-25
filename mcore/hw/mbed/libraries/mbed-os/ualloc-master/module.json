@@ -1,0 +1,35 @@
+{
+  "name": "ualloc",
+  "version": "0.2.0",
+  "description": "mbed allocator api",
+  "keywords": [
+    "ualloc",
+    "alloc",
+    "malloc"
+  ],
+  "author": "Brendan Moran <brendan.moran@arm.com>",
+  "repository": {
+    "url": "git@github.com:ARMmbed/mbed-alloc.git",
+    "type": "git"
+  },
+  "homepage": "https://github.com/ARMmbed/mbed-alloc",
+  "licenses": [
+    {
+      "url": "https://spdx.org/licenses/Apache-2.0",
+      "type": "Apache-2.0"
+    }
+  ],
+  "dependencies": {
+    "dlmalloc": "~0.0.0",
+    "core-util": ">=0.1.0"
+  },
+  "scripts": {
+    "testReporter": [
+      "mbedgt",
+      "--digest",
+      "stdin",
+      "-v",
+      "-V"
+    ]
+  }
+}

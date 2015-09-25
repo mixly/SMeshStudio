@@ -1,0 +1,36 @@
+{
+  "name": "mbed-hal",
+  "version": "0.6.4",
+  "description": "mbed low-level Hardware Abstraction Layer",
+  "keywords": [
+    "mbed",
+    "HAL"
+  ],
+  "author": "Martin Kojtal <martin.kojtal@arm.com>",
+  "repository": {
+    "url": "git@github.com:ARMmbed/mbed-hal.git",
+    "type": "git"
+  },
+  "homepage": "https://github.com/ARMmbed/mbed-hal",
+  "license": "Apache-2.0",
+  "extraIncludes": [
+    "mbed-hal"
+  ],
+  "dependencies": {
+    "mbed-drivers": "*"
+  },
+  "targetDependencies": {
+    "silabs": {
+      "mbed-hal-silabs": "~0.4.0"
+    },
+    "freescale": {
+      "mbed-hal-freescale": "~0.5.0"
+    },
+    "st": {
+      "mbed-hal-st": "~0.5.0"
+    },
+    "nordic": {
+      "mbed-hal-nordic": "~0.0.1"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "mbed-hal-k64f",
+  "version": "0.3.5",
+  "description": "mbed HAL for Freescale K64F MCUs",
+  "keywords": [
+    "mbed",
+    "hal",
+    "k64f",
+    "ksdk",
+    "freescale"
+  ],
+  "author": "martin.kojtal@arm.com",
+  "repository": {
+    "url": "https://github.com/ARMmbed/mbed-hal-k64f.git",
+    "type": "git"
+  },
+  "homepage": "https://github.com/ARMmbed/mbed-hal-k64f",
+  "licenses": [
+    {
+      "url": "https://spdx.org/licenses/Apache-2.0",
+      "type": "Apache-2.0"
+    }
+  ],
+  "extraIncludes": [
+    "mbed-hal-k64f",
+    "mbed-hal-k64f/device",
+    "mbed-hal-k64f/MK64F12"
+  ],
+  "dependencies": {
+    "mbed-hal": "*"
+  },
+  "targetDependencies": {
+    "gcc": {
+      "uvisor-lib": "~0.7.0"
+    },
+    "frdm-k64f": {
+      "mbed-hal-frdm-k64f": "~0.4.0"
+    }
+  }
+}

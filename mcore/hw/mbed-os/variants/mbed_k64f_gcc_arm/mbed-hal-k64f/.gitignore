@@ -1,0 +1,8 @@
+# yotta build directories
+build
+yotta_modules
+yotta_targets
+.yotta.json
+
+# vim files
+*.sw*

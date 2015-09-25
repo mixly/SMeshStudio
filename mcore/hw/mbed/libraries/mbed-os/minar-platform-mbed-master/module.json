@@ -1,0 +1,35 @@
+{
+  "name": "minar-platform-mbed",
+  "version": "0.1.5",
+  "description": "Platform MINAR implementation for mbed.",
+  "scripts": {
+    "testReporter": [
+      "mbedgt",
+      "--digest",
+      "stdin",
+      "-v",
+      "-V"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ARMmbed/minar-platform-mbed.git"
+  },
+  "homepage": "https://github.com/ARMmbed/minar-platform-mbed",
+  "bugs": {
+    "url": "http://github.com/ARMmbed/minar-platform-mbed/issues",
+    "email": "project@hostname.com"
+  },
+  "author": "Martin Kojtal <Martin.Kojtal@arm.com>",
+  "licenses": [
+    {
+      "url": "https://spdx.org/licenses/Apache-2.0",
+      "type": "Apache-2.0"
+    }
+  ],
+  "dependencies": {
+    "cmsis-core": "~0.2.0",
+    "mbed-hal": "~0.6.0",
+    "minar": "*"
+  }
+}

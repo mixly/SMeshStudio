@@ -1,0 +1,42 @@
+###################################################################################################################
+
+mbed_k64f_gcc_arm.name=Freescale FRDM-K64F mbedos board by gcc_arm and upload by copy
+mbed_k64f_gcc_arm.upload.protocol=copy
+mbed_k64f_gcc_arm.upload.tool=mbed_cp
+mbed_k64f_gcc_arm.build.mcu=cortex-m4
+mbed_k64f_gcc_arm.build.cpu=MK64FN1M0VLL12
+
+mbed_k64f_gcc_arm.build.architecture=arm-none-eabi
+mbed_k64f_gcc_arm.build.command.as=arm-none-eabi-as
+mbed_k64f_gcc_arm.build.command.gcc=arm-none-eabi-gcc
+mbed_k64f_gcc_arm.build.command.g++=arm-none-eabi-g++
+mbed_k64f_gcc_arm.build.command.ar=arm-none-eabi-ar
+mbed_k64f_gcc_arm.build.command.objcopy=arm-none-eabi-objcopy
+mbed_k64f_gcc_arm.build.command.objdump=arm-none-eabi-objdump
+mbed_k64f_gcc_arm.build.command.size=arm-none-eabi-size
+
+mbed_k64f_gcc_arm.build.core=mbed
+mbed_k64f_gcc_arm.build.variant=mbed_k64f_gcc_arm
+
+mbed_k64f_gcc_arm.mbedos.build.CC_FLAGS=
+mbed_k64f_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=softfp  -c -g -fno-common -fmessage-length=0 -Wall -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer  -Wno-unused-function -Wno-unused-variable {mbed_k64f_gcc_arm.mbedos.build.CC_FLAGS}  
+mbed_k64f_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
+mbed_k64f_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98 -fno-rtti
+
+mbed_k64f_gcc_arm.build.CC_SYMBOLS =  -DTARGET_LIKE_MBED -DDEVICE_STDIO_MESSAGES -DUVISOR_PRESENT=true -DTARGET_LIKE_CORTEX_M4 -DTARGET_K64F  -DTARGET_M4 -DTARGET_Freescale -DTARGET_KPSDK_MCUS -DTARGET_KPSDK_CODE -DTARGET_MCU_K64F -DTARGET_FRDM -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -D__CORTEX_M4 -DARM_MATH_CM4 -D__FPU_PRESENT=1 -DMBED_BUILD_TIMESTAMP=1414118975.24 -D__MBED__=1 -DCPU_MK64FN1M0VMD12 -DTARGET_FF_ARDUINO {mbed_k64f_gcc_arm.mbedos.build.CC_SYMBOLS}
+ 
+#-DFSL_RTOS_MBED
+mbed_k64f_gcc_arm.build.LD_FLAGS =  -mcpu=cortex-m4 -mthumb -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float
+mbed_k64f_gcc_arm.build.LD_SYS_LIBS =  -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+mbed_k64f_gcc_arm.build.ldscript=hw/mbed-os/variants/mbed_k64f_gcc_arm/frdm-k64f-gcc/ld/K64FN1M0xxx12.ld
+mbed_k64f_gcc_arm.build.uvisor-lib=hw/mbed-os/variants/mbed_k64f_gcc_arm/uvisor-lib/source/MK64FN1M0XXX12
+
+mbed_k64f_gcc_arm.build.use_archiver=false
+mbed_k64f_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} -fno-exceptions -fno-unwind-tables -x assembler-with-cpp {build.ONLY_C_FLAGS}  "-I{runtime.ide.path}/{build.uvisor-lib}" {includes} "{source_file}" -o "{object_file}"
+mbed_k64f_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_k64f_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
+mbed_k64f_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
+mbed_k64f_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}"  {build.LD_SYS_LIBS}
+mbed_k64f_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+mbed_k64f_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+mbed_k64f_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"

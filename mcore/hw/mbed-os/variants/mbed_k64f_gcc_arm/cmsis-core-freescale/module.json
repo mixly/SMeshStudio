@@ -1,0 +1,21 @@
+{
+  "name": "cmsis-core-freescale",
+  "version": "0.1.4",
+  "description": "CMSIS Core Implementation for Freescale MCUs",
+  "keywords": [
+    "cmsis"
+  ],
+  "author": "Brendan Moran <brendan.moran@arm.com>",
+  "repository": {
+    "url": "git@github.com:ARMmbed/cmsis-core-freescale.git",
+    "type": "git"
+  },
+  "homepage": "https://github.com/ARMmbed/cmsis-core-freescale",
+  "license": "Apache-2.0",
+  "dependencies": {},
+  "targetDependencies": {
+    "k64f": {
+      "cmsis-core-k64f": "~0.1.0"
+    }
+  }
+}

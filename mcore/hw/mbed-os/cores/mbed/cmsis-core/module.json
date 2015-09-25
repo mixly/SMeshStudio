@@ -1,0 +1,42 @@
+{
+  "name": "cmsis-core",
+  "version": "0.2.7",
+  "description": "CMSIS-Core",
+  "keywords": [
+    "cmsis"
+  ],
+  "author": "Bogdan Marinescu <bogdan.marinescu@arm.com>",
+  "repository": {
+    "url": "git@github.com:ARMmbed/cmsis-core.git",
+    "type": "git"
+  },
+  "homepage": "https://github.com/ARMmbed/cmsis-core",
+  "licenses": [
+    {
+      "url": "https://spdx.org/licenses/Apache-2.0",
+      "type": "Apache-2.0"
+    },
+    {
+      "url": "https://spdx.org/licenses/BSD-3-Clause",
+      "type": "BSD-3-Clause"
+    }
+  ],
+  "dependencies": {},
+  "extraIncludes": [
+    "cmsis-core"
+  ],
+  "targetDependencies": {
+    "silabs": {
+      "cmsis-core-silabs": "~0.1.0"
+    },
+    "freescale": {
+      "cmsis-core-freescale": "~0.1.0"
+    },
+    "st": {
+      "cmsis-core-st": "~0.2.0"
+    },
+    "nordic": {
+      "cmsis-core-nordic": "~0.0.1"
+    }
+  }
+}

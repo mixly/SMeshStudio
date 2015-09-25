@@ -1,0 +1,36 @@
+{
+  "name": "core-util",
+  "version": "0.1.2",
+  "description": "mbed utilities library",
+  "keywords": [],
+  "licenses": [
+    {
+      "url": "https://spdx.org/licenses/Apache-2.0",
+      "type": "Apache-2.0"
+    }
+  ],
+  "author": "Bogdan Marinescu <bogdan.marinescu@arm.com>",
+  "repository": {
+    "url": "git@github.com:ARMmbed/mbed-util.git",
+    "type": "git"
+  },
+  "homepage": "https://github.com/ARMmbed/mbed-util",
+  "dependencies": {
+    "ualloc": "*"
+  },
+  "targetDependencies": {
+    "mbed": {
+      "cmsis-core": "~0.2.2",
+      "mbed-drivers": ">=0.8.0"
+    }
+  },
+  "scripts": {
+    "testReporter": [
+      "mbedgt",
+      "--digest",
+      "stdin",
+      "-v",
+      "-V"
+    ]
+  }
+}

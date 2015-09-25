@@ -1,0 +1,18 @@
+{
+  "name": "dlmalloc",
+  "version": "0.0.6",
+  "description": "Doug Lea's malloc",
+  "keywords": [
+    "dlmalloc"
+  ],
+  "author": "Brendan Moran <brendan.moran@arm.com>",
+  "homepage": "http://g.oswego.edu/dl/html/malloc.html",
+  "licenses": [
+    {
+      "url": "https://spdx.org/licenses/CC0-1.0.html",
+      "type": "CC0-1.0"
+    }
+  ],
+  "dependencies": {},
+  "targetDependencies": {}
+}

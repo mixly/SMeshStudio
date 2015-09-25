@@ -1,0 +1,74 @@
+{
+  "name": "mbed-hal-ksdk-mcu",
+  "version": "0.5.4",
+  "description": "mbed HAL for Freescale KSDK MCUs",
+  "keywords": [
+    "mbed",
+    "hal",
+    "ksdk",
+    "freescale"
+  ],
+  "author": "martin.kojtal@arm.com",
+  "repository": {
+    "url": "https://github.com/ARMmbed/mbed-hal-ksdk-mcu.git",
+    "type": "git"
+  },
+  "homepage": "https://github.com/ARMmbed/mbed-hal-ksdk-mcu",
+  "licenses": [
+    {
+      "url": "https://spdx.org/licenses/Apache-2.0",
+      "type": "Apache-2.0"
+    },
+    {
+      "url": "https://spdx.org/licenses/BSD-3-Clause",
+      "type": "BSD-3-Clause"
+    }
+  ],
+  "extraIncludes": [
+    "mbed-hal-ksdk-mcu",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/common/phyksz8081",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/drivers/clock",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/drivers/enet",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/drivers/interrupt",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/drivers/pit",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/drivers/pit/common",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/adc",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/can",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/dac",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/dmamux",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/dspi",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/edma",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/enet",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/flextimer",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/gpio",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/i2c",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/llwu",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/lptmr",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/lpuart",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/mcg",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/mpu",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/osc",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/pdb",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/pit",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/pmc",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/port",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/rcm",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/rtc",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/sai",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/sdhc",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/sim",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/smc",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/uart",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/hal/wdog",
+    "mbed-hal-ksdk-mcu/TARGET_KSDK_CODE/utilities"
+  ],
+  "dependencies": {
+    "mbed-hal": "*"
+  },
+  "targetDependencies": {
+    "k64f": {
+      "uvisor-lib": "~0.7.0",
+      "mbed-hal-k64f": "~0.3.0"
+    }
+  }
+}

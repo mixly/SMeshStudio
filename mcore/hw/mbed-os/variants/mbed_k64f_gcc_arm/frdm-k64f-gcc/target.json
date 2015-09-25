@@ -1,0 +1,56 @@
+{
+  "name": "frdm-k64f-gcc",
+  "version": "0.0.24",
+  "inherits": {
+    "mbed-gcc": "*"
+  },
+  "description": "Official mbed build target for the mbed frdm-k64f development board.",
+  "licenses": [
+    {
+      "url": "https://spdx.org/licenses/Apache-2.0",
+      "type": "Apache-2.0"
+    }
+  ],
+  "keywords": [
+    "mbed-target:k64f",
+    "mbed-official",
+    "k64f",
+    "frdm-k64f",
+    "gcc"
+  ],
+  "config": {
+    "mbed-os": {}
+  },
+  "similarTo": [
+    "frdm-k64f",
+    "k64f",
+    "ksdk-mcu",
+    "mk64fn1m0vmd12",
+    "mk64fn1m0",
+    "mk64fn",
+    "freescale",
+    "cortex-m4",
+    "armv7-m",
+    "arm",
+    "gcc",
+    "lwip",
+    "lwip-k64f",
+    "eth-k64f",
+    "mbed"
+  ],
+  "toolchain": "CMake/toolchain.cmake",
+  "scripts": {
+    "debug": [
+      "valinor",
+      "--target",
+      "K64F",
+      "$program"
+    ],
+    "test": [
+      "mbed_test_wrapper",
+      "--target",
+      "K64F",
+      "$program"
+    ]
+  }
+}
