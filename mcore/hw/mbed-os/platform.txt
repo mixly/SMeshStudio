@@ -1,6 +1,6 @@
 
 compiler.gcc_cs.path.windows={runtime.ide.path}/tools/gcc_cs/bin/
-compiler.gcc_arm.path.windows={runtime.ide.path}/tools/gcc_arm/bin/
+compiler.gcc_arm.path.windows={runtime.ide.path}/tools/gcc_arm2/bin/
 compiler.gcc_cr.path.windows={runtime.ide.path}/tools/gcc_cr/bin/
 
 compiler.keil.path.windows=C:\Keil\ARM

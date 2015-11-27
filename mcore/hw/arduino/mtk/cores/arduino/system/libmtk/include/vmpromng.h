@@ -245,7 +245,7 @@ void vm_main(void);
  */
 #define VM_MSG_NW_INFO_STATUS_CHANGED			17
 
-#define VM_MSG_USB_CHARGER_IN                          18 /* when usb charger plug in, will send this event to app */#define VM_MSG_USB_CHARGER_OUT                          19 /* when usb charger plug out, will send this event to app */
+#define VM_MSG_USB_CHARGER_IN                          18 /* when usb charger plug in, will send this event to app */#define VM_MSG_USB_CHARGER_OUT                          19 /* when usb charger plug out, will send this event to app */
 /**
  * atci message 
  */
