@@ -49,7 +49,7 @@
  * The abc module sends packets to all local area neighbors. The abc
  * module adds no headers to outgoing packets.
  *
- * \section abc-channels Channels
+ * \section channels Channels
  *
  * The abc module uses 1 channel.
  *

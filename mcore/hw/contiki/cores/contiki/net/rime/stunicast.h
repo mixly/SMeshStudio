@@ -63,7 +63,7 @@
  * number of retransmissions for a packet as a packet attribute on 
  * outgoing packets.
  *
- * \section stunicast-channels Channels
+ * \section channels Channels
  *
  * The stunicast module uses 1 channel.
  *

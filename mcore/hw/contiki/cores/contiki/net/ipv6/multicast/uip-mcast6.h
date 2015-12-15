@@ -30,11 +30,9 @@
  */
 
 /**
- * \addtogroup uip6
- * @{
- */
-/**
- * \defgroup uip6-multicast IPv6 Multicast Forwarding
+ * \file
+ *   This header file contains configuration directives for uIPv6
+ *   multicast support.
  *
  *   We currently support 2 engines:
  *   - 'Stateless Multicast RPL Forwarding' (SMRF)
@@ -43,14 +41,6 @@
  *   - 'Multicast Forwarding with Trickle' according to the algorithm described
  *     in the internet draft:
  *     http://tools.ietf.org/html/draft-ietf-roll-trickle-mcast
- *
- * @{
- */
-
-/**
- * \file
- *   This header file contains configuration directives for uIPv6
- *   multicast support.
  *
  * \author
  *   George Oikonomou - <oikonomou@users.sourceforge.net>
@@ -93,11 +83,7 @@
  * Multicast API. Similar to NETSTACK, each engine must define a driver and
  * populate the fields with suitable function pointers
  */
-/**
- * \brief The data structure used to represent a multicast engine
- */
 struct uip_mcast6_driver {
-  /** The driver's name */
   char *name;
 
   /** Initialize the multicast engine */
@@ -123,7 +109,6 @@ struct uip_mcast6_driver {
    *        should be delivered up the stack or not.
    *
    * \return 0: Drop, 1: Deliver
-   *
    *
    *        When a datagram with a multicast destination address is received,
    *        the forwarding logic in core is bypassed. Instead, we let the
@@ -173,7 +158,5 @@ extern const struct uip_mcast6_driver UIP_MCAST6;
 #error "Check the value of UIP_CONF_IPV6_RPL in conf files."
 #endif
 /*---------------------------------------------------------------------------*/
+
 #endif /* UIP_MCAST6_H_ */
-/*---------------------------------------------------------------------------*/
-/** @} */
-/** @} */

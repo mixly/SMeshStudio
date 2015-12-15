@@ -50,7 +50,7 @@
  * discovery mechanism. A callback is invoked for every incoming
  * neighbor discovery message.
  *
- * \section neighbor-discovery-channels Channels
+ * \section channels Channels
  *
  * The neighbor-discovery module uses 1 channel.
  *

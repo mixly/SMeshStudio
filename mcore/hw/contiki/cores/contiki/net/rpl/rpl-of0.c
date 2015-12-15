@@ -126,34 +126,26 @@ static rpl_parent_t *
 best_parent(rpl_parent_t *p1, rpl_parent_t *p2)
 {
   rpl_rank_t r1, r2;
-  rpl_dag_t *dag;  
-  uip_ds6_nbr_t *nbr1, *nbr2;
-  nbr1 = rpl_get_nbr(p1);
-  nbr2 = rpl_get_nbr(p2);
-
-  dag = (rpl_dag_t *)p1->dag; /* Both parents must be in the same DAG. */
-
-  if(nbr1 == NULL || nbr2 == NULL) {
-    return dag->preferred_parent;
-  }
+  rpl_dag_t *dag;
 
   PRINTF("RPL: Comparing parent ");
   PRINT6ADDR(rpl_get_parent_ipaddr(p1));
   PRINTF(" (confidence %d, rank %d) with parent ",
-        nbr1->link_metric, p1->rank);
+        p1->link_metric, p1->rank);
   PRINT6ADDR(rpl_get_parent_ipaddr(p2));
   PRINTF(" (confidence %d, rank %d)\n",
-        nbr2->link_metric, p2->rank);
+        p2->link_metric, p2->rank);
 
 
   r1 = DAG_RANK(p1->rank, p1->dag->instance) * RPL_MIN_HOPRANKINC  +
-    nbr1->link_metric;
+         p1->link_metric;
   r2 = DAG_RANK(p2->rank, p1->dag->instance) * RPL_MIN_HOPRANKINC  +
-    nbr2->link_metric;
+         p2->link_metric;
   /* Compare two parents by looking both and their rank and at the ETX
      for that parent. We choose the parent that has the most
      favourable combination. */
 
+  dag = (rpl_dag_t *)p1->dag; /* Both parents must be in the same DAG. */
   if(r1 < r2 + MIN_DIFFERENCE &&
      r1 > r2 - MIN_DIFFERENCE) {
     return dag->preferred_parent;

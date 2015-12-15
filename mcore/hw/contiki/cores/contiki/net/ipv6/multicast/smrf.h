@@ -30,21 +30,11 @@
  */
 
 /**
- * \addtogroup uip6-multicast
- * @{
- */
-/**
- * \defgroup smrf-multicast 'Stateless Multicast RPL Forwarding' (SMRF)
- *
- * SMRF will only work in RPL networks in MOP 3 "Storing with Multicast"
- * @{
- */
-/**
  * \file
- *    Header file for the SMRF forwarding engine
+ *         Header file for 'Stateless Multicast RPL Forwarding' (SMRF)
  *
  * \author
- *    George Oikonomou - <oikonomou@users.sourceforge.net>
+ *         George Oikonomou - <oikonomou@users.sourceforge.net>
  */
 
 #ifndef SMRF_H_
@@ -81,8 +71,5 @@ struct smrf_stats {
   uint16_t mcast_bad;
   uint16_t mcast_dropped;
 };
-/*---------------------------------------------------------------------------*/
+
 #endif /* SMRF_H_ */
-/*---------------------------------------------------------------------------*/
-/** @} */
-/** @} */

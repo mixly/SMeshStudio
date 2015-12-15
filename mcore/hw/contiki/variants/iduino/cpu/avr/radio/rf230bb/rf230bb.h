@@ -53,8 +53,8 @@
  *
  */
 
-#ifndef RF230BB_H_
-#define RF230BB_H_
+#ifndef RADIO_H
+#define RADIO_H
 /*============================ INCLUDE =======================================*/
 #include <stdint.h>
 #include <stdbool.h>
@@ -277,6 +277,6 @@ uint8_t rf230_get_raw_rssi(void);
 
 #define rf230_rssi	rf230_get_raw_rssi
 
-#endif /* RF230BB_H_ */
+#endif
 /** @} */
 /*EOF*/

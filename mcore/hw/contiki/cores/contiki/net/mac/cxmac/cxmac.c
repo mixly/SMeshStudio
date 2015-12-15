@@ -52,7 +52,6 @@
 #include "sys/rtimer.h"
 
 #include "contiki-conf.h"
-#include "sys/cc.h"
 
 #ifdef EXPERIMENT_SETUP
 #include "experiment-setup.h"
@@ -215,6 +214,10 @@ static uint8_t is_streaming;
 static linkaddr_t is_streaming_to, is_streaming_to_too;
 static rtimer_clock_t stream_until;
 #define DEFAULT_STREAM_TIME (RTIMER_ARCH_SECOND)
+
+#ifndef MIN
+#define MIN(a, b) ((a) < (b)? (a) : (b))
+#endif /* MIN */
 
 /*---------------------------------------------------------------------------*/
 static void
@@ -450,6 +453,8 @@ send_packet(void)
            packetbuf_addr(PACKETBUF_ADDR_RECEIVER)->u8[1]);
 #endif /* NETSTACK_CONF_WITH_IPV6 */
   }
+/* is_reliable = packetbuf_attr(PACKETBUF_ATTR_RELIABLE) ||
+    packetbuf_attr(PACKETBUF_ATTR_ERELIABLE);*/
   len = NETSTACK_FRAMER.create();
   strobe_len = len + sizeof(struct cxmac_hdr);
   if(len < 0 || strobe_len > (int)sizeof(strobe)) {
@@ -470,7 +475,7 @@ send_packet(void)
     return MAC_TX_ERR;
   }
 
-#if WITH_STREAMING && PACKETBUF_WITH_PACKET_TYPE
+#if WITH_STREAMING
   if(is_streaming == 1 &&
      (linkaddr_cmp(packetbuf_addr(PACKETBUF_ADDR_RECEIVER),
 		   &is_streaming_to) ||
@@ -514,7 +519,7 @@ send_packet(void)
       wait = ((rtimer_clock_t)(e->time - now)) % (DEFAULT_PERIOD);
       expected = now + wait - 2 * DEFAULT_ON_TIME;
 
-#if WITH_ACK_OPTIMIZATION && PACKETBUF_WITH_PACKET_TYPE
+#if WITH_ACK_OPTIMIZATION
       /* Wait until the receiver is expected to be awake */
       if(packetbuf_attr(PACKETBUF_ATTR_PACKET_TYPE) !=
 	 PACKETBUF_ATTR_PACKET_TYPE_ACK &&
@@ -619,16 +624,12 @@ send_packet(void)
   /* If we have received the strobe ACK, and we are sending a packet
      that will need an upper layer ACK (as signified by the
      PACKETBUF_ATTR_RELIABLE packet attribute), we keep the radio on. */
-  if(got_strobe_ack && (
+  if(got_strobe_ack && (packetbuf_attr(PACKETBUF_ATTR_RELIABLE) ||
 #if NETSTACK_CONF_WITH_RIME
-      packetbuf_attr(PACKETBUF_ATTR_RELIABLE) ||
       packetbuf_attr(PACKETBUF_ATTR_ERELIABLE) ||
 #endif /* NETSTACK_CONF_WITH_RIME */
-#if PACKETBUF_WITH_PACKET_TYPE
 			packetbuf_attr(PACKETBUF_ATTR_PACKET_TYPE) ==
-			PACKETBUF_ATTR_PACKET_TYPE_STREAM ||
-#endif
-      0)) {
+			PACKETBUF_ATTR_PACKET_TYPE_STREAM)) {
     on(); /* Wait for ACK packet */
     waiting_for_packet = 1;
   } else {

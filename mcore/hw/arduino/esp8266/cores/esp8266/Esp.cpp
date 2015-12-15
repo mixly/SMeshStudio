@@ -1,8 +1,8 @@
-/* 
+/*
  Esp.cpp - ESP8266-specific APIs
  Copyright (c) 2015 Ivan Grokhotkov. All rights reserved.
  This file is part of the esp8266 core for Arduino environment.
- 
+
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
  License as published by the Free Software Foundation; either
@@ -22,6 +22,7 @@
 #include "flash_utils.h"
 #include "eboot_command.h"
 #include <memory>
+#include "interrupts.h"
 
 extern "C" {
 #include "user_interface.h"
@@ -32,7 +33,7 @@ extern struct rst_info resetInfo;
 
 //#define DEBUG_SERIAL Serial
 
-    
+
 /**
  * User-defined Literals
  *  usage:
@@ -92,23 +93,25 @@ void EspClass::wdtEnable(WDTO_t timeout_ms)
 
 void EspClass::wdtDisable(void)
 {
-    /// Please don’t stop software watchdog too long (less than 6 seconds),
+    /// Please don't stop software watchdog too long (less than 6 seconds),
     /// otherwise it will trigger hardware watchdog reset.
     system_soft_wdt_stop();
 }
 
 void EspClass::wdtFeed(void)
 {
-
-}
-
-void EspClass::deepSleep(uint32_t time_us, WakeMode mode)
-{
-	system_deep_sleep_set_option(static_cast<int>(mode));
- 	system_deep_sleep(time_us);
+    system_soft_wdt_feed();
 }
 
 extern "C" void esp_yield();
+
+void EspClass::deepSleep(uint32_t time_us, WakeMode mode)
+{
+    system_deep_sleep_set_option(static_cast<int>(mode));
+    system_deep_sleep(time_us);
+    esp_yield();
+}
+
 extern "C" void __real_system_restart_local();
 void EspClass::reset(void)
 {
@@ -119,13 +122,11 @@ void EspClass::restart(void)
 {
     system_restart();
     esp_yield();
-    // todo: provide an alternative code path if this was called
-    // from system context, not from continuation
-    // (implement esp_is_cont_ctx()?)
 }
 
 uint16_t EspClass::getVcc(void)
 {
+    InterruptLock lock;
     return system_get_vdd33();
 }
 
@@ -279,6 +280,18 @@ uint32_t EspClass::getFlashChipSizeByChipId(void) {
             return (2_MB);
         case 0x1440EF: // W25Q80
             return (1_MB);
+        case 0x1340EF: // W25Q40
+            return (512_kB);
+
+        // BergMicro
+        case 0x1640E0: // BG25Q32
+            return (4_MB);
+        case 0x1540E0: // BG25Q16
+            return (2_MB);
+        case 0x1440E0: // BG25Q80
+            return (1_MB);
+        case 0x1340E0: // BG25Q40
+            return (512_kB);
 
         default:
             return 0;
@@ -288,7 +301,7 @@ uint32_t EspClass::getFlashChipSizeByChipId(void) {
 String EspClass::getResetInfo(void) {
     if(resetInfo.reason != 0) {
         char buff[200];
-        sprintf(&buff[0], "Fatal exception:%d flag:%d (%s) epc1:0x%08x epc2:0x%08x epc3:0x%08x excvaddr:0x%08x depc:0x%08x", resetInfo.exccause, resetInfo.reason, (resetInfo.reason == 0 ? "DEFAULT" : resetInfo.reason == 1 ? "WDT" : resetInfo.reason == 2 ? "EXCEPTION" : resetInfo.reason == 3 ? "SOFT_WDT" : resetInfo.reason == 4 ? "SOFT_RESTART" : resetInfo.reason == 5 ? "DEEP_SLEEP_AWAKE" : "???"), resetInfo.epc1, resetInfo.epc2, resetInfo.epc3, resetInfo.excvaddr, resetInfo.depc);
+        sprintf(&buff[0], "Fatal exception:%d flag:%d (%s) epc1:0x%08x epc2:0x%08x epc3:0x%08x excvaddr:0x%08x depc:0x%08x", resetInfo.exccause, resetInfo.reason, (resetInfo.reason == 0 ? "DEFAULT" : resetInfo.reason == 1 ? "WDT" : resetInfo.reason == 2 ? "EXCEPTION" : resetInfo.reason == 3 ? "SOFT_WDT" : resetInfo.reason == 4 ? "SOFT_RESTART" : resetInfo.reason == 5 ? "DEEP_SLEEP_AWAKE" : resetInfo.reason == 6 ? "EXT_SYS_RST" : "???"), resetInfo.epc1, resetInfo.epc2, resetInfo.epc3, resetInfo.excvaddr, resetInfo.depc);
         return String(buff);
     }
     return String("flag: 0");
@@ -333,7 +346,7 @@ uint32_t EspClass::getSketchSize() {
     DEBUG_SERIAL.printf("num_segments=%u\r\n", image_header.num_segments);
 #endif
     for (uint32_t section_index = 0;
-        section_index < image_header.num_segments; 
+        section_index < image_header.num_segments;
         ++section_index)
     {
         section_header_t section_header = {0};
@@ -395,8 +408,30 @@ bool EspClass::updateSketch(Stream& in, uint32_t size, bool restartOnFail, bool 
 
 #ifdef DEBUG_SERIAL
     DEBUG_SERIAL.println("Update SUCCESS");
-#endif  
+#endif
     if(restartOnSuccess) ESP.restart();
     return true;
 }
 
+static const int FLASH_INT_MASK = ((B10 << 8) | B00111010);
+
+bool EspClass::flashEraseSector(uint32_t sector) {
+    ets_isr_mask(FLASH_INT_MASK);
+    int rc = spi_flash_erase_sector(sector);
+    ets_isr_unmask(FLASH_INT_MASK);
+    return rc == 0;
+}
+
+bool EspClass::flashWrite(uint32_t offset, uint32_t *data, size_t size) {
+    ets_isr_mask(FLASH_INT_MASK);
+    int rc = spi_flash_write(offset, (uint32_t*) data, size);
+    ets_isr_unmask(FLASH_INT_MASK);
+    return rc == 0;
+}
+
+bool EspClass::flashRead(uint32_t offset, uint32_t *data, size_t size) {
+    ets_isr_mask(FLASH_INT_MASK);
+    int rc = spi_flash_read(offset, (uint32_t*) data, size);
+    ets_isr_unmask(FLASH_INT_MASK);
+    return rc == 0;
+}

@@ -72,7 +72,7 @@
 #include <avr/interrupt.h>
 
 /* Two tick counters avoid a software divide when CLOCK_SECOND is not a power of two. */
-#if CLOCK_SECOND & (CLOCK_SECOND - 1)
+#if CLOCK_SECOND && (CLOCK_SECOND - 1)
 #define TWO_COUNTERS 1
 #endif
 
@@ -160,7 +160,7 @@ clock_set_seconds(unsigned long sec)
   seconds = sec;
 }
 /*---------------------------------------------------------------------------*/
-/*
+/**
  * Wait for a number of clock ticks.
  */
 void
@@ -176,7 +176,7 @@ clock_wait(clock_time_t t)
   }
 }
 /*---------------------------------------------------------------------------*/
-/*
+/**
  * Delay the CPU for up to 65535*(4000000/F_CPU) microseconds.
  * Copied from _delay_loop_2 in AVR library delay_basic.h, 4 clocks per loop.
  * For accurate short delays, inline _delay_loop_2 in the caller, use a constant
@@ -194,47 +194,47 @@ my_delay_loop_2(uint16_t __count)
   );
 }
 void
-clock_delay_usec(uint16_t dt)
+clock_delay_usec(uint16_t howlong)
 {
 #if 0
 /* Accurate delay at any frequency, but introduces a 64 bit intermediate
   * and has a 279 clock overhead.
  */
-  if(dt<=(uint16_t)(279000000UL/F_CPU)) return;
-  dt-=(uint16_t) (279000000UL/F_CPU);
-  my_delay_loop_2(((uint64_t)(dt) * (uint64_t) F_CPU) / 4000000ULL);
+  if(howlong<=(uint16_t)(279000000UL/F_CPU)) return;
+  howlong-=(uint16_t) (279000000UL/F_CPU);
+  my_delay_loop_2(((uint64_t)(howlong) * (uint64_t) F_CPU) / 4000000ULL);
   /* Remaining numbers tweaked for the breakpoint CPU frequencies */
   /* Add other frequencies as necessary */
 #elif F_CPU>=16000000UL
-  if(dt<1) return;
-  my_delay_loop_2((dt*(uint16_t)(F_CPU/3250000)));
+  if(howlong<1) return;
+  my_delay_loop_2((howlong*(uint16_t)(F_CPU/3250000)));
 #elif F_CPU >= 12000000UL
-  if(dt<2) return;
-  dt-=(uint16_t) (3*12000000/F_CPU);
-  my_delay_loop_2((dt*(uint16_t)(F_CPU/3250000)));
+  if(howlong<2) return;
+  howlong-=(uint16_t) (3*12000000/F_CPU);
+  my_delay_loop_2((howlong*(uint16_t)(F_CPU/3250000)));
 #elif F_CPU >= 8000000UL
-  if(dt<4) return;
-  dt-=(uint16_t) (3*8000000/F_CPU);
-  my_delay_loop_2((dt*(uint16_t)(F_CPU/2000000))/2);
+  if(howlong<4) return;
+  howlong-=(uint16_t) (3*8000000/F_CPU);
+  my_delay_loop_2((howlong*(uint16_t)(F_CPU/2000000))/2);
 #elif F_CPU >= 4000000UL
-  if(dt<5) return;
-  dt-=(uint16_t) (4*4000000/F_CPU);
-  my_delay_loop_2((dt*(uint16_t)(F_CPU/2000000))/2);
+  if(howlong<5) return;
+  howlong-=(uint16_t) (4*4000000/F_CPU);
+  my_delay_loop_2((howlong*(uint16_t)(F_CPU/2000000))/2);
 #elif F_CPU >= 2000000UL
-  if(dt<11) return;
-  dt-=(uint16_t) (10*2000000/F_CPU);
-  my_delay_loop_2((dt*(uint16_t)(F_CPU/1000000))/4);
+  if(howlong<11) return;
+  howlong-=(uint16_t) (10*2000000/F_CPU);
+  my_delay_loop_2((howlong*(uint16_t)(F_CPU/1000000))/4);
 #elif F_CPU >= 1000000UL
-  if(dt<=17) return;
-  dt-=(uint16_t) (17*1000000/F_CPU);
-  my_delay_loop_2((dt*(uint16_t)(F_CPU/1000000))/4);
+  if(howlong<=17) return;
+  howlong-=(uint16_t) (17*1000000/F_CPU);
+  my_delay_loop_2((howlong*(uint16_t)(F_CPU/1000000))/4);
 #else
-  dt >> 5;
-  if (dt < 1) return;
-  my_delay_loop_2(dt);
+  howlong >> 5;
+  if (howlong < 1) return;
+  my_delay_loop_2(howlong);
 #endif
 }
-#if 0
+#if 1
 /*---------------------------------------------------------------------------*/
 /**
  * Legacy delay. The original clock_delay for the msp430 used a granularity
@@ -251,7 +251,7 @@ clock_delay(unsigned int howlong)
 /*---------------------------------------------------------------------------*/
 /**
  * Delay up to 65535 milliseconds.
- * \param howlong   How many milliseconds to delay.
+ * \param dt   How many milliseconds to delay.
  *
  * Neither interrupts nor the watchdog timer is disabled over the delay.
  * Platforms are not required to implement this call.
@@ -280,7 +280,7 @@ clock_delay_msec(uint16_t howlong)
 /*---------------------------------------------------------------------------*/
 /**
  * Adjust the system current clock time.
- * \param howmany   How many ticks to add
+ * \param dt   How many ticks to add
  *
  * Typically used to add ticks after an MCU sleep
  * clock_seconds will increment if necessary to reflect the tick addition.

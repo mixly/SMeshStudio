@@ -31,9 +31,10 @@ extern "C" {
 #include "IPAddress.h"
 #include "WiFiClient.h"
 #include "WiFiServer.h"
+#include "WiFiClientSecure.h"
 
 #define WIFI_SCAN_RUNNING   (-1)
-#define WIFI_SCAN_FAILD     (-2)
+#define WIFI_SCAN_FAILED     (-2)
 
 enum WiFiMode { WIFI_OFF = 0, WIFI_STA = 1, WIFI_AP = 2, WIFI_AP_STA = 3 };
 
@@ -43,8 +44,11 @@ public:
 
     ESP8266WiFiClass();
 
+    void persistent(bool persistent);
+
     void mode(WiFiMode);
-        
+    WiFiMode getMode();
+
     /**
      * Start Wifi connection
      * if passphrase is set the most secure supported mode will be automatically selected
@@ -54,8 +58,11 @@ public:
      * @param channel                   Optional. Channel of AP
      * @return
      */
-    int begin(const char* ssid, const char *passphrase = NULL, int32_t channel = 0, uint8_t bssid[6] = NULL);
-    int begin(char* ssid, char *passphrase = NULL, int32_t channel = 0, uint8_t bssid[6] = NULL);
+    int begin(const char* ssid, const char *passphrase = NULL, int32_t channel = 0, const uint8_t* bssid = NULL);
+    int begin(char* ssid, char *passphrase = NULL, int32_t channel = 0, const uint8_t* bssid = NULL);
+
+    // Use sdk config to connect.
+    int begin();
 
 
    /* Wait for Wifi connection to reach a result
@@ -95,7 +102,7 @@ public:
 		* param dns: 		Defined DNS
         */
     void config(IPAddress local_ip, IPAddress gateway, IPAddress subnet, IPAddress dns);
-	
+
     /* Configure access point
      *
      * param local_ip: access point IP
@@ -103,6 +110,13 @@ public:
      * param subnet: subnet mask
      */
     void softAPConfig(IPAddress local_ip, IPAddress gateway, IPAddress subnet);
+
+    /*
+      * Disconnect from the network (close AP)
+      *
+      * return: one value of wl_status_t enum
+      */
+    int softAPdisconnect(bool wifioff = false);
 
     /*
      * Disconnect from the network
@@ -158,18 +172,32 @@ public:
    IPAddress gatewayIP();
 
     /*
+     * Get the DNS ip address.
+     *
+     * return: DNS ip address value
+     */
+   IPAddress dnsIP(int dns_no = 0);
+
+    /*
      * Return the current SSID associated with the network
      *
      * return: ssid string
      */
-    char* SSID();
+    String SSID() const;
+
+    /*
+     * Return the current pre shared key associated with the network
+     *
+     * return: psk string
+     */
+    String psk() const;
 
     /*
      * Return the current bssid / mac associated with the network if configured
      *
      * return: bssid uint8_t *
      */
-    uint8_t * BSSID(void);
+    uint8_t *BSSID(void);
 
     /*
      * Return the current bssid / mac associated with the network if configured
@@ -221,7 +249,7 @@ public:
 	 *
      * return: ssid string of the specified item on the networks scanned list
      */
-    const char*	SSID(uint8_t networkItem);
+    String SSID(uint8_t networkItem);
 
     /*
      * Return the encryption type of the networks discovered during the scanNetworks
@@ -329,25 +357,26 @@ public:
     /*
      * Start SmartConfig
      *
-     */ 
+     */
     void beginSmartConfig();
-    
+
     /*
      * Query SmartConfig status, to decide when stop config
      *
-     */    
+     */
     bool smartConfigDone();
 
     /*
      * Stop SmartConfig
      *
-     */ 
+     */
     void stopSmartConfig();
 
     friend class WiFiClient;
     friend class WiFiServer;
 
 protected:
+    void _mode(WiFiMode);
     static void _scanDone(void* result, int status);
     void * _getScanInfoByIndex(int i);
     static void _smartConfigCallback(uint32_t status, void* result);
@@ -358,7 +387,8 @@ protected:
     bool _useApMode;
     bool _useClientMode;
 	bool _useStaticIp;
-	
+    bool _persistent;
+
 	static bool _scanAsync;
 	static bool _scanStarted;
 	static bool _scanComplete;

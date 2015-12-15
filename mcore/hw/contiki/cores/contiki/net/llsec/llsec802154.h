@@ -43,7 +43,7 @@
  */
 
 /**
- * \defgroup llsec802154 Link Layer Security Common Functionality
+ * \defgroup llsec802154
  * 
  * Common functionality of 802.15.4-compliant llsec_drivers.
  * 

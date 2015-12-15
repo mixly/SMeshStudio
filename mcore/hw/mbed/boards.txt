@@ -383,6 +383,44 @@ mbed_f446re_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-
 mbed_f446re_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
 mbed_f446re_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
 ###################################################################################################################
+mbed_l476rg_gcc_arm.name= ST Nucleo L476RG mbed boards  by gcc_arm and upload by copy
+mbed_l476rg_gcc_arm.upload.protocol=copy
+mbed_l476rg_gcc_arm.upload.tool=mbed_cp
+mbed_l476rg_gcc_arm.build.mcu=cortex-m4
+mbed_l476rg_gcc_arm.build.cpu=STM32L476RGT6  
+
+mbed_l476rg_gcc_arm.build.architecture=arm-none-eabi
+mbed_l476rg_gcc_arm.build.command.as=arm-none-eabi-as
+mbed_l476rg_gcc_arm.build.command.gcc=arm-none-eabi-gcc
+mbed_l476rg_gcc_arm.build.command.g++=arm-none-eabi-g++
+mbed_l476rg_gcc_arm.build.command.ar=arm-none-eabi-ar
+mbed_l476rg_gcc_arm.build.command.objcopy=arm-none-eabi-objcopy
+mbed_l476rg_gcc_arm.build.command.objdump=arm-none-eabi-objdump
+mbed_l476rg_gcc_arm.build.command.size=arm-none-eabi-size
+
+mbed_l476rg_gcc_arm.build.core=mbed
+mbed_l476rg_gcc_arm.build.variant=mbed_l476rg_gcc_arm
+
+mbed_l476rg_gcc_arm.build.CC_FLAGS= -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16  -mfloat-abi=hard -c -g -fno-common -fmessage-length=0 -Wall -Wextra -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer -MMD -MP -DNDEBUG -Os
+mbed_l476rg_gcc_arm.build.ONLY_C_FLAGS= -std=gnu99
+mbed_l476rg_gcc_arm.build.ONLY_CPP_FLAGS= -std=gnu++98 -fno-rtti
+mbed_l476rg_gcc_arm.build.CC_SYMBOLS= -DTARGET_NUCLEO_L476RG -DTARGET_FF_ARDUINO -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -DTARGET_FF_MORPHO -DTARGET_CORTEX_M -D__FPU_PRESENT=1 -D__MBED__=1 -DTARGET_STM32L476RG -DTARGET_M4 -DTARGET_STM -DTARGET_STM32L4 -DMBED_BUILD_TIMESTAMP=1450171944.31 -D__CORTEX_M4 -DARM_MATH_CM4  
+mbed_l476rg_gcc_arm.build.LD_FLAGS = -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float -Wl,--wrap,main  -Wl,-Map={build.project_name}.map,--cref
+mbed_l476rg_gcc_arm.build.LD_SYS_LIBS =-lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+
+mbed_l476rg_gcc_arm.build.ldscript=hw/mbed/variants/mbed_l476rg_gcc_arm/cmsis/TARGET_STM/TARGET_STM32L4/TARGET_NUCLEO_l476RG/TOOLCHAIN_GCC_ARM/STM32L476XX.ld
+
+mbed_l476rg_gcc_arm.build.use_archiver=false
+mbed_l476rg_gcc_arm.recipe.S.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_l476rg_gcc_arm.recipe.c.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_C_FLAGS}   {includes} "{source_file}" -o "{object_file}"
+mbed_l476rg_gcc_arm.recipe.cpp.o.pattern="{compiler.gcc_arm.path}arm-none-eabi-g++" {build.CC_FLAGS} {build.CC_SYMBOLS} {build.ONLY_CPP_FLAGS} {includes} "{source_file}" -o "{object_file}"
+mbed_l476rg_gcc_arm.recipe.ar.pattern="{compiler.gcc_arm.path}arm-none-eabi-ar" -r "{build.path}/{archive_file}" {object_file} 
+mbed_l476rg_gcc_arm.recipe.c.combine.pattern="{compiler.gcc_arm.path}arm-none-eabi-gcc" {build.LD_FLAGS}  "-T{runtime.ide.path}/{build.ldscript}" -o "{build.path}/{build.project_name}.elf" {object_files} -L"{build.path}" -L"{runtime.ide.path}/hw/mbed/variants/mbed_l476rg_gcc_arm/cmsis/TARGET_STM/TARGET_STM32L4/TARGET_NUCLEO_L476RG/TOOLCHAIN_GCC_ARM" {build.LD_SYS_LIBS}
+mbed_l476rg_gcc_arm.recipe.objcopy.bin.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Obinary "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+mbed_l476rg_gcc_arm.recipe.objcopy.hex.pattern="{compiler.gcc_arm.path}arm-none-eabi-objcopy"  -Oihex "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+mbed_l476rg_gcc_arm.recipe.size.pattern="{compiler.gcc_arm.path}arm-none-eabi-size" -A "{build.path}/{build.project_name}.elf"
+
+###################################################################################################################
 mbed_f334r8_gcc_arm.name=ST Nucleo F334R8 mbed boards  by gcc_arm and upload by copy
 mbed_f334r8_gcc_arm.upload.protocol=copy
 mbed_f334r8_gcc_arm.upload.tool=mbed_cp

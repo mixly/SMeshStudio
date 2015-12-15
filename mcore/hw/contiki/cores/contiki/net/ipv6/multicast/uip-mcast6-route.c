@@ -29,15 +29,11 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 /**
- * \addtogroup uip6-multicast
- * @{
- */
-/**
  * \file
- *    Multicast routing table manipulation
+ *     Multicast routing table manipulation
  *
  * \author
- *    George Oikonomou - <oikonomou@users.sourceforge.net>
+ *     George Oikonomou - <oikonomou@users.sourceforge.net>
  */
 
 #include "contiki.h"
@@ -132,4 +128,3 @@ uip_mcast6_route_init()
   list_init(mcast_route_list);
 }
 /*---------------------------------------------------------------------------*/
-/** @} */

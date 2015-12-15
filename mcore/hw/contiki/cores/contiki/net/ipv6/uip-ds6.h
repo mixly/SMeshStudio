@@ -5,7 +5,7 @@
 
 /**
  * \file
- *    Header file for IPv6-related data structures
+ *         Network interface and stateless autoconfiguration (RFC 4862)
  * \author Mathilde Durvy <mdurvy@cisco.com>
  * \author Julien Abeille <jabeille@cisco.com>
  *

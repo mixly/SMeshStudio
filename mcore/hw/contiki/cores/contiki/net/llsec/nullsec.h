@@ -43,7 +43,7 @@
  */
 
 /**
- * \defgroup nullsec LLSEC driver with zero security (NULLSEC)
+ * \defgroup nullsec
  * 
  * Insecure link layer security driver.
  * 

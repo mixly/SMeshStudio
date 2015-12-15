@@ -56,7 +56,7 @@
  * reliable single-hop primitive for the communication between two
  * single-hop neighbors.
  *
- * \section rmh-channels Channels
+ * \section channels Channels
  *
  * The rmh module uses 1 channel.
  *

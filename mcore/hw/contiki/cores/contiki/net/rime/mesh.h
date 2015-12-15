@@ -50,7 +50,7 @@
  * receiver somewhere in the network.
  *
  *
- * \section mesh-channels Channels
+ * \section channels Channels
  *
  * The mesh module uses 3 channel; one for the multi-hop forwarding
  * (\ref rimemultihop "multihop") and two for the route disovery (\ref

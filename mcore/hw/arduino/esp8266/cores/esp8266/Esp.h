@@ -1,8 +1,8 @@
-/* 
+/*
  Esp.h - ESP8266-specific APIs
  Copyright (c) 2015 Ivan Grokhotkov. All rights reserved.
  This file is part of the esp8266 core for Arduino environment.
- 
+
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
  License as published by the Free Software Foundation; either
@@ -20,6 +20,9 @@
 
 #ifndef ESP_H
 #define ESP_H
+
+#include <Arduino.h>
+
 /**
  * AVR macros for WDT managment
  */
@@ -68,7 +71,7 @@ enum ADCMode {
     ADC_VDD = 255
 };
 
-#define ADC_MODE(mode) extern "C" int __get_adc_mode() { return (int) (mode); }
+#define ADC_MODE(mode) extern "C" int __get_adc_mode(void) { return (int) (mode); }
 
 typedef enum {
      FM_QIO = 0x00,
@@ -113,6 +116,10 @@ class EspClass {
         uint32_t getFlashChipSpeed();
         FlashMode_t getFlashChipMode();
         uint32_t getFlashChipSizeByChipId();
+
+        bool flashEraseSector(uint32_t sector);
+        bool flashWrite(uint32_t offset, uint32_t *data, size_t size);
+        bool flashRead(uint32_t offset, uint32_t *data, size_t size);
 
         uint32_t getSketchSize();
         uint32_t getFreeSketchSpace();

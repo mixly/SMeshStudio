@@ -8,17 +8,18 @@
 #ifndef SPIFFS_CONFIG_H_
 #define SPIFFS_CONFIG_H_
 
-#include "mem.h"
+#include <stddef.h>
+#include <stdint.h>
+#include <string.h>
 #include "c_types.h"
-#include "stddef.h"
-#include "osapi.h"
 #include "ets_sys.h"
 
-#define c_memcpy os_memcpy
-#define c_printf os_printf
-#define c_memset os_memset
 
-typedef signed short file_t;
+#define c_memcpy memcpy
+#define c_printf ets_printf
+#define c_memset memset
+
+typedef int16_t file_t;
 typedef int32_t s32_t;
 typedef uint32_t u32_t;
 typedef int16_t s16_t;
@@ -45,27 +46,27 @@ typedef uint8_t u8_t;
 // compile time switches
 
 // Set generic spiffs debug output call.
-#ifndef SPIFFS_DGB
-#define SPIFFS_DBG(...) //c_printf(__VA_ARGS__)
+#ifndef SPIFFS_DBG
+#define SPIFFS_DBG(...) //printf(__VA_ARGS__)
 #endif
 // Set spiffs debug output call for garbage collecting.
-#ifndef SPIFFS_GC_DGB
-#define SPIFFS_GC_DBG(...) //c_printf(__VA_ARGS__)
+#ifndef SPIFFS_GC_DBG
+#define SPIFFS_GC_DBG(...) //printf(__VA_ARGS__)
 #endif
 // Set spiffs debug output call for caching.
-#ifndef SPIFFS_CACHE_DGB
-#define SPIFFS_CACHE_DBG(...) //c_printf(__VA_ARGS__)
+#ifndef SPIFFS_CACHE_DBG
+#define SPIFFS_CACHE_DBG(...) //printf(__VA_ARGS__)
 #endif
 // Set spiffs debug output call for system consistency checks.
-#ifndef SPIFFS_CHECK_DGB
-#define SPIFFS_CHECK_DBG(...) //c_printf(__VA_ARGS__)
+#ifndef SPIFFS_CHECK_DBG
+#define SPIFFS_CHECK_DBG(...) //printf(__VA_ARGS__)
 #endif
 
 // Enable/disable API functions to determine exact number of bytes
 // for filedescriptor and cache buffers. Once decided for a configuration,
 // this can be disabled to reduce flash.
 #ifndef SPIFFS_BUFFER_HELP
-#define SPIFFS_BUFFER_HELP              0
+#define SPIFFS_BUFFER_HELP              1
 #endif
 
 // Enables/disable memory read caching of nucleus file system operations.
@@ -140,7 +141,7 @@ typedef uint8_t u8_t;
 // not on mount point. If not, SPIFFS_format must be called prior to mounting
 // again.
 #ifndef SPIFFS_USE_MAGIC
-#define SPIFFS_USE_MAGIC                (0)
+#define SPIFFS_USE_MAGIC                (1)
 #endif
 
 // SPIFFS_LOCK and SPIFFS_UNLOCK protects spiffs from reentrancy on api level
@@ -186,6 +187,21 @@ typedef uint8_t u8_t;
 // Enable this if your target needs aligned data for index tables
 #ifndef SPIFFS_ALIGNED_OBJECT_INDEX_TABLES
 #define SPIFFS_ALIGNED_OBJECT_INDEX_TABLES       1
+#endif
+
+// Enable this if you want the HAL callbacks to be called with the spiffs struct
+#ifndef SPIFFS_HAL_CALLBACK_EXTRA
+#define SPIFFS_HAL_CALLBACK_EXTRA         0
+#endif
+
+// Enable this if you want to add an integer offset to all file handles
+// (spiffs_file). This is useful if running multiple instances of spiffs on
+// same target, in order to recognise to what spiffs instance a file handle
+// belongs.
+// NB: This adds config field fh_ix_offset in the configuration struct when
+// mounting, which must be defined.
+#ifndef SPIFFS_FILEHDL_OFFSET
+#define SPIFFS_FILEHDL_OFFSET                 0
 #endif
 
 // Set SPIFFS_TEST_VISUALISATION to non-zero to enable SPIFFS_vis function

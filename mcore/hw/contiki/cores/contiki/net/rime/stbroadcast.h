@@ -51,7 +51,7 @@
  * either the message is canceled or a new message is sent. Messages
  * sent with the stbroadcast module are not identified with a sender ID.
  *
- * \section stbroadcast-channels Channels
+ * \section channels Channels
  *
  * The stbroadcast module uses 1 channel.
  *

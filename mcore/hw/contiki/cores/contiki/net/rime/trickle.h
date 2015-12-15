@@ -48,7 +48,7 @@
  *
  * The trickle module sends a single packet to all nodes on the network.
  *
- * \section trickle-channels Channels
+ * \section channels Channels
  *
  * The trickle module uses 1 channel.
  *

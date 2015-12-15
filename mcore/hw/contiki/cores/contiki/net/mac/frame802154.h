@@ -44,7 +44,7 @@
 */
 
 /**
- *    \addtogroup net
+ *    \addtogroup net 802.15.4 frame creation and parsing
  *    @{
  */
 

@@ -49,7 +49,7 @@
  * The rudolph1 module implements a multi-hop reliable bulk data
  * transfer mechanism.
  *
- * \section rudolph1-channels Channels
+ * \section channels Channels
  *
  * The rudolph1 module uses 2 channels; one for data transmissions and
  * one for NACKs and repair packets.

@@ -28,15 +28,11 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 /**
- * \addtogroup uip6-multicast
- * @{
- */
-/**
  * \file
- *     Header file for IPv6 multicast forwarding stats maintenance
+ *         Header file for IPv6 multicast forwarding stats maintenance
  *
  * \author
- *     George Oikonomou - <oikonomou@users.sourceforge.net>
+ *         George Oikonomou - <oikonomou@users.sourceforge.net>
  */
 #ifndef UIP_MCAST6_STATS_H_
 #define UIP_MCAST6_STATS_H_
@@ -60,35 +56,15 @@
 /*---------------------------------------------------------------------------*/
 /* Stats datatype */
 /*---------------------------------------------------------------------------*/
-/**
- * \brief A data structure used to maintain multicast stats
- *
- * Each engine can extend this structure via the engine_stats field
- */
 typedef struct uip_mcast6_stats {
-  /** Count of unique datagrams received */
   UIP_MCAST6_STATS_DATATYPE mcast_in_unique;
-
-  /** Count of all datagrams received */
-  UIP_MCAST6_STATS_DATATYPE mcast_in_all;
-
-  /** Count of datagrams received for a group that we have joined */
-  UIP_MCAST6_STATS_DATATYPE mcast_in_ours;
-
-  /** Count of datagrams forwarded by us but we are not the seed */
-  UIP_MCAST6_STATS_DATATYPE mcast_fwd;
-
-  /** Count of multicast datagrams originated by us */
-  UIP_MCAST6_STATS_DATATYPE mcast_out;
-
-  /** Count of malformed multicast datagrams seen by us */
+  UIP_MCAST6_STATS_DATATYPE mcast_in_all;        /* At layer 3 */
+  UIP_MCAST6_STATS_DATATYPE mcast_in_ours;       /* Unique and we are a group member */
+  UIP_MCAST6_STATS_DATATYPE mcast_fwd;           /* Forwarded by us but we are not the seed */
+  UIP_MCAST6_STATS_DATATYPE mcast_out;           /* We are the seed */
   UIP_MCAST6_STATS_DATATYPE mcast_bad;
-
-  /** Count of multicast datagrams correclty formed but dropped by us */
   UIP_MCAST6_STATS_DATATYPE mcast_dropped;
-
-  /** Opaque pointer to an engine's additional stats */
-  void *engine_stats;
+  void *engine_stats;                            /* Opaque pointer to an engine's additional stats */
 } uip_mcast6_stats_t;
 /*---------------------------------------------------------------------------*/
 /* Access macros */
@@ -113,5 +89,3 @@ extern uip_mcast6_stats_t uip_mcast6_stats;
 void uip_mcast6_stats_init(void *stats);
 /*---------------------------------------------------------------------------*/
 #endif /* UIP_MCAST6_STATS_H_ */
-/*---------------------------------------------------------------------------*/
-/** @} */

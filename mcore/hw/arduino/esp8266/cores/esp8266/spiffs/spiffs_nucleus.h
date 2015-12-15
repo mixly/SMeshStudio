@@ -124,7 +124,7 @@
 #define SPIFFS_EV_IX_NEW                1
 #define SPIFFS_EV_IX_DEL                2
 
-#define SPIFFS_OBJ_ID_IX_FLAG           (1<<(8*sizeof(spiffs_obj_id)-1))
+#define SPIFFS_OBJ_ID_IX_FLAG           ((spiffs_obj_id)(1<<(8*sizeof(spiffs_obj_id)-1)))
 
 #define SPIFFS_UNDEFINED_LEN            (u32_t)(-1)
 
@@ -311,6 +311,26 @@
 // stop searching at end of all look up pages
 #define SPIFFS_VIS_NO_WRAP      (1<<2)
 
+#if SPIFFS_HAL_CALLBACK_EXTRA
+
+#define SPIFFS_HAL_WRITE(_fs, _paddr, _len, _src) \
+  (_fs)->cfg.hal_write_f((_fs), (_paddr), (_len), (_src))
+#define SPIFFS_HAL_READ(_fs, _paddr, _len, _dst) \
+  (_fs)->cfg.hal_read_f((_fs), (_paddr), (_len), (_dst))
+#define SPIFFS_HAL_ERASE(_fs, _paddr, _len) \
+  (_fs)->cfg.hal_erase_f((_fs), (_paddr), (_len))
+
+#else // SPIFFS_HAL_CALLBACK_EXTRA
+
+#define SPIFFS_HAL_WRITE(_fs, _paddr, _len, _src) \
+  (_fs)->cfg.hal_write_f((_paddr), (_len), (_src))
+#define SPIFFS_HAL_READ(_fs, _paddr, _len, _dst) \
+  (_fs)->cfg.hal_read_f((_paddr), (_len), (_dst))
+#define SPIFFS_HAL_ERASE(_fs, _paddr, _len) \
+  (_fs)->cfg.hal_erase_f((_paddr), (_len))
+
+#endif // SPIFFS_HAL_CALLBACK_EXTRA
+
 #if SPIFFS_CACHE
 
 #define SPIFFS_CACHE_FLAG_DIRTY       (1<<0)
@@ -423,7 +443,7 @@ typedef struct __attribute(( packed ))
   // common page header
   spiffs_page_header p_hdr;
   // alignment
-  u8_t _align[4 - (sizeof(spiffs_page_header)&3)==0 ? 4 : (sizeof(spiffs_page_header)&3)];
+  u8_t _align[4 - ((sizeof(spiffs_page_header)&3)==0 ? 4 : (sizeof(spiffs_page_header)&3))];
   // size of object
   u32_t size;
   // type of object
@@ -435,12 +455,12 @@ typedef struct __attribute(( packed ))
 // object index page header
 typedef struct __attribute(( packed )) {
  spiffs_page_header p_hdr;
- u8_t _align[4 - (sizeof(spiffs_page_header)&3)==0 ? 4 : (sizeof(spiffs_page_header)&3)];
+ u8_t _align[4 - ((sizeof(spiffs_page_header)&3)==0 ? 4 : (sizeof(spiffs_page_header)&3))];
 } spiffs_page_object_ix;
 
 // callback func for object lookup visitor
 typedef s32_t (*spiffs_visitor_f)(spiffs *fs, spiffs_obj_id id, spiffs_block_ix bix, int ix_entry,
-    u32_t user_data, void *user_p);
+    const void *user_const_p, void *user_var_p);
 
 
 #if SPIFFS_CACHE
@@ -501,8 +521,8 @@ s32_t spiffs_obj_lu_find_entry_visitor(
     u8_t flags,
     spiffs_obj_id obj_id,
     spiffs_visitor_f v,
-    u32_t user_data,
-    void *user_p,
+    const void *user_const_p,
+    void *user_var_p,
     spiffs_block_ix *block_ix,
     int *lu_entry);
 
@@ -518,7 +538,7 @@ s32_t spiffs_obj_lu_scan(
 s32_t spiffs_obj_lu_find_free_obj_id(
     spiffs *fs,
     spiffs_obj_id *obj_id,
-    u8_t *conflicting_name);
+    const u8_t *conflicting_name);
 
 s32_t spiffs_obj_lu_find_free(
     spiffs *fs,
@@ -579,7 +599,7 @@ s32_t spiffs_page_delete(
 s32_t spiffs_object_create(
     spiffs *fs,
     spiffs_obj_id obj_id,
-    u8_t name[SPIFFS_OBJ_NAME_LEN],
+    const u8_t name[SPIFFS_OBJ_NAME_LEN],
     spiffs_obj_type type,
     spiffs_page_ix *objix_hdr_pix);
 
@@ -589,7 +609,7 @@ s32_t spiffs_object_update_index_hdr(
     spiffs_obj_id obj_id,
     spiffs_page_ix objix_hdr_pix,
     u8_t *new_objix_hdr_data,
-    u8_t name[SPIFFS_OBJ_NAME_LEN],
+    const u8_t name[SPIFFS_OBJ_NAME_LEN],
     u32_t size,
     spiffs_page_ix *new_pix);
 
@@ -641,7 +661,7 @@ s32_t spiffs_object_truncate(
 
 s32_t spiffs_object_find_object_index_header_by_name(
     spiffs *fs,
-    u8_t name[SPIFFS_OBJ_NAME_LEN],
+    const u8_t name[SPIFFS_OBJ_NAME_LEN],
     spiffs_page_ix *pix);
 
 // ---------------
@@ -665,7 +685,7 @@ s32_t spiffs_gc_clean(
     spiffs_block_ix bix);
 
 s32_t spiffs_gc_quick(
-    spiffs *fs);
+    spiffs *fs, u16_t max_free_pages);
 
 // ---------------
 

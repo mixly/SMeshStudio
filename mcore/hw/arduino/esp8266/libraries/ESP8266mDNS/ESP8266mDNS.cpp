@@ -36,7 +36,7 @@ License (MIT license):
 
 #include "ESP8266mDNS.h"
 #include <functional>
-  
+
 #include "debug.h"
 
 extern "C" {
@@ -85,31 +85,29 @@ static const IPAddress MDNS_MULTICAST_ADDR(224, 0, 0, 251);
 static const int MDNS_MULTICAST_TTL = 1;
 static const int MDNS_PORT = 5353;
 
-MDNSResponder::MDNSResponder() : _conn(0) { _services = 0; }
+MDNSResponder::MDNSResponder() : _conn(0) { _services = 0; _arduinoAuth = false; }
 MDNSResponder::~MDNSResponder() {}
 
-bool MDNSResponder::begin(const char* domain){ 
+bool MDNSResponder::begin(const char* domain){
   // Open the MDNS socket if it isn't already open.
-  
+
   size_t n = strlen(domain);
   if (n > 255) { // Can only handle domains that are 255 chars in length.
     return false;
   }
-  
+
   // Copy in domain characters as lowercase
-  for (int i = 0; i < n; ++i)
+  for (size_t i = 0; i < n; ++i)
     _hostName[i] = tolower(domain[i]);
   _hostName[n] = '\0';
-  
-  os_strcpy(_boardName, ARDUINO_BOARD);
-  
+
   // Open the MDNS socket if it isn't already open.
   if (!_conn) {
     uint32_t ourIp = _getOurIp();
     if(ourIp == 0){
       return false;
     }
-    
+
     ip_addr_t ifaddr;
     ifaddr.addr = ourIp;
     ip_addr_t multicast_addr;
@@ -134,8 +132,8 @@ bool MDNSResponder::begin(const char* domain){
 }
 
 void MDNSResponder::update() {
-  if (!_conn->next()) {
-    return; 
+  if (!_conn || !_conn->next()) {
+    return;
   }
   _parsePacket();
 }
@@ -163,15 +161,21 @@ uint16_t MDNSResponder::_getServicePort(char *name, char *proto){
 }
 
 uint32_t MDNSResponder::_getOurIp(){
-  if(wifi_get_opmode() & STATION_MODE){
+  int mode = wifi_get_opmode();
+  if(mode & STATION_MODE){
     struct ip_info staIpInfo;
     wifi_get_ip_info(STATION_IF, &staIpInfo);
     return staIpInfo.ip.addr;
-  }
+  } else if (mode & SOFTAP_MODE) {
+    struct ip_info staIpInfo;
+    wifi_get_ip_info(SOFTAP_IF, &staIpInfo);
+    return staIpInfo.ip.addr;
+  } else {
 #ifdef MDNS_DEBUG_ERR
     os_printf("ERR_NO_LOCAL_IP\n");
 #endif
-  return 0;
+    return 0;
+  }
 }
 
 void MDNSResponder::_parsePacket(){
@@ -180,39 +184,39 @@ void MDNSResponder::_parsePacket(){
   bool serviceParsed = false;
   bool protoParsed = false;
   bool localParsed = false;
-  
+
   char hostName[255];
   uint8_t hostNameLen;
-  
+
   char serviceName[32];
   uint8_t serviceNameLen;
-  uint16_t servicePort;
-  
+  uint16_t servicePort = 0;
+
   char protoName[32];
   uint8_t protoNameLen;
-  
+
   uint16_t packetHeader[6];
-  
+
   for(i=0; i<6; i++) packetHeader[i] = _conn_read16();
 
   if((packetHeader[1] & 0x8000) != 0){ //not parsing responses yet
     _conn->flush();
     return;
   }
-  
+
   // PARSE REQUEST NAME
-  
+
   hostNameLen = _conn_read8();
   _conn_readS(hostName, hostNameLen);
   hostName[hostNameLen] = '\0';
-  
+
   if(hostName[0] == '_'){
     serviceParsed = true;
     memcpy(serviceName, hostName+1, hostNameLen);
     serviceNameLen = hostNameLen-1;
     hostNameLen = 0;
   }
-  
+
   if(hostNameLen > 0 && strcmp(_hostName, hostName) != 0){
 #ifdef MDNS_DEBUG_ERR
     os_printf("ERR_NO_HOST: %s\n", hostName);
@@ -220,12 +224,12 @@ void MDNSResponder::_parsePacket(){
     _conn->flush();
     return;
   }
-  
+
   if(!serviceParsed){
     serviceNameLen = _conn_read8();
     _conn_readS(serviceName, serviceNameLen);
     serviceName[serviceNameLen] = '\0';
-    
+
     if(serviceName[0] == '_'){
       memcpy(serviceName, serviceName+1, serviceNameLen);
       serviceNameLen--;
@@ -253,7 +257,7 @@ void MDNSResponder::_parsePacket(){
       return;
     }
   }
-  
+
   if(!protoParsed){
     protoNameLen = _conn_read8();
     _conn_readS(protoName, protoNameLen);
@@ -270,7 +274,7 @@ void MDNSResponder::_parsePacket(){
       return;
     }
   }
-  
+
   if(!localParsed){
     char localName[32];
     uint8_t localNameLen = _conn_read8();
@@ -287,7 +291,7 @@ void MDNSResponder::_parsePacket(){
       return;
     }
   }
-  
+
   if(serviceNameLen > 0 && protoNameLen > 0){
     servicePort = _getServicePort(serviceName, protoName);
     if(servicePort == 0){
@@ -304,16 +308,16 @@ void MDNSResponder::_parsePacket(){
     _conn->flush();
     return;
   }
-  
+
   // RESPOND
-  
+
 #ifdef MDNS_DEBUG_RX
   os_printf("RX: REQ, ID:%u, Q:%u, A:%u, NS:%u, ADD:%u\n", packetHeader[0], packetHeader[2], packetHeader[3], packetHeader[4], packetHeader[5]);
 #endif
 
   uint16_t currentType;
   uint16_t currentClass;
-  
+
   int numQuestions = packetHeader[2];
   if(numQuestions > 4) numQuestions = 4;
   uint16_t questions[4];
@@ -326,21 +330,21 @@ void MDNSResponder::_parsePacket(){
     }
     currentClass = _conn_read16();
     if(currentClass & MDNS_CLASS_IN) questions[question++] = currentType;
-    
+
     if(numQuestions > 0){
       if(_conn_read16() != 0xC00C){//new question but for another host/service
         _conn->flush();
         numQuestions = 0;
       }
     }
-    
+
 #ifdef MDNS_DEBUG_RX
     os_printf("REQ: ");
     if(hostNameLen > 0) os_printf("%s.", hostName);
     if(serviceNameLen > 0) os_printf("_%s.", serviceName);
     if(protoNameLen > 0) os_printf("_%s.", protoName);
     os_printf("local. ");
-  
+
     if(currentType == MDNS_TYPE_AAAA) os_printf("  AAAA ");
     else if(currentType == MDNS_TYPE_A) os_printf("  A ");
     else if(currentType == MDNS_TYPE_PTR) os_printf("  PTR ");
@@ -351,7 +355,7 @@ void MDNSResponder::_parsePacket(){
     if(currentClass == MDNS_CLASS_IN) os_printf("  IN ");
     else if(currentClass == MDNS_CLASS_IN_FLUSH_CACHE) os_printf("  IN[F] ");
     else os_printf("  0x%04X ", currentClass);
-  
+
     os_printf("\n");
 #endif
   }
@@ -362,23 +366,26 @@ void MDNSResponder::_parsePacket(){
     else if(questions[i] == MDNS_TYPE_TXT) responseMask |= 0x4;
     else if(questions[i] == MDNS_TYPE_PTR) responseMask |= 0xF;
   }
-  
-  return _reply(responseMask, (serviceName), (protoName), servicePort);
+
+  return _reply(responseMask, serviceName, protoName, servicePort);
 }
 
-
+void MDNSResponder::enableArduino(uint16_t port, bool auth){
+  _arduinoAuth = auth;
+  addService("arduino", "tcp", port);
+}
 
 void MDNSResponder::_reply(uint8_t replyMask, char * service, char *proto, uint16_t port){
   int i;
   if(replyMask == 0) return;
-  
+
 #ifdef MDNS_DEBUG_TX
     os_printf("TX: mask:%01X, service:%s, proto:%s, port:%u\n", replyMask, service, proto, port);
 #endif
-  
+
   char nameLen = os_strlen(_hostName);
   size_t serviceLen = os_strlen(service);
-  
+
   uint8_t answerCount = 0;
   for(i=0;i<4;i++){
     if(replyMask & (1 << i)) answerCount++;
@@ -394,12 +401,12 @@ void MDNSResponder::_reply(uint8_t replyMask, char * service, char *proto, uint1
     0x00, 0x00, //Additional records
   };
   _conn->append(reinterpret_cast<const char*>(head), 12);
-  
+
   if((replyMask & 0x8) == 0){
     _conn->append(reinterpret_cast<const char*>(&nameLen), 1);
     _conn->append(reinterpret_cast<const char*>(_hostName), nameLen);
   }
-  
+
   if(replyMask & 0xE){
     uint8_t servHead[2] = {(uint8_t)(serviceLen+1), '_'};
     uint8_t protoHead[2] = {0x4, '_'};
@@ -408,14 +415,14 @@ void MDNSResponder::_reply(uint8_t replyMask, char * service, char *proto, uint1
     _conn->append(reinterpret_cast<const char*>(protoHead), 2);
     _conn->append(reinterpret_cast<const char*>(proto), 3);
   }
-  
+
   uint8_t local[7] = {
     0x05, //strlen(_local)
     0x6C, 0x6F, 0x63, 0x61, 0x6C, //local
     0x00, //End of domain
   };
   _conn->append(reinterpret_cast<const char*>(local), 7);
-  
+
   // PTR Response
   if(replyMask & 0x8){
     uint8_t ptr[10] = {
@@ -430,29 +437,58 @@ void MDNSResponder::_reply(uint8_t replyMask, char * service, char *proto, uint1
     uint8_t ptrTail[2] = {0xC0, 0x0C};
     _conn->append(reinterpret_cast<const char*>(ptrTail), 2);
   }
-  
+
   // TXT Response
   if(replyMask & 0x4){
-    if(replyMask & 0x8){//send the name
-      uint8_t txtHead[2] = {0xC0, (uint8_t)(36 + serviceLen)};
-      _conn->append(reinterpret_cast<const char*>(txtHead), 2);
+    if(replyMask & 0x8){
+      uint8_t txtHead[10] = {
+        0xC0, (uint8_t)(36 + serviceLen),//send the name
+        0x00, 0x10, //Type TXT
+        0x80, 0x01, //Class IN, with cache flush
+        0x00, 0x00, 0x11, 0x94, //TTL 4500
+      };
+      _conn->append(reinterpret_cast<const char*>(txtHead), 10);
     }
+
+    if(strcmp(reinterpret_cast<const char*>("arduino"), service) == 0){
+      //arduino
+      //arduino service dependance should be removed and properties abstracted
+      const char *tcpCheckExtra = "tcp_check=no";
+      uint8_t tcpCheckExtraLen = os_strlen(tcpCheckExtra);
+      
+      const char *sshUploadExtra = "ssh_upload=no";
+      uint8_t sshUploadExtraLen = os_strlen(sshUploadExtra);
+      
+      char boardName[64];
+      const char *boardExtra = "board=";
+      os_sprintf(boardName, "%s%s", boardExtra, ARDUINO_BOARD);
+      uint8_t boardNameLen = os_strlen(boardName);
+
+      char authUpload[16];
+      const char *authUploadExtra = "auth_upload=";
+      os_sprintf(authUpload, "%s%s", authUploadExtra, reinterpret_cast<const char*>((_arduinoAuth)?"yes":"no"));
+      uint8_t authUploadLen = os_strlen(authUpload);
     
-    uint8_t boardNameLen = os_strlen(_boardName);
-    
-    uint8_t txt[24] = {
-      0x00, 0x10, //Type TXT
-      0x80, 0x01, //Class IN, with cache flush
-      0x00, 0x00, 0x11, 0x94, //TTL 4500
-      0x00, 0x0e, //DATA LEN
-      (uint8_t)(6 + boardNameLen), //strlen(board=) + strlen(boardName)
-      0x62, 0x6f, 0x61, 0x72, 0x64, 0x3d //board=
-    };
-    _conn->append(reinterpret_cast<const char*>(txt), 17);
-    _conn->append(reinterpret_cast<const char*>(_boardName), boardNameLen);
-    
+      uint16_t textDataLen = (1 + boardNameLen) + (1 + tcpCheckExtraLen) + (1 + sshUploadExtraLen) + (1 + authUploadLen);
+      uint8_t txt[2] = {(uint8_t)(textDataLen >> 8), (uint8_t)(textDataLen)}; //DATA LEN
+      _conn->append(reinterpret_cast<const char*>(txt), 2);
+      
+      _conn->append(reinterpret_cast<const char*>(&boardNameLen), 1);
+      _conn->append(reinterpret_cast<const char*>(boardName), boardNameLen);
+      _conn->append(reinterpret_cast<const char*>(&authUploadLen), 1);
+      _conn->append(reinterpret_cast<const char*>(authUpload), authUploadLen);
+      _conn->append(reinterpret_cast<const char*>(&tcpCheckExtraLen), 1);
+      _conn->append(reinterpret_cast<const char*>(tcpCheckExtra), tcpCheckExtraLen);
+      _conn->append(reinterpret_cast<const char*>(&sshUploadExtraLen), 1);
+      _conn->append(reinterpret_cast<const char*>(sshUploadExtra), sshUploadExtraLen);
+    } else {
+      //not arduino
+      //we should figure out an API so TXT properties can be added for services
+      uint8_t txt[2] = {0,0};
+      _conn->append(reinterpret_cast<const char*>(txt), 2);
+    }
   }
-  
+
   // SRV Response
   if(replyMask & 0x2){
     if(replyMask & 0xC){//send the name
@@ -461,7 +497,7 @@ void MDNSResponder::_reply(uint8_t replyMask, char * service, char *proto, uint1
         srvHead[1] = 36 + serviceLen;
       _conn->append(reinterpret_cast<const char*>(srvHead), 2);
     }
-    
+
     uint8_t srv[16] = {
       0x00, 0x21, //Type SRV
       0x80, 0x01, //Class IN, with cache flush
@@ -479,7 +515,7 @@ void MDNSResponder::_reply(uint8_t replyMask, char * service, char *proto, uint1
       srvTail[1] = 19 + serviceLen;
     _conn->append(reinterpret_cast<const char*>(srvTail), 2);
   }
-  
+
   // A Response
   if(replyMask & 0x1){
     uint32_t ip = _getOurIp();
@@ -488,7 +524,7 @@ void MDNSResponder::_reply(uint8_t replyMask, char * service, char *proto, uint1
       _conn->append(reinterpret_cast<const char*>(_hostName), nameLen);
       _conn->append(reinterpret_cast<const char*>(local), 7);
     }
-    
+
     uint8_t aaa[14] = {
       0x00, 0x01, //TYPE A
       0x80, 0x01, //Class IN, with cache flush

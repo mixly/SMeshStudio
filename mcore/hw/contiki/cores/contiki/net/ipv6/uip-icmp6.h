@@ -31,15 +31,15 @@
  */
 
 /**
- * \addtogroup uip6
- * @{
+ * \file
+ *         ICMPv6 echo request and error messages (RFC 4443)
+ * \author Julien Abeille <jabeille@cisco.com> 
+ * \author Mathilde Durvy <mdurvy@cisco.com>
  */
 
 /**
- * \file
- *    Header file for ICMPv6 message and error handing (RFC 4443)
- * \author Julien Abeille <jabeille@cisco.com> 
- * \author Mathilde Durvy <mdurvy@cisco.com>
+ * \addtogroup uip6
+ * @{
  */
 
 #ifndef ICMP6_H_

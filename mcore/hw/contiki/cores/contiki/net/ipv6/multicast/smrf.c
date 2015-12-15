@@ -30,15 +30,13 @@
  */
 
 /**
- * \addtogroup smrf-multicast
- * @{
- */
-/**
  * \file
- *    This file implements 'Stateless Multicast RPL Forwarding' (SMRF)
+ *         This file implements 'Stateless Multicast RPL Forwarding' (SMRF)
+ *
+ *         It will only work in RPL networks in MOP 3 "Storing with Multicast"
  *
  * \author
- *    George Oikonomou - <oikonomou@users.sourceforge.net>
+ *         George Oikonomou - <oikonomou@users.sourceforge.net>
  */
 
 #include "contiki.h"
@@ -201,9 +199,6 @@ out()
   return;
 }
 /*---------------------------------------------------------------------------*/
-/**
- * \brief The SMRF engine driver
- */
 const struct uip_mcast6_driver smrf_driver = {
   "SMRF",
   init,
@@ -211,4 +206,3 @@ const struct uip_mcast6_driver smrf_driver = {
   in,
 };
 /*---------------------------------------------------------------------------*/
-/** @} */

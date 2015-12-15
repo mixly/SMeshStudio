@@ -69,7 +69,7 @@
  * callback.
  *
  *
- * \section runicast-channels Channels
+ * \section channels Channels
  *
  * The runicast module uses 1 channel.
  *
