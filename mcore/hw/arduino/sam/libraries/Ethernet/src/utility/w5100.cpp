@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010 by Arduino LLC. All rights reserved.
+ * Copyright (c) 2010 by Cristian Maglie <c.maglie@arduino.cc>
  *
  * This file is free software; you can redistribute it and/or modify
  * it under the terms of either the GNU General Public License version 2
@@ -9,8 +9,8 @@
 
 #include <stdio.h>
 #include <string.h>
-
-#include "w5100.h"
+//#include <Arduino.h>
+#include "utility/w5100.h"
 
 // W5100 controller instance
 W5100Class W5100;
@@ -24,9 +24,9 @@ W5100Class W5100;
 
 void W5100Class::init(void)
 {
-  delay(300);
+  //delay(300);
 
-#if defined(ARDUINO_ARCH_AVR)
+#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_SAMD)
   SPI.begin();
   initSS();
 #else
@@ -35,11 +35,15 @@ void W5100Class::init(void)
   SPI.setClockDivider(SPI_CS, 21);
   SPI.setDataMode(SPI_CS, SPI_MODE0);
 #endif
+  #ifndef ARDUINO_ARCH_SAMD
   SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
   writeMR(1<<RST);
   writeTMSR(0x55);
   writeRMSR(0x55);
+  #ifndef ARDUINO_ARCH_SAMD
   SPI.endTransaction();
+  #endif
 
   for (int i=0; i<MAX_SOCK_NUM; i++) {
     SBASE[i] = TXBUF_BASE + SSIZE * i;
@@ -136,7 +140,7 @@ void W5100Class::read_data(SOCKET s, volatile uint16_t src, volatile uint8_t *ds
 
 uint8_t W5100Class::write(uint16_t _addr, uint8_t _data)
 {
-#if defined(ARDUINO_ARCH_AVR)
+#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_SAMD)
   setSS();  
   SPI.transfer(0xF0);
   SPI.transfer(_addr >> 8);
@@ -156,7 +160,7 @@ uint16_t W5100Class::write(uint16_t _addr, const uint8_t *_buf, uint16_t _len)
 {
   for (uint16_t i=0; i<_len; i++)
   {
-#if defined(ARDUINO_ARCH_AVR)
+#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_SAMD)
     setSS();    
     SPI.transfer(0xF0);
     SPI.transfer(_addr >> 8);
@@ -177,7 +181,7 @@ uint16_t W5100Class::write(uint16_t _addr, const uint8_t *_buf, uint16_t _len)
 
 uint8_t W5100Class::read(uint16_t _addr)
 {
-#if defined(ARDUINO_ARCH_AVR)
+#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_SAMD)
   setSS();  
   SPI.transfer(0x0F);
   SPI.transfer(_addr >> 8);
@@ -197,7 +201,7 @@ uint16_t W5100Class::read(uint16_t _addr, uint8_t *_buf, uint16_t _len)
 {
   for (uint16_t i=0; i<_len; i++)
   {
-#if defined(ARDUINO_ARCH_AVR)
+#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_SAMD)
     setSS();
     SPI.transfer(0x0F);
     SPI.transfer(_addr >> 8);

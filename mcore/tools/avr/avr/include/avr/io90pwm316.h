@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: io90pwm316.h,v 1.7.2.8 2009/02/11 18:05:24 arcanum Exp $ */
+/* $Id: io90pwm316.h 2225 2011-03-02 16:27:26Z arcanum $ */
 
 /* avr/io90pwm316.h - definitions for AT90PWM316 */
 
@@ -434,7 +434,7 @@
 /* Power Reduction Register */
 #define PRR     _SFR_MEM8(0x64)
 #define PRADC   0   /* Power Reduction ADC */
-#define PRUSART 1   /* Power Reduction USART */
+#define PRUSART0 1   /* Power Reduction USART0 */
 #define PRSPI   2   /* Power Reduction Serial Peripheral Interface */
 #define PRTIM0  3   /* Power Reduction Timer/Counter0 */
 #define PRTIM1  4   /* Power Reduction Timer/Counter1 */
@@ -1076,93 +1076,122 @@
 /* Interrupt 0 is the reset vector. */
 
 /* PSC2 Capture Event */
+#define PSC2_CAPT_vect_num 1
 #define PSC2_CAPT_vect     _VECTOR(1)
 
 /* PSC2 End Cycle */
+#define PSC2_EC_vect_num   2
 #define PSC2_EC_vect       _VECTOR(2)
 
 /* PSC1 Capture Event */
+#define PSC1_CAPT_vect_num 3
 #define PSC1_CAPT_vect     _VECTOR(3)
 
 /* PSC1 End Cycle */
+#define PSC1_EC_vect_num   4
 #define PSC1_EC_vect       _VECTOR(4)
 
 /* PSC0 Capture Event */
+#define PSC0_CAPT_vect_num 5
 #define PSC0_CAPT_vect     _VECTOR(5)
 
 /* PSC0 End Cycle */
+#define PSC0_EC_vect_num   6
 #define PSC0_EC_vect       _VECTOR(6)
 
 /* Analog Comparator 0 */
+#define ANALOG_COMP_0_vect_num 7
 #define ANALOG_COMP_0_vect _VECTOR(7)
 
 /* Analog Comparator 1 */
+#define ANALOG_COMP_1_vect_num 8
 #define ANALOG_COMP_1_vect _VECTOR(8)
 
 /* Analog Comparator 2 */
+#define ANALOG_COMP_2_vect_num 9
 #define ANALOG_COMP_2_vect _VECTOR(9)
 
 /* External Interrupt Request 0 */
+#define INT0_vect_num      10
 #define INT0_vect          _VECTOR(10)
 
 /* Timer/Counter1 Capture Event */
+#define TIMER1_CAPT_vect_num 11
 #define TIMER1_CAPT_vect   _VECTOR(11)
 
 /* Timer/Counter1 Compare Match A */
+#define TIMER1_COMPA_vect_num  12
 #define TIMER1_COMPA_vect  _VECTOR(12)
 
 /* Timer/Counter Compare Match B */
+#define TIMER1_COMPB_vect_num  13
 #define TIMER1_COMPB_vect  _VECTOR(13)
 
 /* Timer/Counter1 Overflow */
+#define TIMER1_OVF_vect_num 15
 #define TIMER1_OVF_vect    _VECTOR(15)
 
 /* Timer/Counter0 Compare Match A */
+#define TIMER0_COMP_A_vect_num 16
 #define TIMER0_COMP_A_vect _VECTOR(16)
 
 /* Timer/Counter0 Overflow */
+#define TIMER0_OVF_vect_num 17
 #define TIMER0_OVF_vect    _VECTOR(17)
 
 /* ADC Conversion Complete */
+#define ADC_vect_num       18
 #define ADC_vect           _VECTOR(18)
 
 /* External Interrupt Request 1 */
+#define INT1_vect_num      19
 #define INT1_vect          _VECTOR(19)
 
 /* SPI Serial Transfer Complete */
+#define SPI_STC_vect_num   20
 #define SPI_STC_vect       _VECTOR(20)
 
 /* USART, Rx Complete */
+#define USART_RX_vect_num  21
 #define USART_RX_vect      _VECTOR(21)
 
 /* USART Data Register Empty */
+#define USART_UDRE_vect_num 22
 #define USART_UDRE_vect    _VECTOR(22)
 
 /* USART, Tx Complete */
+#define USART_TX_vect_num  23
 #define USART_TX_vect      _VECTOR(23)
 
 /* External Interrupt Request 2 */
+#define INT2_vect_num      24
 #define INT2_vect          _VECTOR(24)
 
 /* Watchdog Timeout Interrupt */
+#define WDT_vect_num       25
 #define WDT_vect           _VECTOR(25)
 
 /* EEPROM Ready */
+#define EE_READY_vect_num  26
 #define EE_READY_vect      _VECTOR(26)
 
 /* Timer Counter 0 Compare Match B */
+#define TIMER0_COMPB_vect_num 27
 #define TIMER0_COMPB_vect  _VECTOR(27)
 
 /* External Interrupt Request 3 */
+#define INT3_vect_num      28
 #define INT3_vect          _VECTOR(28)
 
 /* Store Program Memory Read */
+#define SPM_READY_vect_num 31
 #define SPM_READY_vect     _VECTOR(31)
 
 #define _VECTORS_SIZE   (4 * 32)
 
 /* Constants */
 
+#define RAMSTART       0x100
 #define RAMEND         0x4FF
 #define XRAMSIZE       0
 #define XRAMEND        RAMEND

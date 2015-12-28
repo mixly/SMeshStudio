@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: iom169pa.h,v 1.1.2.2 2009/12/15 03:24:15 arcanum Exp $ */
+/* $Id: iom169pa.h 2192 2010-11-08 13:53:24Z arcanum $ */
 
 /* avr/iom169pa.h - definitions for ATmega169PA */
 
@@ -794,20 +794,20 @@
 #define UBRR0 _SFR_MEM16(0xC4)
 
 #define UBRR0L _SFR_MEM8(0xC4)
-#define UBRR0 0
-#define UBRR1 1
-#define UBRR2 2
-#define UBRR3 3
-#define UBRR4 4
-#define UBRR5 5
-#define UBRR6 6
-#define UBRR7 7
+#define UBRR0_0 0
+#define UBRR0_1 1
+#define UBRR0_2 2
+#define UBRR0_3 3
+#define UBRR0_4 4
+#define UBRR0_5 5
+#define UBRR0_6 6
+#define UBRR0_7 7
 
 #define UBRR0H _SFR_MEM8(0xC5)
-#define UBRR8 0
-#define UBRR9 1
-#define UBRR10 2
-#define UBRR11 3
+#define UBRR0_8 0
+#define UBRR0_9 1
+#define UBRR0_10 2
+#define UBRR0_11 3
 
 #define UDR0 _SFR_MEM8(0xC6)
 #define UDR00 0
@@ -1288,15 +1288,15 @@
 #define SEG23_PIN   PING
 #define SEG23_BIT   4
 
-#define ICP/SEG22_DDR   DDRD
-#define ICP/SEG22_PORT  PORTD
-#define ICP/SEG22_PIN   PIND
-#define ICP/SEG22_BIT   0
+#define SEG22_DDR   DDRD
+#define SEG22_PORT  PORTD
+#define SEG22_PIN   PIND
+#define SEG22_BIT   0
 
-#define INT0/SEG21_DDR   DDRD
-#define INT0/SEG21_PORT  PORTD
-#define INT0/SEG21_PIN   PIND
-#define INT0/SEG21_BIT   1
+#define SEG21_DDR   DDRD
+#define SEG21_PORT  PORTD
+#define SEG21_PIN   PIND
+#define SEG21_BIT   1
 
 #define SEG20_DDR   DDRD
 #define SEG20_PORT  PORTD

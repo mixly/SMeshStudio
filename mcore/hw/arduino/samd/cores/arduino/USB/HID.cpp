@@ -1,20 +1,19 @@
-/*
-  Copyright (c) 2014 Arduino.  All right reserved.
-
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+/* Copyright (c) 2011, Peter Barrett
+**
+** Permission to use, copy, modify, and/or distribute this software for
+** any purpose with or without fee is hereby granted, provided that the
+** above copyright notice and this permission notice appear in all copies.
+**
+** THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL
+** WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
+** WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR
+** BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES
+** OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+** WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+** ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
+** SOFTWARE.
 */
+
 
 #include "USBAPI.h"
 #include "Reset.h"
@@ -47,39 +46,39 @@ Keyboard_ Keyboard;
 _Pragma("pack(1)")
 extern const uint8_t _hidReportDescriptor[] = {
 	//	Mouse
-    0x05, 0x01,                    // USAGE_PAGE (Generic Desktop)	// 54
-    0x09, 0x02,                    // USAGE (Mouse)
-    0xa1, 0x01,                    // COLLECTION (Application)
+    0x05, 0x01,                    //   USAGE_PAGE (Generic Desktop)	// 54
+    0x09, 0x02,                    //   USAGE (Mouse)
+    0xa1, 0x01,                    //   COLLECTION (Application)
     0x09, 0x01,                    //   USAGE (Pointer)
     0xa1, 0x00,                    //   COLLECTION (Physical)
-    0x85, 0x01,                    //     REPORT_ID (1)
-    0x05, 0x09,                    //     USAGE_PAGE (Button)
-    0x19, 0x01,                    //     USAGE_MINIMUM (Button 1)
-    0x29, 0x03,                    //     USAGE_MAXIMUM (Button 3)
-    0x15, 0x00,                    //     LOGICAL_MINIMUM (0)
-    0x25, 0x01,                    //     LOGICAL_MAXIMUM (1)
-    0x95, 0x03,                    //     REPORT_COUNT (3)
-    0x75, 0x01,                    //     REPORT_SIZE (1)
-    0x81, 0x02,                    //     INPUT (Data,Var,Abs)
-    0x95, 0x01,                    //     REPORT_COUNT (1)
-    0x75, 0x05,                    //     REPORT_SIZE (5)
-    0x81, 0x03,                    //     INPUT (Cnst,Var,Abs)
-    0x05, 0x01,                    //     USAGE_PAGE (Generic Desktop)
-    0x09, 0x30,                    //     USAGE (X)
-    0x09, 0x31,                    //     USAGE (Y)
-    0x09, 0x38,                    //     USAGE (Wheel)
-    0x15, 0x81,                    //     LOGICAL_MINIMUM (-127)
-    0x25, 0x7f,                    //     LOGICAL_MAXIMUM (127)
-    0x75, 0x08,                    //     REPORT_SIZE (8)
-    0x95, 0x03,                    //     REPORT_COUNT (3)
-    0x81, 0x06,                    //     INPUT (Data,Var,Rel)
+    0x85, 0x01,                    //   REPORT_ID (1)
+    0x05, 0x09,                    //   USAGE_PAGE (Button)
+    0x19, 0x01,                    //   USAGE_MINIMUM (Button 1)
+    0x29, 0x03,                    //   USAGE_MAXIMUM (Button 3)
+    0x15, 0x00,                    //   LOGICAL_MINIMUM (0)
+    0x25, 0x01,                    //   LOGICAL_MAXIMUM (1)
+    0x95, 0x03,                    //   REPORT_COUNT (3)
+    0x75, 0x01,                    //   REPORT_SIZE (1)
+    0x81, 0x02,                    //   INPUT (Data,Var,Abs)
+    0x95, 0x01,                    //   REPORT_COUNT (1)
+    0x75, 0x05,                    //   REPORT_SIZE (5)
+    0x81, 0x03,                    //   INPUT (Cnst,Var,Abs)
+    0x05, 0x01,                    //   USAGE_PAGE (Generic Desktop)
+    0x09, 0x30,                    //   USAGE (X)
+    0x09, 0x31,                    //   USAGE (Y)
+    0x09, 0x38,                    //   USAGE (Wheel)
+    0x15, 0x81,                    //   LOGICAL_MINIMUM (-127)
+    0x25, 0x7f,                    //   LOGICAL_MAXIMUM (127)
+    0x75, 0x08,                    //   REPORT_SIZE (8)
+    0x95, 0x03,                    //   REPORT_COUNT (3)
+    0x81, 0x06,                    //   INPUT (Data,Var,Rel)
     0xc0,                          //   END_COLLECTION
-    0xc0,                          // END_COLLECTION
+    0xc0,                          //   END_COLLECTION
 
 	//	Keyboard
-    0x05, 0x01,                    // USAGE_PAGE (Generic Desktop)	// 47
-    0x09, 0x06,                    // USAGE (Keyboard)
-    0xa1, 0x01,                    // COLLECTION (Application)
+    0x05, 0x01,                    //   USAGE_PAGE (Generic Desktop)	// 47
+    0x09, 0x06,                    //   USAGE (Keyboard)
+    0xa1, 0x01,                    //   COLLECTION (Application)
     0x85, 0x02,                    //   REPORT_ID (2)
     0x05, 0x07,                    //   USAGE_PAGE (Keyboard)
 
@@ -104,27 +103,27 @@ extern const uint8_t _hidReportDescriptor[] = {
 	0x19, 0x00,                    //   USAGE_MINIMUM (Reserved (no event indicated))
     0x29, 0x65,                    //   USAGE_MAXIMUM (Keyboard Application)
     0x81, 0x00,                    //   INPUT (Data,Ary,Abs)
-    0xc0,                          // END_COLLECTION
+    0xc0,                          //   END_COLLECTION
 
 #ifdef RAWHID_ENABLED
 	//	RAW HID
 	0x06, LSB(RAWHID_USAGE_PAGE), MSB(RAWHID_USAGE_PAGE),	// 30
 	0x0A, LSB(RAWHID_USAGE), MSB(RAWHID_USAGE),
 
-	0xA1, 0x01,				// Collection 0x01
-    0x85, 0x03,             // REPORT_ID (3)
-	0x75, 0x08,				// report size = 8 bits
-	0x15, 0x00,				// logical minimum = 0
-	0x26, 0xFF, 0x00,		// logical maximum = 255
+	0xA1, 0x01,                    // Collection 0x01
+    0x85, 0x03,                    // REPORT_ID (3)
+	0x75, 0x08,                    // report size = 8 bits
+	0x15, 0x00,                    // logical minimum = 0
+	0x26, 0xFF, 0x00,              // logical maximum = 255
 
-	0x95, 64,				// report count TX
-	0x09, 0x01,				// usage
-	0x81, 0x02,				// Input (array)
+	0x95, 64,                      // report count TX
+	0x09, 0x01,                    // usage
+	0x81, 0x02,                    // Input (array)
 
-	0x95, 64,				// report count RX
-	0x09, 0x02,				// usage
-	0x91, 0x02,				// Output (array)
-	0xC0					// end collection
+	0x95, 64,                      // report count RX
+	0x09, 0x02,                    // usage
+	0x91, 0x02,                    // Output (array)
+	0xC0                           // end collection
 #endif
 };
 
@@ -192,7 +191,7 @@ bool WEAK HID_Setup(Setup& setup)
 		}
 		if (HID_GET_PROTOCOL == r)
 		{
-			//Send8(_hid_protocol);	// TODO
+			//Send8(_hid_protocol);
 			return true;
 		}
 		if (HID_GET_IDLE == r)
@@ -337,103 +336,103 @@ extern const uint8_t _asciimap[128] =
 	0x00,             // RS
 	0x00,             // US
 
-	0x2c,		   //  ' '
-	0x1e|SHIFT,	   // !
-	0x34|SHIFT,	   // "
-	0x20|SHIFT,    // #
-	0x21|SHIFT,    // $
-	0x22|SHIFT,    // %
-	0x24|SHIFT,    // &
-	0x34,          // '
-	0x26|SHIFT,    // (
-	0x27|SHIFT,    // )
-	0x25|SHIFT,    // *
-	0x2e|SHIFT,    // +
-	0x36,          // ,
-	0x2d,          // -
-	0x37,          // .
-	0x38,          // /
-	0x27,          // 0
-	0x1e,          // 1
-	0x1f,          // 2
-	0x20,          // 3
-	0x21,          // 4
-	0x22,          // 5
-	0x23,          // 6
-	0x24,          // 7
-	0x25,          // 8
-	0x26,          // 9
-	0x33|SHIFT,      // :
-	0x33,          // ;
-	0x36|SHIFT,      // <
-	0x2e,          // =
-	0x37|SHIFT,      // >
-	0x38|SHIFT,      // ?
-	0x1f|SHIFT,      // @
-	0x04|SHIFT,      // A
-	0x05|SHIFT,      // B
-	0x06|SHIFT,      // C
-	0x07|SHIFT,      // D
-	0x08|SHIFT,      // E
-	0x09|SHIFT,      // F
-	0x0a|SHIFT,      // G
-	0x0b|SHIFT,      // H
-	0x0c|SHIFT,      // I
-	0x0d|SHIFT,      // J
-	0x0e|SHIFT,      // K
-	0x0f|SHIFT,      // L
-	0x10|SHIFT,      // M
-	0x11|SHIFT,      // N
-	0x12|SHIFT,      // O
-	0x13|SHIFT,      // P
-	0x14|SHIFT,      // Q
-	0x15|SHIFT,      // R
-	0x16|SHIFT,      // S
-	0x17|SHIFT,      // T
-	0x18|SHIFT,      // U
-	0x19|SHIFT,      // V
-	0x1a|SHIFT,      // W
-	0x1b|SHIFT,      // X
-	0x1c|SHIFT,      // Y
-	0x1d|SHIFT,      // Z
-	0x2f,          // [
-	0x31,          // bslash
-	0x30,          // ]
-	0x23|SHIFT,    // ^
-	0x2d|SHIFT,    // _
-	0x35,          // `
-	0x04,          // a
-	0x05,          // b
-	0x06,          // c
-	0x07,          // d
-	0x08,          // e
-	0x09,          // f
-	0x0a,          // g
-	0x0b,          // h
-	0x0c,          // i
-	0x0d,          // j
-	0x0e,          // k
-	0x0f,          // l
-	0x10,          // m
-	0x11,          // n
-	0x12,          // o
-	0x13,          // p
-	0x14,          // q
-	0x15,          // r
-	0x16,          // s
-	0x17,          // t
-	0x18,          // u
-	0x19,          // v
-	0x1a,          // w
-	0x1b,          // x
-	0x1c,          // y
-	0x1d,          // z
-	0x2f|SHIFT,    //
-	0x31|SHIFT,    // |
-	0x30|SHIFT,    // }
-	0x35|SHIFT,    // ~
-	0				// DEL
-};
+	0x2c,             //  ' '
+	0x1e|SHIFT,       // !
+	0x34|SHIFT,       // "
+	0x20|SHIFT,       // #
+	0x21|SHIFT,       // $
+	0x22|SHIFT,       // %
+	0x24|SHIFT,       // &
+	0x34,             // '
+	0x26|SHIFT,       // (
+	0x27|SHIFT,       // )
+	0x25|SHIFT,       // *
+	0x2e|SHIFT,       // +
+	0x36,             // ,
+	0x2d,             // -
+	0x37,             // .
+	0x38,             // /
+	0x27,             // 0
+	0x1e,             // 1
+	0x1f,             // 2
+	0x20,             // 3
+	0x21,             // 4
+	0x22,             // 5
+	0x23,             // 6
+	0x24,             // 7
+	0x25,             // 8
+	0x26,             // 9
+	0x33|SHIFT,       // :
+	0x33,             // ;
+	0x36|SHIFT,       // <
+	0x2e,             // =
+	0x37|SHIFT,       // >
+	0x38|SHIFT,       // ?
+	0x1f|SHIFT,       // @
+	0x04|SHIFT,       // A
+	0x05|SHIFT,       // B
+	0x06|SHIFT,       // C
+	0x07|SHIFT,       // D
+	0x08|SHIFT,       // E
+	0x09|SHIFT,       // F
+	0x0a|SHIFT,       // G
+	0x0b|SHIFT,       // H
+	0x0c|SHIFT,       // I
+	0x0d|SHIFT,       // J
+	0x0e|SHIFT,       // K
+	0x0f|SHIFT,       // L
+	0x10|SHIFT,       // M
+	0x11|SHIFT,       // N
+	0x12|SHIFT,       // O
+	0x13|SHIFT,       // P
+	0x14|SHIFT,       // Q
+	0x15|SHIFT,       // R
+	0x16|SHIFT,       // S
+	0x17|SHIFT,       // T
+	0x18|SHIFT,       // U
+	0x19|SHIFT,       // V
+	0x1a|SHIFT,       // W
+	0x1b|SHIFT,       // X
+	0x1c|SHIFT,       // Y
+	0x1d|SHIFT,       // Z
+	0x2f,             // [
+	0x31,             // bslash
+	0x30,             // ]
+	0x23|SHIFT,       // ^
+	0x2d|SHIFT,       // _
+	0x35,             // `
+	0x04,             // a
+	0x05,             // b
+	0x06,             // c
+	0x07,             // d
+	0x08,             // e
+	0x09,             // f
+	0x0a,             // g
+	0x0b,             // h
+	0x0c,             // i
+	0x0d,             // j
+	0x0e,             // k
+	0x0f,             // l
+	0x10,             // m
+	0x11,             // n
+	0x12,             // o
+	0x13,             // p
+	0x14,             // q
+	0x15,             // r
+	0x16,             // s
+	0x17,             // t
+	0x18,             // u
+	0x19,             // v
+	0x1a,             // w
+	0x1b,             // x
+	0x1c,             // y
+	0x1d,             // z
+	0x2f|SHIFT,       //
+	0x31|SHIFT,       // |
+	0x30|SHIFT,       // }
+	0x35|SHIFT,       // ~
+	0			      // DEL
+} ;
 
 // press() adds the specified key (printing, non-printing, or modifier)
 // to the persistent key report and sends the report.  Because of the way
@@ -483,6 +482,7 @@ size_t Keyboard_::press(uint8_t k)
 // release() takes the specified key out of the persistent key report and
 // sends the report.  This tells the OS the key is no longer pressed and that
 // it shouldn't be repeated any more.
+
 size_t Keyboard_::release(uint8_t k)
 {
 	uint8_t i;

@@ -60,14 +60,18 @@
 
 // Architecture specific include
 #if defined(ARDUINO_ARCH_AVR)
-#include "avr/ServoTimers.h"
+	#include "avr/ServoTimers.h"
 #elif defined(ARDUINO_ARCH_SAM)
-#include "sam/ServoTimers.h"
-#else
-#error "This library only supports boards with an AVR or SAM processor."
+	#include "sam/ServoTimers.h"
+#elif defined(ARDUINO_ARCH_SAMD)
+	//#include "samd/ServoTimersSamd.h"
+	#define MIN_PULSE_WIDTH_SAMD 500
+	#define MAX_PULSE_WIDTH_SAMD 2100
+#else	
+	#error "This library only supports boards with an AVR,SAM or SAMD processor."
 #endif
 
-#define Servo_VERSION           2     // software version of this library
+#define Servo_VERSION           2.1     // software version of this library
 
 #define MIN_PULSE_WIDTH       544     // the shortest pulse sent to a servo  
 #define MAX_PULSE_WIDTH      2400     // the longest pulse sent to a servo 
@@ -75,7 +79,14 @@
 #define REFRESH_INTERVAL    20000     // minumim time to refresh servos in microseconds 
 
 #define SERVOS_PER_TIMER       12     // the maximum number of servos controlled by one timer 
-#define MAX_SERVOS   (_Nbr_16timers  * SERVOS_PER_TIMER)
+#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_SAM)
+	#define MAX_SERVOS   (_Nbr_16timers  * SERVOS_PER_TIMER)
+#elif defined(ARDUINO_ARCH_SAMD)  
+	#define MAX_SERVOS 8
+#else
+	#error "This library only supports boards with an AVR,SAM or SAMD processor."
+#endif
+
 
 #define INVALID_SERVO         255     // flag indicating an invalid servo index
 

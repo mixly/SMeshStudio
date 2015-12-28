@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2015 Arduino LLC.  All right reserved.
+  Copyright (c) 2011 Arduino.  All right reserved.
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -16,14 +16,15 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#pragma once
+#ifndef WiringPrivate_h
+#define WiringPrivate_h
 
 #include <stdint.h>
 #include <stdio.h>
 #include <stdarg.h>
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"{
 #endif
 
 // Includes Atmel CMSIS
@@ -31,11 +32,11 @@ extern "C" {
 
 #include "wiring_constants.h"
 
-int pinPeripheral( uint32_t ulPin, EPioType ulPeripheral );
-
 #ifdef __cplusplus
 } // extern "C"
 
 #include "HardwareSerial.h"
+
+#endif
 
 #endif

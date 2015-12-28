@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: ioa6289.h,v 1.1.2.3 2009/02/11 18:05:25 arcanum Exp $ */
+/* $Id: ioa6289.h 2102 2010-03-16 22:52:39Z joerg_wunsch $ */
 
 /* avr/ioa6289.h - definitions for ATA6289 */
 

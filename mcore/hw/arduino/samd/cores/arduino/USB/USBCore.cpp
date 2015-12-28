@@ -1,32 +1,62 @@
+// Copyright (c) 2010, Peter Barrett
 /*
-  Copyright (c) 2014 Arduino.  All right reserved.
-
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+** Permission to use, copy, modify, and/or distribute this software for
+** any purpose with or without fee is hereby granted, provided that the
+** above copyright notice and this permission notice appear in all copies.
+**
+** THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL
+** WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
+** WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR
+** BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES
+** OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+** WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+** ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
+** SOFTWARE.
 */
 
-#include "../Arduino.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdint.h>
+//#include "../Arduino.h"
+
+#include "sam.h"
+#include "wiring_constants.h"
 #include "USBCore.h"
 #include "USB/USB_device.h"   // needed for USB PID define
 #include "USBDesc.h"
 #include "USBAPI.h"
 
-//#define TRACE_CORE(x)	x
 #define TRACE_CORE(x)
+
+//==================================================================
+
+
+
+/*
+#if (defined CDC_ENABLED) && defined(HID_ENABLED)
+//#define USB_PID_ZERO       0x004B  // CDC and HID
+#define USB_PID_ZERO       0x804d  // CDC only
+#else
+#if (defined CDC_ENABLED)
+#define USB_PID_ZERO       0x804d  // CDC only  usbserial.name
+#else
+#define USB_PID_ZERO       0x804d  // HID only
+#endif
+#endif
+*/
+
+#define USB_PID_ZERO_PRO	0x804d
+
+// USB Device
+//#define USB_VID 			0x2a03 // arduino srl vid
+//#undef USB_PID
+//#define USB_PID            USB_PID_ZERO
+
+//==================================================================
 
 static char isRemoteWakeUpEnabled = 0;
 static char isEndpointHalt = 0;
+
 
 const uint16_t STRING_LANGUAGE[2] = {
 	(3<<8) | (2+2),
@@ -34,23 +64,28 @@ const uint16_t STRING_LANGUAGE[2] = {
 };
 
 #ifndef USB_PRODUCT
-// If no product is provided, use USB IO Board
-#define USB_PRODUCT     "USB IO Board"
+// Use a hardcoded product name if none is provided
+#if USB_PID == USB_PID_ZERO_PRO
+	#define USB_PRODUCT "Arduino Zero Pro"
+#else
+	#define USB_PRODUCT "USB IO Board"
+#endif
 #endif
 
 const uint8_t STRING_PRODUCT[] = USB_PRODUCT;
 
-#if USB_VID == 0x2341
+#if USB_VID == 0x2a03
 #  if defined(USB_MANUFACTURER)
 #    undef USB_MANUFACTURER
 #  endif
-#  define USB_MANUFACTURER "Arduino LLC"
+#  define USB_MANUFACTURER "Arduino Srl"
 #elif !defined(USB_MANUFACTURER)
 // Fall through to unknown if no manufacturer name was provided in a macro
 #  define USB_MANUFACTURER "Unknown"
 #endif
 
 const uint8_t STRING_MANUFACTURER[12] = USB_MANUFACTURER;
+
 
 
 //	DEVICE DESCRIPTOR
@@ -84,23 +119,30 @@ uint32_t USBD_Available(uint32_t ep)
 //	Return number of bytes read
 uint32_t USBD_Recv(uint32_t ep, void* d, uint32_t len)
 {
-	if (!_usbConfiguration)
+	if (!_usbConfiguration || len < 0)
 		return -1;
 
-	uint8_t *buffer;
-	uint8_t *data = (uint8_t *)d;
-
-	len = min(UDD_FifoByteCount(ep), len);
-
-	UDD_Recv_data(ep, len);
-	UDD_Recv(ep, &buffer);
-	for (uint32_t i=0; i<len; i++) {
-		data[i] = buffer[i];
-	}
-
+	uint32_t n = UDD_FifoByteCount(ep);
+	len = min(n,len);
+	n = len;
+	uint8_t* dst = (uint8_t*)d;
+	while (n--)
+		*dst++ = UDD_Recv8(ep);
+	
+	
+	
+	
 	if (len && !UDD_FifoByteCount(ep)) // release empty buffer
 		UDD_ReleaseRX(ep);
-
+		
+  //----- Tx & Rx led blinking during transmission ----- begin ----	
+	PORT->Group[1].OUTTGL.reg =0x00000008 ;  //RxLED
+	for(int i=0; i < 100000; i++)
+	{
+		asm("NOP");
+	}
+	PORT->Group[1].OUTTGL.reg =0x00000008 ;	
+  //----- Tx & Rx led blinking during transmission ----- end ----
 	return len;
 }
 
@@ -128,12 +170,25 @@ uint32_t USBD_Send(uint32_t ep, const void* d, uint32_t len)
 	UDD_Send(ep, data, len);
 
 	/* Clear the transfer complete flag  */
-	udd_clear_IN_transf_cplt(ep);
+	udd_clear_transf_cplt(ep);
 	/* Set the bank as ready */
-	udd_IN_transfer_allowed(ep);
+	udd_bk_rdy(ep);
 
 	/* Wait for transfer to complete */
-	while (! udd_is_IN_transf_cplt(ep));  // need fire exit.
+	while (! udd_is_transf_cplt(ep));  // need fire exit.
+	
+  //----- Tx & Rx led blinking during transmission ----- begin ----
+	PORT->Group[0].OUTTGL.reg =0x08000000 ; //TxLED
+	for(int i=0; i < 100000; i++)
+	{
+		asm("NOP");
+	}
+	PORT->Group[0].OUTTGL.reg =0x08000000 ;
+	/*for(int i=0; i < 100000; i++)
+	{
+		asm("NOP");
+	}*/
+  //----- Tx & Rx led blinking during transmission ----- end ----	
 	return r;
 }
 
@@ -178,18 +233,9 @@ static bool USB_SendStringDescriptor(const uint8_t *string, int wLength)
 
 uint32_t USBD_RecvControl(void* d, uint32_t len)
 {
-	uint8_t *buffer;
-	uint8_t *data = (uint8_t *)d;
-	uint32_t read = UDD_Recv_data(EP0, len);
-	if (read > len)
-		read = len;
-	UDD_Recv(EP0, &buffer);
-	while (!udd_is_OUT_transf_cplt(EP0));
-	for (uint32_t i=0; i<read; i++) {
-		data[i] = buffer[i];
-	}
-	udd_OUT_transfer_allowed(EP0);
-	return read;
+	udd_ack_out_received(0);
+
+	return len;
 }
 
 //	Handle CLASS_INTERFACE requests
@@ -235,7 +281,7 @@ static bool USBD_SendConfiguration(uint32_t maxlen)
 	const uint8_t* interfaces;
 	uint32_t interfaces_length = 0;
 	uint8_t num_interfaces[1];
-
+	
 	num_interfaces[0] = 0;
 
 #if (defined CDC_ENABLED) && defined(HID_ENABLED)
@@ -298,7 +344,7 @@ _Pragma("pack()")
 	{
 		cache_buffer[i+sizeof(ConfigDescriptor)] = interfaces[i];
 	}
-#endif
+#endif	
 #endif
 
 	if (maxlen > sizeof(cache_buffer))
@@ -391,9 +437,9 @@ void EndpointHandler(uint8_t bEndpoint)
 #ifdef CDC_ENABLED
 	if( bEndpoint == CDC_ENDPOINT_OUT )
 	{
-		udd_OUT_transfer_allowed(CDC_ENDPOINT_OUT);
+		udd_ack_out_received(CDC_ENDPOINT_OUT);
 
-		// Handle received bytes
+		// Handle received bytes		
 		if (USBD_Available(CDC_ENDPOINT_OUT))
 		{
 			SerialUSB.accept();
@@ -401,16 +447,16 @@ void EndpointHandler(uint8_t bEndpoint)
 	}
 	if( bEndpoint == CDC_ENDPOINT_IN )
 	{
-		udd_IN_stop_transfer(CDC_ENDPOINT_IN);
+		udd_ack_in_received(CDC_ENDPOINT_IN);
 		/* Clear the transfer complete flag  */
-		udd_clear_IN_transf_cplt(CDC_ENDPOINT_IN);
-
+		udd_clear_transf_cplt(CDC_ENDPOINT_IN);
+		
 	}
 	if( bEndpoint == CDC_ENDPOINT_ACM )
 	{
-		udd_IN_stop_transfer(CDC_ENDPOINT_ACM);
+		udd_ack_in_received(CDC_ENDPOINT_ACM);
 		/* Clear the transfer complete flag  */
-		udd_clear_IN_transf_cplt(CDC_ENDPOINT_ACM);
+		udd_clear_transf_cplt(CDC_ENDPOINT_ACM);
 	}
 #endif
 
@@ -420,14 +466,14 @@ void EndpointHandler(uint8_t bEndpoint)
 }
 
 
-void USB_ISR(void)
+void USB_Handler(void)
 {
 	uint16_t flags;
 	uint8_t i;
 	uint8_t ept_int;
 
 	ept_int = udd_endpoint_interrupt();
-
+	
 	/* Not endpoint interrupt */
 	if (0 == ept_int)
 	{
@@ -455,7 +501,7 @@ void USB_ISR(void)
 		}
 
 	}
-	else
+	else 
 	{
 		// Endpoint interrupt
 		flags = udd_read_endpoint_flag(0);
@@ -471,7 +517,7 @@ void USB_ISR(void)
 			UDD_Recv(EP0, (uint8_t**)&pSetupData);
 
 			/* Clear the Bank 0 ready flag on Control OUT */
-			udd_OUT_transfer_allowed(0);
+			udd_ack_out_received(0);
 
 			bool ok = true;
 			if (REQUEST_STANDARD == (pSetupData->bmRequestType & REQUEST_TYPE))
@@ -487,9 +533,9 @@ void USB_ISR(void)
 						// Send the device status
      					TRACE_CORE(puts(">>> EP0 Int: GET_STATUS\r\n");)
 						// Check current configuration for power mode (if device is configured)
-						// TODO
+						
 						// Check if remote wake-up is enabled
-						// TODO
+						
 						data_to_be_send[0]=0;
 						data_to_be_send[1]=0;
 						UDD_Send(0, data_to_be_send, 2);
@@ -581,8 +627,8 @@ void USB_ISR(void)
 
 #ifdef CDC_ENABLED
 						// Enable interrupt for CDC reception from host (OUT packet)
-						udd_ept_enable_it_IN_transf_cplt(CDC_ENDPOINT_ACM);
-						udd_ept_enable_it_OUT_transf_cplt(CDC_ENDPOINT_OUT);
+						udd_ept_enable_it_transf_cplt_in(CDC_ENDPOINT_ACM);
+						udd_ept_enable_it_transf_cplt_out(CDC_ENDPOINT_OUT);
 #endif
 						send_zlp();
 					}
@@ -621,7 +667,7 @@ void USB_ISR(void)
 				UDD_Stall(0);
 			}
 
-			if( flags & USB_DEVICE_EPINTFLAG_STALL(2) )
+			if( flags & USB_DEVICE_EPINTFLAG_STALL1 )
 			{
 				/* Clear the stall flag */
 				udd_clear_stall_request(0);
@@ -639,20 +685,20 @@ void USB_ISR(void)
             if ((ept_int & (1 << i)) != 0)
 			{
 				if( (udd_read_endpoint_flag(i) & USB_DEVICE_EPINTFLAG_TRCPT_Msk ) != 0 )
-
+				
 				{
 					EndpointHandler(i);
 				}
                 ept_int &= ~(1 << i);
-
+                
                 if (ept_int != 0)
 				{
-
+                
                     TRACE_CORE("\n\r  - ");
                 }
             }
             i++;
-			if( i> USB_EPT_NUM) break;  // fire exit
+			if( i> USB_EPT_NUM) break;  // exit
         }
 	}
 }
@@ -671,9 +717,6 @@ void USBD_Flush(uint32_t ep)
 uint32_t USBD_Connected(void)
 {
 	uint8_t f = UDD_GetFrameNumber();
-
-    //delay(3);
-
 	return f != UDD_GetFrameNumber();
 }
 
@@ -685,7 +728,6 @@ USBDevice_ USBDevice;
 
 USBDevice_::USBDevice_()
 {
-	UDD_SetStack(&USB_ISR);
 }
 
 bool USBDevice_::attach()

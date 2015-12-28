@@ -27,7 +27,7 @@ void analogWriteCallback(byte pin, int value)
 
 void setup()
 {
-  Firmata.setFirmwareVersion(FIRMATA_MAJOR_VERSION, FIRMATA_MINOR_VERSION);
+  Firmata.setFirmwareVersion(0, 1);
   Firmata.attach(ANALOG_MESSAGE, analogWriteCallback);
   Firmata.begin(57600);
 }

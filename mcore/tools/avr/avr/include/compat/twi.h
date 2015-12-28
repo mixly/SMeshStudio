@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: twi.h,v 1.2 2005/11/05 22:23:15 joerg_wunsch Exp $ */
+/* $Id$ */
 
 #ifndef _COMPAT_TWI_H_
 #define _COMPAT_TWI_H_

@@ -29,7 +29,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: inttypes.h,v 1.16.2.1 2008/10/17 21:33:57 arcanum Exp $ */
+/* $Id$ */
 
 #ifndef __INTTYPES_H_
 #define __INTTYPES_H_

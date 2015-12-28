@@ -26,7 +26,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: boot.h,v 1.27.2.6 2009/09/14 07:52:23 arcanum Exp $ */
+/* $Id$ */
 
 #ifndef _AVR_BOOT_H_
 #define _AVR_BOOT_H_    1
@@ -109,10 +109,12 @@
 /* Check for SPM Control Register in processor. */
 #if defined (SPMCSR)
 #  define __SPM_REG    SPMCSR
-#elif defined (SPMCR)
-#  define __SPM_REG    SPMCR
 #else
-#  error AVR processor does not provide bootloader support!
+#  if defined (SPMCR)
+#    define __SPM_REG    SPMCR
+#  else
+#    error AVR processor does not provide bootloader support!
+#  endif
 #endif
 
 

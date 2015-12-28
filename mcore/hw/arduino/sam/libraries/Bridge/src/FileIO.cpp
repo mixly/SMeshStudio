@@ -175,8 +175,7 @@ void File::close() {
   if (mode == 255)
     return;
   uint8_t cmd[] = {'f', handle};
-  uint8_t ret[1];
-  bridge.transfer(cmd, 2, ret, 1);
+  bridge.transfer(cmd, 2);
   mode = 255;
 }
 

@@ -1,5 +1,5 @@
-#include "w5100.h"
-#include "socket.h"
+#include "utility/w5100.h"
+#include "utility/socket.h"
 
 static uint16_t local_port;
 
@@ -12,7 +12,9 @@ uint8_t socket(SOCKET s, uint8_t protocol, uint16_t port, uint8_t flag)
   if ((protocol == SnMR::TCP) || (protocol == SnMR::UDP) || (protocol == SnMR::IPRAW) || (protocol == SnMR::MACRAW) || (protocol == SnMR::PPPOE))
   {
     close(s);
-    SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+      #ifndef ARDUINO_ARCH_SAMD
+  SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
     W5100.writeSnMR(s, protocol | flag);
     if (port != 0) {
       W5100.writeSnPORT(s, port);
@@ -23,7 +25,9 @@ uint8_t socket(SOCKET s, uint8_t protocol, uint16_t port, uint8_t flag)
     }
 
     W5100.execCmdSn(s, Sock_OPEN);
-    SPI.endTransaction();
+      #ifndef ARDUINO_ARCH_SAMD
+  SPI.endTransaction();
+  #endif
     return 1;
   }
 
@@ -33,9 +37,13 @@ uint8_t socket(SOCKET s, uint8_t protocol, uint16_t port, uint8_t flag)
 
 uint8_t socketStatus(SOCKET s)
 {
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
   uint8_t status = W5100.readSnSR(s);
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.endTransaction();
+  #endif
   return status;
 }
 
@@ -45,10 +53,14 @@ uint8_t socketStatus(SOCKET s)
  */
 void close(SOCKET s)
 {
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
   W5100.execCmdSn(s, Sock_CLOSE);
   W5100.writeSnIR(s, 0xFF);
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.endTransaction();
+  #endif
 }
 
 
@@ -58,13 +70,19 @@ void close(SOCKET s)
  */
 uint8_t listen(SOCKET s)
 {
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
   if (W5100.readSnSR(s) != SnSR::INIT) {
-    SPI.endTransaction();
+      #ifndef ARDUINO_ARCH_SAMD
+  SPI.endTransaction();
+  #endif
     return 0;
   }
   W5100.execCmdSn(s, Sock_LISTEN);
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.endTransaction();
+  #endif
   return 1;
 }
 
@@ -86,11 +104,15 @@ uint8_t connect(SOCKET s, uint8_t * addr, uint16_t port)
     return 0;
 
   // set destination IP
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
   W5100.writeSnDIPR(s, addr);
   W5100.writeSnDPORT(s, port);
   W5100.execCmdSn(s, Sock_CONNECT);
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.endTransaction();
+  #endif
 
   return 1;
 }
@@ -103,9 +125,13 @@ uint8_t connect(SOCKET s, uint8_t * addr, uint16_t port)
  */
 void disconnect(SOCKET s)
 {
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
   W5100.execCmdSn(s, Sock_DISCON);
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.endTransaction();
+  #endif
 }
 
 
@@ -127,21 +153,29 @@ uint16_t send(SOCKET s, const uint8_t * buf, uint16_t len)
   // if freebuf is available, start.
   do 
   {
-    SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+      #ifndef ARDUINO_ARCH_SAMD
+  SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
     freesize = W5100.getTXFreeSize(s);
     status = W5100.readSnSR(s);
-    SPI.endTransaction();
+      #ifndef ARDUINO_ARCH_SAMD
+  SPI.endTransaction();
+  #endif
     if ((status != SnSR::ESTABLISHED) && (status != SnSR::CLOSE_WAIT))
     {
       ret = 0; 
       break;
     }
+	#ifndef ARDUINO_ARCH_SAMD
     yield();
+	#endif
   } 
   while (freesize < ret);
 
   // copy data
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
   W5100.send_data_processing(s, (uint8_t *)buf, ret);
   W5100.execCmdSn(s, Sock_SEND);
 
@@ -151,17 +185,23 @@ uint16_t send(SOCKET s, const uint8_t * buf, uint16_t len)
     /* m2008.01 [bj] : reduce code */
     if ( W5100.readSnSR(s) == SnSR::CLOSED )
     {
-      SPI.endTransaction();
+        #ifndef ARDUINO_ARCH_SAMD
+  SPI.endTransaction();
+  #endif
       close(s);
       return 0;
     }
-    SPI.endTransaction();
+      #ifndef ARDUINO_ARCH_SAMD
+  SPI.endTransaction();
     yield();
-    SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
   }
   /* +2008.01 bj */
   W5100.writeSnIR(s, SnIR::SEND_OK);
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.endTransaction();
+  #endif
   return ret;
 }
 
@@ -175,7 +215,9 @@ uint16_t send(SOCKET s, const uint8_t * buf, uint16_t len)
 int16_t recv(SOCKET s, uint8_t *buf, int16_t len)
 {
   // Check how much data is available
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
   int16_t ret = W5100.getRXReceivedSize(s);
   if ( ret == 0 )
   {
@@ -202,16 +244,22 @@ int16_t recv(SOCKET s, uint8_t *buf, int16_t len)
     W5100.recv_data_processing(s, buf, ret);
     W5100.execCmdSn(s, Sock_RECV);
   }
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.endTransaction();
+  #endif
   return ret;
 }
 
 
 int16_t recvAvailable(SOCKET s)
 {
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
   int16_t ret = W5100.getRXReceivedSize(s);
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.endTransaction();
+  #endif
   return ret;
 }
 
@@ -223,9 +271,13 @@ int16_t recvAvailable(SOCKET s)
  */
 uint16_t peek(SOCKET s, uint8_t *buf)
 {
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
   W5100.recv_data_processing(s, buf, 1, 1);
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.endTransaction();
+  #endif
   return 1;
 }
 
@@ -254,7 +306,9 @@ uint16_t sendto(SOCKET s, const uint8_t *buf, uint16_t len, uint8_t *addr, uint1
   }
   else
   {
-    SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+      #ifndef ARDUINO_ARCH_SAMD
+  SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
     W5100.writeSnDIPR(s, addr);
     W5100.writeSnDPORT(s, port);
 
@@ -269,17 +323,23 @@ uint16_t sendto(SOCKET s, const uint8_t *buf, uint16_t len, uint8_t *addr, uint1
       {
         /* +2008.01 [bj]: clear interrupt */
         W5100.writeSnIR(s, (SnIR::SEND_OK | SnIR::TIMEOUT)); /* clear SEND_OK & TIMEOUT */
-        SPI.endTransaction();
+          #ifndef ARDUINO_ARCH_SAMD
+  SPI.endTransaction();
+  #endif
         return 0;
       }
-      SPI.endTransaction();
+        #ifndef ARDUINO_ARCH_SAMD
+  SPI.endTransaction();
       yield();
-      SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
     }
 
     /* +2008.01 bj */
     W5100.writeSnIR(s, SnIR::SEND_OK);
-    SPI.endTransaction();
+      #ifndef ARDUINO_ARCH_SAMD
+  SPI.endTransaction();
+  #endif
   }
   return ret;
 }
@@ -299,7 +359,9 @@ uint16_t recvfrom(SOCKET s, uint8_t *buf, uint16_t len, uint8_t *addr, uint16_t 
 
   if ( len > 0 )
   {
-    SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+      #ifndef ARDUINO_ARCH_SAMD
+  SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
     ptr = W5100.readSnRX_RD(s);
     switch (W5100.readSnMR(s) & 0x07)
     {
@@ -354,7 +416,9 @@ uint16_t recvfrom(SOCKET s, uint8_t *buf, uint16_t len, uint8_t *addr, uint16_t 
       break;
     }
     W5100.execCmdSn(s, Sock_RECV);
-    SPI.endTransaction();
+      #ifndef ARDUINO_ARCH_SAMD
+  SPI.endTransaction();
+  #endif
   }
   return data_len;
 }
@@ -378,7 +442,9 @@ uint16_t igmpsend(SOCKET s, const uint8_t * buf, uint16_t len)
   if (ret == 0)
     return 0;
 
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
   W5100.send_data_processing(s, (uint8_t *)buf, ret);
   W5100.execCmdSn(s, Sock_SEND);
 
@@ -388,24 +454,32 @@ uint16_t igmpsend(SOCKET s, const uint8_t * buf, uint16_t len)
     {
       /* in case of igmp, if send fails, then socket closed */
       /* if you want change, remove this code. */
-      SPI.endTransaction();
+        #ifndef ARDUINO_ARCH_SAMD
+  SPI.endTransaction();
+  #endif
       close(s);
       return 0;
     }
-    SPI.endTransaction();
+      #ifndef ARDUINO_ARCH_SAMD
+  SPI.endTransaction();
     yield();
-    SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
   }
 
   W5100.writeSnIR(s, SnIR::SEND_OK);
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.endTransaction();
+  #endif
   return ret;
 }
 
 uint16_t bufferData(SOCKET s, uint16_t offset, const uint8_t* buf, uint16_t len)
 {
   uint16_t ret =0;
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
   if (len > W5100.getTXFreeSize(s))
   {
     ret = W5100.getTXFreeSize(s); // check size not to exceed MAX size.
@@ -415,7 +489,9 @@ uint16_t bufferData(SOCKET s, uint16_t offset, const uint8_t* buf, uint16_t len)
     ret = len;
   }
   W5100.send_data_processing_offset(s, offset, buf, ret);
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.endTransaction();
+  #endif
   return ret;
 }
 
@@ -431,17 +507,23 @@ int startUDP(SOCKET s, uint8_t* addr, uint16_t port)
   }
   else
   {
-    SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+      #ifndef ARDUINO_ARCH_SAMD
+  SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
     W5100.writeSnDIPR(s, addr);
     W5100.writeSnDPORT(s, port);
-    SPI.endTransaction();
+      #ifndef ARDUINO_ARCH_SAMD
+  SPI.endTransaction();
+  #endif
     return 1;
   }
 }
 
 int sendUDP(SOCKET s)
 {
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
   W5100.execCmdSn(s, Sock_SEND);
 		
   /* +2008.01 bj */
@@ -451,17 +533,23 @@ int sendUDP(SOCKET s)
     {
       /* +2008.01 [bj]: clear interrupt */
       W5100.writeSnIR(s, (SnIR::SEND_OK|SnIR::TIMEOUT));
-      SPI.endTransaction();
+        #ifndef ARDUINO_ARCH_SAMD
+  SPI.endTransaction();
+  #endif
       return 0;
     }
-    SPI.endTransaction();
+      #ifndef ARDUINO_ARCH_SAMD
+  SPI.endTransaction();
     yield();
-    SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  SPI.beginTransaction(SPI_ETHERNET_SETTINGS);
+  #endif
   }
 
   /* +2008.01 bj */	
   W5100.writeSnIR(s, SnIR::SEND_OK);
+    #ifndef ARDUINO_ARCH_SAMD
   SPI.endTransaction();
+  #endif
 
   /* Sent ok */
   return 1;

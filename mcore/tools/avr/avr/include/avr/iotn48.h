@@ -1,4 +1,4 @@
-/* Copyright (c) 2007 Atmel Corporation
+/* Copyright (c) 2007-2010 Atmel Corporation
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -29,7 +29,7 @@
   POSSIBILITY OF SUCH DAMAGE. 
 */
 
-/* $Id: iotn48.h,v 1.4.2.15 2009/03/27 16:26:07 arcanum Exp $ */
+/* $Id: iotn48.h 2225 2011-03-02 16:27:26Z arcanum $ */
 
 /* avr/iotn48.h - definitions for ATtiny48 */
 
@@ -629,11 +629,11 @@
 #define TWSR _SFR_MEM8(0xB9)
 #define TWPS0 0
 #define TWPS1 1
-#define TWS3 2
-#define TWS4 3
-#define TWS5 4
-#define TWS6 5
-#define TWS7 6
+#define TWS3 3
+#define TWS4 4
+#define TWS5 5
+#define TWS6 6
+#define TWS7 7
 
 #define TWAR _SFR_MEM8(0xBA)
 #define TWGCE 0
@@ -681,31 +681,69 @@
 /* Interrupt Vectors */
 /* Interrupt vector 0 is the reset vector. */
 
+#define INT0_vect_num     1
 #define INT0_vect         _VECTOR(1)
+
+#define INT1_vect_num     2
 #define INT1_vect         _VECTOR(2)
+
+#define PCINT0_vect_num   3
 #define PCINT0_vect       _VECTOR(3)
+
+#define PCINT1_vect_num   4
 #define PCINT1_vect       _VECTOR(4)
+
+#define PCINT2_vect_num   5
 #define PCINT2_vect       _VECTOR(5)
+
+#define PCINT3_vect_num   6
 #define PCINT3_vect       _VECTOR(6)
+
+#define WDT_vect_num      7
 #define WDT_vect          _VECTOR(7)
+
+#define TIMER1_CAPT_vect_num  8
 #define TIMER1_CAPT_vect  _VECTOR(8)
+
+#define TIMER1_COMPA_vect_num  9
 #define TIMER1_COMPA_vect _VECTOR(9)
+
+#define TIMER1_COMPB_vect_num  10
 #define TIMER1_COMPB_vect _VECTOR(10)
+
+#define TIMER1_OVF_vect_num  11
 #define TIMER1_OVF_vect   _VECTOR(11)
+
+#define TIMER0_COMPA_vect_num  12
 #define TIMER0_COMPA_vect _VECTOR(12)
+
+#define TIMER0_COMPB_vect_num  13
 #define TIMER0_COMPB_vect _VECTOR(13)
+
+#define TIMER0_OVF_vect_num  14
 #define TIMER0_OVF_vect   _VECTOR(14)
+
+#define SPI_STC_vect_num  15
 #define SPI_STC_vect      _VECTOR(15)
+
+#define ADC_vect_num      16
 #define ADC_vect          _VECTOR(16)
+
+#define EE_READY_vect_num 17
 #define EE_READY_vect     _VECTOR(17)
+
+#define ANALOG_COMP_vect_num  18
 #define ANALOG_COMP_vect  _VECTOR(18)
+
+#define TWI_vect_num      19
 #define TWI_vect          _VECTOR(19)
 
 #define _VECTORS_SIZE 40
 
 
 /* Constants */
-#define SPM_PAGESIZE 32
+#define SPM_PAGESIZE 64
+#define RAMSTART     (0x100)
 #define RAMEND       0x1FF
 #define XRAMSIZE     0
 #define XRAMEND      RAMEND

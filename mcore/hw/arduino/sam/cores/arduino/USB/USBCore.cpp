@@ -73,6 +73,13 @@ const uint8_t STRING_PRODUCT[] = USB_PRODUCT;
 #    undef USB_MANUFACTURER
 #  endif
 #  define USB_MANUFACTURER "Arduino LLC"
+
+#elif USB_VID == 0x2a03
+#  if defined(USB_MANUFACTURER)
+#    undef USB_MANUFACTURER
+#  endif
+#  define USB_MANUFACTURER "Arduino Srl"
+
 #elif !defined(USB_MANUFACTURER)
 // Fall through to unknown if no manufacturer name was provided in a macro
 #  define USB_MANUFACTURER "Unknown"

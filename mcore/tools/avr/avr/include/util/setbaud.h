@@ -29,7 +29,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: setbaud.h,v 1.1 2007/10/28 23:01:09 joerg_wunsch Exp $ */
+/* $Id$ */
 
 /**
    \file
@@ -191,7 +191,11 @@
 #  define BAUD_TOL 2
 #endif
 
+#ifdef __ASSEMBLER__
+#define UBRR_VALUE (((F_CPU) + 8 * (BAUD)) / (16 * (BAUD)) -1)
+#else
 #define UBRR_VALUE (((F_CPU) + 8UL * (BAUD)) / (16UL * (BAUD)) -1UL)
+#endif
 
 #if 100 * (F_CPU) > \
   (16 * ((UBRR_VALUE) + 1)) * (100 * (BAUD) + (BAUD) * (BAUD_TOL))
@@ -206,7 +210,12 @@
 #if USE_2X
 /* U2X required, recalculate */
 #undef UBRR_VALUE
+
+#ifdef __ASSEMBLER__
+#define UBRR_VALUE (((F_CPU) + 4 * (BAUD)) / (8 * (BAUD)) -1)
+#else
 #define UBRR_VALUE (((F_CPU) + 4UL * (BAUD)) / (8UL * (BAUD)) -1UL)
+#endif
 
 #if 100 * (F_CPU) > \
   (8 * ((UBRR_VALUE) + 1)) * (100 * (BAUD) + (BAUD) * (BAUD_TOL))
@@ -221,6 +230,11 @@
 #endif /* USE_U2X */
 
 #ifdef UBRR_VALUE
+   /* Check for overflow */
+#  if UBRR_VALUE >= (1 << 12)
+#    warning "UBRR value overflow"
+#  endif
+
 #  define UBRRL_VALUE (UBRR_VALUE & 0xff)
 #  define UBRRH_VALUE (UBRR_VALUE >> 8)
 #endif

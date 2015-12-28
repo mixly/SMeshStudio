@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: iom16a.h,v 1.1.2.2 2009/11/02 02:44:17 arcanum Exp $ */
+/* $Id: iom16a.h 2248 2011-05-23 19:54:32Z joerg_wunsch $ */
 
 /* avr/iom16a.h - definitions for ATmega16A */
 
@@ -678,12 +678,24 @@
 #define TIMER0_OVF_vect      _VECTOR(9)  /* Timer/Counter0 Overflow */
 #define SPISTC_vect_num  10
 #define SPISTC_vect      _VECTOR(10)  /* Serial Transfer Complete */
+
+/* The following vectors use an inconsistent (to the ATmega16 etc.)
+   naming scheme.  The inconsistent names are preserved here for softwares
+   that already use them: */
 #define USARTRXC_vect_num  11
 #define USARTRXC_vect      _VECTOR(11)  /* USART, Rx Complete */
 #define USARTUDRE_vect_num  12
 #define USARTUDRE_vect      _VECTOR(12)  /* USART Data Register Empty */
 #define USARTTXC_vect_num  13
 #define USARTTXC_vect      _VECTOR(13)  /* USART, Tx Complete */
+/* The "classic" designators: */
+#define USART_RXC_vect_num  11
+#define USART_RXC_vect      _VECTOR(11)  /* USART, Rx Complete */
+#define USART_UDRE_vect_num  12
+#define USART_UDRE_vect      _VECTOR(12)  /* USART Data Register Empty */
+#define USART_TXC_vect_num  13
+#define USART_TXC_vect      _VECTOR(13)  /* USART, Tx Complete */
+
 #define ADC_vect_num  14
 #define ADC_vect      _VECTOR(14)  /* ADC Conversion Complete */
 #define EE_RDY_vect_num  15

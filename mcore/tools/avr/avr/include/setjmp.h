@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: setjmp.h,v 1.10.2.1 2008/03/24 11:29:53 dmix Exp $ */
+/* $Id$ */
 
 #ifndef __SETJMP_H_
 #define __SETJMP_H_ 1
@@ -40,17 +40,20 @@ extern "C" {
 /*
    jmp_buf:
 	offset	size	description
-	 0	16	call-saved registers (r2-r17)
-	16	 2	frame pointer (r29:r28)
-	18	 2	stack pointer (SPH:SPL)
-	20	 1	status register (SREG)
-	21	 2/3	return address (PC) (2 bytes used for <=128Kw flash)
-	23/24 = total size
+	 0	16/4	call-saved registers (r2-r17)
+                        (AVR tiny10 family has only 4 call saved registers (r18-r21))
+	16/4	 2	frame pointer (r29:r28)
+	18/6	 2	stack pointer (SPH:SPL)
+	20/8	 1	status register (SREG)
+	21/9	 2/3	return address (PC) (2 bytes used for <=128Kw flash)
+	23/24/11 = total size (AVR Tiny10 family always has 2 bytes PC)
  */
 
 #if !defined(__DOXYGEN__)
 
-#if	defined(__AVR_3_BYTE_PC__) && __AVR_3_BYTE_PC__
+#if defined(__AVR_TINY__)
+# define _JBLEN 11
+#elif	defined(__AVR_3_BYTE_PC__) && __AVR_3_BYTE_PC__
 # define _JBLEN  24
 #else
 # define _JBLEN  23

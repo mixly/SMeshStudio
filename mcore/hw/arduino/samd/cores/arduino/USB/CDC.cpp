@@ -1,19 +1,17 @@
-/*
-  Copyright (c) 2014 Arduino.  All right reserved.
-
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+/* Copyright (c) 2011, Peter Barrett
+**
+** Permission to use, copy, modify, and/or distribute this software for
+** any purpose with or without fee is hereby granted, provided that the
+** above copyright notice and this permission notice appear in all copies.
+**
+** THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL
+** WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
+** WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR
+** BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES
+** OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+** WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+** ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
+** SOFTWARE.
 */
 
 #include <stdlib.h>
@@ -61,7 +59,7 @@ typedef struct
 } LineInfo;
 
 _Pragma("pack(1)")
-static volatile LineInfo _usbLineInfo = {
+static volatile LineInfo _usbLineInfo = { 
    115200, // dWDTERate
     0x00,  // bCharFormat
     0x00,  // bParityType
@@ -77,7 +75,7 @@ static const CDCDescriptor _cdcInterface =
 	//	CDC communication interface
 	D_INTERFACE(CDC_ACM_INTERFACE,1,CDC_COMMUNICATION_INTERFACE_CLASS,CDC_ABSTRACT_CONTROL_MODEL,0),
 	D_CDCCS( CDC_HEADER, CDC_V1_10 & 0xFF, (CDC_V1_10>>8) & 0x0FF ),	// Header (1.10 bcd)
-
+	
 	D_CDCCS4(CDC_ABSTRACT_CONTROL_MANAGEMENT,6),				// SET_LINE_CODING, GET_LINE_CODING, SET_CONTROL_LINE_STATE supported
 	D_CDCCS(CDC_UNION,CDC_ACM_INTERFACE,CDC_DATA_INTERFACE),	// Communication interface is master, data interface is slave 0
 	D_CDCCS(CDC_CALL_MANAGEMENT,1,1),							// Device handles call management (not)
@@ -118,26 +116,26 @@ bool WEAK CDC_Setup(Setup& setup)
 	{
 		if (CDC_SET_LINE_CODING == r)
 		{
-			USBD_RecvControl((void*)&_usbLineInfo,7);
+			while( UDD_FifoByteCount(EP0) <15);
+			//USBD_RecvControl((void*)&_usbLineInfo,7);
+			uint8_t* line = (uint8_t*)&_usbLineInfo;
+			for(uint8_t i = 0; i<7; i++)
+				line[i] = setup.data[i];
+			return false;
 		}
 
 		if (CDC_SET_CONTROL_LINE_STATE == r)
 		{
 			_usbLineInfo.lineState = setup.wValueL;
-		}
-
-		if (CDC_SET_LINE_CODING == r || CDC_SET_CONTROL_LINE_STATE == r)
-		{
 			// auto-reset into the bootloader is triggered when the port, already
-			// open at 1200 bps, is closed. We check DTR state to determine if host 
-			// port is open (bit 0 of lineState).
-			if (1200 == _usbLineInfo.dwDTERate && (_usbLineInfo.lineState & 0x01) == 0)
+			// open at 1200 bps, is closed.
+			if (1200 == _usbLineInfo.dwDTERate)
 			{
-				initiateReset(250);
-			}
-			else
-			{
-				cancelReset();
+				// We check DTR state to determine if host port is open (bit 0 of lineState).
+				if ((_usbLineInfo.lineState & 0x01) == 0)
+					initiateReset(250);
+				else
+					cancelReset();
 			}
 			return false;
 		}
@@ -160,26 +158,25 @@ void Serial_::end(void)
 
 void Serial_::accept(void)
 {
-	uint8_t buffer[CDC_SERIAL_BUFFER_SIZE];
-	uint32_t len = USBD_Recv(CDC_ENDPOINT_OUT, (void*)&buffer, CDC_SERIAL_BUFFER_SIZE);
-
-	noInterrupts();
-	ring_buffer *ringBuffer = &cdc_rx_buffer;
-	uint32_t i = ringBuffer->head;
+	ring_buffer *buffer = &cdc_rx_buffer;
+	uint32_t i = (uint32_t)(buffer->head+1) % CDC_SERIAL_BUFFER_SIZE;
 
 	// if we should be storing the received character into the location
 	// just before the tail (meaning that the head would advance to the
 	// current location of the tail), we're about to overflow the buffer
 	// and so we don't write the character or advance the head.
-	uint32_t k = 0;
-	i = (i + 1) % CDC_SERIAL_BUFFER_SIZE;
-	while (i != ringBuffer->tail && len>0) {
-		len--;
-		ringBuffer->buffer[ringBuffer->head] = buffer[k++];
-		ringBuffer->head = i;
+	while (i != buffer->tail) {
+		uint32_t c;
+		if (!USBD_Available(CDC_ENDPOINT_OUT)) {
+            UDD_ReleaseRX(CDC_ENDPOINT_OUT);
+			break;
+		}
+		c = USBD_Recv(CDC_ENDPOINT_OUT);
+		buffer->buffer[buffer->head] = c;
+		buffer->head = i;
+
 		i = (i + 1) % CDC_SERIAL_BUFFER_SIZE;
 	}
-	interrupts();
 }
 
 int Serial_::available(void)
@@ -234,10 +231,6 @@ size_t Serial_::write(const uint8_t *buffer, size_t size)
 	 bytes sent before the user opens the connection or after
 	 the connection is closed are lost - just like with a UART. */
 
-	// TODO - ZE - check behavior on different OSes and test what happens if an
-	// open connection isn't broken cleanly (cable is yanked out, host dies
-	// or locks up, or host virtual serial port hangs)
-//	if (_usbLineInfo.lineState > 0)  // Problem with Windows(R)
 	{
 		uint32_t r = USBD_Send(CDC_ENDPOINT_IN, buffer, size);
 
@@ -265,6 +258,7 @@ size_t Serial_::write(uint8_t c) {
 // actually ready to receive and display the data.
 // We add a short delay before returning to fix a bug observed by Federico
 // where the port is configured (lineState != 0) but not quite opened.
+
 Serial_::operator bool()
 {
 	// this is here to avoid spurious opening after upload

@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: iom32u6.h,v 1.1.2.4 2009/02/11 18:05:29 arcanum Exp $ */
+/* $Id: iom32u6.h 1873 2009-02-11 17:53:39Z arcanum $ */
 
 /* avr/iom32u6.h - definitions for ATmega32U6 */
 

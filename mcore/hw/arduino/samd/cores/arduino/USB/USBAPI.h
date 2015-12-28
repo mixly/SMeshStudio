@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2014 Arduino.  All right reserved.
+  Copyright (c) 2012 Arduino.  All right reserved.
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -18,13 +18,6 @@
 
 #ifndef __USBAPI__
 #define __USBAPI__
-
-#define HSTPIPCFG_PTYPE_BLK 1
-#define HSTPIPCFG_PTOKEN_IN 2
-#define HSTPIPCFG_PTOKEN_OUT 3
-#define HSTPIPCFG_PBK_1_BANK 4
-#define HSTPIPCFG_PTYPE_INTRPT 5
-
 
 
 /* Define attribute */
@@ -187,6 +180,7 @@ typedef struct
 	uint8_t wValueH;
 	uint16_t wIndex;
 	uint16_t wLength;
+	uint8_t data[8];
 } Setup;
 
 //================================================================================

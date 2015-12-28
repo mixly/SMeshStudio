@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: io90scr100.h,v 1.1.2.6 2009/03/04 17:45:30 arcanum Exp $ */
+/* $Id: io90scr100.h 1910 2009-03-04 17:45:30Z arcanum $ */
 
 /* avr/io90scr100.h - definitions for AT90SCR100 */
 

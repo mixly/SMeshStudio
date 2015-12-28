@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: iom88pa.h,v 1.1.2.2 2009/11/02 02:44:17 arcanum Exp $ */
+/* $Id: iom88pa.h 2035 2009-11-02 02:44:17Z arcanum $ */
 
 /* avr/iom88pa.h - definitions for ATmega88PA */
 
@@ -337,10 +337,12 @@
 
 #define SPMCSR _SFR_IO8(0x37)
 #define SELFPRGEN 0
+#define SPMEN 0
 #define PGERS 1
 #define PGWRT 2
 #define BLBSET 3
 #define RWWSRE 4
+#define SIGRD 5
 #define RWWSB 6
 #define SPMIE 7
 

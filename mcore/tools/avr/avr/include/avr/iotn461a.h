@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: iotn461a.h,v 1.1.2.2 2009/11/18 22:06:28 arcanum Exp $ */
+/* $Id: iotn461a.h 2063 2009-11-18 22:06:28Z arcanum $ */
 
 /* avr/iotn461a.h - definitions for ATtiny461A */
 

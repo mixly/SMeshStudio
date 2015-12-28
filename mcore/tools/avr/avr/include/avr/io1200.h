@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: io1200.h,v 1.8.4.3 2008/08/14 00:07:59 arcanum Exp $ */
+/* $Id: io1200.h 2225 2011-03-02 16:27:26Z arcanum $ */
 
 /* avr/io1200.h - definitions for AT90S1200 */
 
@@ -115,14 +115,17 @@
 /* Interrupt vectors */
 
 /* External Interrupt 0 */
+#define INT0_vect_num		1
 #define INT0_vect			_VECTOR(1)
 #define SIG_INTERRUPT0			_VECTOR(1)
 
 /* Timer/Counter0 Overflow */
+#define TIMER0_OVF_vect_num		2
 #define TIMER0_OVF_vect			_VECTOR(2)
 #define SIG_OVERFLOW0			_VECTOR(2)
 
 /* Analog Comparator */
+#define ANA_COMP_vect_num		3
 #define ANA_COMP_vect			_VECTOR(3)
 #define SIG_COMPARATOR			_VECTOR(3)
 
@@ -240,6 +243,7 @@
 
 #undef ZH
 
+#define RAMSTART    0x60
 /* Last memory addresses */
 #define RAMEND		0x1F
 #define XRAMEND		0x0

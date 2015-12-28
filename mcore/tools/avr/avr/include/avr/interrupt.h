@@ -30,7 +30,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: interrupt.h,v 1.25.2.1 2008/01/05 06:33:11 dmix Exp $ */
+/* $Id$ */
 
 #ifndef _AVR_INTERRUPT_H_
 #define _AVR_INTERRUPT_H_
@@ -51,35 +51,52 @@
 /** \name Global manipulation of the interrupt flag
 
     The global interrupt flag is maintained in the I bit of the status
-    register (SREG). 
+    register (SREG).
+
+    Handling interrupts frequently requires attention regarding atomic
+    access to objects that could be altered by code running within an
+    interrupt context, see <util/atomic.h>.
+
+    Frequently, interrupts are being disabled for periods of time in
+    order to perform certain operations without being disturbed; see
+    \ref optim_code_reorder for things to be taken into account with
+    respect to compiler optimizations.
 */
 
 #if defined(__DOXYGEN__)
 /** \def sei()
     \ingroup avr_interrupts
 
-    \code #include <avr/interrupt.h> \endcode
-
     Enables interrupts by setting the global interrupt mask. This function
     actually compiles into a single line of assembly, so there is no function
-    call overhead. */
+    call overhead.  However, the macro also implies a <i>memory barrier</i>
+    which can cause additional loss of optimization.
+
+    In order to implement atomic access to multi-byte objects,
+    consider using the macros from <util/atomic.h>, rather than
+    implementing them manually with cli() and sei().
+*/
 #define sei()
 #else  /* !DOXYGEN */
-# define sei()  __asm__ __volatile__ ("sei" ::)
+# define sei()  __asm__ __volatile__ ("sei" ::: "memory")
 #endif /* DOXYGEN */
 
 #if defined(__DOXYGEN__)
 /** \def cli()
     \ingroup avr_interrupts
 
-    \code #include <avr/interrupt.h> \endcode
-
     Disables all interrupts by clearing the global interrupt mask. This function
     actually compiles into a single line of assembly, so there is no function
-    call overhead. */
+    call overhead.  However, the macro also implies a <i>memory barrier</i>
+    which can cause additional loss of optimization.
+
+    In order to implement atomic access to multi-byte objects,
+    consider using the macros from <util/atomic.h>, rather than
+    implementing them manually with cli() and sei().
+*/
 #define cli()
 #else  /* !DOXYGEN */
-# define cli()  __asm__ __volatile__ ("cli" ::)
+# define cli()  __asm__ __volatile__ ("cli" ::: "memory")
 #endif /* DOXYGEN */
 
 
@@ -89,8 +106,6 @@
 #if defined(__DOXYGEN__)
 /** \def ISR(vector [, attributes])
     \ingroup avr_interrupts
-
-    \code #include <avr/interrupt.h> \endcode
 
     Introduces an interrupt handler function (interrupt service
     routine) that runs with global interrupts initially disabled
@@ -132,8 +147,6 @@
 /** \def SIGNAL(vector)
     \ingroup avr_interrupts
 
-    \code #include <avr/interrupt.h> \endcode
-
     Introduces an interrupt handler function that runs with global interrupts
     initially disabled.
 
@@ -159,8 +172,6 @@
 /** \def EMPTY_INTERRUPT(vector)
     \ingroup avr_interrupts
 
-    \code #include <avr/interrupt.h> \endcode
-
     Defines an empty interrupt handler function. This will not generate
     any prolog or epilog code and will only return from the ISR. Do not
     define a function body as this will define it for you.
@@ -185,8 +196,6 @@
 /** \def ISR_ALIAS(vector, target_vector)
     \ingroup avr_interrupts
 
-    \code #include <avr/interrupt.h> \endcode
-
     Aliases a given vector to another one in the same manner as the
     ISR_ALIASOF attribute for the ISR() macro. Unlike the ISR_ALIASOF
     attribute macro however, this is compatible for all versions of
@@ -210,6 +219,7 @@
 
     ISR_ALIAS(INT1_vect, INT0_vect);
     \endcode 
+    
 */
 #  define ISR_ALIAS(vector, target_vector)
 #else /* real code */
@@ -241,8 +251,6 @@
 #if defined(__DOXYGEN__)
 /** \def reti()
     \ingroup avr_interrupts
-
-    \code #include <avr/interrupt.h> \endcode
 
     Returns from an interrupt routine, enabling global interrupts. This should
     be the last command executed before leaving an ISR defined with the ISR_NAKED
@@ -278,8 +286,6 @@
 /** \def ISR_BLOCK
     \ingroup avr_interrupts
 
-    \code# include <avr/interrupt.h> \endcode
-
     Identical to an ISR with no attributes specified. Global
     interrupts are initially disabled by the AVR hardware when
     entering the ISR, without the compiler modifying this state.
@@ -290,8 +296,6 @@
 
 /** \def ISR_NOBLOCK
     \ingroup avr_interrupts
-
-    \code# include <avr/interrupt.h> \endcode
 
     ISR runs with global interrupts initially enabled.  The interrupt
     enable flag is activated by the compiler as early as possible
@@ -310,8 +314,6 @@
 /** \def ISR_NAKED
     \ingroup avr_interrupts
 
-    \code# include <avr/interrupt.h> \endcode
-
     ISR is created with no prologue or epilogue code. The user code is
     responsible for preservation of the machine state including the
     SREG register, as well as placing a reti() at the end of the
@@ -323,8 +325,6 @@
 
 /** \def ISR_ALIASOF(target_vector)
     \ingroup avr_interrupts
-
-    \code#include <avr/interrupt.h>\endcode
 
     The ISR is linked to another ISR, specified by the vect parameter.
     This is compatible with GCC 4.2 and greater only.

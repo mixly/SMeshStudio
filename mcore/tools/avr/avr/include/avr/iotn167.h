@@ -1,4 +1,4 @@
-/* Copyright (c) 2008 Atmel Corporation
+/* Copyright (c) 2008-2010 Atmel Corporation
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -29,7 +29,7 @@
   POSSIBILITY OF SUCH DAMAGE. 
 */
 
-/* $Id: iotn167.h,v 1.1.2.6 2009/02/11 18:05:31 arcanum Exp $ */
+/* $Id: iotn167.h 2253 2011-09-26 14:53:41Z arcanum $ */
 
 /* avr/iotn167.h - definitions for ATtiny167. */
 
@@ -114,7 +114,7 @@
 
 #define PORTCR _SFR_IO8(0x12)
 #define PUDA 0
-#define PUDB 2
+#define PUDB 1
 #define BBMA 4
 #define BBMB 5
 
@@ -298,8 +298,8 @@
 
 #define MCUCR _SFR_IO8(0x35)
 #define PUD 4
-#define BODS 5
-#define BODSE 6
+#define BODSE 5
+#define BODS 6
 
 #define SPMCSR _SFR_IO8(0x37)
 #define SPMEN 0
@@ -472,9 +472,9 @@
 #define ADC7D 7
 
 #define DIDR1 _SFR_MEM8(0x7F)
-#define ADC8D 0
-#define ADC9D 1
-#define ADC10D 2
+#define ADC8D 4
+#define ADC9D 5
+#define ADC10D 6
 
 #define TCCR1A _SFR_MEM8(0x80)
 #define WGM10 0
@@ -529,7 +529,7 @@
 #define TCNT1H6 6
 #define TCNT1H7 7
 
-#define ICR1 _SFR_MEM8(0x86)
+#define ICR1 _SFR_MEM16(0x86)
 
 #define ICR1L _SFR_MEM8(0x86)
 #define ICR1L0 0
@@ -749,24 +749,61 @@
 
 /* Interrupt Vectors */
 /* Interrupt Vector 0 is the reset vector. */
+#define INT0_vect_num       1
 #define INT0_vect           _VECTOR(1)  /* External Interrupt Request 0 */
+
+#define INT1_vect_num       2
 #define INT1_vect           _VECTOR(2)  /* External Interrupt Request 1 */
+
+#define PCINT0_vect_num     3
 #define PCINT0_vect         _VECTOR(3)  /* Pin Change Interrupt Request 0 */
+
+#define PCINT1_vect_num     4
 #define PCINT1_vect         _VECTOR(4)  /* Pin Change Interrupt Request 1 */
+
+#define WDT_vect_num        5
 #define WDT_vect            _VECTOR(5)  /* Watchdog Time-Out Interrupt */
+
+#define TIMER1_CAPT_vect_num  6
 #define TIMER1_CAPT_vect    _VECTOR(6)  /* Timer/Counter1 Capture Event */
+
+#define TIMER1_COMPA_vect_num  7
 #define TIMER1_COMPA_vect   _VECTOR(7)  /* Timer/Counter1 Compare Match 1A */
+
+#define TIMER1_COMPB_vect_num  8
 #define TIMER1_COMPB_vect   _VECTOR(8)  /* Timer/Counter1 Compare Match 1B */
+
+#define TIMER1_OVF_vect_num 9
 #define TIMER1_OVF_vect     _VECTOR(9)  /* Timer/Counter1 Overflow */
+
+#define TIMER0_COMPA_vect_num  10
 #define TIMER0_COMPA_vect   _VECTOR(10)  /* Timer/Counter0 Compare Match 0A */
+
+#define TIMER0_OVF_vect_num 11
 #define TIMER0_OVF_vect     _VECTOR(11)  /* Timer/Counter0 Overflow */
+
+#define LIN_TC_vect_num     12
 #define LIN_TC_vect         _VECTOR(12)  /* LIN Transfer Complete */
+
+#define LIN_ERR_vect_num    13
 #define LIN_ERR_vect        _VECTOR(13)  /* LIN Error */
+
+#define SPI_STC_vect_num    14
 #define SPI_STC_vect        _VECTOR(14)  /* SPI Serial Transfer Complete */
+
+#define ADC_vect_num        15
 #define ADC_vect            _VECTOR(15)  /* ADC Conversion Complete */
+
+#define EE_RDY_vect_num     16
 #define EE_RDY_vect         _VECTOR(16)  /* EEPROM Ready */
+
+#define ANA_COMP_vect_num   17
 #define ANA_COMP_vect       _VECTOR(17)  /* Analog Comparator */
+
+#define USI_START_vect_num  18
 #define USI_START_vect      _VECTOR(18)  /* USI Start */
+
+#define USI_OVF_vect_num    19
 #define USI_OVF_vect        _VECTOR(19)  /* USI Overflow */
 
 #define _VECTORS_SIZE (20 * 4)
@@ -774,9 +811,9 @@
 
 
 /* Constants */
-#define SPM_PAGESIZE (64)
+#define SPM_PAGESIZE (128)
 #define RAMSTART     (0x100)
-#define RAMSIZE      (0x1FF)
+#define RAMSIZE      (0x200)
 #define RAMEND       (RAMSTART + RAMSIZE - 1)  /* Last On-Chip SRAM Location */
 #define XRAMSIZE     (0)
 #define XRAMEND      RAMEND

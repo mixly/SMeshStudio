@@ -1,4 +1,4 @@
-/* Copyright (c) 2009 Atmel Corporation
+/* Copyright (c) 2009-2010 Atmel Corporation
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: iox16d4.h,v 1.1.2.6 2009/12/29 22:41:05 arcanum Exp $ */
+/* $Id: iox16d4.h 2200 2010-12-14 04:24:24Z arcanum $ */
 
 /* avr/iox16d4.h - definitions for ATxmega16D4 */
 
@@ -50,6 +50,24 @@
 
 
 /* Ungrouped common registers */
+#define GPIOR0  _SFR_MEM8(0x0000)  /* General Purpose IO Register 0 */
+#define GPIOR1  _SFR_MEM8(0x0001)  /* General Purpose IO Register 1 */
+#define GPIOR2  _SFR_MEM8(0x0002)  /* General Purpose IO Register 2 */
+#define GPIOR3  _SFR_MEM8(0x0003)  /* General Purpose IO Register 3 */
+#define GPIOR4  _SFR_MEM8(0x0004)  /* General Purpose IO Register 4 */
+#define GPIOR5  _SFR_MEM8(0x0005)  /* General Purpose IO Register 5 */
+#define GPIOR6  _SFR_MEM8(0x0006)  /* General Purpose IO Register 6 */
+#define GPIOR7  _SFR_MEM8(0x0007)  /* General Purpose IO Register 7 */
+#define GPIOR8  _SFR_MEM8(0x0008)  /* General Purpose IO Register 8 */
+#define GPIOR9  _SFR_MEM8(0x0009)  /* General Purpose IO Register 9 */
+#define GPIORA  _SFR_MEM8(0x000A)  /* General Purpose IO Register 10 */
+#define GPIORB  _SFR_MEM8(0x000B)  /* General Purpose IO Register 11 */
+#define GPIORC  _SFR_MEM8(0x000C)  /* General Purpose IO Register 12 */
+#define GPIORD  _SFR_MEM8(0x000D)  /* General Purpose IO Register 13 */
+#define GPIORE  _SFR_MEM8(0x000E)  /* General Purpose IO Register 14 */
+#define GPIORF  _SFR_MEM8(0x000F)  /* General Purpose IO Register 15 */
+
+/* Deprecated */
 #define GPIO0  _SFR_MEM8(0x0000)  /* General Purpose IO Register 0 */
 #define GPIO1  _SFR_MEM8(0x0001)  /* General Purpose IO Register 1 */
 #define GPIO2  _SFR_MEM8(0x0002)  /* General Purpose IO Register 2 */
@@ -416,6 +434,42 @@ typedef struct PMIC_struct
 
 /*
 --------------------------------------------------------------------------
+CRC - Cyclic Redundancy Checker
+--------------------------------------------------------------------------
+*/
+
+/* Cyclic Redundancy Checker */
+typedef struct CRC_struct
+{
+    register8_t CTRL;  /* Control Register */
+    register8_t STATUS;  /* Status Register */
+    register8_t reserved_0x02;
+    register8_t DATAIN;  /* Data Input */
+    register8_t CHECKSUM0;  /* Checksum byte 0 */
+    register8_t CHECKSUM1;  /* Checksum byte 1 */
+    register8_t CHECKSUM2;  /* Checksum byte 2 */
+    register8_t CHECKSUM3;  /* Checksum byte 3 */
+} CRC_t;
+
+/* Reset */
+typedef enum CRC_RESET_enum
+{
+    CRC_RESET_NO_gc = (0x00<<6),  /* No Reset */
+    CRC_RESET_RESET0_gc = (0x02<<6),  /* Reset CRC with CHECKSUM to all zeros */
+    CRC_RESET_RESET1_gc = (0x03<<6),  /* Reset CRC with CHECKSUM to all ones */
+} CRC_RESET_t;
+
+/* Input Source */
+typedef enum CRC_SOURCE_enum
+{
+    CRC_SOURCE_DISABLE_gc = (0x00<<0),  /* Disabled */
+    CRC_SOURCE_IO_gc = (0x01<<0),  /* I/O Interface */
+    CRC_SOURCE_FLASH_gc = (0x02<<0),  /* Flash */
+} CRC_SOURCE_t;
+
+
+/*
+--------------------------------------------------------------------------
 EVSYS - Event System
 --------------------------------------------------------------------------
 */
@@ -427,10 +481,18 @@ typedef struct EVSYS_struct
     register8_t CH1MUX;  /* Event Channel 1 Multiplexer */
     register8_t CH2MUX;  /* Event Channel 2 Multiplexer */
     register8_t CH3MUX;  /* Event Channel 3 Multiplexer */
+    register8_t reserved_0x04;
+    register8_t reserved_0x05;
+    register8_t reserved_0x06;
+    register8_t reserved_0x07;
     register8_t CH0CTRL;  /* Channel 0 Control Register */
     register8_t CH1CTRL;  /* Channel 1 Control Register */
     register8_t CH2CTRL;  /* Channel 2 Control Register */
     register8_t CH3CTRL;  /* Channel 3 Control Register */
+    register8_t reserved_0x0C;
+    register8_t reserved_0x0D;
+    register8_t reserved_0x0E;
+    register8_t reserved_0x0F;
     register8_t STROBE;  /* Event Strobe */
     register8_t DATA;  /* Event Data */
 } EVSYS_t;
@@ -970,7 +1032,7 @@ typedef struct ADC_struct
     register8_t REFCTRL;  /* Reference Control */
     register8_t EVCTRL;  /* Event Control */
     register8_t PRESCALER;  /* Clock Prescaler */
-    register8_t CALCTRL;  /* Calibration Control Register */
+    register8_t reserved_0x05;
     register8_t INTFLAGS;  /* Interrupt Flags */
     register8_t reserved_0x07;
     register8_t reserved_0x08;
@@ -981,6 +1043,12 @@ typedef struct ADC_struct
     register8_t reserved_0x0E;
     register8_t reserved_0x0F;
     _WORDREGISTER(CH0RES);  /* Channel 0 Result */
+    register8_t reserved_0x12;
+    register8_t reserved_0x13;
+    register8_t reserved_0x14;
+    register8_t reserved_0x15;
+    register8_t reserved_0x16;
+    register8_t reserved_0x17;
     _WORDREGISTER(CMP);  /* Compare Value */
     register8_t reserved_0x1A;
     register8_t reserved_0x1B;
@@ -1016,14 +1084,14 @@ typedef enum ADC_CH_MUXINT_enum
 /* Negative input multiplexer selection */
 typedef enum ADC_CH_MUXNEG_enum
 {
-    ADC_CH_MUXNEG_PIN0_gc = (0x00<<0),  /* Input pin 0 */
-    ADC_CH_MUXNEG_PIN1_gc = (0x01<<0),  /* Input pin 1 */
-    ADC_CH_MUXNEG_PIN2_gc = (0x02<<0),  /* Input pin 2 */
-    ADC_CH_MUXNEG_PIN3_gc = (0x03<<0),  /* Input pin 3 */
-    ADC_CH_MUXNEG_PIN4_gc = (0x04<<0),  /* Input pin 4 */
-    ADC_CH_MUXNEG_PIN5_gc = (0x05<<0),  /* Input pin 5 */
-    ADC_CH_MUXNEG_PIN6_gc = (0x06<<0),  /* Input pin 6 */
-    ADC_CH_MUXNEG_PIN7_gc = (0x07<<0),  /* Input pin 7 */
+    ADC_CH_MUXNEG_PIN0_gc = (0x00<<0),  /* Input pin 0, INPUTMODE[1:0] = 10 */
+    ADC_CH_MUXNEG_PIN1_gc = (0x01<<0),  /* Input pin 1, INPUTMODE[1:0] = 10 */
+    ADC_CH_MUXNEG_PIN2_gc = (0x02<<0),  /* Input pin 2, INPUTMODE[1:0] = 10 */
+    ADC_CH_MUXNEG_PIN3_gc = (0x03<<0),  /* Input pin 3, INPUTMODE[1:0] = 10 */
+    ADC_CH_MUXNEG_PIN4_gc = (0x00<<0),  /* Input pin 4, INPUTMODE[1:0] = 11 */
+    ADC_CH_MUXNEG_PIN5_gc = (0x01<<0),  /* Input pin 5, INPUTMODE[1:0] = 11 */
+    ADC_CH_MUXNEG_PIN6_gc = (0x02<<0),  /* Input pin 6, INPUTMODE[1:0] = 11 */
+    ADC_CH_MUXNEG_PIN7_gc = (0x03<<0),  /* Input pin 7, INPUTMODE[1:0] = 11 */
 } ADC_CH_MUXNEG_t;
 
 /* Input mode */
@@ -1045,6 +1113,7 @@ typedef enum ADC_CH_GAIN_enum
     ADC_CH_GAIN_16X_gc = (0x04<<2),  /* 16x gain */
     ADC_CH_GAIN_32X_gc = (0x05<<2),  /* 32x gain */
     ADC_CH_GAIN_64X_gc = (0x06<<2),  /* 64x gain */
+    ADC_CH_GAIN_DIV2_gc = (0x07<<2),  /* x/2 gain */		
 } ADC_CH_GAIN_t;
 
 /* Conversion result resolution */
@@ -1054,6 +1123,14 @@ typedef enum ADC_RESOLUTION_enum
     ADC_RESOLUTION_8BIT_gc = (0x02<<1),  /* 8-bit right-adjusted result */
     ADC_RESOLUTION_LEFT12BIT_gc = (0x03<<1),  /* 12-bit left-adjusted result */
 } ADC_RESOLUTION_t;
+
+typedef enum ADC_CURRLIMIT_enum
+{
+    ADC_CURRLIMIT_NO_gc = (0x00<<5),  /* No limit */
+    ADC_CURRLIMIT_LOW_gc = (0x01<<5),  /* Low current limit, max. sampling rate 1.5MSPS */
+    ADC_CURRLIMIT_MED_gc = (0x02<<5),  /* Medium current limit, max. sampling rate 1MSPS */
+    ADC_CURRLIMIT_HIGH_gc = (0x03<<5),  /* High current limit, max. sampling rate 0.5MSPS */
+} ADC_CURRLIMIT_t;
 
 /* Voltage reference selection */
 typedef enum ADC_REFSEL_enum
@@ -1219,26 +1296,26 @@ typedef struct EBI_struct
 } EBI_t;
 
 /* Chip Select adress space */
-typedef enum EBI_CS_ASPACE_enum
+typedef enum EBI_CS_ASIZE_enum
 {
-    EBI_CS_ASPACE_256B_gc = (0x00<<2),  /* 256 bytes */
-    EBI_CS_ASPACE_512B_gc = (0x01<<2),  /* 512 bytes */
-    EBI_CS_ASPACE_1KB_gc = (0x02<<2),  /* 1K bytes */
-    EBI_CS_ASPACE_2KB_gc = (0x03<<2),  /* 2K bytes */
-    EBI_CS_ASPACE_4KB_gc = (0x04<<2),  /* 4K bytes */
-    EBI_CS_ASPACE_8KB_gc = (0x05<<2),  /* 8K bytes */
-    EBI_CS_ASPACE_16KB_gc = (0x06<<2),  /* 16K bytes */
-    EBI_CS_ASPACE_32KB_gc = (0x07<<2),  /* 32K bytes */
-    EBI_CS_ASPACE_64KB_gc = (0x08<<2),  /* 64K bytes */
-    EBI_CS_ASPACE_128KB_gc = (0x09<<2),  /* 128K bytes */
-    EBI_CS_ASPACE_256KB_gc = (0x0A<<2),  /* 256K bytes */
-    EBI_CS_ASPACE_512KB_gc = (0x0B<<2),  /* 512K bytes */
-    EBI_CS_ASPACE_1MB_gc = (0x0C<<2),  /* 1M bytes */
-    EBI_CS_ASPACE_2MB_gc = (0x0D<<2),  /* 2M bytes */
-    EBI_CS_ASPACE_4MB_gc = (0x0E<<2),  /* 4M bytes */
-    EBI_CS_ASPACE_8MB_gc = (0x0F<<2),  /* 8M bytes */
-    EBI_CS_ASPACE_16M_gc = (0x10<<2),  /* 16M bytes */
-} EBI_CS_ASPACE_t;
+    EBI_CS_ASIZE_256B_gc = (0x00<<2),  /* 256 bytes */
+    EBI_CS_ASIZE_512B_gc = (0x01<<2),  /* 512 bytes */
+    EBI_CS_ASIZE_1KB_gc = (0x02<<2),  /* 1K bytes */
+    EBI_CS_ASIZE_2KB_gc = (0x03<<2),  /* 2K bytes */
+    EBI_CS_ASIZE_4KB_gc = (0x04<<2),  /* 4K bytes */
+    EBI_CS_ASIZE_8KB_gc = (0x05<<2),  /* 8K bytes */
+    EBI_CS_ASIZE_16KB_gc = (0x06<<2),  /* 16K bytes */
+    EBI_CS_ASIZE_32KB_gc = (0x07<<2),  /* 32K bytes */
+    EBI_CS_ASIZE_64KB_gc = (0x08<<2),  /* 64K bytes */
+    EBI_CS_ASIZE_128KB_gc = (0x09<<2),  /* 128K bytes */
+    EBI_CS_ASIZE_256KB_gc = (0x0A<<2),  /* 256K bytes */
+    EBI_CS_ASIZE_512KB_gc = (0x0B<<2),  /* 512K bytes */
+    EBI_CS_ASIZE_1MB_gc = (0x0C<<2),  /* 1M bytes */
+    EBI_CS_ASIZE_2MB_gc = (0x0D<<2),  /* 2M bytes */
+    EBI_CS_ASIZE_4MB_gc = (0x0E<<2),  /* 4M bytes */
+    EBI_CS_ASIZE_8MB_gc = (0x0F<<2),  /* 8M bytes */
+    EBI_CS_ASIZE_16M_gc = (0x10<<2),  /* 16M bytes */
+} EBI_CS_ASIZE_t;
 
 /*  */
 typedef enum EBI_CS_SRWS_enum
@@ -1833,7 +1910,7 @@ typedef struct AWEX_struct
 {
     register8_t CTRL;  /* Control Register */
     register8_t reserved_0x01;
-    register8_t FDEVMASK;  /* Fault Detection Event Mask */
+    register8_t FDEMASK;  /* Fault Detection Event Mask */
     register8_t FDCTRL;  /* Fault Detection Control Register */
     register8_t STATUS;  /* Status Register */
     register8_t reserved_0x05;
@@ -1855,7 +1932,7 @@ TC - 16-bit Timer/Counter With PWM
 /* High-Resolution Extension */
 typedef struct HIRES_struct
 {
-    register8_t CTRL;  /* Control Register */
+    register8_t CTRLA;  /* Control Register */
 } HIRES_t;
 
 /* Clock Selection */
@@ -2150,13 +2227,11 @@ IO Module Instances. Mapped to memory.
 ==========================================================================
 */
 
-#define GPIO    (*(GPIO_t *) 0x0000)  /* General Purpose IO Registers */
 #define VPORT0    (*(VPORT_t *) 0x0010)  /* Virtual Port 0 */
 #define VPORT1    (*(VPORT_t *) 0x0014)  /* Virtual Port 1 */
 #define VPORT2    (*(VPORT_t *) 0x0018)  /* Virtual Port 2 */
 #define VPORT3    (*(VPORT_t *) 0x001C)  /* Virtual Port 3 */
 #define OCD    (*(OCD_t *) 0x002E)  /* On-Chip Debug System */
-#define CPU    (*(CPU_t *) 0x0030)  /* CPU Registers */
 #define CLK    (*(CLK_t *) 0x0040)  /* Clock System */
 #define SLEEP    (*(SLEEP_t *) 0x0048)  /* Sleep Controller */
 #define OSC    (*(OSC_t *) 0x0050)  /* Oscillator Control */
@@ -2174,6 +2249,7 @@ IO Module Instances. Mapped to memory.
 #define ACA    (*(AC_t *) 0x0380)  /* Analog Comparator A */
 #define RTC    (*(RTC_t *) 0x0400)  /* Real-Time Counter */
 #define TWIC    (*(TWI_t *) 0x0480)  /* Two-Wire Interface C */
+#define TWIE    (*(TWI_t *) 0x04A0)  /* Two-Wire Interface E */
 #define PORTA    (*(PORT_t *) 0x0600)  /* Port A */
 #define PORTB    (*(PORT_t *) 0x0620)  /* Port B */
 #define PORTC    (*(PORT_t *) 0x0640)  /* Port C */
@@ -2199,6 +2275,24 @@ IO Module Instances. Mapped to memory.
 /* ========== Flattened fully qualified IO register names ========== */
 
 /* GPIO - General Purpose IO Registers */
+#define GPIO_GPIOR0  _SFR_MEM8(0x0000)
+#define GPIO_GPIOR1  _SFR_MEM8(0x0001)
+#define GPIO_GPIOR2  _SFR_MEM8(0x0002)
+#define GPIO_GPIOR3  _SFR_MEM8(0x0003)
+#define GPIO_GPIOR4  _SFR_MEM8(0x0004)
+#define GPIO_GPIOR5  _SFR_MEM8(0x0005)
+#define GPIO_GPIOR6  _SFR_MEM8(0x0006)
+#define GPIO_GPIOR7  _SFR_MEM8(0x0007)
+#define GPIO_GPIOR8  _SFR_MEM8(0x0008)
+#define GPIO_GPIOR9  _SFR_MEM8(0x0009)
+#define GPIO_GPIORA  _SFR_MEM8(0x000A)
+#define GPIO_GPIORB  _SFR_MEM8(0x000B)
+#define GPIO_GPIORC  _SFR_MEM8(0x000C)
+#define GPIO_GPIORD  _SFR_MEM8(0x000D)
+#define GPIO_GPIORE  _SFR_MEM8(0x000E)
+#define GPIO_GPIORF  _SFR_MEM8(0x000F)
+
+/* Deprecated */
 #define GPIO_GPIO0  _SFR_MEM8(0x0000)
 #define GPIO_GPIO1  _SFR_MEM8(0x0001)
 #define GPIO_GPIO2  _SFR_MEM8(0x0002)
@@ -2360,7 +2454,6 @@ IO Module Instances. Mapped to memory.
 #define ADCA_REFCTRL  _SFR_MEM8(0x0202)
 #define ADCA_EVCTRL  _SFR_MEM8(0x0203)
 #define ADCA_PRESCALER  _SFR_MEM8(0x0204)
-#define ADCA_CALCTRL  _SFR_MEM8(0x0205)
 #define ADCA_INTFLAGS  _SFR_MEM8(0x0206)
 #define ADCA_CAL  _SFR_MEM16(0x020C)
 #define ADCA_CH0RES  _SFR_MEM16(0x0210)
@@ -2406,6 +2499,23 @@ IO Module Instances. Mapped to memory.
 #define TWIC_SLAVE_ADDR  _SFR_MEM8(0x048B)
 #define TWIC_SLAVE_DATA  _SFR_MEM8(0x048C)
 #define TWIC_SLAVE_ADDRMASK  _SFR_MEM8(0x048D)
+
+/* TWIE - Two-Wire Interface E */
+#define TWIE_CTRL  _SFR_MEM8(0x04A0)
+#define TWIE_MASTER_CTRLA  _SFR_MEM8(0x04A1)
+#define TWIE_MASTER_CTRLB  _SFR_MEM8(0x04A2)
+#define TWIE_MASTER_CTRLC  _SFR_MEM8(0x04A3)
+#define TWIE_MASTER_STATUS  _SFR_MEM8(0x04A4)
+#define TWIE_MASTER_BAUD  _SFR_MEM8(0x04A5)
+#define TWIE_MASTER_ADDR  _SFR_MEM8(0x04A6)
+#define TWIE_MASTER_DATA  _SFR_MEM8(0x04A7)
+#define TWIE_SLAVE_CTRLA  _SFR_MEM8(0x04A8)
+#define TWIE_SLAVE_CTRLB  _SFR_MEM8(0x04A9)
+#define TWIE_SLAVE_STATUS  _SFR_MEM8(0x04AA)
+#define TWIE_SLAVE_ADDR  _SFR_MEM8(0x04AB)
+#define TWIE_SLAVE_DATA  _SFR_MEM8(0x04AC)
+#define TWIE_SLAVE_ADDRMASK  _SFR_MEM8(0x04AD)
+
 
 /* PORTA - Port A */
 #define PORTA_DIR  _SFR_MEM8(0x0600)
@@ -2595,7 +2705,7 @@ IO Module Instances. Mapped to memory.
 
 /* AWEXC - Advanced Waveform Extension C */
 #define AWEXC_CTRL  _SFR_MEM8(0x0880)
-#define AWEXC_FDEVMASK  _SFR_MEM8(0x0882)
+#define AWEXC_FDEMASK  _SFR_MEM8(0x0882)
 #define AWEXC_FDCTRL  _SFR_MEM8(0x0883)
 #define AWEXC_STATUS  _SFR_MEM8(0x0884)
 #define AWEXC_DTBOTH  _SFR_MEM8(0x0886)
@@ -2607,7 +2717,7 @@ IO Module Instances. Mapped to memory.
 #define AWEXC_OUTOVEN  _SFR_MEM8(0x088C)
 
 /* HIRESC - High-Resolution Extension C */
-#define HIRESC_CTRL  _SFR_MEM8(0x0890)
+#define HIRESC_CTRLA  _SFR_MEM8(0x0890)
 
 /* USARTC0 - Universal Asynchronous Receiver-Transmitter C0 */
 #define USARTC0_DATA  _SFR_MEM8(0x08A0)
@@ -3794,6 +3904,8 @@ IO Module Instances. Mapped to memory.
 #define ADC_CH_MUXPOS2_bp  5  /* Positive Input Select bit 2 position. */
 #define ADC_CH_MUXPOS3_bm  (1<<6)  /* Positive Input Select bit 3 mask. */
 #define ADC_CH_MUXPOS3_bp  6  /* Positive Input Select bit 3 position. */
+#define ADC_CH_MUXPOS4_bm  (1<<7)  /* Positive Input Select bit 3 mask. */
+#define ADC_CH_MUXPOS4_bp  7  /* Positive Input Select bit 3 position. */
 
 #define ADC_CH_MUXINT_gm  0x78  /* Internal Input Select group mask. */
 #define ADC_CH_MUXINT_gp  3  /* Internal Input Select group position. */
@@ -3839,11 +3951,21 @@ IO Module Instances. Mapped to memory.
 #define ADC_CH0START_bm  0x04  /* Channel 0 Start Conversion bit mask. */
 #define ADC_CH0START_bp  2  /* Channel 0 Start Conversion bit position. */
 
+#define ADC_FLUSH_bm  0x02  /* ADC Flush bit mask. */
+#define ADC_FLUSH_bp  1  /* ADC Flush bit position. */
+
 #define ADC_ENABLE_bm  0x01  /* Enable ADC bit mask. */
 #define ADC_ENABLE_bp  0  /* Enable ADC bit position. */
 
 
 /* ADC.CTRLB  bit masks and bit positions */
+#define ADC_IMPMODE_bm  0x80  /* Impedance Mode bit mask. */
+#define ADC_IMPMODE_bp  7  /* Impedance Mode bit position. */
+
+#define ADC_CURRENT_bm  0x60  /* Current bit mask. */
+#define ADC_CURRENT1_bp  6  /* Current bit position. */
+#define ADC_CURRENT0_bp  5  /* Current bit position. */
+
 #define ADC_CONMODE_bm  0x10  /* Conversion Mode bit mask. */
 #define ADC_CONMODE_bp  4  /* Conversion Mode bit position. */
 
@@ -3859,12 +3981,14 @@ IO Module Instances. Mapped to memory.
 
 
 /* ADC.REFCTRL  bit masks and bit positions */
-#define ADC_REFSEL_gm  0x30  /* Reference Selection group mask. */
+#define ADC_REFSEL_gm  0x70  /* Reference Selection group mask. */
 #define ADC_REFSEL_gp  4  /* Reference Selection group position. */
 #define ADC_REFSEL0_bm  (1<<4)  /* Reference Selection bit 0 mask. */
 #define ADC_REFSEL0_bp  4  /* Reference Selection bit 0 position. */
 #define ADC_REFSEL1_bm  (1<<5)  /* Reference Selection bit 1 mask. */
 #define ADC_REFSEL1_bp  5  /* Reference Selection bit 1 position. */
+#define ADC_REFSEL2_bm  (1<<6)  /* Reference Selection bit 2 mask. */
+#define ADC_REFSEL2_bp  6  /* Reference Selection bit 2 position. */
 
 #define ADC_BANDGAP_bm  0x02  /* Bandgap enable bit mask. */
 #define ADC_BANDGAP_bp  1  /* Bandgap enable bit position. */
@@ -3909,11 +4033,6 @@ IO Module Instances. Mapped to memory.
 #define ADC_PRESCALER1_bp  1  /* Clock Prescaler Selection bit 1 position. */
 #define ADC_PRESCALER2_bm  (1<<2)  /* Clock Prescaler Selection bit 2 mask. */
 #define ADC_PRESCALER2_bp  2  /* Clock Prescaler Selection bit 2 position. */
-
-
-/* ADC.CALCTRL  bit masks and bit positions */
-#define ADC_CAL_bm  0x01  /* ADC Calibration Start bit mask. */
-#define ADC_CAL_bp  0  /* ADC Calibration Start bit position. */
 
 
 /* ADC.INTFLAGS  bit masks and bit positions */
@@ -3964,18 +4083,18 @@ IO Module Instances. Mapped to memory.
 
 /* EBI - External Bus Interface */
 /* EBI_CS.CTRLA  bit masks and bit positions */
-#define EBI_CS_ASPACE_gm  0x7C  /* Address Space group mask. */
-#define EBI_CS_ASPACE_gp  2  /* Address Space group position. */
-#define EBI_CS_ASPACE0_bm  (1<<2)  /* Address Space bit 0 mask. */
-#define EBI_CS_ASPACE0_bp  2  /* Address Space bit 0 position. */
-#define EBI_CS_ASPACE1_bm  (1<<3)  /* Address Space bit 1 mask. */
-#define EBI_CS_ASPACE1_bp  3  /* Address Space bit 1 position. */
-#define EBI_CS_ASPACE2_bm  (1<<4)  /* Address Space bit 2 mask. */
-#define EBI_CS_ASPACE2_bp  4  /* Address Space bit 2 position. */
-#define EBI_CS_ASPACE3_bm  (1<<5)  /* Address Space bit 3 mask. */
-#define EBI_CS_ASPACE3_bp  5  /* Address Space bit 3 position. */
-#define EBI_CS_ASPACE4_bm  (1<<6)  /* Address Space bit 4 mask. */
-#define EBI_CS_ASPACE4_bp  6  /* Address Space bit 4 position. */
+#define EBI_CS_ASIZE_gm  0x7C  /* Address Size group mask. */
+#define EBI_CS_ASIZE_gp  2  /* Address Size group position. */
+#define EBI_CS_ASIZE0_bm  (1<<2)  /* Address Size bit 0 mask. */
+#define EBI_CS_ASIZE0_bp  2  /* Address Size bit 0 position. */
+#define EBI_CS_ASIZE1_bm  (1<<3)  /* Address Size bit 1 mask. */
+#define EBI_CS_ASIZE1_bp  3  /* Address Size bit 1 position. */
+#define EBI_CS_ASIZE2_bm  (1<<4)  /* Address Size bit 2 mask. */
+#define EBI_CS_ASIZE2_bp  4  /* Address Size bit 2 position. */
+#define EBI_CS_ASIZE3_bm  (1<<5)  /* Address Size bit 3 mask. */
+#define EBI_CS_ASIZE3_bp  5  /* Address Size bit 3 position. */
+#define EBI_CS_ASIZE4_bm  (1<<6)  /* Address Size bit 4 mask. */
+#define EBI_CS_ASIZE4_bp  6  /* Address Size bit 4 position. */
 
 #define EBI_CS_MODE_gm  0x03  /* Memory Mode group mask. */
 #define EBI_CS_MODE_gp  0  /* Memory Mode group position. */
@@ -5321,6 +5440,12 @@ IO Module Instances. Mapped to memory.
 #define PORTE_INT0_vect      _VECTOR(43)  /* External Interrupt 0 */
 #define PORTE_INT1_vect_num  44
 #define PORTE_INT1_vect      _VECTOR(44)  /* External Interrupt 1 */
+
+/* TWIE interrupt vectors */
+#define TWIE_TWIS_vect_num  45
+#define TWIE_TWIS_vect      _VECTOR(45)  /* TWI Slave Interrupt */
+#define TWIE_TWIM_vect_num  46
+#define TWIE_TWIM_vect      _VECTOR(46)  /* TWI Master Interrupt */
 
 /* TCE0 interrupt vectors */
 #define TCE0_OVF_vect_num  47

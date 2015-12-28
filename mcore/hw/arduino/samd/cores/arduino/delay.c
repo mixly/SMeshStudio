@@ -1,21 +1,3 @@
-/*
-  Copyright (c) 2015 Arduino LLC.  All right reserved.
-
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
-
 #include "delay.h"
 #include "Arduino.h"
 
@@ -73,16 +55,89 @@ void delay( uint32_t ms )
   do
   {
     yield() ;
-  } while ( _ulTickCount - start <= ms ) ;
+  } while ( _ulTickCount - start <= (ms-1) ) ;
 }
 
-#include "Reset.h" // for tickReset()
-
-void SysTick_DefaultHandler(void)
+void SysTick_Handler( void )
 {
   // Increment tick count each ms
-  _ulTickCount++;
-  tickReset();
+  _ulTickCount++ ;
+}
+
+void delayMicroseconds(uint32_t usec)
+{
+	unsigned int presc=0, ref=0, sot=1;
+	double ref_val=0.0, div_val=0.0, usec_val=0.0;
+        unsigned long int i=0,limit=0;
+	
+        if (usec <=0) return;
+	usec_val=usec * 1.0;
+	
+	if(usec <= 20)
+       {
+            
+			  
+			if(usec == 1) limit = usec * 2;
+			else if(usec == 2) limit = usec * 6;
+			else if(usec == 3) limit = usec * 8;
+			else if(usec == 4) limit = usec * 9;
+			else if(usec == 5) limit = usec * 9;
+			else limit = usec * 11;
+           
+			for(i=0; i <= limit; i++);
+                {
+                  asm("NOP");
+                }  
+                return;
+         }  
+    else if(usec <=1363)
+	{
+		presc=TC_CTRLA_PRESCALER_DIV1;
+		div_val=1.0;
+	        ref = (uint16_t)(usec_val * 48.0 / div_val);
+                if((usec > 20) & (usec <=60)) ref= ref - 905;
+			if(usec > 60) ref= ref - 921;
+	}	
+
+        else if((usec > 1363)  & (usec <= 5461))
+	{
+		presc=TC_CTRLA_PRESCALER_DIV4;
+		div_val=4.0;
+		ref = (uint16_t)(usec_val * 48.0 / div_val);
+                
+	}	
+	else if((usec > 5461) & (usec <= 10922))
+	{	
+		presc=TC_CTRLA_PRESCALER_DIV8;
+		div_val=8.0;
+		ref = (uint16_t)(usec_val * 48.0 / div_val);
+	}	
+	else if((usec > 10922) & (usec <= 21845))
+	{
+		presc=TC_CTRLA_PRESCALER_DIV16;
+		div_val=16.0;
+		ref = (uint16_t)(usec_val * 48.0 / div_val);
+	}	
+	else if(usec > 21845)
+	{
+		presc=TC_CTRLA_PRESCALER_DIV64;
+		div_val=64.0;
+		ref = (uint16_t)(usec_val * 48.0 / div_val);
+	}
+    else;
+    
+    
+	GCLK->CLKCTRL.reg = (uint16_t) (GCLK_CLKCTRL_CLKEN | GCLK_CLKCTRL_GEN_GCLK0 | GCLK_CLKCTRL_ID( GCM_TC4_TC5 ));
+	
+	 TC4->COUNT16.CTRLA.reg &=~(TC_CTRLA_ENABLE);
+      TC4->COUNT16.CTRLA.reg |= TC_CTRLA_MODE_COUNT16 | presc;
+      TC4->COUNT16.READREQ.reg = 0x4002;
+      TC4->COUNT16.CTRLA.reg |= TC_CTRLA_ENABLE;
+      
+	  
+	  while(TC4->COUNT16.COUNT.reg < ref);
+	  	
+return;
 }
 
 #ifdef __cplusplus

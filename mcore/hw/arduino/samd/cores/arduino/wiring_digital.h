@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2014 Arduino.  All right reserved.
+  Copyright (c) 2011 Arduino.  All right reserved.
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -23,13 +23,28 @@
  extern "C" {
 #endif
 
+#define INPUT           (0x0ul)
+#define OUTPUT          (0x1ul)
+#define INPUT_PULLUP    (0x2ul)
+
+#define LOW             (0x0ul)
+#define HIGH            (0x1ul)
+
 #include "WVariant.h"
+
+/**
+ * \brief Configures the specified pin to belong to a device peripheral or to behave either as a an input or an output. See the description of board for details.
+ *
+ * \param ulPin The number of the pin whose mode you wish to set
+ * \param ulPeripheral See WVariant.h for type decription
+ */
+extern int pinPeripheral( uint32_t ulPin, EPioType ulPeripheral ) ;
 
 /**
  * \brief Configures the specified pin to behave either as an input or an output. See the description of digital pins for details.
  *
  * \param ulPin The number of the pin whose mode you wish to set
- * \param ulMode Can be INPUT, OUTPUT, INPUT_PULLUP or INPUT_PULLDOWN
+ * \param ulMode Either INPUT or OUTPUT
  */
 extern void pinMode( uint32_t dwPin, uint32_t dwMode ) ;
 

@@ -29,7 +29,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 */
 
-/* $Id: atomic.h,v 1.3 2007/12/20 14:17:56 joerg_wunsch Exp $ */
+/* $Id$ */
 
 #ifndef _UTIL_ATOMIC_H_
 #define _UTIL_ATOMIC_H_ 1
@@ -184,6 +184,8 @@ main(void)
     entering the ATOMIC_BLOCK, it should be executed with the
     parameter ATOMIC_RESTORESTATE rather than ATOMIC_FORCEON.
 
+    See \ref optim_code_reorder for things to be taken into account
+    with respect to compiler optimizations.
 */
 
 /** \def ATOMIC_BLOCK(type)

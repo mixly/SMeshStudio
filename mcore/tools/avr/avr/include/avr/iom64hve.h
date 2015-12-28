@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: iom64hve.h,v 1.1.2.2 2009/12/15 03:24:16 arcanum Exp $ */
+/* $Id: iom64hve.h 2086 2009-12-15 03:24:16Z arcanum $ */
 
 /* avr/iom64hve.h - definitions for ATmega64HVE */
 

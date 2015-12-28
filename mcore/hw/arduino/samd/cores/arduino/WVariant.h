@@ -1,29 +1,12 @@
-/*
-  Copyright (c) 2015 Arduino LLC.  All right reserved.
-
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
-
-#pragma once
+#ifndef _VARIANTS_
+#define _VARIANTS_
 
 #include <stdint.h>
 #include "sam.h"
 
 #ifdef __cplusplus
-extern "C" {
-#endif
+extern "C"{
+#endif // __cplusplus
 
 /* Definitions and types for pins */
 typedef enum _EAnalogChannel
@@ -49,87 +32,71 @@ typedef enum _EAnalogChannel
 typedef enum _ETCChannel
 {
   NOT_ON_TIMER=-1,
-  TCC0_CH0 = (0<<8)|(0),
-  TCC0_CH1 = (0<<8)|(1),
-  TCC0_CH2 = (0<<8)|(2),
-  TCC0_CH3 = (0<<8)|(3),
-  TCC0_CH4 = (0<<8)|(0), // Channel 4 is 0!
-  TCC0_CH5 = (0<<8)|(1), // Channel 5 is 1!
-  TCC0_CH6 = (0<<8)|(2), // Channel 6 is 2!
-  TCC0_CH7 = (0<<8)|(3), // Channel 7 is 3!
-  TCC1_CH0 = (1<<8)|(0),
-  TCC1_CH1 = (1<<8)|(1),
-  TCC2_CH0 = (2<<8)|(0),
-  TCC2_CH1 = (2<<8)|(1),
-  TC3_CH0  = (3<<8)|(0),
-  TC3_CH1  = (3<<8)|(1),
-  TC5_CH0  = (5<<8)|(0),
-  TC5_CH1  = (5<<8)|(1),
-#if defined __SAMD21J18A__
-  TC7_CH0  = (7<<8)|(0),
-  TC7_CH1  = (7<<8)|(1)
-#endif // __SAMD21J18A__
+	TC3_CH0 = (3<<8)|(0),
+	TC3_CH1 = (3<<8)|(1),
+	TCC0_CH0 = (0<<8)|(0),
+	TCC0_CH1 = (0<<8)|(1),
+	TCC0_CH4 = (0<<8)|(4),
+	TCC0_CH5 = (0<<8)|(5),
+	TCC0_CH6 = (0<<8)|(6),
+	TCC0_CH7 = (0<<8)|(7),
+	TCC1_CH0 = (1<<8)|(0),
+	TCC1_CH1 = (1<<8)|(1),
+	TCC2_CH0 = (2<<8)|(0),
+	TCC2_CH1 = (2<<8)|(1)
 } ETCChannel ;
 
 extern const void* g_apTCInstances[TCC_INST_NUM+TC_INST_NUM] ;
 
 #define GetTCNumber( x ) ( (x) >> 8 )
-#define GetTCChannelNumber( x ) ( (x) & 0xff )
+#define GetTCChannelNumber( x ) ( (x) && 0xff )
 #define GetTC( x ) ( g_apTCInstances[(x) >> 8] )
 
 // Definitions for PWM channels
 typedef enum _EPWMChannel
 {
   NOT_ON_PWM=-1,
-  PWM0_CH0=TCC0_CH0,
-  PWM0_CH1=TCC0_CH1,
-  PWM0_CH2=TCC0_CH2,
-  PWM0_CH3=TCC0_CH3,
-  PWM0_CH4=TCC0_CH4,
-  PWM0_CH5=TCC0_CH5,
-  PWM0_CH6=TCC0_CH6,
-  PWM0_CH7=TCC0_CH7,
-  PWM1_CH0=TCC1_CH0,
-  PWM1_CH1=TCC1_CH1,
-  PWM2_CH0=TCC2_CH0,
-  PWM2_CH1=TCC2_CH1,
-  PWM3_CH0=TC3_CH0,
-  PWM3_CH1=TC3_CH1,
-  PWM5_CH0=TC5_CH0,
-  PWM5_CH1=TC5_CH1,
-#if defined __SAMD21J18A__
-  PWM7_CH0=TC7_CH0,
-  PWM7_CH1=TC7_CH1
-#endif // __SAMD21J18A__
+	PWM3_CH0=TC3_CH0,
+	PWM3_CH1=TC3_CH1,
+	PWM0_CH0=TCC0_CH0,
+	PWM0_CH1=TCC0_CH1,
+	PWM0_CH4=TCC0_CH4,
+	PWM0_CH5=TCC0_CH5,
+	PWM0_CH6=TCC0_CH6,
+	PWM0_CH7=TCC0_CH7,
+	PWM1_CH0=TCC1_CH0,
+	PWM1_CH1=TCC1_CH1,
+	PWM2_CH0=TCC2_CH0,
+	PWM2_CH1=TCC2_CH1
 } EPWMChannel ;
 
 typedef enum _EPortType
 {
-  NOT_A_PORT=-1,
-  PORTA=0,
-  PORTB=1,
-  PORTC=2,
+	NOT_A_PORT=-1,
+	PORTA=0,
+	PORTB=1,
+	PORTC=2,
 } EPortType ;
 
 typedef enum _EExt_Interrupts
 {
-  EXTERNAL_INT_0 = 0, // Available on pin 11
-  EXTERNAL_INT_1, // Available on pin 13
-  EXTERNAL_INT_2, // Available on pins 10, A0, A5
-  EXTERNAL_INT_3, // Available on pin 12
-  EXTERNAL_INT_4, // Available on pin 6, 8, A3
-  EXTERNAL_INT_5, // Available on pin 7, 9, A4
-  EXTERNAL_INT_6, // Available on pin 16
-  EXTERNAL_INT_7, // Available on pin 17
-  EXTERNAL_INT_8, // Available on pin A1
-  EXTERNAL_INT_9, // Available on pin 3, A2
-  EXTERNAL_INT_10, // Available on pin 0, 21
-  EXTERNAL_INT_11, // Available on pin 1, 20
-  EXTERNAL_INT_12, // Available on pin 18
-  EXTERNAL_INT_13, // Available on pin EDBG_GPIO0 (43)
-  EXTERNAL_INT_14, // Available on pin 4
-  EXTERNAL_INT_15, // Available on pin 5
-  EXTERNAL_INT_NMI, // Available on pin 2
+  EXTERNAL_INT_0 = 0,   // Available on pin 11
+  EXTERNAL_INT_1,       // Available on pin 13
+  EXTERNAL_INT_2,       // Available on pins 10, A0, A5
+  EXTERNAL_INT_3,       // Available on pin 12
+  EXTERNAL_INT_4,       // Available on pin 6, 8, A3
+  EXTERNAL_INT_5,       // Available on pin 7, 9, A4
+  EXTERNAL_INT_6,       // Available on pin 16
+  EXTERNAL_INT_7,       // Available on pin 17
+  EXTERNAL_INT_8,       // Available on pin A1
+  EXTERNAL_INT_9,       // Available on pin 3, A2
+  EXTERNAL_INT_10,      // Available on pin 0, 21
+  EXTERNAL_INT_11,      // Available on pin 1, 20
+  EXTERNAL_INT_12,      // Available on pin 18
+  EXTERNAL_INT_13,      // Available on pin EDBG_GPIO0 (43)
+  EXTERNAL_INT_14,      // Available on pin 4
+  EXTERNAL_INT_15,      // Available on pin 5
+  EXTERNAL_INT_NMI,     // Available on pin 2
   EXTERNAL_NUM_INTERRUPTS,
   NOT_AN_INTERRUPT = -1,
   EXTERNAL_INT_NONE = NOT_AN_INTERRUPT,
@@ -140,19 +107,19 @@ typedef enum _EExt_Interrupts
 
 typedef enum _EPioType
 {
-  PIO_NOT_A_PIN=-1,     /* Not under control of a peripheral. */
-  PIO_EXTINT=0,         /* The pin is controlled by the associated signal of peripheral A. */
-  PIO_ANALOG,           /* The pin is controlled by the associated signal of peripheral B. */
-  PIO_SERCOM,           /* The pin is controlled by the associated signal of peripheral C. */
-  PIO_SERCOM_ALT,       /* The pin is controlled by the associated signal of peripheral D. */
-  PIO_TIMER,            /* The pin is controlled by the associated signal of peripheral E. */
-  PIO_TIMER_ALT,        /* The pin is controlled by the associated signal of peripheral F. */
-  PIO_COM,              /* The pin is controlled by the associated signal of peripheral G. */
-  PIO_AC_CLK,           /* The pin is controlled by the associated signal of peripheral H. */
-  PIO_DIGITAL,          /* The pin is controlled by PORT. */
-  PIO_INPUT,            /* The pin is controlled by PORT and is an input. */
-  PIO_INPUT_PULLUP,     /* The pin is controlled by PORT and is an input with internal pull-up resistor enabled. */
-  PIO_OUTPUT,           /* The pin is controlled by PORT and is an output. */
+  PIO_NOT_A_PIN=-1,  /* Not under control of a peripheral. */
+  PIO_EXTINT,        /* The pin is controlled by the associated signal of peripheral A. */
+  PIO_ANALOG,        /* The pin is controlled by the associated signal of peripheral B. */
+  PIO_SERCOM,        /* The pin is controlled by the associated signal of peripheral C. */
+  PIO_SERCOM_ALT,    /* The pin is controlled by the associated signal of peripheral D. */
+  PIO_TIMER,         /* The pin is controlled by the associated signal of peripheral E. */
+  PIO_TIMER_ALT,     /* The pin is controlled by the associated signal of peripheral F. */
+  PIO_COM,           /* The pin is controlled by the associated signal of peripheral G. */
+  PIO_AC_CLK,        /* The pin is controlled by the associated signal of peripheral H. */
+  PIO_DIGITAL,       /* The pin is controlled by PORT. */
+  PIO_INPUT,         /* The pin is controlled by PORT and is an input. */
+  PIO_INPUT_PULLUP,  /* The pin is controlled by PORT and is an input with internal pull-up resistor enabled. */
+  PIO_OUTPUT,        /* The pin is controlled by PORT and is an output. */
 
   PIO_PWM=PIO_TIMER,
   PIO_PWM_ALT=PIO_TIMER_ALT,
@@ -172,13 +139,13 @@ typedef enum _EPioType
 /* Types used for the table below */
 typedef struct _PinDescription
 {
-  EPortType       ulPort ;
-  uint32_t        ulPin ;
-  EPioType        ulPinType ;
-  uint32_t        ulPinAttribute ;
-  EAnalogChannel  ulADCChannelNumber ; /* ADC Channel number in the SAM device */
-  EPWMChannel     ulPWMChannel ;
-  ETCChannel      ulTCChannel ;
+  EPortType ulPort ;
+  uint32_t ulPin ;
+  EPioType ulPinType ;
+  uint32_t ulPinAttribute ;
+  EAnalogChannel ulADCChannelNumber ; /* ADC Channel number in the SAM device */
+  EPWMChannel ulPWMChannel ;
+  ETCChannel ulTCChannel ;
   EExt_Interrupts ulExtInt ;
 } PinDescription ;
 
@@ -226,4 +193,6 @@ extern const PinDescription g_APinDescription[] ;
 
 #ifdef __cplusplus
 } // extern "C"
-#endif
+#endif // __cplusplus
+
+#endif // _VARIANTS_

@@ -30,13 +30,18 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: delay.h,v 1.5.2.1 2009/02/25 10:14:03 joerg_wunsch Exp $ */
+/* $Id$ */
 
 #ifndef _UTIL_DELAY_H_
 #define _UTIL_DELAY_H_ 1
 
+#ifndef __HAS_DELAY_CYCLES
+#define __HAS_DELAY_CYCLES 1
+#endif
+
 #include <inttypes.h>
 #include <util/delay_basic.h>
+#include <math.h>
 
 /** \file */
 /** \defgroup util_delay <util/delay.h>: Convenience functions for busy-wait delay loops
@@ -90,6 +95,12 @@ static inline void _delay_ms(double __ms) __attribute__((always_inline));
 # warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
 #endif
 
+#if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+  !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+  __STDC_HOSTED__
+#  include <math.h>
+#endif
+
 /**
    \ingroup util_delay
 
@@ -105,12 +116,55 @@ static inline void _delay_ms(double __ms) __attribute__((always_inline));
    mode _delay_ms() will work with a resolution of 1/10 ms, providing
    delays up to 6.5535 seconds (independent from CPU frequency).  The
    user will not be informed about decreased resolution.
+
+   If the avr-gcc toolchain has __builtin_avr_delay_cycles(unsigned long)
+   support, maximal possible delay is 4294967.295 ms/ F_CPU in MHz. For
+   values greater than the maximal possible delay, overflows results in
+   no delay i.e., 0ms.
+
+   Conversion of __us into clock cycles may not always result in integer.
+   By default, the clock cycles rounded up to next integer. This ensures that
+   the user gets atleast __us microseconds of delay.
+
+   Alternatively, user can define __DELAY_ROUND_DOWN__ and __DELAY_ROUND_CLOSEST__
+   to round down and round to closest integer.
+
+   Note: The new implementation of _delay_ms(double __ms) with 
+    __builtin_avr_delay_cycles(unsigned long) support is not backward compatible. 
+   User can define __DELAY_BACKWARD_COMPATIBLE__ to get a backward compatible delay.
+   Also, the backward compatible
+   algorithm will be chosen if the code is compiled in a <em>freestanding
+   environment</em> (GCC option \c -ffreestanding), as the math functions
+   required for rounding are not available to the compiler then.
+
  */
 void
 _delay_ms(double __ms)
 {
+	double __tmp ; 
+#if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+  !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+  __STDC_HOSTED__
+	uint32_t __ticks_dc;
+	extern void __builtin_avr_delay_cycles(unsigned long);
+	__tmp = ((F_CPU) / 1e3) * __ms;
+
+	#if defined(__DELAY_ROUND_DOWN__)
+		__ticks_dc = (uint32_t)fabs(__tmp);
+
+	#elif defined(__DELAY_ROUND_CLOSEST__)
+		__ticks_dc = (uint32_t)(fabs(__tmp)+0.5);
+
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+
+#else
 	uint16_t __ticks;
-	double __tmp = ((F_CPU) / 4e3) * __ms;
+	__tmp = ((F_CPU) / 4e3) * __ms;
 	if (__tmp < 1.0)
 		__ticks = 1;
 	else if (__tmp > 65535)
@@ -128,6 +182,7 @@ _delay_ms(double __ms)
 	else
 		__ticks = (uint16_t)__tmp;
 	_delay_loop_2(__ticks);
+#endif
 }
 
 /**
@@ -143,22 +198,73 @@ _delay_ms(double __ms)
    If the user requests a delay greater than the maximal possible one,
    _delay_us() will automatically call _delay_ms() instead.  The user
    will not be informed about this case.
+
+   If the avr-gcc toolchain has __builtin_avr_delay_cycles(unsigned long)
+   support, maximal possible delay is 4294967.295 us/ F_CPU in MHz. For
+   values greater than the maximal possible delay, overflow results in
+   no delay i.e., 0us.
+  
+   Conversion of __us into clock cycles may not always result in integer.
+   By default, the clock cycles rounded up to next integer. This ensures that
+   the user gets atleast __us microseconds of delay.
+
+   Alternatively, user can define __DELAY_ROUND_DOWN__ and __DELAY_ROUND_CLOSEST__
+   to round down and round to closest integer.
+ 
+   Note: The new implementation of _delay_us(double __us) with 
+    __builtin_avr_delay_cycles(unsigned long) support is not backward compatible.
+   User can define __DELAY_BACKWARD_COMPATIBLE__ to get a backward compatible delay.
+   Also, the backward compatible
+   algorithm will be chosen if the code is compiled in a <em>freestanding
+   environment</em> (GCC option \c -ffreestanding), as the math functions
+   required for rounding are not available to the compiler then.
+
  */
 void
 _delay_us(double __us)
 {
+	double __tmp ; 
+#if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+  !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+  __STDC_HOSTED__
+	uint32_t __ticks_dc;
+	extern void __builtin_avr_delay_cycles(unsigned long);
+	__tmp = ((F_CPU) / 1e6) * __us;
+
+	#if defined(__DELAY_ROUND_DOWN__)
+		__ticks_dc = (uint32_t)fabs(__tmp);
+
+	#elif defined(__DELAY_ROUND_CLOSEST__)
+		__ticks_dc = (uint32_t)(fabs(__tmp)+0.5);
+
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+
+#else
 	uint8_t __ticks;
-	double __tmp = ((F_CPU) / 3e6) * __us;
+	double __tmp2 ; 
+	__tmp = ((F_CPU) / 3e6) * __us;
+	__tmp2 = ((F_CPU) / 4e6) * __us;
 	if (__tmp < 1.0)
 		__ticks = 1;
-	else if (__tmp > 255)
+	else if (__tmp2 > 65535)
 	{
 		_delay_ms(__us / 1000.0);
+	}
+	else if (__tmp > 255)
+	{
+		uint16_t __ticks=(uint16_t)__tmp2;
+		_delay_loop_2(__ticks);
 		return;
 	}
 	else
 		__ticks = (uint8_t)__tmp;
 	_delay_loop_1(__ticks);
+#endif
 }
 
 

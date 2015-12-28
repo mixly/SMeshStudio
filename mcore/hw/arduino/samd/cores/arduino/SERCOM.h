@@ -1,21 +1,3 @@
-/*
-  Copyright (c) 2014 Arduino.  All right reserved.
-
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
-
 #ifndef _SERCOM_CLASS_
 #define _SERCOM_CLASS_
 
@@ -79,9 +61,8 @@ typedef enum
 
 typedef enum
 {
-	UART_TX_PAD_0 = 0x0ul,	// Only for UART
-	UART_TX_PAD_2 = 0x1ul,  // Only for UART
-	UART_TX_RTS_CTS_PAD_0_2_3 = 0x2ul,  // Only for UART with TX on PAD0, RTS on PAD2 and CTS on PAD3
+	UART_TX_PAD_0 = 0x0ul,	//Only for UART
+	UART_TX_PAD_2 = 0x1ul,  //Only for UART
 } SercomUartTXPad;
 
 typedef enum
@@ -162,8 +143,6 @@ class SERCOM
 		bool isDataRegisterEmptyUART( void ) ;
 		uint8_t readDataUART( void ) ;
 		int writeDataUART(uint8_t data) ;
-		bool isUARTError() ;
-		void acknowledgeUARTError() ;
 
 		/* ========== SPI ========== */
 		void initSPI(SercomSpiTXPad mosi, SercomRXPad miso, SercomSpiCharSize charSize, SercomDataOrder dataOrder) ;
@@ -188,10 +167,10 @@ class SERCOM
 
 		void resetWIRE( void ) ;
 		void enableWIRE( void ) ;
-    void disableWIRE( void );
-    void prepareNackBitWIRE( void ) ;
-    void prepareAckBitWIRE( void ) ;
-    void prepareCommandBitsWire(SercomMasterCommandWire cmd);
+        void disableWIRE( void );
+        void prepareNackBitWIRE( void ) ;
+        void prepareAckBitWIRE( void ) ;
+        void prepareCommandBitsWire(SercomMasterCommandWire cmd);
 		bool startTransmissionWIRE(uint8_t address, SercomWireReadWriteFlag flag) ;
 		bool sendDataMasterWIRE(uint8_t data) ;
 		bool sendDataSlaveWIRE(uint8_t data) ;
@@ -203,7 +182,7 @@ class SERCOM
 		bool isRestartDetectedWIRE( void ) ;
 		bool isAddressMatch( void ) ;
 		bool isMasterReadOperationWIRE( void ) ;
-    bool isRXNackReceivedWIRE( void ) ;
+        bool isRXNackReceivedWIRE( void ) ;
 		int availableWIRE( void ) ;
 		uint8_t readDataWIRE( void ) ;
 

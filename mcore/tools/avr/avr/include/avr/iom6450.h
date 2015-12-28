@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: iom6450.h,v 1.11.2.7 2009/02/11 18:05:30 arcanum Exp $ */
+/* $Id: iom6450.h 2235 2011-03-17 04:13:14Z arcanum $ */
 
 /* avr/iom6450.h - definitions for ATmega6450 */
 
@@ -752,98 +752,122 @@
 
 /* Interrupt vectors */
 /* Vector 0 is the reset vector */
+
 /* External Interrupt Request 0 */
+#define INT0_vect_num		1
 #define INT0_vect			_VECTOR(1)
 #define SIG_INTERRUPT0			_VECTOR(1)
 
 /* Pin Change Interrupt Request 0 */
+#define PCINT0_vect_num		2
 #define PCINT0_vect			_VECTOR(2)
 #define SIG_PIN_CHANGE0			_VECTOR(2)
 
 /* Pin Change Interrupt Request 1 */
+#define PCINT1_vect_num		3
 #define PCINT1_vect			_VECTOR(3)
 #define SIG_PIN_CHANGE1			_VECTOR(3)
 
 /* Timer/Counter2 Compare Match */
+#define TIMER2_COMP_vect_num	4
 #define TIMER2_COMP_vect		_VECTOR(4)
 #define SIG_OUTPUT_COMPARE2		_VECTOR(4)
 
 /* Timer/Counter2 Overflow */
+#define TIMER2_OVF_vect_num		5
 #define TIMER2_OVF_vect			_VECTOR(5)
 #define SIG_OVERFLOW2			_VECTOR(5)
 
 /* Timer/Counter1 Capture Event */
+#define TIMER1_CAPT_vect_num	6
 #define TIMER1_CAPT_vect		_VECTOR(6)
 #define SIG_INPUT_CAPTURE1		_VECTOR(6)
 
 /* Timer/Counter1 Compare Match A */
+#define TIMER1_COMPA_vect_num	7
 #define TIMER1_COMPA_vect		_VECTOR(7)
 #define SIG_OUTPUT_COMPARE1A	_VECTOR(7)
 
 /* Timer/Counter Compare Match B */
+#define TIMER1_COMPB_vect_num	8
 #define TIMER1_COMPB_vect		_VECTOR(8)
 #define SIG_OUTPUT_COMPARE1B	_VECTOR(8)
 
 /* Timer/Counter1 Overflow */
+#define TIMER1_OVF_vect_num		9
 #define TIMER1_OVF_vect			_VECTOR(9)
 #define SIG_OVERFLOW1			_VECTOR(9)
 
 /* Timer/Counter0 Compare Match */
+#define TIMER0_COMP_vect_num	10
 #define TIMER0_COMP_vect		_VECTOR(10)
 #define SIG_OUTPUT_COMPARE0		_VECTOR(10)
 
 /* Timer/Counter0 Overflow */
+#define TIMER0_OVF_vect_num		11
 #define TIMER0_OVF_vect			_VECTOR(11)
 #define SIG_OVERFLOW0			_VECTOR(11)
 
 /* SPI Serial Transfer Complete */
+#define SPI_STC_vect_num		12
 #define SPI_STC_vect			_VECTOR(12)
 #define SIG_SPI				    _VECTOR(12)
 
 /* USART, Rx Complete */
+#define USART_RX_vect_num		13
 #define USART_RX_vect			_VECTOR(13)
 #define USART0_RX_vect			_VECTOR(13)  /* Alias */
 #define SIG_UART_RECV			_VECTOR(13)
 
 /* USART Data register Empty */
+#define USART_UDRE_vect_num		14
 #define USART_UDRE_vect			_VECTOR(14)
 #define USART0_UDRE_vect		_VECTOR(14)  /* Alias */
 #define SIG_UART_DATA			_VECTOR(14)
 
 /* USART0, Tx Complete */
+#define USART0_TX_vect_num		15
 #define USART0_TX_vect			_VECTOR(15)
 #define USART_TX_vect			_VECTOR(15)  /* Alias */
 #define SIG_UART_TRANS			_VECTOR(15)
 
 /* USI Start Condition */
+#define USI_START_vect_num		16
 #define USI_START_vect			_VECTOR(16)
 #define SIG_USI_START			_VECTOR(16)
 
 /* USI Overflow */
+#define USI_OVERFLOW_vect_num	17
 #define USI_OVERFLOW_vect		_VECTOR(17)
 #define SIG_USI_OVERFLOW		_VECTOR(17)
 
 /* Analog Comparator */
+#define ANALOG_COMP_vect_num	18
 #define ANALOG_COMP_vect		_VECTOR(18)
 #define SIG_COMPARATOR			_VECTOR(18)
 
 /* ADC Conversion Complete */
+#define ADC_vect_num		19
 #define ADC_vect			_VECTOR(19)
 #define SIG_ADC				_VECTOR(19)
 
 /* EEPROM Ready */
+#define EE_READY_vect_num		20
 #define EE_READY_vect			_VECTOR(20)
 #define SIG_EEPROM_READY		_VECTOR(20)
 
 /* Store Program Memory Read */
+#define SPM_READY_vect_num		21
 #define SPM_READY_vect			_VECTOR(21)
 #define SIG_SPM_READY			_VECTOR(21)
 
 /* Pin Change Interrupt Request 2 */
+#define PCINT2_vect_num		23
 #define PCINT2_vect			_VECTOR(23)
 #define SIG_PIN_CHANGE2			_VECTOR(23)
 
 /* Pin Change Interrupt Request 3 */
+#define PCINT3_vect_num		24
 #define PCINT3_vect			_VECTOR(24)
 #define SIG_PIN_CHANGE3			_VECTOR(24)
 
@@ -852,6 +876,7 @@
 
 /* Constants */
 #define SPM_PAGESIZE 256
+#define RAMSTART     (0x100)
 #define RAMEND       0x10FF
 #define XRAMEND      RAMEND
 #define E2END        0x7FF
@@ -902,6 +927,41 @@
 #define SIGNATURE_0 0x1E
 #define SIGNATURE_1 0x96
 #define SIGNATURE_2 0x06
+
+
+/* Deprecated items */
+#if !defined(__AVR_LIBC_DEPRECATED_ENABLE__)
+
+#pragma GCC system_header
+
+#pragma GCC poison SIG_INTERRUPT0
+#pragma GCC poison SIG_PIN_CHANGE0
+#pragma GCC poison SIG_PIN_CHANGE1
+#pragma GCC poison SIG_OUTPUT_COMPARE2
+#pragma GCC poison SIG_OVERFLOW2
+#pragma GCC poison SIG_INPUT_CAPTURE1
+#pragma GCC poison SIG_OUTPUT_COMPARE1A
+#pragma GCC poison SIG_OUTPUT_COMPARE1B
+#pragma GCC poison SIG_OVERFLOW1
+#pragma GCC poison SIG_OUTPUT_COMPARE0
+#pragma GCC poison SIG_OVERFLOW0
+#pragma GCC poison SIG_SPI
+#pragma GCC poison USART0_RX_vect
+#pragma GCC poison SIG_UART_RECV
+#pragma GCC poison USART0_UDRE_vect
+#pragma GCC poison SIG_UART_DATA
+#pragma GCC poison USART_TX_vect
+#pragma GCC poison SIG_UART_TRANS
+#pragma GCC poison SIG_USI_START
+#pragma GCC poison SIG_USI_OVERFLOW
+#pragma GCC poison SIG_COMPARATOR
+#pragma GCC poison SIG_ADC
+#pragma GCC poison SIG_EEPROM_READY
+#pragma GCC poison SIG_SPM_READY
+#pragma GCC poison SIG_PIN_CHANGE2
+#pragma GCC poison SIG_PIN_CHANGE3
+
+#endif  /* !defined(__AVR_LIBC_DEPRECATED_ENABLE__) */
 
 
 #endif /* _AVR_IOM6450_H_ */

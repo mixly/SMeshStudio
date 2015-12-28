@@ -30,6 +30,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 The latest version of this library can always be found at
 https://github.com/BlueVia/Official-Arduino
+
+
+Added support for Arduino GSM Shield 2
+Modified Apr. 2015
+by Arduino.org team (http://arduino.org)
+
 */
 #ifndef _GSM3SIMPLIFIERFILE_
 #define _GSM3SIMPLIFIERFILE_
@@ -53,6 +59,8 @@ https://github.com/BlueVia/Official-Arduino
 #include <GSM3SMSService.h>
 #include <GSM3VoiceCallService.h>
 
+#include <GSM3ShieldV2.h>
+
 #define GSM GSM3ShieldV1AccessProvider
 #define GPRS GSM3ShieldV1DataNetworkProvider
 #define GSMClient GSM3MobileClientService
@@ -63,7 +71,11 @@ https://github.com/BlueVia/Official-Arduino
 #define GSMPIN GSM3ShieldV1PinManagement
 #define GSMModem GSM3ShieldV1ModemVerification
 #define GSMCell GSM3ShieldV1CellManagement
+#define GSMCell GSM3CellManagement
 #define GSMBand GSM3ShieldV1BandManagement
 #define GSMScanner GSM3ShieldV1ScanNetworks
 
+
+//#define GPRSPosition GSM3ShieldV2
+#define GSM2 GSM3ShieldV2
 #endif

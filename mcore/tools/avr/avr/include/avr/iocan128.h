@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: iocan128.h,v 1.17.2.5 2008/10/17 23:27:46 arcanum Exp $ */
+/* $Id: iocan128.h 1767 2008-10-17 23:27:53Z arcanum $ */
 
 /* iocan128.h - definitions for CAN128 */
 
@@ -39,6 +39,7 @@
 
 /* Constants */
 #define SPM_PAGESIZE 256
+#define RAMSTART     0x100
 #define RAMEND       0x10FF     /* Last On-Chip SRAM Location */
 #define XRAMEND      0xFFFF
 #define E2END        0x0FFF

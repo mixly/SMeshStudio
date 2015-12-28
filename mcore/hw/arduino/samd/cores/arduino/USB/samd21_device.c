@@ -1,20 +1,31 @@
-/*
-  Copyright (c) 2014 Arduino.  All right reserved.
-
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+/* ----------------------------------------------------------------------------
+ *         SAM Software Package License
+ * ----------------------------------------------------------------------------
+ * Copyright (c) 2011-2012, Atmel Corporation
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following condition is met:
+ *
+ * - Redistributions of source code must retain the above copyright notice,
+ * this list of conditions and the disclaimer below.
+ *
+ * Atmel's name may not be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ *
+ * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+ * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ----------------------------------------------------------------------------
+ */
 
 #include <stdio.h>
 #include <stdint.h>
@@ -34,8 +45,8 @@ extern "C"{
 //#define TRACE_DEVICE(x)	x
 #define TRACE_DEVICE(x)
 
-__attribute__((__aligned__(4))) /*__attribute__((__section__(".bss_hram0")))*/ uint8_t udd_ep_out_cache_buffer[4][64];
-__attribute__((__aligned__(4))) /*__attribute__((__section__(".bss_hram0")))*/ uint8_t udd_ep_in_cache_buffer[4][128];
+__attribute__((__aligned__(4)))   __attribute__((__section__(".bss_hram0"))) uint8_t udd_ep_out_cache_buffer[4][64];
+__attribute__((__aligned__(4)))   __attribute__((__section__(".bss_hram0"))) uint8_t udd_ep_in_cache_buffer[4][128];
 
 /**
  * USB SRAM data containing pipe descriptor table
@@ -47,15 +58,6 @@ __attribute__((__aligned__(4))) /*__attribute__((__section__(".bss_hram0")))*/ u
  * This data section is volatile.
  */
  __attribute__((__aligned__(4))) UsbDeviceDescriptor usb_endpoint_table[USB_EPT_NUM];
-
-
-extern void (*gpf_isr)(void);
-
-
-void UDD_SetStack(void (*pf_isr)(void))
-{
-	gpf_isr = pf_isr;
-}
 
 // NVM Software Calibration Area Mapping
 // USB TRANSN calibration value. Should be written to the USB PADCAL register.
@@ -143,11 +145,13 @@ void UDD_Init(void)
 	/* Set the configuration */
 	udd_force_device_mode();
 	udd_device_run_in_standby();
-	// Set address of USB SRAM
+    // Set address of USB SRAM
 	USB->DEVICE.DESCADD.reg = (uint32_t)(&usb_endpoint_table[0]);
-	// For USB_SPEED_FULL
+	// For USB_SPEED_FULL 
 	udd_force_full_speed();
-	memset(&usb_endpoint_table[0], 0, sizeof(usb_endpoint_table));
+ 	for (i = 0; i < sizeof(usb_endpoint_table); i++) {
+ 		(*(uint32_t *)(&usb_endpoint_table[0]+i)) = 0;
+ 	}
 
 	// Configure interrupts
 	NVIC_SetPriority((IRQn_Type) USB_IRQn, 0UL);
@@ -205,7 +209,7 @@ void UDD_InitEP( uint32_t ul_ep_nb, uint32_t ul_ep_cfg )
 		usb_endpoint_table[ul_ep_nb].DeviceDescBank[0].PCKSIZE.bit.MULTI_PACKET_SIZE = 64;
 		usb_endpoint_table[ul_ep_nb].DeviceDescBank[0].PCKSIZE.bit.BYTE_COUNT = 0;
 		// NACK if not ready
-		udd_OUT_transfer_allowed(ul_ep_nb);
+	    USB->DEVICE.DeviceEndpoint[ul_ep_nb].EPSTATUSCLR.reg = USB_DEVICE_EPSTATUSCLR_BK0RDY;
 	}
 	else if( ul_ep_cfg == (USB_ENDPOINT_TYPE_BULK | USB_ENDPOINT_IN(0)) )
 	{
@@ -216,14 +220,14 @@ void UDD_InitEP( uint32_t ul_ep_nb, uint32_t ul_ep_cfg )
 		/* Configure the data buffer */
 		usb_endpoint_table[ul_ep_nb].DeviceDescBank[1].ADDR.reg = (uint32_t)&udd_ep_in_cache_buffer[ul_ep_nb];
 		// NACK if not ready
-		udd_IN_stop_transfer(ul_ep_nb);
+		USB->DEVICE.DeviceEndpoint[ul_ep_nb].EPSTATUSCLR.reg = USB_DEVICE_EPSTATUSCLR_BK1RDY;
 	}
 	else if( ul_ep_cfg == USB_ENDPOINT_TYPE_CONTROL )
 	{
 		/* Configure CONTROL endpoint */
 		USB->DEVICE.DeviceEndpoint[ul_ep_nb].EPCFG.reg = USB_DEVICE_EPCFG_EPTYPE0(1) | USB_DEVICE_EPCFG_EPTYPE1(1);
-		udd_OUT_stop_transfer(ul_ep_nb);
-		udd_IN_stop_transfer(ul_ep_nb);
+		USB->DEVICE.DeviceEndpoint[ul_ep_nb].EPSTATUSSET.reg = USB_DEVICE_EPSTATUSSET_BK0RDY;
+		USB->DEVICE.DeviceEndpoint[ul_ep_nb].EPSTATUSCLR.reg = USB_DEVICE_EPSTATUSCLR_BK1RDY;
 
 		usb_endpoint_table[ul_ep_nb].DeviceDescBank[0].PCKSIZE.reg &= ~USB_DEVICE_PCKSIZE_AUTO_ZLP;
 		usb_endpoint_table[ul_ep_nb].DeviceDescBank[1].PCKSIZE.reg &= ~USB_DEVICE_PCKSIZE_AUTO_ZLP;
@@ -234,12 +238,12 @@ void UDD_InitEP( uint32_t ul_ep_nb, uint32_t ul_ep_cfg )
 
 		/* get endpoint configuration from setting register */
 		usb_endpoint_table[ul_ep_nb].DeviceDescBank[0].ADDR.reg = (uint32_t)&udd_ep_out_cache_buffer[0];
-		usb_endpoint_table[ul_ep_nb].DeviceDescBank[0].PCKSIZE.bit.MULTI_PACKET_SIZE = 8;
+		usb_endpoint_table[ul_ep_nb].DeviceDescBank[0].PCKSIZE.bit.MULTI_PACKET_SIZE = 16;
 		usb_endpoint_table[ul_ep_nb].DeviceDescBank[0].PCKSIZE.bit.BYTE_COUNT = 0;
 
 		// NACK if not ready
-		udd_OUT_stop_transfer(ul_ep_nb);
-		udd_IN_stop_transfer(ul_ep_nb);
+		USB->DEVICE.DeviceEndpoint[ul_ep_nb].EPSTATUSSET.reg = USB_DEVICE_EPSTATUSSET_BK0RDY;
+		USB->DEVICE.DeviceEndpoint[ul_ep_nb].EPSTATUSCLR.reg = USB_DEVICE_EPSTATUSCLR_BK1RDY;
 	}
 }
 
@@ -247,7 +251,7 @@ void UDD_InitEP( uint32_t ul_ep_nb, uint32_t ul_ep_cfg )
 // Send packet.
 void UDD_ClearIN(void)
 {
-	udd_IN_transfer_allowed(EP0);
+	USB->DEVICE.DeviceEndpoint[EP0].EPSTATUSSET.reg = USB_DEVICE_EPSTATUSSET_BK1RDY;
 }
 
 
@@ -264,21 +268,20 @@ uint32_t UDD_Send(uint32_t ep, const void* data, uint32_t len)
 	return len;
 }
 
-uint8_t UDD_Recv_data(uint32_t ep, uint32_t len)
+uint8_t UDD_Recv8(uint32_t ep)
 {
-	TRACE_DEVICE(printf("=> UDD_Recvdata : ep=%d\r\n", (char)ep);)
+	TRACE_DEVICE(printf("=> UDD_Recv8 : ep=%d\r\n", (char)ep);)
 
-	if (len>64) len=64;
-	usb_endpoint_table[ep].DeviceDescBank[0].ADDR.reg = (uint32_t)&udd_ep_out_cache_buffer[ep];
-	usb_endpoint_table[ep].DeviceDescBank[0].PCKSIZE.bit.MULTI_PACKET_SIZE = len;
+    usb_endpoint_table[ep].DeviceDescBank[0].ADDR.reg = (uint32_t)&udd_ep_out_cache_buffer[ep];
+	usb_endpoint_table[ep].DeviceDescBank[0].PCKSIZE.bit.MULTI_PACKET_SIZE = 8;
 	usb_endpoint_table[ep].DeviceDescBank[0].PCKSIZE.bit.BYTE_COUNT = 0;
-	udd_OUT_transfer_allowed(ep);
-	TRACE_DEVICE(printf("=> UDD_Recv_data : data=%lu\r\n", (unsigned long)data);)
+	USB->DEVICE.DeviceEndpoint[ep].EPSTATUSCLR.reg = USB_DEVICE_EPSTATUSCLR_BK0RDY;
+	TRACE_DEVICE(printf("=> UDD_Recv8 : data=%lu\r\n", (unsigned long)data);)
 
 	/* Wait for transfer to complete */
-	while (!udd_is_OUT_transf_cplt(ep));
+	while (!( USB->DEVICE.DeviceEndpoint[ep].EPINTFLAG.reg & USB_DEVICE_EPINTFLAG_TRCPT0 ));
 	/* Clear Transfer complete 0 flag */
-	udd_clear_OUT_transf_cplt(ep);
+	USB->DEVICE.DeviceEndpoint[ep].EPINTFLAG.bit.TRCPT0 = 1;
 
 	return udd_ep_out_cache_buffer[ep][0];
 }
@@ -293,7 +296,7 @@ void UDD_Stall(uint32_t ep)
 	uint8_t ep_num = ep;
 
 	// Stall endpoint
-	USB->DEVICE.DeviceEndpoint[ep_num].EPSTATUSSET.reg = USB_DEVICE_EPSTATUSSET_STALLRQ(2);
+	USB->DEVICE.DeviceEndpoint[ep_num].EPSTATUSSET.reg = USB_DEVICE_EPSTATUSSET_STALLRQ1;
 }
 
 uint32_t UDD_FifoByteCount(uint32_t ep)
@@ -304,19 +307,15 @@ uint32_t UDD_FifoByteCount(uint32_t ep)
 void UDD_ReleaseRX(uint32_t ep)
 {
 	TRACE_DEVICE(puts("=> UDD_ReleaseRX\r\n");)
-	// The RAM Buffer is empty: we can receive data
-	udd_OUT_transfer_allowed(ep);
-	/* Clear Transfer complete 0 flag */
-	udd_clear_OUT_transf_cplt(ep);
+	USB->DEVICE.DeviceEndpoint[ep].EPSTATUSCLR.reg = USB_DEVICE_EPSTATUSCLR_BK0RDY;
+    USB->DEVICE.DeviceEndpoint[ep].EPINTFLAG.reg = USB_DEVICE_EPINTFLAG_TRCPT0;
 }
 
 void UDD_ReleaseTX(uint32_t ep)
 {
 	TRACE_DEVICE(printf("=> UDD_ReleaseTX ep=%lu\r\n", (unsigned long)ep);)
-	// The RAM Buffer is full: we can send data
-    udd_IN_transfer_allowed(ep);
- 	/* Clear the transfer complete flag  */
-    udd_clear_IN_transf_cplt(ep);
+    USB->DEVICE.DeviceEndpoint[ep].EPSTATUSSET.reg = USB_DEVICE_EPSTATUSSET_BK1RDY;
+    USB->DEVICE.DeviceEndpoint[ep].EPINTFLAG.reg = USB_DEVICE_EPINTFLAG_TRCPT1;
 }
 
 void UDD_SetAddress(uint32_t addr)
@@ -326,12 +325,12 @@ void UDD_SetAddress(uint32_t addr)
 	/* Set the byte count as zero */
 	usb_endpoint_table[0].DeviceDescBank[1].PCKSIZE.bit.BYTE_COUNT = 0;
  	/* Clear the transfer complete flag  */
-    udd_clear_IN_transf_cplt(0);
+ 	USB->DEVICE.DeviceEndpoint[0].EPINTFLAG.bit.TRCPT1 = 1;
 	/* Set the bank as ready */
-	udd_IN_transfer_allowed(0);
+	USB->DEVICE.DeviceEndpoint[0].EPSTATUSSET.bit.BK1RDY = 1;
 
 	/* Wait for transfer to complete */
-	while (!udd_is_IN_transf_cplt(EP0)) {}
+	while (!( USB->DEVICE.DeviceEndpoint[0].EPINTFLAG.reg & USB_DEVICE_EPINTFLAG_TRCPT1 )) {}
 
 	udd_configure_address(addr);
 }

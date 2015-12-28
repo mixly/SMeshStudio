@@ -29,7 +29,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: parity.h,v 1.2 2007/01/23 15:32:48 joerg_wunsch Exp $ */
+/* $Id$ */
 
 #ifndef _UTIL_PARITY_H_
 #define _UTIL_PARITY_H_

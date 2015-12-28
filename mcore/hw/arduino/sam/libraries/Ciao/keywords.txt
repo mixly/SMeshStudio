@@ -1,0 +1,23 @@
+#######################################
+# Syntax Coloring Map For Bridge
+#######################################
+
+#######################################
+# Class (KEYWORD3)
+#######################################
+
+Ciao	KEYWORD3
+CiaoData	KEYWORD3
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+# methods names in commond
+begin	KEYWORD2
+writeResponse	KEYWORD2
+available	KEYWORD2
+read	KEYWORD2
+write	KEYWORD2
+bool	KEYWORD2
+

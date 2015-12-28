@@ -11,12 +11,10 @@ yun.vid.0=0x2341
 yun.pid.0=0x0041
 yun.vid.1=0x2341
 yun.pid.1=0x8041
-yun.vid.2=0x2A03
+yun.vid.2=0x2a03
 yun.pid.2=0x0041
-yun.vid.3=0x2A03
+yun.vid.3=0x2a03
 yun.pid.3=0x8041
-
-yun.vid.0x2A03.warning=Uncertified
 
 yun.upload.tool=avrdude
 yun.upload.protocol=avr109
@@ -37,7 +35,7 @@ yun.bootloader.lock_bits=0x2F
 
 yun.build.mcu=atmega32u4
 yun.build.f_cpu=16000000L
-yun.build.vid=0x2341
+yun.build.vid=0x2a03
 yun.build.pid=0x8041
 yun.build.usb_product="Arduino Yun"
 yun.build.board=AVR_YUN
@@ -47,16 +45,88 @@ yun.build.extra_flags={build.usb_flags}
 
 ##############################################################
 
+yunmini.name=Arduino Yún Mini
+yunmini.upload.via_ssh=true
+
+yunmini.vid.0=0x2a03
+yunmini.pid.0=0x0050
+yunmini.vid.1=0x2a03
+yunmini.pid.1=0x8050
+
+yunmini.upload.tool=avrdude
+yunmini.upload.protocol=avr109
+yunmini.upload.maximum_size=28672
+yunmini.upload.maximum_data_size=2560
+yunmini.upload.speed=57600
+yunmini.upload.disable_flushing=true
+yunmini.upload.use_1200bps_touch=true
+yunmini.upload.wait_for_upload_port=true
+
+yunmini.bootloader.tool=avrdude
+yunmini.bootloader.low_fuses=0xff
+yunmini.bootloader.high_fuses=0xd8
+yunmini.bootloader.extended_fuses=0xfb
+yunmini.bootloader.file=caterina/Caterina-Yunmini.hex
+yunmini.bootloader.unlock_bits=0x3F
+yunmini.bootloader.lock_bits=0x2F
+
+yunmini.build.mcu=atmega32u4
+yunmini.build.f_cpu=16000000L
+yunmini.build.vid=0x2a03
+yunmini.build.pid=0x8050
+yunmini.build.usb_product="Arduino Yún Mini"
+yunmini.build.board=AVR_YUN
+yunmini.build.core=arduino
+yunmini.build.variant=yun
+yunmini.build.extra_flags={build.usb_flags}
+
+##############################################################
+
+one.name=Linino One
+one.upload.via_ssh=true
+
+one.vid.0=0x2a03
+one.pid.0=0x0001
+one.vid.1=0x2a03
+one.pid.1=0x8001
+
+one.upload.tool=avrdude
+one.upload.protocol=avr109
+one.upload.maximum_size=28672
+one.upload.maximum_data_size=2560
+one.upload.speed=57600
+one.upload.disable_flushing=true
+one.upload.use_1200bps_touch=true
+one.upload.wait_for_upload_port=true
+
+one.bootloader.tool=avrdude
+one.bootloader.low_fuses=0xff
+one.bootloader.high_fuses=0xd8
+one.bootloader.extended_fuses=0xfb
+one.bootloader.file=caterina/Caterina-LininoOne.hex
+one.bootloader.unlock_bits=0x3F
+one.bootloader.lock_bits=0x2F
+
+one.build.mcu=atmega32u4
+one.build.f_cpu=16000000L
+one.build.vid=0x2a03
+one.build.pid=0x8001
+one.build.usb_product="Linino One"
+one.build.board=AVR_YUN
+one.build.core=arduino
+one.build.variant=yun
+one.build.extra_flags={build.usb_flags}
+
+##############################################################
+
 uno.name=Arduino Uno
 
 uno.vid.0=0x2341
 uno.pid.0=0x0043
 uno.vid.1=0x2341
 uno.pid.1=0x0001
-uno.vid.2=0x2A03
+uno.vid.2=0x2a03
 uno.pid.2=0x0043
-
-uno.vid.0x2A03.warning=Uncertified
 
 uno.upload.tool=avrdude
 uno.upload.protocol=arduino
@@ -77,36 +147,6 @@ uno.build.f_cpu=16000000L
 uno.build.board=AVR_UNO
 uno.build.core=arduino
 uno.build.variant=standard
-
-##############################################################
-
-uno2.name=4WD Robot Controller
-
-uno2.vid.0=0x2341
-uno2.pid.0=0x0043
-uno2.vid.1=0x2341
-uno2.pid.1=0x0001
-
-uno2.upload.tool=avrdude
-uno2.upload.protocol=arduino
-uno2.upload.maximum_size=32256
-uno2.upload.maximum_data_size=2048
-uno2.upload.speed=57600
-
-uno2.bootloader.tool=avrdude
-uno2.bootloader.low_fuses=0xFF
-uno2.bootloader.high_fuses=0xDE
-uno2.bootloader.extended_fuses=0x05
-uno2.bootloader.unlock_bits=0x3F
-uno2.bootloader.lock_bits=0x0F
-uno2.bootloader.file=optiboot/optiboot_atmega328.hex
-
-uno2.build.mcu=atmega328p
-uno2.build.f_cpu=16000000L
-uno2.build.board=AVR_UNO
-uno2.build.core=arduino
-uno2.build.variant=standard
-
 
 ##############################################################
 
@@ -207,12 +247,10 @@ mega.vid.0=0x2341
 mega.pid.0=0x0010
 mega.vid.1=0x2341
 mega.pid.1=0x0042
-mega.vid.2=0x2A03
+mega.vid.2=0x2a03
 mega.pid.2=0x0010
-mega.vid.3=0x2A03
+mega.vid.3=0x2a03
 mega.pid.3=0x0042
-
-mega.vid.0x2A03.warning=Uncertified
 
 mega.upload.tool=avrdude
 mega.upload.maximum_data_size=8192
@@ -266,12 +304,10 @@ megaADK.vid.0=0x2341
 megaADK.pid.0=0x003f
 megaADK.vid.1=0x2341
 megaADK.pid.1=0x0044
-megaADK.vid.2=0x2A03
+megaADK.vid.2=0x2a03
 megaADK.pid.2=0x003f
-megaADK.vid.3=0x2A03
+megaADK.vid.3=0x2a03
 megaADK.pid.3=0x0044
-
-megaADK.vid.0x2A03.warning=Uncertified
 
 megaADK.upload.tool=avrdude
 megaADK.upload.protocol=wiring
@@ -295,17 +331,50 @@ megaADK.build.variant=mega
 
 ##############################################################
 
+leonardoeth.name=Arduino Leonardo ETH
+leonardoeth.vid.0=0x2a03
+leonardoeth.pid.0=0x0040
+leonardoeth.vid.1=0x2a03
+leonardoeth.pid.1=0x8040
+
+leonardoeth.upload.tool=avrdude
+leonardoeth.upload.protocol=avr109
+leonardoeth.upload.maximum_size=28672
+leonardoeth.upload.maximum_data_size=2560
+leonardoeth.upload.speed=57600
+leonardoeth.upload.disable_flushing=true
+leonardoeth.upload.use_1200bps_touch=true
+leonardoeth.upload.wait_for_upload_port=true
+
+leonardoeth.bootloader.tool=avrdude
+leonardoeth.bootloader.low_fuses=0xff
+leonardoeth.bootloader.high_fuses=0xd8
+leonardoeth.bootloader.extended_fuses=0xcb
+leonardoeth.bootloader.file=caterina/Caterina-LeonardoEthernet.hex
+leonardoeth.bootloader.unlock_bits=0x3F
+leonardoeth.bootloader.lock_bits=0x2F
+
+leonardoeth.build.mcu=atmega32u4
+leonardoeth.build.f_cpu=16000000L
+leonardoeth.build.vid=0x2a03
+leonardoeth.build.pid=0x8040
+leonardoeth.build.usb_product="Arduino Leonardo ETH"
+leonardoeth.build.board=AVR_LEONARDO
+leonardoeth.build.core=arduino
+leonardoeth.build.variant=leonardo
+leonardoeth.build.extra_flags={build.usb_flags}
+
+##############################################################
+
 leonardo.name=Arduino Leonardo
 leonardo.vid.0=0x2341
 leonardo.pid.0=0x0036
 leonardo.vid.1=0x2341
 leonardo.pid.1=0x8036
-leonardo.vid.2=0x2A03
+leonardo.vid.2=0x2a03
 leonardo.pid.2=0x0036
-leonardo.vid.3=0x2A03
+leonardo.vid.3=0x2a03
 leonardo.pid.3=0x8036
-
-leonardo.vid.0x2A03.warning=Uncertified
 
 leonardo.upload.tool=avrdude
 leonardo.upload.protocol=avr109
@@ -326,7 +395,7 @@ leonardo.bootloader.lock_bits=0x2F
 
 leonardo.build.mcu=atmega32u4
 leonardo.build.f_cpu=16000000L
-leonardo.build.vid=0x2341
+leonardo.build.vid=0x2a03
 leonardo.build.pid=0x8036
 leonardo.build.usb_product="Arduino Leonardo"
 leonardo.build.board=AVR_LEONARDO
@@ -337,17 +406,6 @@ leonardo.build.extra_flags={build.usb_flags}
 ##############################################################
 
 micro.name=Arduino Micro
-micro.vid.0=0x2341
-micro.pid.0=0x0037
-micro.vid.1=0x2341
-micro.pid.1=0x8037
-micro.vid.2=0x2A03
-micro.pid.2=0x0037
-micro.vid.3=0x2A03
-micro.pid.3=0x8037
-
-micro.vid.0x2A03.warning=Uncertified
-
 micro.upload.tool=avrdude
 micro.upload.protocol=avr109
 micro.upload.maximum_size=28672
@@ -367,7 +425,7 @@ micro.bootloader.lock_bits=0x2F
 
 micro.build.mcu=atmega32u4
 micro.build.f_cpu=16000000L
-micro.build.vid=0x2341
+micro.build.vid=0x2a03
 micro.build.pid=0x8037
 micro.build.usb_product="Arduino Micro"
 micro.build.board=AVR_MICRO
@@ -379,15 +437,13 @@ micro.build.extra_flags={build.usb_flags}
 
 esplora.name=Arduino Esplora
 esplora.vid.0=0x2341
-esplora.pid.0=0x003C
+esplora.pid.0=0x003c
 esplora.vid.1=0x2341
-esplora.pid.1=0x803C
-esplora.vid.2=0x2A03
-esplora.pid.2=0x003C
-esplora.vid.3=0x2A03
-esplora.pid.3=0x803C
-
-esplora.vid.0x2A03.warning=Uncertified
+esplora.pid.1=0x803c
+esplora.vid.2=0x2a03
+esplora.pid.2=0x003c
+esplora.vid.3=0x2a03
+esplora.pid.3=0x803c
 
 esplora.upload.tool=avrdude
 esplora.upload.protocol=avr109
@@ -408,7 +464,7 @@ esplora.bootloader.lock_bits=0x2F
 
 esplora.build.mcu=atmega32u4
 esplora.build.f_cpu=16000000L
-esplora.build.vid=0x2341
+esplora.build.vid=0x2a03
 esplora.build.pid=0x803c
 esplora.build.usb_product="Arduino Esplora"
 esplora.build.board=AVR_ESPLORA
@@ -555,10 +611,6 @@ bt.menu.cpu.atmega168.build.mcu=atmega168
 ##############################################################
 
 LilyPadUSB.name=LilyPad Arduino USB
-LilyPadUSB.vid.0=0x1B4F
-LilyPadUSB.pid.0=0x9207
-LilyPadUSB.vid.1=0x1B4F
-LilyPadUSB.pid.1=0x9208
 
 LilyPadUSB.upload.tool=avrdude
 LilyPadUSB.upload.protocol=avr109
@@ -760,17 +812,6 @@ atmegang.menu.cpu.atmega8.build.mcu=atmega8
 ##############################################################
 
 robotControl.name=Arduino Robot Control
-robotControl.vid.0=0x2341
-robotControl.pid.0=0x0038
-robotControl.vid.1=0x2341
-robotControl.pid.1=0x8038
-robotControl.vid.2=0x2A03
-robotControl.pid.2=0x0038
-robotControl.vid.3=0x2A03
-robotControl.pid.3=0x8038
-
-robotControl.vid.0x2A03.warning=Uncertified
-
 robotControl.upload.tool=avrdude
 robotControl.upload.protocol=avr109
 robotControl.upload.maximum_size=28672
@@ -790,7 +831,7 @@ robotControl.bootloader.lock_bits=0x2F
 
 robotControl.build.mcu=atmega32u4
 robotControl.build.f_cpu=16000000L
-robotControl.build.vid=0x2341
+robotControl.build.vid=0x2a03
 robotControl.build.pid=0x8038
 robotControl.build.usb_product="Robot Control"
 robotControl.build.board=AVR_ROBOT_CONTROL
@@ -801,17 +842,6 @@ robotControl.build.extra_flags={build.usb_flags}
 ##############################################################
 
 robotMotor.name=Arduino Robot Motor
-robotMotor.vid.0=0x2341
-robotMotor.pid.0=0x0039
-robotMotor.vid.1=0x2341
-robotMotor.pid.1=0x8039
-robotMotor.vid.2=0x2A03
-robotMotor.pid.2=0x0039
-robotMotor.vid.3=0x2A03
-robotMotor.pid.3=0x8039
-
-robotMotor.vid.0x2A03.warning=Uncertified
-
 robotMotor.upload.tool=avrdude
 robotMotor.upload.protocol=avr109
 robotMotor.upload.maximum_size=28672
@@ -831,7 +861,7 @@ robotMotor.bootloader.lock_bits=0x2F
 
 robotMotor.build.mcu=atmega32u4
 robotMotor.build.f_cpu=16000000L
-robotMotor.build.vid=0x2341
+robotMotor.build.vid=0x2a03
 robotMotor.build.pid=0x8039
 robotMotor.build.usb_product="Robot Motor"
 robotMotor.build.board=AVR_ROBOT_MOTOR

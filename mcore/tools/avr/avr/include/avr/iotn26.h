@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: iotn26.h,v 1.15.2.7 2009/02/11 18:05:32 arcanum Exp $ */
+/* $Id: iotn26.h 2236 2011-03-17 21:53:39Z arcanum $ */
 
 /* avr/iotn26.h - definitions for ATtiny26 */
 
@@ -293,54 +293,66 @@
 /* Interrupt vectors */
 /* Interrupt vector 0 is the reset vector. */
 /* External Interrupt 0 */
-#define INT0_vect			_VECTOR(1)
+#define INT0_vect_num			1
+#define INT0_vect	    		_VECTOR(1)
 #define SIG_INTERRUPT0			_VECTOR(1)
 
 /* External Interrupt Request 0 */
+#define IO_PINS_vect_num    	2
 #define IO_PINS_vect			_VECTOR(2)
 #define SIG_PIN_CHANGE			_VECTOR(2)
 
 /* Timer/Counter1 Compare Match 1A */
-#define TIMER1_CMPA_vect		_VECTOR(3)
-#define SIG_OUTPUT_COMPARE1A		_VECTOR(3)
+#define TIMER1_CMPA_vect_num	3
+#define TIMER1_CMPA_vect	   	_VECTOR(3)
+#define SIG_OUTPUT_COMPARE1A	_VECTOR(3)
 
 /* Timer/Counter1 Compare Match 1B */
+#define TIMER1_CMPB_vect_num	4
 #define TIMER1_CMPB_vect		_VECTOR(4)
-#define SIG_OUTPUT_COMPARE1B		_VECTOR(4)
+#define SIG_OUTPUT_COMPARE1B	_VECTOR(4)
 
 /* Timer/Counter1 Overflow */
+#define TIMER1_OVF1_vect_num	5
 #define TIMER1_OVF1_vect		_VECTOR(5)
 #define SIG_OVERFLOW1			_VECTOR(5)
 
 /* Timer/Counter0 Overflow */
+#define TIMER0_OVF0_vect_num	6
 #define TIMER0_OVF0_vect		_VECTOR(6)
 #define SIG_OVERFLOW0			_VECTOR(6)
 
 /* USI Start */
+#define USI_STRT_vect_num		7
 #define USI_STRT_vect			_VECTOR(7)
 #define SIG_USI_START			_VECTOR(7)
 
 /* USI Overflow */
+#define USI_OVF_vect_num		8
 #define USI_OVF_vect			_VECTOR(8)
 #define SIG_USI_OVERFLOW		_VECTOR(8)
 
 /* EEPROM Ready */
-#define EE_RDY_vect			_VECTOR(9)
+#define EE_RDY_vect_num			9
+#define EE_RDY_vect		    	_VECTOR(9)
 #define SIG_EEPROM_READY		_VECTOR(9)
 
 /* Analog Comparator */
+#define ANA_COMP_vect_num    	10
 #define ANA_COMP_vect			_VECTOR(10)
 #define SIG_ANA_COMP			_VECTOR(10)
 #define SIG_COMPARATOR			_VECTOR(10)
 
 /* ADC Conversion Complete */
-#define ADC_vect			_VECTOR(11)
-#define SIG_ADC				_VECTOR(11)
+#define ADC_vect_num			11
+#define ADC_vect	    		_VECTOR(11)
+#define SIG_ADC			    	_VECTOR(11)
 
 #define _VECTORS_SIZE 24
 
 
 /* Constants */
+#define RAMSTART    0x60
 #define RAMEND      0xDF
 #define XRAMEND     RAMEND
 #define E2END       0x7F
@@ -380,6 +392,27 @@
 #define SIGNATURE_0 0x1E
 #define SIGNATURE_1 0x91
 #define SIGNATURE_2 0x09
+
+
+/* Deprecated items */
+#if !defined(__AVR_LIBC_DEPRECATED_ENABLE__)
+
+#pragma GCC system_header
+
+#pragma GCC poison SIG_INTERRUPT0
+#pragma GCC poison SIG_PIN_CHANGE
+#pragma GCC poison SIG_OUTPUT_COMPARE1A
+#pragma GCC poison SIG_OUTPUT_COMPARE1B
+#pragma GCC poison SIG_OVERFLOW1
+#pragma GCC poison SIG_OVERFLOW0
+#pragma GCC poison SIG_USI_START
+#pragma GCC poison SIG_USI_OVERFLOW
+#pragma GCC poison SIG_EEPROM_READY
+#pragma GCC poison SIG_ANA_COMP
+#pragma GCC poison SIG_COMPARATOR
+#pragma GCC poison SIG_ADC
+
+#endif  /* !defined(__AVR_LIBC_DEPRECATED_ENABLE__) */
 
 
 #endif  /* _AVR_IOTN26_H_ */

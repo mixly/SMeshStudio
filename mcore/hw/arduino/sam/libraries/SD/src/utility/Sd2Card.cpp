@@ -24,7 +24,9 @@
 #ifndef SOFTWARE_SPI
 #ifdef USE_SPI_LIB
 #include <SPI.h>
+#ifndef ARDUINO_ARCH_SAMD
 static SPISettings settings;
+#endif
 #endif
 // functions for hardware SPI
 /** Send a byte to the card */
@@ -164,7 +166,9 @@ void Sd2Card::chipSelectHigh(void) {
 #ifdef USE_SPI_LIB
   if (chip_select_asserted) {
     chip_select_asserted = 0;
+	#ifndef ARDUINO_ARCH_SAMD
     SPI.endTransaction();
+	#endif
   }
 #endif
 }
@@ -173,7 +177,9 @@ void Sd2Card::chipSelectLow(void) {
 #ifdef USE_SPI_LIB
   if (!chip_select_asserted) {
     chip_select_asserted = 1;
+	#ifndef ARDUINO_ARCH_SAMD
     SPI.beginTransaction(settings);
+	#endif
   }
 #endif
   digitalWrite(chipSelectPin_, LOW);
@@ -240,6 +246,7 @@ uint8_t Sd2Card::eraseSingleBlockEnable(void) {
  * can be determined by calling errorCode() and errorData().
  */
 uint8_t Sd2Card::init(uint8_t sckRateID, uint8_t chipSelectPin) {
+	
   errorCode_ = inBlock_ = partialBlockRead_ = type_ = 0;
   chipSelectPin_ = chipSelectPin;
   // 16-bit init start time allows over a minute
@@ -266,24 +273,30 @@ uint8_t Sd2Card::init(uint8_t sckRateID, uint8_t chipSelectPin) {
   SPSR &= ~(1 << SPI2X);
 #else // USE_SPI_LIB
   SPI.begin();
+  #ifndef ARDUINO_ARCH_SAMD
   settings = SPISettings(250000, MSBFIRST, SPI_MODE0);
+  #endif
 #endif // USE_SPI_LIB
 #endif // SOFTWARE_SPI
 
   // must supply min of 74 clock cycles with CS high.
 #ifdef USE_SPI_LIB
+#ifndef ARDUINO_ARCH_SAMD
   SPI.beginTransaction(settings);
 #endif
+#endif
   for (uint8_t i = 0; i < 10; i++) spiSend(0XFF);
-#ifdef USE_SPI_LIB
+#ifdef USE_SPI_LIB  
+#ifndef ARDUINO_ARCH_SAMD
   SPI.endTransaction();
+#endif
 #endif
 
   chipSelectLow();
 
   // command to go idle in SPI mode
   while ((status_ = cardCommand(CMD0, 0)) != R1_IDLE_STATE) {
-    if (((uint16_t)(millis() - t0)) > SD_INIT_TIMEOUT) {
+    if (((uint16_t)millis() - t0) > SD_INIT_TIMEOUT) {
       error(SD_CARD_ERROR_CMD0);
       goto fail;
     }
@@ -305,7 +318,7 @@ uint8_t Sd2Card::init(uint8_t sckRateID, uint8_t chipSelectPin) {
 
   while ((status_ = cardAcmd(ACMD41, arg)) != R1_READY_STATE) {
     // check for timeout
-    if (((uint16_t)(millis() - t0)) > SD_INIT_TIMEOUT) {
+    if (((uint16_t)millis() - t0) > SD_INIT_TIMEOUT) {
       error(SD_CARD_ERROR_ACMD41);
       goto fail;
     }
@@ -514,6 +527,7 @@ uint8_t Sd2Card::setSckRate(uint8_t sckRateID) {
   SPCR |= (sckRateID & 4 ? (1 << SPR1) : 0)
     | (sckRateID & 2 ? (1 << SPR0) : 0);
 #else // USE_SPI_LIB
+  #if defined(ARDUINO_ARCH_SAM)
   switch (sckRateID) {
     case 0:  settings = SPISettings(25000000, MSBFIRST, SPI_MODE0); break;
     case 1:  settings = SPISettings(4000000, MSBFIRST, SPI_MODE0); break;
@@ -523,6 +537,7 @@ uint8_t Sd2Card::setSckRate(uint8_t sckRateID) {
     case 5:  settings = SPISettings(250000, MSBFIRST, SPI_MODE0); break;
     default: settings = SPISettings(125000, MSBFIRST, SPI_MODE0);
   }
+  #endif
 #endif // USE_SPI_LIB
   return true;
 }

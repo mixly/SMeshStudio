@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: common.h,v 1.3.4.4 2009/03/02 23:36:17 arcanum Exp $ */
+/* $Id$ */
 
 
 #ifndef _AVR_COMMON_H
@@ -186,6 +186,18 @@ keep the EEPROM-related definitions here.
 #  ifndef EERIE
 #    define EERIE  (3)
 #  endif
+
+
+/* RAM Page Z Select Register	*/
+#ifndef RAMPZ
+#  if     defined(__AVR_HAVE_RAMPZ__) && __AVR_HAVE_RAMPZ__
+#    if     __AVR_ARCH__ >= 100
+#      define RAMPZ	_SFR_MEM8(0x3B)
+#    else
+#      define RAMPZ	_SFR_IO8(0x3B)
+#    endif
+#  endif
+#endif
 
 #endif /* __COMPILING_AVR_LIBC__ */
 

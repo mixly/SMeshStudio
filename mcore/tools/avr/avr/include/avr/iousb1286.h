@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: iousb1286.h,v 1.2.2.5 2008/10/17 23:27:53 arcanum Exp $ */
+/* $Id: iousb1286.h 2102 2010-03-16 22:52:39Z joerg_wunsch $ */
 
 /* avr/iousb1286.h - definitions for AT90USB1286 */
 
@@ -39,6 +39,7 @@
 
 /* Constants */
 #define SPM_PAGESIZE 256
+#define RAMSTART     0x100
 #define RAMEND       0x20FF
 #define XRAMEND      0xFFFF
 #define E2END        0xFFF

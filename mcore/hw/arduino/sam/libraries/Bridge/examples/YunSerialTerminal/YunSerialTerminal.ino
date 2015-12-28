@@ -27,16 +27,19 @@
 
  This example code is in the public domain.
 
- http://www.arduino.cc/en/Tutorial/YunSerialTerminal
+ http://arduino.cc/en/Tutorial/YunSerialTerminal
 
  */
 
 
 long linuxBaud = 250000;
+const int handshake =  7;      // the number of the HANDSHAKE pin
 
 void setup() {
   Serial.begin(115200);      // open serial connection via USB-Serial
   Serial1.begin(linuxBaud);  // open serial connection to Linux
+  pinMode(handshake, OUTPUT);
+  digitalWrite(handshake, LOW);
 }
 
 boolean commandMode = false;

@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: lock.h,v 1.3.2.2 2008/04/29 18:07:36 arcanum Exp $ */
+/* $Id$ */
 
 /* avr/lock.h - Lock Bits API */
 
@@ -187,7 +187,7 @@
 #ifndef __ASSEMBLER__
 
 #ifndef LOCKMEM
-#define LOCKMEM  __attribute__((section (".lock")))
+#define LOCKMEM  __attribute__((__used__, __section__ (".lock")))
 #endif
 
 #ifndef LOCKBITS

@@ -1,4 +1,4 @@
-/* Copyright (c) 2009 Atmel Corporation
+/* Copyright (c) 2009-2010 Atmel Corporation
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: iox256d3.h,v 1.1.2.4 2009/10/23 21:47:10 arcanum Exp $ */
+/* $Id: iox256d3.h 2162 2010-06-11 17:26:12Z arcanum $ */
 
 /* avr/iox256d3.h - definitions for ATxmega256D3 */
 
@@ -162,6 +162,19 @@ typedef struct CLK_struct
     register8_t LOCK;  /* Lock register */
     register8_t RTCCTRL;  /* RTC Control Register */
 } CLK_t;
+
+
+/* Power Reduction */
+typedef struct PR_struct
+{
+    register8_t PRGEN;  /* General Power Reduction */
+    register8_t PRPA;  /* Power Reduction Port A */
+    register8_t reserved_0x02;
+    register8_t PRPC;  /* Power Reduction Port C */
+    register8_t PRPD;  /* Power Reduction Port D */
+    register8_t PRPE;  /* Power Reduction Port E */
+    register8_t PRPF;  /* Power Reduction Port F */
+} PR_t;
 
 /* System Clock Selection */
 typedef enum CLK_SCLKSEL_enum
@@ -398,6 +411,46 @@ typedef struct PMIC_struct
 
 /*
 --------------------------------------------------------------------------
+CRC - Cyclic Redundancy Checker
+--------------------------------------------------------------------------
+*/
+
+/* Cyclic Redundancy Checker */
+typedef struct CRC_struct
+{
+    register8_t CTRL;  /* Control Register */
+    register8_t STATUS;  /* Status Register */
+    register8_t reserved_0x02;
+    register8_t DATAIN;  /* Data Input */
+    register8_t CHECKSUM0;  /* Checksum byte 0 */
+    register8_t CHECKSUM1;  /* Checksum byte 1 */
+    register8_t CHECKSUM2;  /* Checksum byte 2 */
+    register8_t CHECKSUM3;  /* Checksum byte 3 */
+} CRC_t;
+
+/* Reset */
+typedef enum CRC_RESET_enum
+{
+    CRC_RESET_NO_gc = (0x00<<6),  /* No Reset */
+    CRC_RESET_RESET0_gc = (0x02<<6),  /* Reset CRC with CHECKSUM to all zeros */
+    CRC_RESET_RESET1_gc = (0x03<<6),  /* Reset CRC with CHECKSUM to all ones */
+} CRC_RESET_t;
+
+/* Input Source */
+typedef enum CRC_SOURCE_enum
+{
+    CRC_SOURCE_DISABLE_gc = (0x00<<0),  /* Disabled */
+    CRC_SOURCE_IO_gc = (0x01<<0),  /* I/O Interface */
+    CRC_SOURCE_FLASH_gc = (0x02<<0),  /* Flash */
+    CRC_SOURCE_DMAC0_gc = (0x04<<0),  /* DMAC Channel 0 */
+    CRC_SOURCE_DMAC1_gc = (0x05<<0),  /* DMAC Channel 1 */
+    CRC_SOURCE_DMAC2_gc = (0x06<<0),  /* DMAC Channel 2 */
+    CRC_SOURCE_DMAC3_gc = (0x07<<0),  /* DMAC Channel 3 */
+} CRC_SOURCE_t;
+
+
+/*
+--------------------------------------------------------------------------
 EVSYS - Event System
 --------------------------------------------------------------------------
 */
@@ -409,10 +462,18 @@ typedef struct EVSYS_struct
     register8_t CH1MUX;  /* Event Channel 1 Multiplexer */
     register8_t CH2MUX;  /* Event Channel 2 Multiplexer */
     register8_t CH3MUX;  /* Event Channel 3 Multiplexer */
+    register8_t reserved_0x04;
+    register8_t reserved_0x05;
+    register8_t reserved_0x06;
+    register8_t reserved_0x07;
     register8_t CH0CTRL;  /* Channel 0 Control Register */
     register8_t CH1CTRL;  /* Channel 1 Control Register */
     register8_t CH2CTRL;  /* Channel 2 Control Register */
     register8_t CH3CTRL;  /* Channel 3 Control Register */
+    register8_t reserved_0x0C;
+    register8_t reserved_0x0D;
+    register8_t reserved_0x0E;
+    register8_t reserved_0x0F;
     register8_t STROBE;  /* Event Strobe */
     register8_t DATA;  /* Event Data */
 } EVSYS_t;
@@ -977,6 +1038,15 @@ typedef struct ADC_struct
     ADC_CH_t CH0;  /* ADC Channel 0 */
 } ADC_t;
 
+/* Current Limitation */
+typedef enum ADC_CURRLIMIT_enum
+{
+    ADC_CURRLIMIT_NO_gc = (0x00<<5),  /* No current limit,     300ksps max sampling rate */
+    ADC_CURRLIMIT_LOW_gc = (0x01<<5),  /* Low current limit,    225ksps max sampling rate */
+    ADC_CURRLIMIT_MED_gc = (0x02<<5),  /* Medium current limit, 150ksps max sampling rate */
+    ADC_CURRLIMIT_HIGH_gc = (0x03<<5),  /* High current limit,   75ksps max sampling rate */
+} ADC_CURRLIMIT_t;
+
 /* Positive input multiplexer selection */
 typedef enum ADC_CH_MUXPOS_enum
 {
@@ -1022,6 +1092,7 @@ typedef enum ADC_CH_GAIN_enum
     ADC_CH_GAIN_16X_gc = (0x04<<2),  /* 16x gain */
     ADC_CH_GAIN_32X_gc = (0x05<<2),  /* 32x gain */
     ADC_CH_GAIN_64X_gc = (0x06<<2),  /* 64x gain */
+    ADC_CH_GAIN_DIV2_gc = (0x07<<2),  /* x/2 gain */		
 } ADC_CH_GAIN_t;
 
 /* Conversion result resolution */
@@ -1190,26 +1261,26 @@ typedef struct EBI_struct
 } EBI_t;
 
 /* Chip Select adress space */
-typedef enum EBI_CS_ASPACE_enum
+typedef enum EBI_CS_ASIZE_enum
 {
-    EBI_CS_ASPACE_256B_gc = (0x00<<2),  /* 256 bytes */
-    EBI_CS_ASPACE_512B_gc = (0x01<<2),  /* 512 bytes */
-    EBI_CS_ASPACE_1KB_gc = (0x02<<2),  /* 1K bytes */
-    EBI_CS_ASPACE_2KB_gc = (0x03<<2),  /* 2K bytes */
-    EBI_CS_ASPACE_4KB_gc = (0x04<<2),  /* 4K bytes */
-    EBI_CS_ASPACE_8KB_gc = (0x05<<2),  /* 8K bytes */
-    EBI_CS_ASPACE_16KB_gc = (0x06<<2),  /* 16K bytes */
-    EBI_CS_ASPACE_32KB_gc = (0x07<<2),  /* 32K bytes */
-    EBI_CS_ASPACE_64KB_gc = (0x08<<2),  /* 64K bytes */
-    EBI_CS_ASPACE_128KB_gc = (0x09<<2),  /* 128K bytes */
-    EBI_CS_ASPACE_256KB_gc = (0x0A<<2),  /* 256K bytes */
-    EBI_CS_ASPACE_512KB_gc = (0x0B<<2),  /* 512K bytes */
-    EBI_CS_ASPACE_1MB_gc = (0x0C<<2),  /* 1M bytes */
-    EBI_CS_ASPACE_2MB_gc = (0x0D<<2),  /* 2M bytes */
-    EBI_CS_ASPACE_4MB_gc = (0x0E<<2),  /* 4M bytes */
-    EBI_CS_ASPACE_8MB_gc = (0x0F<<2),  /* 8M bytes */
-    EBI_CS_ASPACE_16M_gc = (0x10<<2),  /* 16M bytes */
-} EBI_CS_ASPACE_t;
+    EBI_CS_ASIZE_256B_gc = (0x00<<2),  /* 256 bytes */
+    EBI_CS_ASIZE_512B_gc = (0x01<<2),  /* 512 bytes */
+    EBI_CS_ASIZE_1KB_gc = (0x02<<2),  /* 1K bytes */
+    EBI_CS_ASIZE_2KB_gc = (0x03<<2),  /* 2K bytes */
+    EBI_CS_ASIZE_4KB_gc = (0x04<<2),  /* 4K bytes */
+    EBI_CS_ASIZE_8KB_gc = (0x05<<2),  /* 8K bytes */
+    EBI_CS_ASIZE_16KB_gc = (0x06<<2),  /* 16K bytes */
+    EBI_CS_ASIZE_32KB_gc = (0x07<<2),  /* 32K bytes */
+    EBI_CS_ASIZE_64KB_gc = (0x08<<2),  /* 64K bytes */
+    EBI_CS_ASIZE_128KB_gc = (0x09<<2),  /* 128K bytes */
+    EBI_CS_ASIZE_256KB_gc = (0x0A<<2),  /* 256K bytes */
+    EBI_CS_ASIZE_512KB_gc = (0x0B<<2),  /* 512K bytes */
+    EBI_CS_ASIZE_1MB_gc = (0x0C<<2),  /* 1M bytes */
+    EBI_CS_ASIZE_2MB_gc = (0x0D<<2),  /* 2M bytes */
+    EBI_CS_ASIZE_4MB_gc = (0x0E<<2),  /* 4M bytes */
+    EBI_CS_ASIZE_8MB_gc = (0x0F<<2),  /* 8M bytes */
+    EBI_CS_ASIZE_16M_gc = (0x10<<2),  /* 16M bytes */
+} EBI_CS_ASIZE_t;
 
 /*  */
 typedef enum EBI_CS_SRWS_enum
@@ -2121,13 +2192,11 @@ IO Module Instances. Mapped to memory.
 ==========================================================================
 */
 
-#define GPIO    (*(GPIO_t *) 0x0000)  /* General Purpose IO Registers */
 #define VPORT0    (*(VPORT_t *) 0x0010)  /* Virtual Port 0 */
 #define VPORT1    (*(VPORT_t *) 0x0014)  /* Virtual Port 1 */
 #define VPORT2    (*(VPORT_t *) 0x0018)  /* Virtual Port 2 */
 #define VPORT3    (*(VPORT_t *) 0x001C)  /* Virtual Port 3 */
 #define OCD    (*(OCD_t *) 0x002E)  /* On-Chip Debug System */
-#define CPU    (*(CPU_t *) 0x0030)  /* CPU Registers */
 #define CLK    (*(CLK_t *) 0x0040)  /* Clock System */
 #define SLEEP    (*(SLEEP_t *) 0x0048)  /* Sleep Controller */
 #define OSC    (*(OSC_t *) 0x0050)  /* Oscillator Control */
@@ -2138,12 +2207,14 @@ IO Module Instances. Mapped to memory.
 #define MCU    (*(MCU_t *) 0x0090)  /* MCU Control */
 #define PMIC    (*(PMIC_t *) 0x00A0)  /* Programmable Interrupt Controller */
 #define PORTCFG    (*(PORTCFG_t *) 0x00B0)  /* Port Configuration */
+#define CRC    (*(CRC_t *) 0x00D0)  /* Cyclic Redundancy Checker */
 #define EVSYS    (*(EVSYS_t *) 0x0180)  /* Event System */
 #define NVM    (*(NVM_t *) 0x01C0)  /* Non Volatile Memory Controller */
 #define ADCA    (*(ADC_t *) 0x0200)  /* Analog to Digital Converter A */
 #define ACA    (*(AC_t *) 0x0380)  /* Analog Comparator A */
 #define RTC    (*(RTC_t *) 0x0400)  /* Real-Time Counter */
 #define TWIC    (*(TWI_t *) 0x0480)  /* Two-Wire Interface C */
+#define TWIE    (*(TWI_t *) 0x04A0)  /* Two-Wire Interface E */
 #define PORTA    (*(PORT_t *) 0x0600)  /* Port A */
 #define PORTB    (*(PORT_t *) 0x0620)  /* Port B */
 #define PORTC    (*(PORT_t *) 0x0640)  /* Port C */
@@ -2264,6 +2335,14 @@ IO Module Instances. Mapped to memory.
 #define DFLLRC2M_COMP1  _SFR_MEM8(0x006D)
 #define DFLLRC2M_COMP2  _SFR_MEM8(0x006E)
 
+/* PR - Power Reduction */
+#define PR_PRGEN  _SFR_MEM8(0x0070)
+#define PR_PRPA  _SFR_MEM8(0x0071)
+#define PR_PRPC  _SFR_MEM8(0x0073)
+#define PR_PRPD  _SFR_MEM8(0x0074)
+#define PR_PRPE  _SFR_MEM8(0x0075)
+#define PR_PRPF  _SFR_MEM8(0x0076)
+
 /* RST - Reset Controller */
 #define RST_STATUS  _SFR_MEM8(0x0078)
 #define RST_CTRL  _SFR_MEM8(0x0079)
@@ -2293,6 +2372,15 @@ IO Module Instances. Mapped to memory.
 #define PORTCFG_VPCTRLA  _SFR_MEM8(0x00B2)
 #define PORTCFG_VPCTRLB  _SFR_MEM8(0x00B3)
 #define PORTCFG_CLKEVOUT  _SFR_MEM8(0x00B4)
+
+/* CRC - Cyclic Redundancy Checker */
+#define CRC_CTRL  _SFR_MEM8(0x00D0)
+#define CRC_STATUS  _SFR_MEM8(0x00D1)
+#define CRC_DATAIN  _SFR_MEM8(0x00D3)
+#define CRC_CHECKSUM0  _SFR_MEM8(0x00D4)
+#define CRC_CHECKSUM1  _SFR_MEM8(0x00D5)
+#define CRC_CHECKSUM2  _SFR_MEM8(0x00D6)
+#define CRC_CHECKSUM3  _SFR_MEM8(0x00D7)
 
 /* EVSYS - Event System */
 #define EVSYS_CH0MUX  _SFR_MEM8(0x0180)
@@ -2372,6 +2460,22 @@ IO Module Instances. Mapped to memory.
 #define TWIC_SLAVE_ADDR  _SFR_MEM8(0x048B)
 #define TWIC_SLAVE_DATA  _SFR_MEM8(0x048C)
 #define TWIC_SLAVE_ADDRMASK  _SFR_MEM8(0x048D)
+
+/* TWIE - Two-Wire Interface E */
+#define TWIE_CTRL  _SFR_MEM8(0x04A0)
+#define TWIE_MASTER_CTRLA  _SFR_MEM8(0x04A1)
+#define TWIE_MASTER_CTRLB  _SFR_MEM8(0x04A2)
+#define TWIE_MASTER_CTRLC  _SFR_MEM8(0x04A3)
+#define TWIE_MASTER_STATUS  _SFR_MEM8(0x04A4)
+#define TWIE_MASTER_BAUD  _SFR_MEM8(0x04A5)
+#define TWIE_MASTER_ADDR  _SFR_MEM8(0x04A6)
+#define TWIE_MASTER_DATA  _SFR_MEM8(0x04A7)
+#define TWIE_SLAVE_CTRLA  _SFR_MEM8(0x04A8)
+#define TWIE_SLAVE_CTRLB  _SFR_MEM8(0x04A9)
+#define TWIE_SLAVE_STATUS  _SFR_MEM8(0x04AA)
+#define TWIE_SLAVE_ADDR  _SFR_MEM8(0x04AB)
+#define TWIE_SLAVE_DATA  _SFR_MEM8(0x04AC)
+#define TWIE_SLAVE_ADDRMASK  _SFR_MEM8(0x04AD)
 
 /* PORTA - Port A */
 #define PORTA_DIR  _SFR_MEM8(0x0600)
@@ -2849,6 +2953,65 @@ IO Module Instances. Mapped to memory.
 #define CLK_RTCEN_bm  0x01  /* RTC Clock Source Enable bit mask. */
 #define CLK_RTCEN_bp  0  /* RTC Clock Source Enable bit position. */
 
+/* PR.PRGEN  bit masks and bit positions */
+#define PR_RTC_bm  0x04  /* Real-time Counter bit mask. */
+#define PR_RTC_bp  2  /* Real-time Counter bit position. */
+
+#define PR_EVSYS_bm  0x02  /* Event System bit mask. */
+#define PR_EVSYS_bp  1  /* Event System bit position. */
+
+/* PR.PRPA  bit masks and bit positions */
+#define PR_ADC_bm  0x02  /* Port A ADC bit mask. */
+#define PR_ADC_bp  1  /* Port A ADC bit position. */
+
+#define PR_AC_bm  0x01  /* Port A Analog Comparator bit mask. */
+#define PR_AC_bp  0  /* Port A Analog Comparator bit position. */
+
+/* PR.PRPC  bit masks and bit positions */
+#define PR_TWI_bm  0x40  /* Port C Two-wire Interface bit mask. */
+#define PR_TWI_bp  6  /* Port C Two-wire Interface bit position. */
+
+#define PR_USART0_bm  0x10  /* Port C USART0 bit mask. */
+#define PR_USART0_bp  4  /* Port C USART0 bit position. */
+
+#define PR_SPI_bm  0x08  /* Port C SPI bit mask. */
+#define PR_SPI_bp  3  /* Port C SPI bit position. */
+
+#define PR_HIRES_bm  0x04  /* Port C HIRES bit mask. */
+#define PR_HIRES_bp  2  /* Port C HIRES bit position. */
+
+#define PR_TC1_bm  0x02  /* Port C Timer/Counter1 bit mask. */
+#define PR_TC1_bp  1  /* Port C Timer/Counter1 bit position. */
+
+#define PR_TC0_bm  0x01  /* Port C Timer/Counter0 bit mask. */
+#define PR_TC0_bp  0  /* Port C Timer/Counter0 bit position. */
+
+/* PR.PRPD  bit masks and bit positions */
+/* PR_USART0  Predefined. */
+/* PR_USART0  Predefined. */
+
+/* PR_SPI  Predefined. */
+/* PR_SPI  Predefined. */
+
+/* PR_TC0  Predefined. */
+/* PR_TC0  Predefined. */
+
+/* PR.PRPE  bit masks and bit positions */
+/* PR_TWI  Predefined. */
+/* PR_TWI  Predefined. */
+
+/* PR_USART0  Predefined. */
+/* PR_USART0  Predefined. */
+
+/* PR_TC0  Predefined. */
+/* PR_TC0  Predefined. */
+
+/* PR.PRPF  bit masks and bit positions */
+/* PR_USART0  Predefined. */
+/* PR_USART0  Predefined. */
+
+/* PR_TC0  Predefined. */
+/* PR_TC0  Predefined. */
 
 /* SLEEP - Sleep Controller */
 /* SLEEP.CTRL  bit masks and bit positions */
@@ -3128,6 +3291,37 @@ IO Module Instances. Mapped to memory.
 
 #define PMIC_LOLVLEN_bm  0x01  /* Low Level Enable bit mask. */
 #define PMIC_LOLVLEN_bp  0  /* Low Level Enable bit position. */
+
+
+/* CRC - Cyclic Redundancy Checker */
+/* CRC.CTRL  bit masks and bit positions */
+#define CRC_RESET_gm  0xC0  /* Reset group mask. */
+#define CRC_RESET_gp  6  /* Reset group position. */
+#define CRC_RESET0_bm  (1<<6)  /* Reset bit 0 mask. */
+#define CRC_RESET0_bp  6  /* Reset bit 0 position. */
+#define CRC_RESET1_bm  (1<<7)  /* Reset bit 1 mask. */
+#define CRC_RESET1_bp  7  /* Reset bit 1 position. */
+
+#define CRC_CRC32_bm  0x20  /* CRC Mode bit mask. */
+#define CRC_CRC32_bp  5  /* CRC Mode bit position. */
+
+#define CRC_SOURCE_gm  0x0F  /* Input Source group mask. */
+#define CRC_SOURCE_gp  0  /* Input Source group position. */
+#define CRC_SOURCE0_bm  (1<<0)  /* Input Source bit 0 mask. */
+#define CRC_SOURCE0_bp  0  /* Input Source bit 0 position. */
+#define CRC_SOURCE1_bm  (1<<1)  /* Input Source bit 1 mask. */
+#define CRC_SOURCE1_bp  1  /* Input Source bit 1 position. */
+#define CRC_SOURCE2_bm  (1<<2)  /* Input Source bit 2 mask. */
+#define CRC_SOURCE2_bp  2  /* Input Source bit 2 position. */
+#define CRC_SOURCE3_bm  (1<<3)  /* Input Source bit 3 mask. */
+#define CRC_SOURCE3_bp  3  /* Input Source bit 3 position. */
+
+/* CRC.STATUS  bit masks and bit positions */
+#define CRC_ZERO_bm  0x02  /* Zero detection bit mask. */
+#define CRC_ZERO_bp  1  /* Zero detection bit position. */
+
+#define CRC_BUSY_bm  0x01  /* Busy bit mask. */
+#define CRC_BUSY_bp  0  /* Busy bit position. */
 
 
 /* EVSYS - Event System */
@@ -3751,6 +3945,13 @@ IO Module Instances. Mapped to memory.
 
 
 /* ADC.CTRLB  bit masks and bit positions */
+#define ADC_CURRLIMIT_gm  0x60  /* Current Limitation group mask. */
+#define ADC_CURRLIMIT_gp  5  /* Current Limitation group position. */
+#define ADC_CURRLIMIT0_bm  (1<<5)  /* Current Limitation bit 0 mask. */
+#define ADC_CURRLIMIT0_bp  5  /* Current Limitation bit 0 position. */
+#define ADC_CURRLIMIT1_bm  (1<<6)  /* Current Limitation bit 1 mask. */
+#define ADC_CURRLIMIT1_bp  6  /* Current Limitation bit 1 position. */
+
 #define ADC_CONMODE_bm  0x10  /* Conversion Mode bit mask. */
 #define ADC_CONMODE_bp  4  /* Conversion Mode bit position. */
 
@@ -3855,18 +4056,18 @@ IO Module Instances. Mapped to memory.
 
 /* EBI - External Bus Interface */
 /* EBI_CS.CTRLA  bit masks and bit positions */
-#define EBI_CS_ASPACE_gm  0x7C  /* Address Space group mask. */
-#define EBI_CS_ASPACE_gp  2  /* Address Space group position. */
-#define EBI_CS_ASPACE0_bm  (1<<2)  /* Address Space bit 0 mask. */
-#define EBI_CS_ASPACE0_bp  2  /* Address Space bit 0 position. */
-#define EBI_CS_ASPACE1_bm  (1<<3)  /* Address Space bit 1 mask. */
-#define EBI_CS_ASPACE1_bp  3  /* Address Space bit 1 position. */
-#define EBI_CS_ASPACE2_bm  (1<<4)  /* Address Space bit 2 mask. */
-#define EBI_CS_ASPACE2_bp  4  /* Address Space bit 2 position. */
-#define EBI_CS_ASPACE3_bm  (1<<5)  /* Address Space bit 3 mask. */
-#define EBI_CS_ASPACE3_bp  5  /* Address Space bit 3 position. */
-#define EBI_CS_ASPACE4_bm  (1<<6)  /* Address Space bit 4 mask. */
-#define EBI_CS_ASPACE4_bp  6  /* Address Space bit 4 position. */
+#define EBI_CS_ASIZE_gm  0x7C  /* Address Size group mask. */
+#define EBI_CS_ASIZE_gp  2  /* Address Size group position. */
+#define EBI_CS_ASIZE0_bm  (1<<2)  /* Address Size bit 0 mask. */
+#define EBI_CS_ASIZE0_bp  2  /* Address Size bit 0 position. */
+#define EBI_CS_ASIZE1_bm  (1<<3)  /* Address Size bit 1 mask. */
+#define EBI_CS_ASIZE1_bp  3  /* Address Size bit 1 position. */
+#define EBI_CS_ASIZE2_bm  (1<<4)  /* Address Size bit 2 mask. */
+#define EBI_CS_ASIZE2_bp  4  /* Address Size bit 2 position. */
+#define EBI_CS_ASIZE3_bm  (1<<5)  /* Address Size bit 3 mask. */
+#define EBI_CS_ASIZE3_bp  5  /* Address Size bit 3 position. */
+#define EBI_CS_ASIZE4_bm  (1<<6)  /* Address Size bit 4 mask. */
+#define EBI_CS_ASIZE4_bp  6  /* Address Size bit 4 position. */
 
 #define EBI_CS_MODE_gm  0x03  /* Memory Mode group mask. */
 #define EBI_CS_MODE_gp  0  /* Memory Mode group position. */
@@ -5206,6 +5407,12 @@ IO Module Instances. Mapped to memory.
 #define PORTE_INT0_vect      _VECTOR(43)  /* External Interrupt 0 */
 #define PORTE_INT1_vect_num  44
 #define PORTE_INT1_vect      _VECTOR(44)  /* External Interrupt 1 */
+
+/* TWIE interrupt vectors */
+#define TWIE_TWIS_vect_num  45
+#define TWIE_TWIS_vect      _VECTOR(45)  /* TWI Slave Interrupt */
+#define TWIE_TWIM_vect_num  46
+#define TWIE_TWIM_vect      _VECTOR(46)  /* TWI Master Interrupt */
 
 /* TCE0 interrupt vectors */
 #define TCE0_OVF_vect_num  47

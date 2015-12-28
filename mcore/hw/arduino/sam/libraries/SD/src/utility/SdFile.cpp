@@ -202,20 +202,20 @@ void SdFile::dirName(const dir_t& dir, char* name) {
  */
 void SdFile::ls(uint8_t flags, uint8_t indent) {
   dir_t* p;
-
   rewind();
   while ((p = readDirCache())) {
     // done if past last used entry
     if (p->name[0] == DIR_NAME_FREE) break;
-
     // skip deleted entry and entries for . and  ..
     if (p->name[0] == DIR_NAME_DELETED || p->name[0] == '.') continue;
-
     // only list subdirectories and files
     if (!DIR_IS_FILE_OR_SUBDIR(p)) continue;
-
     // print any indent spaces
-    for (int8_t i = 0; i < indent; i++) Serial.print(' ');
+	#if defined(ARDUINO_ARCH_SAMD)
+    for (int8_t i = 0; i < indent; i++) SerialUSB.print(' ');
+	#else
+	for (int8_t i = 0; i < indent; i++) Serial.print(' ');
+	#endif
 
     // print file name with possible blank fill
     printDirName(*p, flags & (LS_DATE | LS_SIZE) ? 14 : 0);
@@ -223,15 +223,29 @@ void SdFile::ls(uint8_t flags, uint8_t indent) {
     // print modify date/time if requested
     if (flags & LS_DATE) {
        printFatDate(p->lastWriteDate);
-       Serial.print(' ');
+	   #if defined(ARDUINO_ARCH_SAMD)
+       SerialUSB.print(' ');
+	   #else
+	   Serial.print(' ');
+       #endif
        printFatTime(p->lastWriteTime);
+	   
     }
     // print size if requested
     if (!DIR_IS_SUBDIR(p) && (flags & LS_SIZE)) {
-      Serial.print(' ');
-      Serial.print(p->fileSize);
+	  #if defined(ARDUINO_ARCH_SAMD)
+      SerialUSB.print(' ');
+      SerialUSB.print(p->fileSize);
+	  #else
+	  Serial.print(' ');
+      Serial.print(p->fileSize);  
+	  #endif
     }
-    Serial.println();
+	#if defined(ARDUINO_ARCH_SAMD)
+    SerialUSB.println();
+	#else
+	Serial.println();
+	#endif
 
     // list subdirectory content if requested
     if ((flags & LS_R) && DIR_IS_SUBDIR(p)) {
@@ -595,18 +609,34 @@ void SdFile::printDirName(const dir_t& dir, uint8_t width) {
   for (uint8_t i = 0; i < 11; i++) {
     if (dir.name[i] == ' ')continue;
     if (i == 8) {
-      Serial.print('.');
+	  #if defined(ARDUINO_ARCH_SAMD)
+      SerialUSB.print('.');
+	  #else
+	  Serial.print('.');
+	  #endif
       w++;
     }
-    Serial.write(dir.name[i]);
+	#if defined(ARDUINO_ARCH_SAMD)
+    SerialUSB.write(dir.name[i]);
+	#else
+	Serial.write(dir.name[i]);
+	#endif
     w++;
   }
   if (DIR_IS_SUBDIR(&dir)) {
-    Serial.print('/');
+	#if defined(ARDUINO_ARCH_SAMD)
+    SerialUSB.print('/');
+	#else
+	Serial.print('/');
+	#endif
     w++;
   }
   while (w < width) {
-    Serial.print(' ');
+	#if defined(ARDUINO_ARCH_SAMD)
+    SerialUSB.print(' ');
+	#else
+	Serial.print(' ');
+	#endif
     w++;
   }
 }
@@ -618,10 +648,20 @@ void SdFile::printDirName(const dir_t& dir, uint8_t width) {
  * \param[in] fatDate The date field from a directory entry.
  */
 void SdFile::printFatDate(uint16_t fatDate) {
+  
+  #if defined(ARDUINO_ARCH_SAMD)
+  SerialUSB.print(FAT_YEAR(fatDate));
+  SerialUSB.print('-');
+  #else
   Serial.print(FAT_YEAR(fatDate));
   Serial.print('-');
+  #endif
   printTwoDigits(FAT_MONTH(fatDate));
+  #if defined(ARDUINO_ARCH_SAMD)
+  SerialUSB.print('-');
+  #else
   Serial.print('-');
+  #endif
   printTwoDigits(FAT_DAY(fatDate));
 }
 //------------------------------------------------------------------------------
@@ -633,9 +673,17 @@ void SdFile::printFatDate(uint16_t fatDate) {
  */
 void SdFile::printFatTime(uint16_t fatTime) {
   printTwoDigits(FAT_HOUR(fatTime));
+  #if defined(ARDUINO_ARCH_SAMD)
+  SerialUSB.print(':');
+  #else
   Serial.print(':');
+  #endif
   printTwoDigits(FAT_MINUTE(fatTime));
+  #if defined(ARDUINO_ARCH_SAMD)
+  SerialUSB.print(':');
+  #else
   Serial.print(':');
+  #endif
   printTwoDigits(FAT_SECOND(fatTime));
 }
 //------------------------------------------------------------------------------
@@ -648,7 +696,12 @@ void SdFile::printTwoDigits(uint8_t v) {
   str[0] = '0' + v/10;
   str[1] = '0' + v % 10;
   str[2] = 0;
+  #if defined(ARDUINO_ARCH_SAMD)
+  SerialUSB.print(str);
+  #else
   Serial.print(str);
+  #endif
+
 }
 //------------------------------------------------------------------------------
 /**

@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: iom32u2.h,v 1.1.2.2 2009/07/17 17:09:31 arcanum Exp $ */
+/* $Id: iom32u2.h 2240 2011-05-09 22:18:18Z arcanum $ */
 
 /* avr/iom32u2.h - definitions for ATmega32U2 */
 
@@ -474,6 +474,12 @@
 #define DIDR1 _SFR_MEM8(0x7F)
 #define AIN0D 0
 #define AIN1D 1
+#define AIN2D 2
+#define AIN3D 3
+#define AIN4D 4
+#define AIN5D 5
+#define AIN6D 6
+#define AIN7D 7
 
 #define TCCR1A _SFR_MEM8(0x80)
 #define WGM10 0
@@ -914,7 +920,7 @@
 #define TIMER1_OVF_vect      _VECTOR(18)  /* Timer/Counter1 Overflow */
 
 #define _VECTOR_SIZE 4 /* Size of individual vector. */
-#define _VECTORS_SIZE (38 * _VECTOR_SIZE)
+#define _VECTORS_SIZE (29 * _VECTOR_SIZE)
 
 
 /* Constants */

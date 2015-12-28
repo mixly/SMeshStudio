@@ -1,20 +1,31 @@
-/*
-  Copyright (c) 2014 Arduino.  All right reserved.
-
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+/* ----------------------------------------------------------------------------
+ *         SAM Software Package License
+ * ----------------------------------------------------------------------------
+ * Copyright (c) 2011-2012, Atmel Corporation
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following condition is met:
+ *
+ * - Redistributions of source code must retain the above copyright notice,
+ * this list of conditions and the disclaimer below.
+ *
+ * Atmel's name may not be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ *
+ * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+ * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ----------------------------------------------------------------------------
+ */
 
 #ifndef SAMD21_DEVICE_H_INCLUDED
 #define SAMD21_DEVICE_H_INCLUDED
@@ -50,33 +61,26 @@ extern "C" {
 // configures the USB device address and enable it.
 #define udd_configure_address(address)            USB->DEVICE.DADD.reg = USB_DEVICE_DADD_ADDEN | address
 
-// Clear BK0RDY for know that the BANK0 ram buffer (udd_g_ep_table[ep].DeviceDescBank[0]) is empty and can receive data 
-#define udd_OUT_transfer_allowed(ep)              USB->DEVICE.DeviceEndpoint[ep].EPSTATUSCLR.reg = USB_DEVICE_EPSTATUSCLR_BK0RDY
-// Set BK1RDY for know that the BANK1 ram buffer (udd_g_ep_table[ep].DeviceDescBank[1]) is full and can send data
-#define udd_IN_transfer_allowed(ep)               USB->DEVICE.DeviceEndpoint[ep].EPSTATUSSET.reg = USB_DEVICE_EPSTATUSSET_BK1RDY
-
-// Stop OUT transfer
-#define udd_OUT_stop_transfer(ep)                 USB->DEVICE.DeviceEndpoint[ep].EPSTATUSSET.reg = USB_DEVICE_EPSTATUSSET_BK0RDY
-// Stop IN transfer
-#define udd_IN_stop_transfer(ep)                  USB->DEVICE.DeviceEndpoint[ep].EPSTATUSCLR.reg = USB_DEVICE_EPSTATUSCLR_BK1RDY
-
-#define udd_read_endpoint_flag(ep)                USB->DEVICE.DeviceEndpoint[ep].EPINTFLAG.reg
-// Is transfer completed ?
-#define udd_is_IN_transf_cplt(ep)                 (USB->DEVICE.DeviceEndpoint[ep].EPINTFLAG.reg & USB_DEVICE_EPINTFLAG_TRCPT(2))
-#define udd_is_OUT_transf_cplt(ep)                (USB->DEVICE.DeviceEndpoint[ep].EPINTFLAG.reg & USB_DEVICE_EPINTFLAG_TRCPT(1))
-// Clear the transfer complete flag
-#define udd_clear_IN_transf_cplt(ep)              USB->DEVICE.DeviceEndpoint[ep].EPINTFLAG.reg = USB_DEVICE_EPINTFLAG_TRCPT(2)
-#define udd_clear_OUT_transf_cplt(ep)             USB->DEVICE.DeviceEndpoint[ep].EPINTFLAG.reg = USB_DEVICE_EPINTFLAG_TRCPT(1)
-// Enable interrupt transfer complete
-#define udd_ept_enable_it_IN_transf_cplt(ep)      USB->DEVICE.DeviceEndpoint[ep].EPINTENSET.reg = USB_DEVICE_EPINTENSET_TRCPT(2)
-#define udd_ept_enable_it_OUT_transf_cplt(ep)     USB->DEVICE.DeviceEndpoint[ep].EPINTENSET.reg = USB_DEVICE_EPINTENSET_TRCPT(1)
-
 // Enables SETUP received interrupt
 #define udd_enable_setup_received_interrupt(ep)   USB->DEVICE.DeviceEndpoint[ep].EPINTENSET.reg = USB_DEVICE_EPINTFLAG_RXSTP
+// ACKs OUT received
+#define udd_ack_out_received(ep)                  USB->DEVICE.DeviceEndpoint[ep].EPSTATUSCLR.reg = USB_DEVICE_EPSTATUSCLR_BK0RDY
+// ACKs OUT received
+#define udd_ack_in_received(ep)                   USB->DEVICE.DeviceEndpoint[ep].EPSTATUSCLR.reg = USB_DEVICE_EPSTATUSCLR_BK1RDY
+// Is transfert completed ?
+#define udd_is_transf_cplt(ep)                   (USB->DEVICE.DeviceEndpoint[ep].EPINTFLAG.reg & USB_DEVICE_EPINTFLAG_TRCPT1)
+// Clear the transfer complete flag
+#define udd_clear_transf_cplt(ep)                 USB->DEVICE.DeviceEndpoint[ep].EPINTFLAG.bit.TRCPT1 = 1
+// Set the bank as ready
+#define udd_bk_rdy(ep)                            USB->DEVICE.DeviceEndpoint[ep].EPSTATUSSET.bit.BK1RDY = 1
+#define udd_read_endpoint_flag(ep)                USB->DEVICE.DeviceEndpoint[ep].EPINTFLAG.reg
+// Enable interrupt transfer complete
+#define udd_ept_enable_it_transf_cplt_in(ep)      USB->DEVICE.DeviceEndpoint[ep].EPINTENSET.reg = USB_DEVICE_EPINTENSET_TRCPT1
+#define udd_ept_enable_it_transf_cplt_out(ep)     USB->DEVICE.DeviceEndpoint[ep].EPINTENSET.reg = USB_DEVICE_EPINTENSET_TRCPT0
 // Clear the stall flag
-#define udd_clear_stall_request(ep)			      USB->DEVICE.DeviceEndpoint[ep].EPINTFLAG.reg = USB_DEVICE_EPINTFLAG_STALL(2)
-// Remove stall
-#define udd_remove_stall_request(ep)		      USB->DEVICE.DeviceEndpoint[ep].EPSTATUSCLR.reg = USB_DEVICE_EPSTATUSCLR_STALLRQ(2)
+#define udd_clear_stall_request(ep)			      USB->DEVICE.DeviceEndpoint[ep].EPINTFLAG.reg = USB_DEVICE_EPINTFLAG_STALL1
+// Remove stall 
+#define udd_remove_stall_request(ep)		      USB->DEVICE.DeviceEndpoint[ep].EPSTATUSCLR.reg = USB_DEVICE_EPSTATUSCLR_STALLRQ1
 
 // Endpoint Interrupt Summary
 #define udd_endpoint_interrupt()            USB->DEVICE.EPINTSMRY.reg
@@ -90,7 +94,7 @@ extern "C" {
 // Force device mode
 #define udd_force_device_mode()             USB->DEVICE.CTRLA.reg &= ~USB_CTRLA_MODE
 // Run in Standby
-#define udd_device_run_in_standby()         USB->DEVICE.CTRLA.reg |= USB_CTRLA_RUNSTDBY
+#define udd_device_run_in_standby()         USB->DEVICE.CTRLA.reg |= USB_CTRLA_RUNSTDBY 
 // Force host mode
 #define udd_force_host_mode()               USB->DEVICE.CTRLA.reg |= USB_CTRLA_MODE
 

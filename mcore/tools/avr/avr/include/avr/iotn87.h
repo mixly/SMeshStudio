@@ -1,4 +1,4 @@
-/* Copyright (c) 2009 Atmel Corporation
+/* Copyright (c) 2009-2010 Atmel Corporation
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: iotn87.h,v 1.1.2.2 2009/01/22 23:29:13 arcanum Exp $ */
+/* $Id: iotn87.h 2181 2010-08-23 03:46:23Z arcanum $ */
 
 /* avr/iotn87.h - definitions for ATtiny87 */
 
@@ -297,8 +297,8 @@
 
 #define MCUCR _SFR_IO8(0x35)
 #define PUD 4
-#define BODS 5
-#define BODSE 6
+#define BODSE 5
+#define BODS 6
 
 #define SPMCSR _SFR_IO8(0x37)
 #define SPMEN 0
@@ -471,9 +471,9 @@
 #define ADC7D 7
 
 #define DIDR1 _SFR_MEM8(0x7F)
-#define ADC8D 0
-#define ADC9D 1
-#define ADC10D 2
+#define ADC8D 4
+#define ADC9D 5
+#define ADC10D 6
 
 #define TCCR1A _SFR_MEM8(0x80)
 #define WGM10 0

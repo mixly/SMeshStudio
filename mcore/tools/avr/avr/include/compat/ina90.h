@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: ina90.h,v 1.2 2005/11/05 21:22:33 joerg_wunsch Exp $ */
+/* $Id$ */
 /* copied from: Id: avr/ina90.h,v 1.8 2004/11/09 19:16:09 arcanum Exp */
 
 /*

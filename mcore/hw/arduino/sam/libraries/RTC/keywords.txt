@@ -1,0 +1,58 @@
+#######################################
+# Syntax Coloring Map For RTC
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+RTCInt	KEYWORD1
+local_time	KEYWORD1
+local_date	KEYWORD1
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+getDay	KEYWORD2
+getMonth	KEYWORD2
+getYear	KEYWORD2
+getHour	KEYWORD2
+getMinute	KEYWORD2
+getSecond	KEYWORD2
+getDate	KEYWORD2
+getTime	Keyword2
+
+setDay	KEYWORD2
+setMonth	KEYWORD2
+setYear	KEYWORD2
+setHour	KEYWORD2
+setMinute	KEYWORD2
+setSecond	KEYWORD2
+setDate	KEYWORD2
+setTime	KEYWORD2
+
+enableAlarm	KEYWORD2
+setAlarm	KEYWORD2
+alarmMatch	KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+TIME_H24	LITERAL1
+TIME_H12	LITERAL1
+
+
+OFF	LITERAL1
+
+
+MMSS	LITERAL1
+HHMMSS	LITERAL1
+DDHHMMSS	LITERAL1
+MMDDHHMMSS	LITERAL1
+YYMMDDHHMMSS	LITERAL1
+SEC	LITERAL1
+ANTI_MERIDIAN	LITERAL1
+POST_MERIDIAN	LITERAL1
+ALARM_POLLED	LITERAL1
+ALARM_INTERRUPT	LITERAL1

@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: io90pwm81.h,v 1.1.2.2 2009/02/01 12:50:25 arcanum Exp $ */
+/* $Id: io90pwm81.h 2206 2011-02-11 06:58:02Z aboyapati $ */
 
 /* avr/io90pwm81.h - definitions for AT90PWM81 */
 
@@ -854,7 +854,7 @@
 #define PRADC 0
 #define PRSPI 2
 #define PRTIM1 4
-#define PRPSC0 5
+#define PRPSCR 5
 #define PRPSC2 7
 
 #define PLLCSR _SFR_MEM8(0x87)

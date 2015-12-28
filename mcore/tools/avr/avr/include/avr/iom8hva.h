@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: iom8hva.h,v 1.2.2.5 2009/02/11 18:05:31 arcanum Exp $ */
+/* $Id: iom8hva.h 2102 2010-03-16 22:52:39Z joerg_wunsch $ */
 
 /* iom8hva.h - definitions for ATmega8HVA.  */
 
@@ -39,6 +39,7 @@
 
 /* Constants */
 #define SPM_PAGESIZE 128
+#define RAMSTART    0x100
 #define RAMEND      0x2FF
 #define XRAMEND     RAMEND
 #define E2END       0xFF

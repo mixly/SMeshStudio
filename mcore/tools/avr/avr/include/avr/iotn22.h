@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: iotn22.h,v 1.9.2.6 2009/02/11 18:05:31 arcanum Exp $ */
+/* $Id: iotn22.h 2236 2011-03-17 21:53:39Z arcanum $ */
 
 /* avr/iotn22.h - definitions for ATtiny22 */
 
@@ -102,10 +102,12 @@
 /* Interrupt vectors */
 
 /* External Interrupt 0 */
-#define INT0_vect			_VECTOR(1)
+#define INT0_vect_num			1
+#define INT0_vect	    		_VECTOR(1)
 #define SIG_INTERRUPT0			_VECTOR(1)
 
 /* Timer/Counter0 Overflow */
+#define TIMER0_OVF0_vect_num	2
 #define TIMER0_OVF0_vect		_VECTOR(2)
 #define SIG_OVERFLOW0			_VECTOR(2)
 
@@ -175,6 +177,7 @@
 #define    EERE    0
 
 /* Constants */
+#define RAMSTART   0x60
 #define RAMEND     0xDF
 #define XRAMEND    RAMEND
 #define E2END      0x7F
@@ -200,6 +203,17 @@
 #define SIGNATURE_0 0x1E
 #define SIGNATURE_1 0x91
 #define SIGNATURE_2 0x06
+
+
+/* Deprecated items */
+#if !defined(__AVR_LIBC_DEPRECATED_ENABLE__)
+
+#pragma GCC system_header
+
+#pragma GCC poison SIG_INTERRUPT0
+#pragma GCC poison SIG_OVERFLOW0
+
+#endif  /* !defined(__AVR_LIBC_DEPRECATED_ENABLE__) */
 
 
 #endif /* _AVR_IOTN22_H_ */

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010 by Arduino LLC. All rights reserved.
+ * Copyright (c) 2010 by Cristian Maglie <c.maglie@arduino.cc>
  *
  * This file is free software; you can redistribute it and/or modify
  * it under the terms of either the GNU General Public License version 2
@@ -342,13 +342,22 @@ private:
 #elif defined(__AVR_AT90USB1286__) || defined(__AVR_AT90USB646__) || defined(__AVR_AT90USB162__)
   inline static void initSS()    { DDRB  |=  _BV(0); };
   inline static void setSS()     { PORTB &= ~_BV(0); };
-  inline static void resetSS()   { PORTB |=  _BV(0); }; 
+  inline static void resetSS()   { PORTB |=  _BV(0); };
+  
 #else
   inline static void initSS()    { DDRB  |=  _BV(2); };
   inline static void setSS()     { PORTB &= ~_BV(2); };
   inline static void resetSS()   { PORTB |=  _BV(2); };
 #endif
+#elif defined(ARDUINO_ARCH_SAMD) 
+  inline static void initSS()    { PORT->Group[g_APinDescription[10].ulPort].PINCFG[g_APinDescription[10].ulPin].reg&=~(uint8_t)(PORT_PINCFG_INEN) ;
+								   PORT->Group[g_APinDescription[10].ulPort].DIRSET.reg = (uint32_t)(1<<g_APinDescription[10].ulPin) ;
+								   PORT->Group[g_APinDescription[10].ulPort].PINCFG[g_APinDescription[10].ulPin].reg=(uint8_t)(PORT_PINCFG_PULLEN) ;
+                                   PORT->Group[g_APinDescription[10].ulPort].OUTSET.reg = (1ul << g_APinDescription[10].ulPin) ; };
+  inline static void setSS()     { PORT->Group[g_APinDescription[10].ulPort].OUTCLR.reg = (1ul << g_APinDescription[10].ulPin) ; };
+  inline static void resetSS()   { PORT->Group[g_APinDescription[10].ulPort].OUTSET.reg = (1ul << g_APinDescription[10].ulPin) ; };
 #endif // ARDUINO_ARCH_AVR
+
 };
 
 extern W5100Class W5100;

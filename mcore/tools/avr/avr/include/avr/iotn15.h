@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: iotn15.h,v 1.12.2.5 2008/10/17 23:27:51 arcanum Exp $ */
+/* $Id: iotn15.h 2236 2011-03-17 21:53:39Z arcanum $ */
 
 /* avr/iotn15.h - definitions for ATtiny15 */
 
@@ -139,37 +139,45 @@
 /* Interrupt vectors */
 
 /* External Interrupt 0 */
-#define INT0_vect			_VECTOR(1)
+#define INT0_vect_num			1
+#define INT0_vect		    	_VECTOR(1)
 #define SIG_INTERRUPT0			_VECTOR(1)
 
 /* External Interrupt Request 0 */
+#define IO_PINS_vect_num		2
 #define IO_PINS_vect			_VECTOR(2)
-#define SIG_PIN				_VECTOR(2)
+#define SIG_PIN			    	_VECTOR(2)
 #define SIG_PIN_CHANGE			_VECTOR(2)
 
 /* Timer/Counter1 Compare Match */
-#define TIMER1_COMP_vect		_VECTOR(3)
-#define SIG_OUTPUT_COMPARE1A		_VECTOR(3)
+#define TIMER1_COMP_vect_num	3
+#define TIMER1_COMP_vect	    _VECTOR(3)
+#define SIG_OUTPUT_COMPARE1A	_VECTOR(3)
 
 /* Timer/Counter1 Overflow */
+#define TIMER1_OVF_vect_num		4
 #define TIMER1_OVF_vect			_VECTOR(4)
 #define SIG_OVERFLOW1			_VECTOR(4)
 
 /* Timer/Counter0 Overflow */
+#define TIMER0_OVF_vect_num		5
 #define TIMER0_OVF_vect			_VECTOR(5)
 #define SIG_OVERFLOW0			_VECTOR(5)
 
 /* EEPROM Ready */
-#define EE_RDY_vect			_VECTOR(6)
+#define EE_RDY_vect_num			6
+#define EE_RDY_vect			    _VECTOR(6)
 #define SIG_EEPROM_READY		_VECTOR(6)
 
 /* Analog Comparator */
+#define ANA_COMP_vect_num		7
 #define ANA_COMP_vect			_VECTOR(7)
 #define SIG_COMPARATOR			_VECTOR(7)
 
 /* ADC Conversion Ready */
-#define ADC_vect			_VECTOR(8)
-#define SIG_ADC				_VECTOR(8)
+#define ADC_vect_num			8
+#define ADC_vect	    		_VECTOR(8)
+#define SIG_ADC			    	_VECTOR(8)
 
 #define _VECTORS_SIZE 18
 
@@ -298,6 +306,7 @@
 #define EEWE    1
 #define EERE    0
 
+#define RAMSTART    0x60
 /* Last memory addresses */
 #define RAMEND		0x1F
 #define XRAMEND		0x0
@@ -328,6 +337,24 @@
 #define SIGNATURE_0 0x1E
 #define SIGNATURE_1 0x90
 #define SIGNATURE_2 0x06
+
+
+/* Deprecated items */
+#if !defined(__AVR_LIBC_DEPRECATED_ENABLE__)
+
+#pragma GCC system_header
+
+#pragma GCC poison SIG_INTERRUPT0
+#pragma GCC poison SIG_PIN
+#pragma GCC poison SIG_PIN_CHANGE
+#pragma GCC poison SIG_OUTPUT_COMPARE1A
+#pragma GCC poison SIG_OVERFLOW1
+#pragma GCC poison SIG_OVERFLOW0
+#pragma GCC poison SIG_EEPROM_READY
+#pragma GCC poison SIG_COMPARATOR
+#pragma GCC poison SIG_ADC
+
+#endif  /* !defined(__AVR_LIBC_DEPRECATED_ENABLE__) */
 
 
 #endif /* _AVR_IOTN15_H_ */

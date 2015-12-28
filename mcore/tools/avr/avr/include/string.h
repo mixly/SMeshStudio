@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: string.h,v 1.19.2.4 2008/12/21 02:37:32 dmix Exp $ */
+/* $Id$ */
 
 /*
    string.h

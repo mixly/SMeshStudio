@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: iotn12.h,v 1.10.2.5 2008/10/17 23:27:51 arcanum Exp $ */
+/* $Id: iotn12.h 2236 2011-03-17 21:53:39Z arcanum $ */
 
 /* avr/iotn12.h - definitions for ATtiny12 */
 
@@ -124,23 +124,28 @@
 /* Interrupt vectors */
 
 /* External Interrupt 0 */
-#define INT0_vect			_VECTOR(1)
+#define INT0_vect_num			1
+#define INT0_vect	    		_VECTOR(1)
 #define SIG_INTERRUPT0			_VECTOR(1)
 
 /* External Interrupt Request 0 */
+#define IO_PINS_vect_num		2
 #define IO_PINS_vect			_VECTOR(2)
-#define SIG_PIN				_VECTOR(2)
+#define SIG_PIN			    	_VECTOR(2)
 #define SIG_PIN_CHANGE			_VECTOR(2)
 
 /* Timer/Counter0 Overflow */
+#define TIMER0_OVF_vect_num		3
 #define TIMER0_OVF_vect			_VECTOR(3)
 #define SIG_OVERFLOW0			_VECTOR(3)
 
 /* EEPROM Ready */
-#define EE_RDY_vect			_VECTOR(4)
+#define EE_RDY_vect_num			4
+#define EE_RDY_vect		    	_VECTOR(4)
 #define SIG_EEPROM_READY		_VECTOR(4)
 
 /* Analog Comparator */
+#define ANA_COMP_vect_num		5
 #define ANA_COMP_vect			_VECTOR(5)
 #define SIG_COMPARATOR			_VECTOR(5)
 
@@ -228,6 +233,7 @@
 #define EEWE    1
 #define EERE    0
 
+#define RAMSTART    0x60
 /* Last memory addresses */
 #define RAMEND		0x1F
 #define XRAMEND		0x0
@@ -260,6 +266,21 @@
 #define SIGNATURE_0 0x1E
 #define SIGNATURE_1 0x90
 #define SIGNATURE_2 0x05
+
+
+/* Deprecated items */
+#if !defined(__AVR_LIBC_DEPRECATED_ENABLE__)
+
+#pragma GCC system_header
+
+#pragma GCC poison SIG_INTERRUPT0
+#pragma GCC poison SIG_PIN
+#pragma GCC poison SIG_PIN_CHANGE
+#pragma GCC poison SIG_OVERFLOW0
+#pragma GCC poison SIG_EEPROM_READY
+#pragma GCC poison SIG_COMPARATOR
+
+#endif  /* !defined(__AVR_LIBC_DEPRECATED_ENABLE__) */
 
 
 #endif /* _AVR_IOTN12_H_ */
