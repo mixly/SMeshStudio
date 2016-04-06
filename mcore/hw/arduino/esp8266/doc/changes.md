@@ -2,7 +2,89 @@
 title: Change Log
 ---
 
-*Current release*
+## Current version
+
+### Core
+
+### Libraries
+
+### Tools
+
+---
+## 2.1.0
+February 27, 2016
+
+Package link: `http://arduino.esp8266.com/versions/2.1.0/package_esp8266com_index.json`.
+
+### Core
+
+- Add function to know last reset reason.
+- Allow control of enabling debug and debug level from IDE
+- Add espduino board
+- Rework StreamString::write to use String internal buffer directly (#1289)
+- Add function to measure stack high water mark
+- Fix RAM corruption caused by our hook of register_chipv6_phy(init_data*).
+- Optimize PWM interrupt handler for better precision
+- Add warning levels configurable through Preferences
+- SPIFFS: check if path length is valid (#1089)
+- Set CPU frequency before running setup
+- Add core_esp8266_features.h to be able to detect the features and libraries included in the ESP core
+- Add ESPino to supported boards
+- Fix pwm first step getting skipped
+- Update SDK to 1.5.1_16_01_08
+- Bufferless and interruptless HardwareSerial
+- HardwareSerial: allow mapping of UART0 TX to GPIO2
+- Add 128K SPIFFS for 512KB modules
+- Reduce stack usage by Print::printf
+- Fix a crash in String::changeBuffer()
+- Implement static initialization guards (#500)
+- Implementation of Tone API using timer1
+- Use umm_malloc for heap management
+- Configurable I2C clock stretching limit
+- Add a new board entry for the SparkFun Thing Dev
+
+### Libraries
+
+- ESP8266HTTPClient: add CHUNKED encoding support (#1324)
+- Fixed crash bug with mDNS where a string buffer could be used uninitialized
+- Add WiFi TX power control
+- Add WiFi sleep management
+- Allow to hook into WiFi events from sketch
+- Allow setting TCP timeout
+- Add setSleepMode + getSleepMode and setPhyMode + getPhyMode to WiFi
+- Update GDBStub library with the source of esp-gdbstub
+- Servo: fix detach and attach
+- ESP8266mDNS: refactoring, add TXT support
+- Add HTTP Basic Auth to WebServer and libb64 (base64) to core
+- Fix link-time dependency of ESP8266WebServer on SPIFFS (#862)
+- Allow setting client side TLS key and certificate
+- Replace chain of UDP pbufs with a single pbuf before sending (#1009)
+- Unique Built-In libraries library.properties name
+- Improvements for MD5Builder with Stream
+- ESP8266SSDP: fixing TTL to 2 per spec
+- ESP8266WebServer: a content length of zero should also be sent
+- Use SoftwareSerial version 2.2
+- EEPROM: optimised `_dirty` flag
+- ESP8266mDNS: advertise all hosted services
+- Remove bundled OneWire - ESP8266 support has been merged in the official OneWire sources
+- WiFiClientSecure: don't panic if memory allocation fails
+- Verify domain name in WiFiClientSecure::verify
+- Speed up WiFi.hostByName when the hostname is actually an IP
+- Fix WiFi scan issue (#1355)
+- Workaround for LwIP not handling ERR_ABRT
+- Servo value read and write fixes
+
+### Tools
+
+- espota.py: add support for manually selecting ip and port for host side
+- Update esptool to 0.4.8
+- Make espota compatible with python 3.5
+
+---
+## 2.0.0
+November 30, 2015
+
+Package link: `http://arduino.esp8266.com/versions/2.0.0/package_esp8266com_index.json`.
 
 ### Core
 
@@ -59,7 +141,7 @@ title: Change Log
 - Add gdb stub library
 - Extracted the WebUpdate example into a library.
 - Fix to Servo allowing write() to be called before attach()
-- ESP9266WiFi: add function `begin` without any parameters and add `psk` function to return current PSK form sdk config
+- ESP8266WiFi: add function `begin` without any parameters and add `psk` function to return current PSK form sdk config
 - Fix a crash due to abort() called from TCP error callback (#428)
 - Adding support for OPTIONS requests to ESP8266WebServer
 - Add HTTPS request sample (#43)

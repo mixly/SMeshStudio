@@ -21,11 +21,11 @@
 
 #ifndef wificlient_h
 #define wificlient_h
+#include <memory>
 #include "Arduino.h"
 #include "Print.h"
 #include "Client.h"
 #include "IPAddress.h"
-#include <memory>
 #include "include/slist.h"
 
 #define WIFICLIENT_MAX_PACKET_SIZE 1460
@@ -56,6 +56,10 @@ public:
   virtual int read();
   virtual int read(uint8_t *buf, size_t size);
   virtual int peek();
+  virtual size_t peekBytes(uint8_t *buffer, size_t length);
+  size_t peekBytes(char *buffer, size_t length) {
+    return peekBytes((uint8_t *) buffer, length);
+  }
   virtual void flush();
   virtual void stop();
   virtual uint8_t connected();

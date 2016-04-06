@@ -38,17 +38,20 @@ File system size depends on the flash chip size. Depending on the board which is
 
 Board | Flash chip size, bytes | File system size, bytes
 ------|-----------------|-----------------
-Generic module | 512k | 64k
+Generic module | 512k | 64k, 128k
 Generic module | 1M | 64k, 128k, 256k, 512k
 Generic module | 2M | 1M
 Generic module | 4M | 3M
 Adafruit HUZZAH | 4M | 1M, 3M
+ESPresso Lite 1.0 | 4M | 1M, 3M
+ESPresso Lite 2.0 | 4M | 1M, 3M
 NodeMCU 0.9    | 4M | 1M, 3M
 NodeMCU 1.0    | 4M | 1M, 3M
 Olimex MOD-WIFI-ESP8266(-DEV)| 2M | 1M
 SparkFun Thing | 512k | 64k
 SweetPea ESP-210 | 4M | 1M, 3M
 WeMos D1 & D1 mini | 4M | 1M, 3M
+ESPDuino | 4M | 1M, 3M
 
 **Note:** to use any of file system functions in the sketch, add the following include to the sketch:
 
@@ -60,7 +63,7 @@ WeMos D1 & D1 mini | 4M | 1M, 3M
 
 *ESP8266FS* is a tool which integrates into the Arduino IDE. It adds a menu item to *Tools* menu for uploading the contents of sketch data directory into ESP8266 flash file system.
 
-- Download the tool: https://github.com/esp8266/arduino-esp8266fs-plugin/releases/download/0.1.3/ESP8266FS-0.1.3.zip.
+- Download the tool: https://github.com/esp8266/arduino-esp8266fs-plugin/releases/download/0.2.0/ESP8266FS-0.2.0.zip.
 - In your Arduino sketchbook directory, create `tools` directory if it doesn't exist yet
 - Unpack the tool into `tools` directory (the path will look like `<home_dir>/Arduino/tools/ESP8266FS/tool/esp8266fs.jar`)
 - Restart Arduino IDE
@@ -169,8 +172,14 @@ struct FSInfo {
 };
 ```
 
-This is the structure which may be filled using FS::info method. Field names
-are self-explanatory.
+This is the structure which may be filled using FS::info method.
+- `totalBytes` — total size of useful data on the file system
+- `usedBytes` — number of bytes used by files
+- `blockSize` — SPIFFS block size
+- `pageSize` — SPIFFS logical page size
+- `maxOpenFiles` — max number of files which may be open simultaneously
+- `maxPathLength` — max file name length (including one byte for zero termination)
+
 
 ## Directory object (Dir)
 

@@ -177,26 +177,7 @@ uint32_t EspClass::getFlashChipSize(void)
     uint8_t * bytes = (uint8_t *) &data;
     // read first 4 byte (magic byte + flash config)
     if(spi_flash_read(0x0000, &data, 4) == SPI_FLASH_RESULT_OK) {
-        switch((bytes[3] & 0xf0) >> 4) {
-            case 0x0: // 4 Mbit (512KB)
-                return (512_kB);
-            case 0x1: // 2 MBit (256KB)
-                return (256_kB);
-            case 0x2: // 8 MBit (1MB)
-                return (1_MB);
-            case 0x3: // 16 MBit (2MB)
-                return (2_MB);
-            case 0x4: // 32 MBit (4MB)
-                return (4_MB);
-            case 0x5: // 64 MBit (8MB)
-                return (8_MB);
-            case 0x6: // 128 MBit (16MB)
-                return (16_MB);
-            case 0x7: // 256 MBit (32MB)
-                return (32_MB);
-            default: // fail?
-                return 0;
-        }
+        return magicFlashChipSize((bytes[3] & 0xf0) >> 4);
     }
     return 0;
 }
@@ -207,18 +188,7 @@ uint32_t EspClass::getFlashChipSpeed(void)
     uint8_t * bytes = (uint8_t *) &data;
     // read first 4 byte (magic byte + flash config)
     if(spi_flash_read(0x0000, &data, 4) == SPI_FLASH_RESULT_OK) {
-        switch(bytes[3] & 0x0F) {
-            case 0x0: // 40 MHz
-                return (40_MHz);
-            case 0x1: // 26 MHz
-                return (26_MHz);
-            case 0x2: // 20 MHz
-                return (20_MHz);
-            case 0xf: // 80 MHz
-                return (80_MHz);
-            default: // fail?
-                return 0;
-        }
+        return magicFlashChipSpeed(bytes[3] & 0x0F);
     }
     return 0;
 }
@@ -230,10 +200,53 @@ FlashMode_t EspClass::getFlashChipMode(void)
     uint8_t * bytes = (uint8_t *) &data;
     // read first 4 byte (magic byte + flash config)
     if(spi_flash_read(0x0000, &data, 4) == SPI_FLASH_RESULT_OK) {
-        mode = (FlashMode_t) bytes[2];
-        if(mode > FM_DOUT) {
-            mode = FM_UNKNOWN;
-        }
+        mode = magicFlashChipMode(bytes[2]);
+    }
+    return mode;
+}
+
+uint32_t EspClass::magicFlashChipSize(uint8_t byte) {
+    switch(byte & 0x0F) {
+        case 0x0: // 4 Mbit (512KB)
+            return (512_kB);
+        case 0x1: // 2 MBit (256KB)
+            return (256_kB);
+        case 0x2: // 8 MBit (1MB)
+            return (1_MB);
+        case 0x3: // 16 MBit (2MB)
+            return (2_MB);
+        case 0x4: // 32 MBit (4MB)
+            return (4_MB);
+        case 0x5: // 64 MBit (8MB)
+            return (8_MB);
+        case 0x6: // 128 MBit (16MB)
+            return (16_MB);
+        case 0x7: // 256 MBit (32MB)
+            return (32_MB);
+        default: // fail?
+            return 0;
+    }
+}
+
+uint32_t EspClass::magicFlashChipSpeed(uint8_t byte) {
+    switch(byte & 0x0F) {
+        case 0x0: // 40 MHz
+            return (40_MHz);
+        case 0x1: // 26 MHz
+            return (26_MHz);
+        case 0x2: // 20 MHz
+            return (20_MHz);
+        case 0xf: // 80 MHz
+            return (80_MHz);
+        default: // fail?
+            return 0;
+    }
+}
+
+FlashMode_t EspClass::magicFlashChipMode(uint8_t byte) {
+    FlashMode_t mode = (FlashMode_t) byte;
+    if(mode > FM_DOUT) {
+        mode = FM_UNKNOWN;
     }
     return mode;
 }
@@ -296,6 +309,46 @@ uint32_t EspClass::getFlashChipSizeByChipId(void) {
         default:
             return 0;
     }
+}
+
+/**
+ * check the Flash settings from IDE against the Real flash size
+ * @param needsEquals (return only true it equals)
+ * @return ok or not
+ */
+bool EspClass::checkFlashConfig(bool needsEquals) {
+    if(needsEquals) {
+        if(getFlashChipRealSize() == getFlashChipSize()) {
+            return true;
+        }
+    } else {
+        if(getFlashChipRealSize() >= getFlashChipSize()) {
+            return true;
+        }
+    }
+    return false;
+}
+
+String EspClass::getResetReason(void) {
+    char buff[32];
+    if (resetInfo.reason == REASON_DEFAULT_RST) { // normal startup by power on 
+      strcpy_P(buff, PSTR("Power on"));
+    } else if (resetInfo.reason == REASON_WDT_RST) { // hardware watch dog reset
+      strcpy_P(buff, PSTR("Hardware Watchdog"));
+    } else if (resetInfo.reason == REASON_EXCEPTION_RST) { // exception reset, GPIO status won’t change 
+      strcpy_P(buff, PSTR("Exception"));
+    } else if (resetInfo.reason == REASON_SOFT_WDT_RST) { // software watch dog reset, GPIO status won’t change 
+      strcpy_P(buff, PSTR("Software Watchdog"));
+    } else if (resetInfo.reason == REASON_SOFT_RESTART) { // software restart ,system_restart , GPIO status won’t change 
+      strcpy_P(buff, PSTR("Software/System restart"));
+    } else if (resetInfo.reason == REASON_DEEP_SLEEP_AWAKE) { // wake up from deep-sleep 
+      strcpy_P(buff, PSTR("Deep-Sleep Wake"));
+    } else if (resetInfo.reason == REASON_EXT_SYS_RST) { // external system reset 
+      strcpy_P(buff, PSTR("External System"));
+    } else {
+      strcpy_P(buff, PSTR("Unknown"));
+    }
+    return String(buff);
 }
 
 String EspClass::getResetInfo(void) {

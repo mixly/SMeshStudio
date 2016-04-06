@@ -29,9 +29,16 @@ extern "C" {
 
 #include <SoftwareSerial.h>
 
-SoftwareSerial::SoftwareSerial(int receivePin, int transmitPin, unsigned int buffSize) {
+#define MAX_PIN 15
+
+// List of SoftSerial object for each possible Rx pin
+SoftwareSerial *InterruptList[MAX_PIN+1];
+bool InterruptsEnabled = false;
+
+SoftwareSerial::SoftwareSerial(int receivePin, int transmitPin, bool inverse_logic, unsigned int buffSize) {
    m_rxValid = m_txValid = false;
    m_buffer = NULL;
+   m_invert = inverse_logic;
    if (isValidGPIOpin(receivePin)) {
       m_rxPin = receivePin;
       m_buffSize = buffSize;
@@ -40,10 +47,13 @@ SoftwareSerial::SoftwareSerial(int receivePin, int transmitPin, unsigned int buf
          m_rxValid = true;
          m_inPos = m_outPos = 0;
          pinMode(m_rxPin, INPUT);
-         // Use SDK interrupt management as Arduino attachInterrupt doesn't take any parameter
-         ETS_GPIO_INTR_ATTACH(handle_interrupt, this);
+         if (!InterruptsEnabled) {
+            ETS_GPIO_INTR_ATTACH(handle_interrupt, 0);
+            InterruptsEnabled = true;
+         }
+         InterruptList[m_rxPin] = this;
          GPIO_REG_WRITE(GPIO_STATUS_W1TC_ADDRESS, BIT(m_rxPin));
-         gpio_pin_intr_state_set(GPIO_ID_PIN(m_rxPin), GPIO_PIN_INTR_NEGEDGE);
+         enableRx(true);
       }
    }
    if (isValidGPIOpin(transmitPin)) {
@@ -56,23 +66,33 @@ SoftwareSerial::SoftwareSerial(int receivePin, int transmitPin, unsigned int buf
 }
 
 SoftwareSerial::~SoftwareSerial() {
-   // No available SDK API to detach an interrupt handler,
-   // just disable the pin interrupt for now
-   gpio_pin_intr_state_set(GPIO_ID_PIN(m_rxPin), GPIO_PIN_INTR_DISABLE);
+   enableRx(false);
+   if (m_rxValid)
+      InterruptList[m_rxPin] = NULL;
    if (m_buffer)
       free(m_buffer);
 }
 
 bool SoftwareSerial::isValidGPIOpin(int pin) {
    // Some GPIO pins are reserved by the system
-   return (pin >= 0 && pin <= 5) || (pin >= 12 && pin <= 15);
+   return (pin >= 0 && pin <= 5) || (pin >= 12 && pin <= MAX_PIN);
 }
 
 void SoftwareSerial::begin(long speed) {
-   m_bitTime = round(1000000.0/speed);
-   if (m_bitTime < 5 || m_bitTime > 500) {
-      // Invalid speed
-      m_rxValid = m_txValid = false;
+   // Use getCycleCount() loop to get as exact timing as possible
+   m_bitTime = ESP.getCpuFreqMHz()*1000000/speed;
+}
+
+void SoftwareSerial::enableRx(bool on) {
+   if (m_rxValid) {
+      GPIO_INT_TYPE type;
+      if (!on)
+         type = GPIO_PIN_INTR_DISABLE;
+      else if (m_invert)
+         type = GPIO_PIN_INTR_POSEDGE;
+      else
+         type = GPIO_PIN_INTR_NEGEDGE;
+      gpio_pin_intr_state_set(GPIO_ID_PIN(m_rxPin), type);
    }
 }
 
@@ -84,19 +104,23 @@ int SoftwareSerial::read() {
 }
 
 int SoftwareSerial::available() {
-   return m_rxValid && ((m_inPos-m_outPos) > 0);
+   if (!m_rxValid) return 0;
+   int avail = m_inPos - m_outPos;
+   if (avail < 0) avail += m_buffSize;
+   return avail;
 }
 
-// Use micros loop to get as exect timing as possible
-#define WAIT { while (micros()-start < wait); wait += m_bitTime; }
+#define WAIT { while (ESP.getCycleCount()-start < wait); wait += m_bitTime; }
 
 size_t SoftwareSerial::write(uint8_t b) {
    if (!m_txValid) return 0;
-   // Disable interrupt in order to get a clean transmit
+
+   if (m_invert) b = ~b;
+   // Disable interrupts in order to get a clean transmit
    cli();
-   uint16_t wait = m_bitTime;
+   unsigned long wait = m_bitTime;
    digitalWrite(m_txPin, HIGH);
-   unsigned long start = micros();
+   unsigned long start = ESP.getCycleCount();
     // Start bit;
    digitalWrite(m_txPin, LOW);
    WAIT;
@@ -121,14 +145,9 @@ int SoftwareSerial::peek() {
    return m_buffer[m_outPos];
 }
 
-void SoftwareSerial::rxRead() {
-   uint16_t wait = m_bitTime;
-   unsigned long start = micros();
-   // Skip half start bit unless this is less than normal interrupt delay time
-   if (m_bitTime > 10) {
-     wait = m_bitTime/2;
-     WAIT;
-   }
+void ICACHE_RAM_ATTR SoftwareSerial::rxRead() {
+   unsigned long wait = m_bitTime;
+   unsigned long start = ESP.getCycleCount();
    uint8_t rec = 0;
    for (int i = 0; i < 8; i++) {
      WAIT;
@@ -136,6 +155,7 @@ void SoftwareSerial::rxRead() {
      if (digitalRead(m_rxPin))
        rec |= 0x80;
    }
+   if (m_invert) rec = ~rec;
    // Stop bit
    WAIT;
    // Store the received value in the buffer unless we have an overflow
@@ -146,22 +166,19 @@ void SoftwareSerial::rxRead() {
    }
 }
 
-void SoftwareSerial::handle_interrupt(SoftwareSerial *swSerObj) {
-   if (!swSerObj) return;
-
-   // Check if this interrupt was was coming from the the rx pin of this object
-   int pin = swSerObj->m_rxPin;
+void ICACHE_RAM_ATTR SoftwareSerial::handle_interrupt(void *arg) {
    uint32_t gpioStatus = GPIO_REG_READ(GPIO_STATUS_ADDRESS);
-   if (!(gpioStatus & BIT(pin))) return;
-   // Clear the interrupt
+   // Clear the interrupt(s) otherwise we get called again
    GPIO_REG_WRITE(GPIO_STATUS_W1TC_ADDRESS, gpioStatus);
-   // Seems like the interrupt is delivered on all flanks in spite
-   // of GPIO_PIN_INTR_NEGEDGE. Hence ignore unless we have a start bit
-   if (digitalRead(pin)) return;
-
-   // Disable GPIO interrupts when sampling the incoming byte
    ETS_GPIO_INTR_DISABLE();
-   swSerObj->rxRead();
+   for (uint8_t pin = 0; pin <= MAX_PIN; pin++) {
+      if ((gpioStatus & BIT(pin)) && InterruptList[pin]) {
+         // Seems like the interrupt is delivered on all flanks in regardless
+         // of what edge that has been set. Hence ignore unless we have a start bit
+         if (digitalRead(pin) == InterruptList[pin]->m_invert)
+            InterruptList[pin]->rxRead();
+      }
+   }
    ETS_GPIO_INTR_ENABLE();
 }
 

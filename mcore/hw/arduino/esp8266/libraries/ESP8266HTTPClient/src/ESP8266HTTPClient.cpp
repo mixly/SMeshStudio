@@ -26,6 +26,7 @@
 #include <ESP8266WiFi.h>
 #include <WiFiClientSecure.h>
 #include <StreamString.h>
+#include <base64.h>
 
 #include "ESP8266HTTPClient.h"
 
@@ -39,6 +40,9 @@ HTTPClient::HTTPClient() {
     _port = 0;
 
     _reuse = false;
+    _tcpTimeout = HTTPCLIENT_DEFAULT_TCP_TIMEOUT;
+    _useHTTP10 = false;
+
     _https = false;
 
     _userAgent = "ESP8266HTTPClient";
@@ -49,6 +53,7 @@ HTTPClient::HTTPClient() {
     _returnCode = 0;
     _size = -1;
     _canReuse = false;
+    _transferEncoding = HTTPC_TE_IDENTITY;
 
 }
 
@@ -100,27 +105,34 @@ void HTTPClient::begin(String url, String httpsFingerprint) {
     String protocol;
     // check for : (http: or https:
     int index = url.indexOf(':');
-    int index2;
+    //int index2;
     bool hasPort = false;
-    if(index) {
+    if(index >= 0) {
         protocol = url.substring(0, index);
         url.remove(0, (index + 3)); // remove http:// or https://
 
-        index = url.indexOf(':');
-        index2 = url.indexOf('/');
+        index = url.indexOf('/');
+        String host = url.substring(0, index);
+        url.remove(0, index); // remove host part
 
-        if(index >= 0 && ((index2 >= 0 && index < index2) || index2 == 0)) { // do we have a port?
-            _host = url.substring(0, index); // hostname
-            url.remove(0, (index + 1)); // remove hostname + :
+        // get Authorization
+        index = host.indexOf('@');
+        if(index >= 0) {
+            // auth info
+            String auth = host.substring(0, index);
+            host.remove(0, index + 1); // remove auth part including @
+            _base64Authorization = base64::encode(auth);
+        }
 
-            index = url.indexOf('/');
-            _port = url.substring(0, index).toInt(); // get port
-            url.remove(0, index); // remove port
+        // get port
+        index = host.indexOf(':');
+        if(index >= 0) {
+            _host = host.substring(0, index); // hostname
+            host.remove(0, (index + 1)); // remove hostname + :
+            _port = host.toInt(); // get port
             hasPort = true;
         } else {
-            index = index2;
-            _host = url.substring(0, index);
-            url.remove(0, index); // remove hostname
+            _host = host;
         }
 
         _url = url;
@@ -139,6 +151,7 @@ void HTTPClient::begin(String url, String httpsFingerprint) {
             DEBUG_HTTPCLIENT("[HTTP-Client][begin] protocol: %s unknown?!\n", protocol.c_str());
             return;
         }
+
     }
 
     DEBUG_HTTPCLIENT("[HTTP-Client][begin] host: %s port: %d url: %s https: %d httpsFingerprint: %s\n", _host.c_str(), _port, _url.c_str(), _https, _httpsFingerprint.c_str());
@@ -180,6 +193,12 @@ void HTTPClient::begin(String host, uint16_t port, String url, bool https, Strin
  */
 void HTTPClient::end(void) {
     if(connected()) {
+        if(_tcp->available() > 0) {
+            DEBUG_HTTPCLIENT("[HTTP-Client][end] still data in buffer (%d), clean up.\n", _tcp->available());
+            while(_tcp->available() > 0) {
+                _tcp->read();
+            }
+        }
         if(_reuse && _canReuse) {
             DEBUG_HTTPCLIENT("[HTTP-Client][end] tcp keep open for reuse\n");
         } else {
@@ -220,6 +239,49 @@ void HTTPClient::setUserAgent(const char * userAgent) {
 }
 
 /**
+ * set the Authorizatio for the http request
+ * @param user const char *
+ * @param password const char *
+ */
+void HTTPClient::setAuthorization(const char * user, const char * password) {
+    if(user && password) {
+        String auth = user;
+        auth += ":";
+        auth += password;
+        _base64Authorization = base64::encode(auth);
+    }
+}
+
+/**
+ * set the Authorizatio for the http request
+ * @param auth const char * base64
+ */
+void HTTPClient::setAuthorization(const char * auth) {
+    if(auth) {
+        _base64Authorization = auth;
+    }
+}
+
+/**
+ * set the timeout for the TCP connection
+ * @param timeout unsigned int
+ */
+void HTTPClient::setTimeout(uint16_t timeout) {
+    _tcpTimeout = timeout;
+    if(connected()) {
+        _tcp->setTimeout(timeout);
+    }
+}
+
+/**
+ * use HTTP1.0
+ * @param timeout
+ */
+void HTTPClient::useHTTP10(bool useHTTP10) {
+    _useHTTP10 = useHTTP10;
+}
+
+/**
  * send a GET request
  * @return http code
  */
@@ -244,6 +306,16 @@ int HTTPClient::POST(String payload) {
 /**
  * sendRequest
  * @param type const char *     "GET", "POST", ....
+ * @param payload String        data for the message body
+ * @return
+ */
+int HTTPClient::sendRequest(const char * type, String payload) {
+    return sendRequest(type, (uint8_t *) payload.c_str(), payload.length());
+}
+
+/**
+ * sendRequest
+ * @param type const char *     "GET", "POST", ....
  * @param payload uint8_t *     data for the message body if null not send
  * @param size size_t           size for the message body if 0 not send
  * @return -1 if no info or > 0 when Content-Length is set by server
@@ -251,7 +323,7 @@ int HTTPClient::POST(String payload) {
 int HTTPClient::sendRequest(const char * type, uint8_t * payload, size_t size) {
     // connect to server
     if(!connect()) {
-        return HTTPC_ERROR_CONNECTION_REFUSED;
+        return returnError(HTTPC_ERROR_CONNECTION_REFUSED);
     }
 
     if(payload && size > 0) {
@@ -260,18 +332,18 @@ int HTTPClient::sendRequest(const char * type, uint8_t * payload, size_t size) {
 
     // send Header
     if(!sendHeader(type)) {
-        return HTTPC_ERROR_SEND_HEADER_FAILED;
+        return returnError(HTTPC_ERROR_SEND_HEADER_FAILED);
     }
 
     // send Payload if needed
     if(payload && size > 0) {
         if(_tcp->write(&payload[0], size) != size) {
-            return HTTPC_ERROR_SEND_PAYLOAD_FAILED;
+            return returnError(HTTPC_ERROR_SEND_PAYLOAD_FAILED);
         }
     }
 
     // handle Server Response (Header)
-    return handleHeaderResponse();
+    return returnError(handleHeaderResponse());
 }
 
 /**
@@ -284,12 +356,12 @@ int HTTPClient::sendRequest(const char * type, uint8_t * payload, size_t size) {
 int HTTPClient::sendRequest(const char * type, Stream * stream, size_t size) {
 
     if(!stream) {
-        return HTTPC_ERROR_NO_STREAM;
+        return returnError(HTTPC_ERROR_NO_STREAM);
     }
 
     // connect to server
     if(!connect()) {
-        return HTTPC_ERROR_CONNECTION_REFUSED;
+        return returnError(HTTPC_ERROR_CONNECTION_REFUSED);
     }
 
     if(size > 0) {
@@ -298,11 +370,10 @@ int HTTPClient::sendRequest(const char * type, Stream * stream, size_t size) {
 
     // send Header
     if(!sendHeader(type)) {
-        return HTTPC_ERROR_SEND_HEADER_FAILED;
+        return returnError(HTTPC_ERROR_SEND_HEADER_FAILED);
     }
 
-    // create buffer for read
-    uint8_t buff[1460] = { 0 };
+    int buff_size = HTTP_TCP_BUFFER_SIZE;
 
     int len = size;
     int bytesWritten = 0;
@@ -311,38 +382,105 @@ int HTTPClient::sendRequest(const char * type, Stream * stream, size_t size) {
         len = -1;
     }
 
-    // read all data from stream and send it to server
-    while(connected() && stream->available() && (len > 0 || len == -1)) {
-
-        // get available data size
-        size_t s = stream->available();
-
-        if(s) {
-            int c = stream->readBytes(buff, ((s > sizeof(buff)) ? sizeof(buff) : s));
-
-            // write it to Stream
-            bytesWritten += _tcp->write((const uint8_t *)buff, c);
-
-            if(len > 0) {
-                len -= c;
-            }
-
-            delay(0);
-        } else {
-            delay(1);
-        }
+    // if possible create smaller buffer then HTTP_TCP_BUFFER_SIZE
+    if((len > 0) && (len < HTTP_TCP_BUFFER_SIZE)) {
+        buff_size = len;
     }
 
-    if(size && (int)size != bytesWritten) {
-        DEBUG_HTTPCLIENT("[HTTP-Client][sendRequest] Stream payload bytesWritten %d and size %d mismatch!.\n", bytesWritten, _size);
-        DEBUG_HTTPCLIENT("[HTTP-Client][sendRequest] ERROR SEND PAYLOAD FAILED!");
-        return HTTPC_ERROR_SEND_PAYLOAD_FAILED;
+    // create buffer for read
+    uint8_t * buff = (uint8_t *) malloc(buff_size);
+
+    if(buff) {
+        // read all data from stream and send it to server
+        while(connected() && (stream->available() > -1) && (len > 0 || len == -1)) {
+
+            // get available data size
+            int sizeAvailable = stream->available();
+
+            if(sizeAvailable) {
+
+                int readBytes = sizeAvailable;
+
+                // read only the asked bytes
+                if(len > 0 && readBytes > len) {
+                    readBytes = len;
+                }
+
+                // not read more the buffer can handle
+                if(readBytes > buff_size) {
+                    readBytes = buff_size;
+                }
+
+                // read data
+                int bytesRead = stream->readBytes(buff, readBytes);
+
+                // write it to Stream
+                int bytesWrite = _tcp->write((const uint8_t *) buff, bytesRead);
+                bytesWritten += bytesWrite;
+
+                // are all Bytes a writen to stream ?
+                if(bytesWrite != bytesRead) {
+                    DEBUG_HTTPCLIENT("[HTTP-Client][sendRequest] short write, asked for %d but got %d retry...\n", bytesRead, bytesWrite);
+
+                    // check for write error
+                    if(_tcp->getWriteError()) {
+                        DEBUG_HTTPCLIENT("[HTTP-Client][sendRequest] stream write error %d\n", _tcp->getWriteError());
+
+                        //reset write error for retry
+                        _tcp->clearWriteError();
+                    }
+
+                    // some time for the stream
+                    delay(1);
+
+                    int leftBytes = (readBytes - bytesWrite);
+
+                    // retry to send the missed bytes
+                    bytesWrite = _tcp->write((const uint8_t *) (buff + bytesWrite), leftBytes);
+                    bytesWritten += bytesWrite;
+
+                    if(bytesWrite != leftBytes) {
+                        // failed again
+                        DEBUG_HTTPCLIENT("[HTTP-Client][sendRequest] short write, asked for %d but got %d failed.\n", leftBytes, bytesWrite);
+                        free(buff);
+                        return returnError(HTTPC_ERROR_SEND_PAYLOAD_FAILED);
+                    }
+                }
+
+                // check for write error
+                if(_tcp->getWriteError()) {
+                    DEBUG_HTTPCLIENT("[HTTP-Client][sendRequest] stream write error %d\n", _tcp->getWriteError());
+                    free(buff);
+                    return returnError(HTTPC_ERROR_SEND_PAYLOAD_FAILED);
+                }
+
+                // count bytes to read left
+                if(len > 0) {
+                    len -= readBytes;
+                }
+
+                delay(0);
+            } else {
+                delay(1);
+            }
+        }
+
+        free(buff);
+
+        if(size && (int) size != bytesWritten) {
+            DEBUG_HTTPCLIENT("[HTTP-Client][sendRequest] Stream payload bytesWritten %d and size %d mismatch!.\n", bytesWritten, size); DEBUG_HTTPCLIENT("[HTTP-Client][sendRequest] ERROR SEND PAYLOAD FAILED!");
+            return returnError(HTTPC_ERROR_SEND_PAYLOAD_FAILED);
+        } else {
+            DEBUG_HTTPCLIENT("[HTTP-Client][sendRequest] Stream payload written: %d\n", bytesWritten);
+        }
+
     } else {
-        DEBUG_HTTPCLIENT("[HTTP-Client][sendRequest] Stream payload written: %d\n", bytesWritten);
+        DEBUG_HTTPCLIENT("[HTTP-Client][sendRequest] too less ram! need %d\n", HTTP_TCP_BUFFER_SIZE);
+        return returnError(HTTPC_ERROR_TOO_LESS_RAM);
     }
 
     // handle Server Response (Header)
-    return handleHeaderResponse();
+    return returnError(handleHeaderResponse());
 }
 
 /**
@@ -389,50 +527,73 @@ WiFiClient * HTTPClient::getStreamPtr(void) {
 int HTTPClient::writeToStream(Stream * stream) {
 
     if(!stream) {
-        return HTTPC_ERROR_NO_STREAM;
+        return returnError(HTTPC_ERROR_NO_STREAM);
     }
 
     if(!connected()) {
-        return HTTPC_ERROR_NOT_CONNECTED;
+        return returnError(HTTPC_ERROR_NOT_CONNECTED);
     }
 
     // get length of document (is -1 when Server sends no Content-Length header)
     int len = _size;
-    int bytesWritten = 0;
+    int ret = 0;
 
-    // create buffer for read
-    uint8_t buff[1460] = { 0 };
+    if(_transferEncoding == HTTPC_TE_IDENTITY) {
+        ret = writeToStreamDataBlock(stream, len);
 
-    // read all data from server
-    while(connected() && (len > 0 || len == -1)) {
+        // have we an error?
+        if(ret < 0) {
+            return returnError(ret);
+        }
+    } else if(_transferEncoding == HTTPC_TE_CHUNKED) {
+        int size = 0;
+        while(1) {
+            if(!connected()) {
+                return returnError(HTTPC_ERROR_CONNECTION_LOST);
+            }
+            String chunkHeader = _tcp->readStringUntil('\n');
 
-        // get available data size
-        size_t size = _tcp->available();
+            if(chunkHeader.length() <= 0) {
+                return returnError(HTTPC_ERROR_READ_TIMEOUT);
+            }
 
-        if(size) {
-            int c = _tcp->readBytes(buff, ((size > sizeof(buff)) ? sizeof(buff) : size));
+            chunkHeader.trim(); // remove \r
 
-            // write it to Stream
-            bytesWritten += stream->write(buff, c);
+            // read size of chunk
+            len = (uint32_t) strtol((const char *) chunkHeader.c_str(), NULL, 16);
+            size += len;
+            DEBUG_HTTPCLIENT("[HTTP-Client] read chunk len: %d\n", len);
 
+            // data left?
             if(len > 0) {
-                len -= c;
+                int r = writeToStreamDataBlock(stream, len);
+                if(r < 0) {
+                    // error in writeToStreamDataBlock
+                    return returnError(r);
+                }
+                ret += r;
+            } else {
+
+                // if no length Header use global chunk size
+                if(_size <= 0) {
+                    _size = size;
+                }
+
+                // check if we have write all data out
+                if(ret != _size) {
+                    return returnError(HTTPC_ERROR_STREAM_WRITE);
+                }
+                break;
             }
 
             delay(0);
-        } else {
-            delay(1);
         }
-    }
-
-    DEBUG_HTTPCLIENT("[HTTP-Client][writeToStream] connection closed or file end (written: %d).\n", bytesWritten);
-
-    if(_size && _size != bytesWritten) {
-        DEBUG_HTTPCLIENT("[HTTP-Client][writeToStream] bytesWritten %d and size %d mismatch!.\n", bytesWritten, _size);
+    } else {
+        return returnError(HTTPC_ERROR_ENCODING);
     }
 
     end();
-    return bytesWritten;
+    return ret;
 }
 
 /**
@@ -455,6 +616,40 @@ String HTTPClient::getString(void) {
 }
 
 /**
+ * converts error code to String
+ * @param error int
+ * @return String
+ */
+String HTTPClient::errorToString(int error) {
+    switch(error) {
+        case HTTPC_ERROR_CONNECTION_REFUSED:
+            return String("connection refused");
+        case HTTPC_ERROR_SEND_HEADER_FAILED:
+            return String("send header failed");
+        case HTTPC_ERROR_SEND_PAYLOAD_FAILED:
+            return String("send payload failed");
+        case HTTPC_ERROR_NOT_CONNECTED:
+            return String("not connected");
+        case HTTPC_ERROR_CONNECTION_LOST:
+            return String("connection lost");
+        case HTTPC_ERROR_NO_STREAM:
+            return String("no stream");
+        case HTTPC_ERROR_NO_HTTP_SERVER:
+            return String("no HTTP server");
+        case HTTPC_ERROR_TOO_LESS_RAM:
+            return String("too less ram");
+        case HTTPC_ERROR_ENCODING:
+            return String("Transfer-Encoding not supported");
+        case HTTPC_ERROR_STREAM_WRITE:
+            return String("Stream write error");
+        case HTTPC_ERROR_READ_TIMEOUT:
+            return String("read Timeout");
+        default:
+            return String();
+    }
+}
+
+/**
  * adds Header to the request
  * @param name
  * @param value
@@ -463,7 +658,7 @@ String HTTPClient::getString(void) {
 void HTTPClient::addHeader(const String& name, const String& value, bool first) {
 
     // not allow set of Header handled by code
-    if(!name.equalsIgnoreCase("Connection") && !name.equalsIgnoreCase("User-Agent") && !name.equalsIgnoreCase("Host")) {
+    if(!name.equalsIgnoreCase("Connection") && !name.equalsIgnoreCase("User-Agent") && !name.equalsIgnoreCase("Host") && !(_base64Authorization.length() && name.equalsIgnoreCase("Authorization"))) {
         String headerLine = name;
         headerLine += ": ";
         headerLine += value;
@@ -528,6 +723,9 @@ bool HTTPClient::connect(void) {
 
     if(connected()) {
         DEBUG_HTTPCLIENT("[HTTP-Client] connect. already connected, try reuse!\n");
+        while(_tcp->available() > 0) {
+            _tcp->read();
+        }
         return true;
     }
 
@@ -567,7 +765,7 @@ bool HTTPClient::connect(void) {
     }
 
     // set Timeout for readBytesUntil and readStringUntil
-    _tcp->setTimeout(HTTPCLIENT_TCP_TIMEOUT);
+    _tcp->setTimeout(_tcpTimeout);
 
 #ifdef ESP8266
     _tcp->setNoDelay(true);
@@ -585,7 +783,15 @@ bool HTTPClient::sendHeader(const char * type) {
         return false;
     }
 
-    String header = String(type) + " " + _url + " HTTP/1.1\r\n"
+    String header = String(type) + " " + _url + " HTTP/1.";
+
+    if(_useHTTP10) {
+        header += "0";
+    } else {
+        header += "1";
+    }
+
+    header += "\r\n"
             "Host: " + _host + "\r\n"
             "User-Agent: " + _userAgent + "\r\n"
             "Connection: ";
@@ -595,7 +801,17 @@ bool HTTPClient::sendHeader(const char * type) {
     } else {
         header += "close";
     }
-    header += "\r\n" + _Headers + "\r\n";
+    header += "\r\n";
+
+    if(!_useHTTP10) {
+        header += "Accept-Encoding: identity;q=1,chunked;q=0.1,*;q=0\r\n";
+    }
+
+    if(_base64Authorization.length()) {
+        header += "Authorization: Basic " + _base64Authorization + "\r\n";
+    }
+
+    header += _Headers + "\r\n";
 
     return (_tcp->write(header.c_str(), header.length()) == header.length());
 }
@@ -610,14 +826,19 @@ int HTTPClient::handleHeaderResponse() {
         return HTTPC_ERROR_NOT_CONNECTED;
     }
 
+    String transferEncoding;
     _returnCode = -1;
     _size = -1;
+    _transferEncoding = HTTPC_TE_IDENTITY;
+    unsigned long lastDataTime = millis();
 
     while(connected()) {
         size_t len = _tcp->available();
         if(len > 0) {
             String headerLine = _tcp->readStringUntil('\n');
             headerLine.trim(); // remove \r
+
+            lastDataTime = millis();
 
             DEBUG_HTTPCLIENT("[HTTP-Client][handleHeaderResponse] RX: '%s'\n", headerLine.c_str());
 
@@ -635,6 +856,10 @@ int HTTPClient::handleHeaderResponse() {
                     _canReuse = headerValue.equalsIgnoreCase("keep-alive");
                 }
 
+                if(headerName.equalsIgnoreCase("Transfer-Encoding")) {
+                    transferEncoding = headerValue;
+                }
+
                 for(size_t i = 0; i < _headerKeysCount; i++) {
                     if(_currentHeaders[i].key.equalsIgnoreCase(headerName)) {
                         _currentHeaders[i].value = headerValue;
@@ -645,9 +870,22 @@ int HTTPClient::handleHeaderResponse() {
 
             if(headerLine == "") {
                 DEBUG_HTTPCLIENT("[HTTP-Client][handleHeaderResponse] code: %d\n", _returnCode);
-                if(_size) {
+
+                if(_size > 0) {
                     DEBUG_HTTPCLIENT("[HTTP-Client][handleHeaderResponse] size: %d\n", _size);
                 }
+
+                if(transferEncoding.length() > 0) {
+                    DEBUG_HTTPCLIENT("[HTTP-Client][handleHeaderResponse] Transfer-Encoding: %s\n", transferEncoding.c_str());
+                    if(transferEncoding.equalsIgnoreCase("chunked")) {
+                        _transferEncoding = HTTPC_TE_CHUNKED;
+                    } else {
+                        return HTTPC_ERROR_ENCODING;
+                    }
+                } else {
+                    _transferEncoding = HTTPC_TE_IDENTITY;
+                }
+
                 if(_returnCode) {
                     return _returnCode;
                 } else {
@@ -657,9 +895,139 @@ int HTTPClient::handleHeaderResponse() {
             }
 
         } else {
+            if((millis() - lastDataTime) > _tcpTimeout) {
+                return HTTPC_ERROR_READ_TIMEOUT;
+            }
             delay(0);
         }
     }
 
     return HTTPC_ERROR_CONNECTION_LOST;
+}
+
+/**
+ * write one Data Block to Stream
+ * @param stream Stream *
+ * @param size int
+ * @return < 0 = error >= 0 = size written
+ */
+int HTTPClient::writeToStreamDataBlock(Stream * stream, int size) {
+    int buff_size = HTTP_TCP_BUFFER_SIZE;
+    int len = size;
+    int bytesWritten = 0;
+
+    // if possible create smaller buffer then HTTP_TCP_BUFFER_SIZE
+    if((len > 0) && (len < HTTP_TCP_BUFFER_SIZE)) {
+        buff_size = len;
+    }
+
+    // create buffer for read
+    uint8_t * buff = (uint8_t *) malloc(buff_size);
+
+    if(buff) {
+        // read all data from server
+        while(connected() && (len > 0 || len == -1)) {
+
+            // get available data size
+            size_t sizeAvailable = _tcp->available();
+
+            if(sizeAvailable) {
+
+                int readBytes = sizeAvailable;
+
+                // read only the asked bytes
+                if(len > 0 && readBytes > len) {
+                    readBytes = len;
+                }
+
+                // not read more the buffer can handle
+                if(readBytes > buff_size) {
+                    readBytes = buff_size;
+                }
+
+                // read data
+                int bytesRead = _tcp->readBytes(buff, readBytes);
+
+                // write it to Stream
+                int bytesWrite = stream->write(buff, bytesRead);
+                bytesWritten += bytesWrite;
+
+                // are all Bytes a writen to stream ?
+                if(bytesWrite != bytesRead) {
+                    DEBUG_HTTPCLIENT("[HTTP-Client][writeToStream] short write asked for %d but got %d retry...\n", bytesRead, bytesWrite);
+
+                    // check for write error
+                    if(stream->getWriteError()) {
+                        DEBUG_HTTPCLIENT("[HTTP-Client][writeToStreamDataBlock] stream write error %d\n", stream->getWriteError());
+
+                        //reset write error for retry
+                        stream->clearWriteError();
+                    }
+
+                    // some time for the stream
+                    delay(1);
+
+                    int leftBytes = (readBytes - bytesWrite);
+
+                    // retry to send the missed bytes
+                    bytesWrite = stream->write((buff + bytesWrite), leftBytes);
+                    bytesWritten += bytesWrite;
+
+                    if(bytesWrite != leftBytes) {
+                        // failed again
+                        DEBUG_HTTPCLIENT("[HTTP-Client][writeToStream] short write asked for %d but got %d failed.\n", leftBytes, bytesWrite);
+                        free(buff);
+                        return HTTPC_ERROR_STREAM_WRITE;
+                    }
+                }
+
+                // check for write error
+                if(stream->getWriteError()) {
+                    DEBUG_HTTPCLIENT("[HTTP-Client][writeToStreamDataBlock] stream write error %d\n", stream->getWriteError());
+                    free(buff);
+                    return HTTPC_ERROR_STREAM_WRITE;
+                }
+
+                // count bytes to read left
+                if(len > 0) {
+                    len -= readBytes;
+                }
+
+                delay(0);
+            } else {
+                delay(1);
+            }
+        }
+
+        free(buff);
+
+        DEBUG_HTTPCLIENT("[HTTP-Client][writeToStreamDataBlock] connection closed or file end (written: %d).\n", bytesWritten);
+
+        if((size > 0) && (size != bytesWritten)) {
+            DEBUG_HTTPCLIENT("[HTTP-Client][writeToStreamDataBlock] bytesWritten %d and size %d mismatch!.\n", bytesWritten, size);
+            return HTTPC_ERROR_STREAM_WRITE;
+        }
+
+    } else {
+        DEBUG_HTTPCLIENT("[HTTP-Client][writeToStreamDataBlock] too less ram! need %d\n", HTTP_TCP_BUFFER_SIZE);
+        return HTTPC_ERROR_TOO_LESS_RAM;
+    }
+
+    return bytesWritten;
+}
+
+/**
+ * called to handle error return, may disconnect the connection if still exists
+ * @param error
+ * @return error
+ */
+int HTTPClient::returnError(int error) {
+    if(error < 0) {
+        DEBUG_HTTPCLIENT("[HTTP-Client][returnError] error(%d): %s\n", error, errorToString(error).c_str());
+        if(connected()) {
+            DEBUG_HTTPCLIENT("[HTTP-Client][returnError] tcp stop\n");
+            _tcp->stop();
+        }
+    }
+    return error;
 }

@@ -36,7 +36,7 @@ ESP8266 has a single ADC channel available to users. It may be used either to re
 
 To read external voltage applied to ADC pin, use `analogRead(A0)`. Input voltage range is 0 — 1.0V.
 
-To read VCC voltage, ADC pin must be kept unconnected. Additionally, the following line has to be added to the sketch:
+To read VCC voltage, use `ESP.getVcc()` and ADC pin must be kept unconnected. Additionally, the following line has to be added to the sketch:
 
 ```c++
 ADC_MODE(ADC_VCC);
@@ -75,6 +75,8 @@ more than 20 milliseconds is not recommended.
 `Serial` uses UART0, which is mapped to pins GPIO1 (TX) and GPIO3 (RX). Serial may be remapped to GPIO15 (TX) and GPIO13 (RX) by calling `Serial.swap()` after `Serial.begin`. Calling `swap` again maps UART0 back to GPIO1 and GPIO3.
 
 `Serial1` uses UART1, TX pin is GPIO2. UART1 can not be used to receive data because normally it's RX pin is occupied for flash chip connection. To use `Serial1`, call `Serial1.begin(baudrate)`.
+
+If `Serial1` is not used and `Serial` is not swapped - TX for UART0 can be mapped to GPIO2 instead by calling `Serial.set_tx(2)` after `Serial.begin` or directly with `Serial.begin(baud, config, mode, 2)`.
 
 By default the diagnostic output from WiFi libraries is disabled when you call `Serial.begin`. To enable debug output again, call `Serial.setDebugOutput(true)`. To redirect debug output to `Serial1` instead, call `Serial1.setDebugOutput(true)`.
 

@@ -5,11 +5,12 @@
 #
 # Modified since 2015-09-18 from Pascal Gollor (https://github.com/pgollor)
 # Modified since 2015-11-09 from Hristo Gochkov (https://github.com/me-no-dev)
+# Modified since 2016-01-03 from Matthew O'Gorman (https://githumb.com/mogorman)
 #
 # This script will push an OTA update to the ESP
-# use it like: python espota.py -i <ESP_IP_address> -p <ESP_port> [-a password] -f <sketch.bin>
+# use it like: python espota.py -i <ESP_IP_address> -I <Host_IP_address> -p <ESP_port> -P <Host_port> [-a password] -f <sketch.bin>
 # Or to upload SPIFFS image:
-# python espota.py -i <ESP_IP_address> -p <ESP_port> [-a password] -s -f <spiffs.bin>
+# python espota.py -i <ESP_IP_address> -I <Host_IP_address> -p <ESP_port> -P <HOST_port> [-a password] -s -f <spiffs.bin>
 #
 # Changes
 # 2015-09-18:
@@ -21,6 +22,10 @@
 # 2015-11-09:
 # - Added digest authentication
 # - Enchanced error tracking and reporting
+#
+# Changes
+# 2016-01-03:
+# - Added more options to parser.
 #
 
 from __future__ import print_function
@@ -64,11 +69,10 @@ def update_progress(progress):
     sys.stderr.write('.')
     sys.stderr.flush()
 
-def serve(remoteAddr, remotePort, password, filename, command = FLASH):
+def serve(remoteAddr, localAddr, remotePort, localPort, password, filename, command = FLASH):
   # Create a TCP/IP socket
   sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-  serverPort = random.randint(10000,60000)
-  server_address = ('0.0.0.0', serverPort)
+  server_address = (localAddr, localPort)
   logging.info('Starting on %s:%s', str(server_address[0]), str(server_address[1]))
   try:
     sock.bind(server_address)
@@ -82,16 +86,16 @@ def serve(remoteAddr, remotePort, password, filename, command = FLASH):
   file_md5 = hashlib.md5(f.read()).hexdigest()
   f.close()
   logging.info('Upload size: %d', content_size)
-  message = '%d %d %d %s\n' % (command, serverPort, content_size, file_md5)
+  message = '%d %d %d %s\n' % (command, localPort, content_size, file_md5)
 
   # Wait for a connection
   logging.info('Sending invitation to: %s', remoteAddr)
   sock2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
   remote_address = (remoteAddr, int(remotePort))
-  sent = sock2.sendto(message, remote_address)
+  sent = sock2.sendto(message.encode(), remote_address)
   sock2.settimeout(10)
   try:
-    data = sock2.recv(37)
+    data = sock2.recv(37).decode()
   except:
     logging.error('No Answer')
     sock2.close()
@@ -100,17 +104,17 @@ def serve(remoteAddr, remotePort, password, filename, command = FLASH):
     if(data.startswith('AUTH')):
       nonce = data.split()[1]
       cnonce_text = '%s%u%s%s' % (filename, content_size, file_md5, remoteAddr)
-      cnonce = hashlib.md5(cnonce_text).hexdigest()
-      passmd5 = hashlib.md5(password).hexdigest()
+      cnonce = hashlib.md5(cnonce_text.encode()).hexdigest()
+      passmd5 = hashlib.md5(password.encode()).hexdigest()
       result_text = '%s:%s:%s' % (passmd5 ,nonce, cnonce)
-      result = hashlib.md5(result_text).hexdigest()
+      result = hashlib.md5(result_text.encode()).hexdigest()
       sys.stderr.write('Authenticating...')
       sys.stderr.flush()
       message = '%d %s %s\n' % (AUTH, cnonce, result)
-      sock2.sendto(message, remote_address)
+      sock2.sendto(message.encode(), remote_address)
       sock2.settimeout(10)
       try:
-        data = sock2.recv(32)
+        data = sock2.recv(32).decode()
       except:
         sys.stderr.write('FAIL\n')
         logging.error('No Answer to our Authentication')
@@ -169,7 +173,7 @@ def serve(remoteAddr, remotePort, password, filename, command = FLASH):
     logging.info('Waiting for result...')
     try:
       connection.settimeout(60)
-      data = connection.recv(32)
+      data = connection.recv(32).decode()
       logging.info('Result: %s' ,data)
       connection.close()
       f.close()
@@ -209,11 +213,23 @@ def parser():
     help = "ESP8266 IP Address.",
     default = False
   )
+  group.add_option("-I", "--host_ip",
+    dest = "host_ip",
+    action = "store",
+    help = "Host IP Address.",
+    default = "0.0.0.0"
+  )
   group.add_option("-p", "--port",
     dest = "esp_port",
     type = "int",
     help = "ESP8266 ota Port. Default 8266",
     default = 8266
+  )
+  group.add_option("-P", "--host_port",
+    dest = "host_port",
+    type = "int",
+    help = "Host server ota Port. Default random 10000-60000",
+    default = random.randint(10000,60000)
   )
   parser.add_option_group(group)
 
@@ -294,7 +310,7 @@ def main(args):
     command = SPIFFS
   # end if
 
-  return serve(options.esp_ip, options.esp_port, options.auth, options.image, command)
+  return serve(options.esp_ip, options.host_ip, options.esp_port, options.host_port, options.auth, options.image, command)
 # end main
 
 

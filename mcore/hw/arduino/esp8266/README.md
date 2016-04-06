@@ -5,6 +5,17 @@ This project brings support for ESP8266 chip to the Arduino environment. It lets
 
 ESP8266 Arduino core comes with libraries to communicate over WiFi using TCP and UDP, set up HTTP, mDNS, SSDP, and DNS servers, do OTA updates, use a file system in flash memory, work with SD cards, servos, SPI and I2C peripherals.
 
+# Contents
+- Installing options:
+  - [Using Boards Manager](#installing-with-boards-manager)
+  - [Using git version](#using-git-version-)
+  - [Using stable version with PlatformIO](#using-stable-version-with-platformio)
+  - [Building with make](#building-with-make)
+- [Documentation](#documentation)
+- [Issues and support](#issues-and-support)
+- [Contributing](#contributing)  
+- [License and credits](#license-and-credits)   
+
 ### Installing with Boards Manager ###
 
 Starting with 1.6.4, Arduino allows installation of third-party platform packages using Boards Manager. We have packages available for Windows, Mac OS, and Linux (32 and 64 bit).
@@ -15,7 +26,7 @@ Starting with 1.6.4, Arduino allows installation of third-party platform package
 - Open Boards Manager from Tools > Board menu and install *esp8266* platform (and don't forget to select your ESP8266 board from Tools > Board menu after installation).
 
 The best place to ask questions related to this core is ESP8266 community forum: http://www.esp8266.com/arduino.
-If you find this ESP8266 board manager useful, please consider supporting it with a donation. The ESP8266 Community Forum and IGRR have made this wonderful port available.
+If you find this forum or the ESP8266 Boards Manager package useful, please consider supporting it with a donation.
 [![Donate](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://www.paypal.com/webscr?cmd=_s-xclick&hosted_button_id=4M56YCWV6PX66)
 
 #### Available versions
@@ -23,16 +34,16 @@ If you find this ESP8266 board manager useful, please consider supporting it wit
 ##### Stable version ![](http://arduino.esp8266.com/stable/badge.svg)
 Boards manager link: `http://arduino.esp8266.com/stable/package_esp8266com_index.json`
 
-Documentation: [Reference](http://arduino.esp8266.com/stable/doc/reference.html)
+Documentation: [http://esp8266.github.io/Arduino/versions/2.1.0/](http://esp8266.github.io/Arduino/versions/2.1.0/)
 
 ##### Staging version ![](http://arduino.esp8266.com/staging/badge.svg)
 Boards manager link: `http://arduino.esp8266.com/staging/package_esp8266com_index.json`
 
-Documentation: [Reference](http://arduino.esp8266.com/staging/doc/reference.html)
+Documentation: [http://esp8266.github.io/Arduino/versions/2.1.0-rc2/](http://esp8266.github.io/Arduino/versions/2.1.0-rc2/)
 
 ### Using git version [![Linux build status](https://travis-ci.org/esp8266/Arduino.svg)](https://travis-ci.org/esp8266/Arduino)
 
-- Install Arduino 1.6.5
+- Install Arduino 1.6.7
 - Go to Arduino directory
 - Clone this repository into hardware/esp8266com/esp8266 directory (or clone it elsewhere and create a symlink)
 ```bash
@@ -48,12 +59,28 @@ python get.py
 ```
 - Restart Arduino
 
+### Using stable version with PlatformIO
+
+[PlatformIO](http://platformio.org) is a cross-platform code-builder and library manager for embedded development with no external dependencies. Works on the popular host OS: Mac OS X, Windows, Linux 32/64, Linux ARM (like Raspberry Pi, BeagleBone, CubieBoard). More details in documentation [What is PlatformIO? How does it work?](http://docs.platformio.org/en/latest/faq.html#general).
+
+See [detailed instructions on how to use Espressif platform with PlatformIO](doc/platformio.md).
+
+### Building with make
+
+[makeEspArduino](https://github.com/plerup/makeEspArduino) is a generic makefile for any ESP8266 Arduino project.
+Using make instead of the Arduino IDE makes it easier to do automated and production builds.
+
+
+### Documentation
+
 Documentation for latest development version:
 
 - [Reference](doc/reference.md)
+- [Libraries](doc/libraries.md)
+- [File system](doc/filesystem.md)
+- [OTA update](doc/ota_updates/ota_updates.md)
 - [Supported boards](doc/boards.md)
 - [Change log](doc/changes.md)
-- [OTA Update](doc/ota_updates/ota_updates.md)
 
 ### Issues and support ###
 
@@ -81,3 +108,5 @@ Espressif SDK included in this build is under Espressif MIT License.
 ESP8266 core files are licensed under LGPL.
 
 [SPI Flash File System (SPIFFS)](https://github.com/pellepl/spiffs) written by Peter Andersson is used in this project. It is distributed under MIT license.
+
+[umm_malloc](https://github.com/rhempel/umm_malloc) memory management library written by Ralph Hempel is used in this project. It is distributed under MIT license.

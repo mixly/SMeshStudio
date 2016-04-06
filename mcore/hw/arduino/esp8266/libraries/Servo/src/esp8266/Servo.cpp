@@ -1,20 +1,20 @@
 /*
-  Copyright (c) 2015 Michael C. Miller. All right reserved.
+Copyright (c) 2015 Michael C. Miller. All right reserved.
 
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
 
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-  Lesser General Public License for more details.
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
 
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
-  */
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+*/
 
 #if defined(ESP8266)
 
@@ -26,9 +26,12 @@
 
 const uint32_t c_CycleCompensation = 4;  // compensation us to trim adjust for digitalWrite delays
 
+#define INVALID_PIN           63    // flag indicating never attached servo
+
 struct ServoInfo  {
-    uint8_t pin : 6;             // a pin number from 0 to 63
+    uint8_t pin : 6;             // a pin number from 0 to 62, 63 reserved
     uint8_t isActive : 1;        // true if this channel is enabled, pin not pulsed if false
+    uint8_t isDetaching : 1;     // true if this channel is being detached, maintains pulse integrity
 };
 
 struct ServoState {
@@ -53,6 +56,21 @@ static uint8_t s_servoCount = 0;            // the total number of attached s_se
 #define SERVO_INDEX_TO_TIMER(servoIndex) ((ServoTimerSequence)(servoIndex / SERVOS_PER_TIMER)) // returns the timer controlling this servo
 #define SERVO_INDEX(timerId, channel)  ((timerId * SERVOS_PER_TIMER) + channel)     // macro to access servo index by timer and channel
 
+// similiar to map but will have increased accuracy that provides a more
+// symetric api (call it and use result to reverse will provide the original value)
+// 
+int improved_map(int value, int minIn, int maxIn, int minOut, int maxOut)
+{
+    const int rangeIn = maxIn - minIn;
+    const int rangeOut = maxOut - minOut;
+    const int deltaIn = value - minIn;
+    // fixed point math constants to improve accurancy of divide and rounding
+    const int fixedHalfDecimal = 1;
+    const int fixedDecimal = fixedHalfDecimal * 2;
+
+    return ((deltaIn * rangeOut * fixedDecimal) / (rangeIn) + fixedHalfDecimal) / fixedDecimal + minOut;
+}
+
 //------------------------------------------------------------------------------
 // Interrupt handler template method that takes a class that implements
 // a standard set of methods for the timer abstraction
@@ -76,29 +94,49 @@ static void Servo_Handler(T* timer)
         if (servoIndex < s_servoCount && s_servos[servoIndex].info.isActive) {
             // pulse this channel low if activated
             digitalWrite(s_servos[servoIndex].info.pin, LOW);
+
+            if (s_servos[servoIndex].info.isDetaching) {
+                s_servos[servoIndex].info.isActive = false;
+                s_servos[servoIndex].info.isDetaching = false;
+            }
         }
         timer->nextChannel();
     }
 
     servoIndex = SERVO_INDEX(timer->timerId(), timer->getCurrentChannel());
 
-    if (servoIndex < s_servoCount && timer->getCurrentChannel() < SERVOS_PER_TIMER) {
+    if (servoIndex < s_servoCount &&
+        timer->getCurrentChannel() < SERVOS_PER_TIMER) {
         timer->SetPulseCompare(timer->usToTicks(s_servos[servoIndex].usPulse) - c_CycleCompensation);
 
-        if (s_servos[servoIndex].info.isActive) {  // check if activated
-            digitalWrite(s_servos[servoIndex].info.pin, HIGH); // its an active channel so pulse it high
+        if (s_servos[servoIndex].info.isActive) {
+            if (s_servos[servoIndex].info.isDetaching) {
+                // it was active, reset state and leave low
+                s_servos[servoIndex].info.isActive = false;
+                s_servos[servoIndex].info.isDetaching = false;
+            }
+            else {
+                // its an active channel so pulse it high
+                digitalWrite(s_servos[servoIndex].info.pin, HIGH);
+            }
         }
     }
     else {
-        // finished all channels so wait for the refresh period to expire before starting over
-        // allow a few ticks to ensure the next match is not missed
-        uint32_t refreshCompare = timer->usToTicks(REFRESH_INTERVAL);
-        if ((timer->GetCycleCount() + c_CycleCompensation * 2) < refreshCompare) {
-            timer->SetCycleCompare(refreshCompare - c_CycleCompensation);
+        if (!isTimerActive(timer->timerId())) {
+            // no active running channels on this timer, stop the ISR
+            finISR(timer->timerId());
         }
         else {
-            // at least REFRESH_INTERVAL has elapsed
-            timer->SetCycleCompare(timer->GetCycleCount() + c_CycleCompensation * 2);
+            // finished all channels so wait for the refresh period to expire before starting over
+            // allow a few ticks to ensure the next match is not missed
+            uint32_t refreshCompare = timer->usToTicks(REFRESH_INTERVAL);
+            if ((timer->GetCycleCount() + c_CycleCompensation * 2) < refreshCompare) {
+                timer->SetCycleCompare(refreshCompare - c_CycleCompensation);
+            }
+            else {
+                // at least REFRESH_INTERVAL has elapsed
+                timer->SetCycleCompare(timer->GetCycleCount() + c_CycleCompensation * 2);
+            }
         }
 
         timer->setEndOfCycle();
@@ -166,6 +204,10 @@ Servo::Servo()
         // set default _minUs and _maxUs incase write() is called before attach()
         _minUs = MIN_PULSE_WIDTH;
         _maxUs = MAX_PULSE_WIDTH;
+
+        s_servos[_servoIndex].info.isActive = false;
+        s_servos[_servoIndex].info.isDetaching = false;
+        s_servos[_servoIndex].info.pin = INVALID_PIN;
     }
     else {
         _servoIndex = INVALID_SERVO;  // too many servos
@@ -182,9 +224,11 @@ uint8_t Servo::attach(int pin, int minUs, int maxUs)
     ServoTimerSequence timerId;
 
     if (_servoIndex < MAX_SERVOS) {
-        pinMode(pin, OUTPUT);       // set servo pin to output
-        digitalWrite(pin, LOW);
-        s_servos[_servoIndex].info.pin = pin;
+        if (s_servos[_servoIndex].info.pin == INVALID_PIN) {
+            pinMode(pin, OUTPUT);       // set servo pin to output
+            digitalWrite(pin, LOW);
+            s_servos[_servoIndex].info.pin = pin;
+        }
 
         // keep the min and max within 200-3000 us, these are extreme
         // ranges and should support extreme servos while maintaining
@@ -197,6 +241,7 @@ uint8_t Servo::attach(int pin, int minUs, int maxUs)
         if (!isTimerActive(timerId)) {
             initISR(timerId);
         }
+        s_servos[_servoIndex].info.isDetaching = false;
         s_servos[_servoIndex].info.isActive = true;  // this must be set after the check for isTimerActive
     }
     return _servoIndex;
@@ -206,10 +251,8 @@ void Servo::detach()
 {
     ServoTimerSequence timerId;
 
-    s_servos[_servoIndex].info.isActive = false;
-    timerId = SERVO_INDEX_TO_TIMER(_servoIndex);
-    if (!isTimerActive(timerId)) {
-        finISR(timerId);
+    if (s_servos[_servoIndex].info.isActive) {
+        s_servos[_servoIndex].info.isDetaching = true;
     }
 }
 
@@ -218,8 +261,10 @@ void Servo::write(int value)
     // treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds)
     if (value < MIN_PULSE_WIDTH) {
         // assumed to be 0-180 degrees servo
-        value = max(0, min(180, value));
-        value = map(value, 0, 180, _minUs, _maxUs);
+        value = constrain(value, 0, 180);
+        // writeMicroseconds will contrain the calculated value for us
+        // for any user defined min and max, but we must use default min max
+        value = improved_map(value, 0, 180, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
     }
     writeMicroseconds(value);
 }
@@ -229,7 +274,7 @@ void Servo::writeMicroseconds(int value)
     // ensure channel is valid
     if ((_servoIndex < MAX_SERVOS)) {
         // ensure pulse width is valid
-        value = max(_minUs, min(_maxUs, value));
+        value = constrain(value, _minUs, _maxUs);
 
         s_servos[_servoIndex].usPulse = value;
     }
@@ -237,7 +282,9 @@ void Servo::writeMicroseconds(int value)
 
 int Servo::read() // return the value as degrees
 {
-    return map(readMicroseconds(), _minUs, _maxUs, 0, 180);
+    // read returns the angle for an assumed 0-180, so we calculate using 
+    // the normal min/max constants and not user defined ones
+    return improved_map(readMicroseconds(), MIN_PULSE_WIDTH, MAX_PULSE_WIDTH, 0, 180);
 }
 
 int Servo::readMicroseconds()

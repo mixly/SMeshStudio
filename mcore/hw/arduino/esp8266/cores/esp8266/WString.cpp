@@ -121,6 +121,7 @@ ICACHE_FLASH_ATTR String::~String() {
     if(buffer) {
         free(buffer);
     }
+    init();
 }
 
 // /*********************************************/
@@ -136,8 +137,7 @@ inline void String::init(void) {
 void ICACHE_FLASH_ATTR String::invalidate(void) {
     if(buffer)
         free(buffer);
-    buffer = NULL;
-    capacity = len = 0;
+    init();
 }
 
 unsigned char ICACHE_FLASH_ATTR String::reserve(unsigned int size) {
@@ -156,9 +156,11 @@ unsigned char ICACHE_FLASH_ATTR String::changeBuffer(unsigned int maxStrLen) {
     char *newbuffer = (char *) malloc(newSize);
     if(newbuffer) {
         memset(newbuffer, 0, newSize);
-        memcpy(newbuffer, buffer, len);
         if (buffer)
+        {
+            memcpy(newbuffer, buffer, len);
             free(buffer);
+        }
         capacity = newSize - 1;
         buffer = newbuffer;
         return 1;
